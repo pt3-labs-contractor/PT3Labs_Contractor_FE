@@ -6,8 +6,9 @@ function Users(props) {
     <div>
       <h3>Users:</h3>
       {props.loading ? <p>Loading...</p> : null}
+      {props.error ? <p>{props.error}</p> : null}
       {props.users.map(user => (
-        <p>{user.username}</p>
+        <p key={user.id}>{user.username}</p>
       ))}
     </div>
   )
@@ -15,8 +16,9 @@ function Users(props) {
 
 const mapStateToProps = state => {
   return {
-    users: state.users,
-    loading: state.loading
+    users: state.accounts.users,
+    loading: state.loading,
+    error: state.error
   }
 }
 

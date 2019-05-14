@@ -4,20 +4,23 @@ import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import './App.css';
 
-import { fetchUsers } from './actions/index';
+import { fetchAccts } from './actions/index';
 import Users from './components/users/Users';
+import ContractorList from './components/contractors/ContractorList';
 
 function App(props) {
 
   useEffect(() => {
-    props.fetchUsers();
+    props.fetchAccts();
+    // eslint-disable-next-line
   }, [])
 
   return (
     <div className="App">
-      <Route path="/" component={Users} />
+      <Route path="/users" component={Users} />
+      <Route path="/contractors" component={ContractorList} />
     </div>
   );
 }
 
-export default withRouter(connect(null, { fetchUsers })(App));
+export default withRouter(connect(null, { fetchAccts })(App));

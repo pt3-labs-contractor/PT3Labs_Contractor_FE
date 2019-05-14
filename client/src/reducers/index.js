@@ -1,7 +1,10 @@
 import { LOADING, SUCCESS, FAILURE } from '../actions';
 
 const initialState = {
-  users: [],
+  accounts: {
+    users: [],
+    contractors: []
+  },
   loading: false,
   error: null
 };
@@ -9,11 +12,11 @@ const initialState = {
 export default (state = initialState, action) => {
   switch(action.type) {
     case LOADING:
-      return { ...state, users: [], loading: true, error: null };
+      return { ...state, accounts: {users: [], contractors: []}, loading: true, error: null };
     case SUCCESS:
-      return { ...state, user: action.payload, loading: false, error: null };
+      return { ...state, accounts: action.payload, loading: false, error: null };
     case FAILURE:
-      return { ...state, user: [], loading: false, error: action.error };
+      return { ...state, accounts: {users: [], contractors: []}, loading: false, error: action.error };
     default:
       return state;
   }
