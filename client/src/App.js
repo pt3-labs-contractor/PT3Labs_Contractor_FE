@@ -1,24 +1,31 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { Route } from 'react-router-dom';
+import { withRouter } from 'react-router';
+import { connect } from 'react-redux';
 import './App.css';
 
-function App() {
+import { fetchAccts } from './actions/index';
+import Users from './components/users/Users';
+import ContractorList from './components/contractors/ContractorList';
+import Login from './components/login/Login';
+import Register from './components/register/Register';
+
+function App(props) {
+
+  useEffect(() => {
+    props.fetchAccts();
+    // eslint-disable-next-line
+  }, [])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Route path="/users" component={Users} />
+      <Route path="/contractors" component={ContractorList} />
+      <Route path="/login" component={Login} />
+      <Route path="/register" component={Register} />
+
     </div>
   );
 }
 
-export default App;
+export default withRouter(connect(null, { fetchAccts })(App));
