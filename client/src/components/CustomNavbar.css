@@ -1,0 +1,13 @@
+nav.navbar {
+    background-color: rgb(247, 164, 40) !important;
+}
+
+a.nav-link {
+    color: #FFFFFF !important;
+}
+
+.team-name {
+    color: red !important;
+    font-size: 30px !important;
+    font-weight: 500 !important;
+}

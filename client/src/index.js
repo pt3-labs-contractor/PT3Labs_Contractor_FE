@@ -13,6 +13,8 @@ import App from './App';
 
 import reducer from './reducers';
 
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 const store = createStore(
   reducer,
   applyMiddleware(thunk, logger)
