@@ -8,6 +8,7 @@ import { fetchAccts } from './actions/index';
 import Users from './components/users/Users';
 import ContractorList from './components/contractors/ContractorList';
 import Login from './components/login/Login';
+import Register from './components/register/Register';
 
 function App(props) {
 
@@ -21,6 +22,8 @@ function App(props) {
       <Route path="/users" component={Users} />
       <Route path="/contractors" component={ContractorList} />
       <Route path="/login" component={Login} />
+      <Route path="/register" component={Register} />
+
     </div>
   );
 }
