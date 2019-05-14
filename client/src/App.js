@@ -7,6 +7,7 @@ import './App.css';
 import { fetchAccts } from './actions/index';
 import Users from './components/users/Users';
 import ContractorList from './components/contractors/ContractorList';
+import Login from './components/login/Login';
 
 function App(props) {
 
@@ -19,6 +20,7 @@ function App(props) {
     <div className="App">
       <Route path="/users" component={Users} />
       <Route path="/contractors" component={ContractorList} />
+      <Route path="/login" component={Login} />
     </div>
   );
 }
