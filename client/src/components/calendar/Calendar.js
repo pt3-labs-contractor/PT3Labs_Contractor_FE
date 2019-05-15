@@ -5,7 +5,17 @@ function Calendar() {
   const [ selectedMonth, setMonth ] = useState(new Date());
   const [ selectedDay, setDay ] = useState(new Date());
 
-  function renderDaysOfWeek() {
+  function CalendarNav() {
+    return (
+      <div>
+        <div onClick={() => setMonth(dateFns.subMonths(selectedMonth, 1))}>***</div>
+        <div>{dateFns.format(selectedMonth, "MMMM YYYY")}</div>
+        <div onClick={() => setMonth(dateFns.addMonths(selectedMonth, 1))}>***</div>
+      </div>
+    )
+  }
+
+  function DaysOfWeek() {
     let days = [];
 
     let start = dateFns.startOfWeek(selectedMonth);
@@ -20,7 +30,7 @@ function Calendar() {
     return <div>{days}</div>
   };
 
-  function renderDaysOfMonth() {
+  function DaysOfMonth() {
     const startMonth = dateFns.startOfMonth(selectedMonth);
     const endMonth = dateFns.endOfMonth(selectedMonth);
     const startCalendar = dateFns.startOfWeek(startMonth);
@@ -41,8 +51,9 @@ function Calendar() {
 
   return (
     <div>
-      {renderDaysOfWeek()}
-      {renderDaysOfMonth()}
+      <CalendarNav/>
+      <DaysOfWeek/>
+      <DaysOfMonth/>
     </div>
   )
 }
