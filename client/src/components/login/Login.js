@@ -9,7 +9,7 @@ function Login(props) {
     e.preventDefault();
     axios.post()
       .then(res => {
-        props.history.push('/');
+        props.history.push('/contractors');
       })
       .catch(err => {
         console.log(err)
