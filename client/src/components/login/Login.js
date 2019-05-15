@@ -15,9 +15,6 @@ function Login(props) {
         console.log(err)
       })
   } 
-  // state = {
-  //   username: ''
-  // }
 
   return (
     <>
@@ -31,7 +28,7 @@ function Login(props) {
         >
         </input>
         <input
-          type='text'
+          type='password'
           name='password'
           placeholder='Password'
           onChange={(e) => setPassword(e.target.value)}
