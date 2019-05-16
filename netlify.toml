@@ -2,3 +2,7 @@
 base = 'client'
 publish = 'client/build/'
 command = 'yarn build'
+
+/*    /index.html   200
+
+/login /login 200
