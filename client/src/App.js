@@ -9,6 +9,7 @@ import Users from './components/users/Users';
 import ContractorList from './components/contractors/ContractorList';
 import Login from './components/login/Login';
 import Register from './components/register/Register';
+import Calendar from './components/calendar/Calendar';
 
 function App(props) {
 
@@ -23,7 +24,7 @@ function App(props) {
       <Route path="/contractors" component={ContractorList} />
       <Route path="/login" component={Login} />
       <Route path="/register" component={Register} />
-
+      <Route path="/calendar" component={Calendar} />
     </div>
   );
 }
