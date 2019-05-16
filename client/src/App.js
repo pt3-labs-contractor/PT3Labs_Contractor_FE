@@ -24,7 +24,7 @@ function App(props) {
       <Route path="/contractors" component={ContractorList} />
       <Route path="/login" component={Login} />
       <Route path="/register" component={Register} />
-      <Route pate="/calendar" component={Calendar} />
+      <Route path="/calendar" component={Calendar} />
     </div>
   );
 }
