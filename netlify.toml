@@ -3,6 +3,7 @@ base = 'client'
 publish = 'client/build/'
 command = 'yarn build'
 
-/*    /index.html   200
-
-/login /login 200
+[[redirects]]
+  from = "/*"
+  status = 200
+  to = "/index.html"
