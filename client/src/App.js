@@ -7,6 +7,7 @@ import './App.css';
 import { fetchAccts } from './actions/index';
 import Users from './components/users/Users';
 import ContractorList from './components/contractors/ContractorList';
+import Contractor from './components/contractors/Contractor';
 import Login from './components/login/Login';
 import Register from './components/register/Register';
 import Calendar from './components/calendar/Calendar';
@@ -21,7 +22,8 @@ function App(props) {
   return (
     <div className="App">
       <Route path="/users" component={Users} />
-      <Route path="/contractors" component={ContractorList} />
+      <Route exact path="/contractors" component={ContractorList} />
+      <Route path="/contractors/:id" component={Contractor} />
       <Route path="/login" component={Login} />
       <Route path="/register" component={Register} />
       <Route path="/calendar" component={Calendar} />
