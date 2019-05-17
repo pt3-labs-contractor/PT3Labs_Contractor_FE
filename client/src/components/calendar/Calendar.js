@@ -1,11 +1,13 @@
-import React, { useState } from 'react'
+import React from 'react'
+import { connect } from 'react-redux';
 import dateFns from 'date-fns';
+
+import { setDay, setMonth } from '../../actions/index';
 
 import './Calendar.css';
 
-function Calendar() {
-  const [ selectedMonth, setMonth ] = useState(new Date());
-  const [ selectedDay, setDay ] = useState(new Date());
+function Calendar(props) {
+  const { selectedDay, selectedMonth, setMonth } = props
 
   function CalendarNav() {
     return (
@@ -52,13 +54,7 @@ function Calendar() {
               ? " selected" 
               : !dateFns.isSameMonth(temp, selectedMonth) 
                 ? "disable" : ""}`}
-          onClick={
-            dateFns.isSameMonth(temp, selectedMonth) 
-              ? () => setDay(temp) 
-              : () => {
-                setMonth(temp); 
-                setDay(temp)
-              }}
+          onClick={() => handleSelect(temp)}
         >
           {dateFns.format(day, 'D')}
         </div>
@@ -67,6 +63,15 @@ function Calendar() {
     }
 
     return <div class="cell-container">{days}</div>
+  }
+
+  function handleSelect(day) {
+    if(dateFns.isSameMonth(day, selectedMonth)) {
+      props.setDay(day);
+    } else {
+      props.setMonth(day)
+      props.setDay(day);
+    }
   }
 
   return (
@@ -78,4 +83,11 @@ function Calendar() {
   )
 }
 
-export default Calendar
+const mapStateToProps = state => {
+  return {
+    selectedDay: state.thisDay,
+    selectedMonth: state.thisMonth
+  }
+}
+
+export default connect(mapStateToProps, { setDay, setMonth })(Calendar);

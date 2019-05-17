@@ -1,5 +1,6 @@
-import React from 'react'
-import { connect } from 'react-redux'
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 function ContractorList(props) {
   return (
@@ -8,7 +9,7 @@ function ContractorList(props) {
       {props.loading ? <p>Loading...</p> : null}
       {props.error ? <p>{props.error}</p> : null}
       {props.contractors.map(contractor => (
-        <p key={contractor.id}>{contractor.name}</p>
+        <Link to={`/contractors/${contractor.id}`} key={contractor.id}>{contractor.name}</Link>
       ))}
     </div>
   )
