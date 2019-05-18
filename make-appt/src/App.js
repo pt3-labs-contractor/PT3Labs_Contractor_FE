@@ -3,12 +3,13 @@ import BigCalendar from 'react-big-calendar'
 
 import moment from 'moment'
 import events from './components/events'
+import ExampleControlSlot from './components/ExampleControlSlot'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import axios from 'axios'
 
 import './App.css'
 
-moment.locale('en-GB')
+//moment.locale('en') // en-GB
 const localizer = BigCalendar.momentLocalizer(moment)
 //BigCalendar.momentLocalizer(moment)
 
@@ -52,9 +53,12 @@ class App extends Component {
 	}
 
 	render() {
+		//moment.locale('en')
 		//const { localizer } = this.props
-		//	const localizer = BigCalendar.momentLocalizer(moment)
+
+		//const localizer = BigCalendar.momentLocalizer(moment)
 		const cal_events = []
+
 		return (
 			<div className="App">
 				<h1 className="App-title">Appointment Calendar</h1>
@@ -76,4 +80,7 @@ class App extends Component {
 		)
 	}
 }
+
+App.propTypes = propTypes
+
 export default App
