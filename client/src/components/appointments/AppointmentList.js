@@ -9,7 +9,8 @@ function AppointmentList(props) {
   useEffect(() => {
     const date = schedule.filter(item => dateFns.isSameDay(item, selectedDay));
     setAppointment(date);
-  }, [schedule, selectedDay])
+    // eslint-disable-next-line
+  }, [selectedDay])
 
   return (
     <div>

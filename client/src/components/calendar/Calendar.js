@@ -68,7 +68,7 @@ function Calendar(props) {
   function handleSelect(day) {
     if(dateFns.isSameMonth(day, selectedMonth)) {
       props.setDay(day);
-    } else {
+    } else if(!dateFns.isBefore(day, dateFns.startOfMonth(new Date()))) {
       props.setMonth(day)
       props.setDay(day);
     }

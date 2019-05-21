@@ -16,8 +16,8 @@ function Contractor(props) {
   return (
     <div>
       <h3>{props.contractor.name}</h3>
-      <AppointmentList />
       <Calendar schedule={props.schedule} />
+      <AppointmentList />
     </div>
   )
 }
