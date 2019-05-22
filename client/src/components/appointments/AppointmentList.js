@@ -16,7 +16,7 @@ function AppointmentList(props) {
     <div>
       {appointment.map(item => (
         <>
-        {dateFns.format(item, "MMM Do HH:mm ")}
+        {dateFns.format(item, "HH:mm ")}
         </>
       ))}
     </div>
@@ -25,8 +25,7 @@ function AppointmentList(props) {
 
 const mapStateToProps = state => {
   return {
-    schedule: state.schedule,
-    selectedDay: state.thisDay
+    schedule: state.schedule
   }
 }
 

@@ -13,6 +13,11 @@ import Login from './components/login/Login';
 import Register from './components/register/Register';
 import Calendar from './components/calendar/Calendar';
 import MainNavbar from './components/navbar/MainNavbar';
+import NavBarUser from './components/navbar/NavBarUser';
+import NavBarContractor from './components/navbar/NavBarContractor';
+import Settings from './components/settings/Settings';
+import ContractorFeedback from './components/feedback/ContractorFeedback'
+import UserFeedback from './components/feedback/UserFeedback'
 
 function App(props) {
 
@@ -25,14 +30,19 @@ function App(props) {
     <div className="App">
       <MainNavbar />
       <main className="main-content">
+      <NavBarUser/>
+      <NavBarContractor/>
       <Switch>
         <Route exact path="/" component={Homepage} /> 
         <Route path="/users" component={Users} />
-        <Route path="/contractors" component={ContractorList} />
+        <Route exact path="/contractors" component={ContractorList} />
         <Route path="/contractors/:id" component={Contractor} />
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
         <Route path="/calendar" component={Calendar} />
+        <Route path="/settings" component={Settings}/>
+        <Route path="/contractorFeedback" component={ContractorFeedback} />
+        <Route path="/userFeedback" component={UserFeedback} />
         </Switch>
       </main>
     </div>

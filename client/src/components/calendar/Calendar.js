@@ -4,6 +4,8 @@ import dateFns from 'date-fns';
 
 import { setDay, setMonth } from '../../actions/index';
 
+import AppointmentList from '../appointments/AppointmentList';
+
 import './Calendar.css';
 
 function Calendar(props) {
@@ -57,6 +59,7 @@ function Calendar(props) {
           onClick={() => handleSelect(temp)}
         >
           {dateFns.format(day, 'D')}
+          {props.contractor ? <AppointmentList selectedDay={temp} /> : null}
         </div>
       )
       day = dateFns.addDays(day, 1);
@@ -86,7 +89,8 @@ function Calendar(props) {
 const mapStateToProps = state => {
   return {
     selectedDay: state.thisDay,
-    selectedMonth: state.thisMonth
+    selectedMonth: state.thisMonth,
+    contractor: state.thisContractor
   }
 }
 
