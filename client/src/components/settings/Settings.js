@@ -30,7 +30,6 @@ function ContractorList(props) {
           <li>Service2<button><IoMdCreate/></button> <button><IoIosTrash/></button></li>
           <li>Service3<button><IoMdCreate/></button> <button><IoIosTrash/></button></li>
           <li>Service4<button><IoMdCreate/></button> <button><IoIosTrash/></button></li>
-
         </ul>
     </div>
   )
