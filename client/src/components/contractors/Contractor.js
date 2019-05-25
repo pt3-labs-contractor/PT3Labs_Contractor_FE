@@ -2,8 +2,6 @@ import React, { useEffect } from 'react'
 import { connect } from 'react-redux';
 
 import Calendar from '../calendar/Calendar';
-// import AppointmentList from '../appointments/AppointmentList';
-import DayView from '../calendar/DayView';
 
 import { selectContractor } from '../../actions/index';
 
@@ -17,9 +15,7 @@ function Contractor(props) {
   return (
     <div>
       <h3>{props.contractor.name}</h3>
-      <Calendar />
-      {/* <AppointmentList /> */}
-      <DayView />
+      <Calendar contractor={props.contractor} />
     </div>
   )
 }
