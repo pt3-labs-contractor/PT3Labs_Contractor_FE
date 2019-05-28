@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import axios from 'axios';
 
 function Login(props) {
@@ -7,14 +7,15 @@ function Login(props) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    axios.post()
+    axios
+      .post()
       .then(res => {
         props.history.push('/contractors');
       })
       .catch(err => {
-        console.log(err)
-      })
-  } 
+        console.log(err);
+      });
+  }
   // state = {
   //   username: ''
   // }
@@ -23,25 +24,23 @@ function Login(props) {
     <>
       <form onSubmit={handleSubmit}>
         <input
-          type='text'
-          name='username'
-          placeholder='Username'
-          onChange={(e) => setUsername(e.target.value)}
+          type="text"
+          name="username"
+          placeholder="Username"
+          onChange={e => setUsername(e.target.value)}
           value={username}
-        >
-        </input>
+        />
         <input
-          type='text'
-          name='password'
-          placeholder='Password'
-          onChange={(e) => setPassword(e.target.value)}
+          type="text"
+          name="password"
+          placeholder="Password"
+          onChange={e => setPassword(e.target.value)}
           value={password}
-        >
-        </input>
-        <button type='submit'>Submit</button>
+        />
+        <button type="submit">Submit</button>
       </form>
     </>
-  )
+  );
 }
 
 export default Login;

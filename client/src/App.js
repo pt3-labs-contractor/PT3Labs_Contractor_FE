@@ -11,6 +11,9 @@ import ContractorList from './components/contractors/ContractorList';
 import Login from './components/login/Login';
 import Register from './components/register/Register';
 import MainNavbar from './components/navbar/MainNavbar'
+import Preloader from './components/preloader/Preloader'
+import User from './components/user/User'
+import Team from './components/team/Team'
 
 function App(props) {
 
@@ -23,12 +26,14 @@ function App(props) {
     <div className="App">
       <MainNavbar />
       <main className="main-content">
-      <Switch>
-        <Route exact path="/" component={Homepage} /> 
-        <Route path="/users" component={Users} />
-        <Route path="/contractors" component={ContractorList} />
-        <Route path="/login" component={Login} />
-        <Route path="/register" component={Register} />
+      <Preloader />
+        <Switch>
+          <Route exact path="/" component={Homepage} /> 
+          <Route path="/users" component={Users} />
+          <Route path="/contractors" component={ContractorList} />
+          <Route path="/login" component={Login} />
+          <Route path="/register" component={Register} />
+          <Route path="/user" component={User} />
         </Switch>
       </main>
     </div>
