@@ -9,6 +9,7 @@ function NavBarUser() {
           <Link to={'/calendar'}>Calendar</Link>
           <Link to={'/userFeedback'}>Feedback</Link>
           <Link to={'/contractors'}>Contractors</Link>
+          <button>Log Out</button>
 
       </div>
     )
