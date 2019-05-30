@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import axios from 'axios';
-import { GoogleLogin } from 'react-google-login'
 
 function Login(props) {
   const [username, setUsername] = useState('');
@@ -17,31 +16,10 @@ function Login(props) {
       })
   }
 
-  function googleRedirect() {
-    axios.get('https://fierce-plains-47590.herokuapp.com/api/auth/google')
-      .then(res => {
-        console.log(res.data);
-      })
-      .catch(err => {
-        console.log(err);
-      })
-  }
-
-  const responseGoogle = response => {
-    console.log(response);
-  }
 
   return (
     <>
-      <GoogleLogin
-        clientId="946449224744-vhunkfv7b299chrqqr2sjsvmajrua9c7.apps.googleusercontent.com"
-        buttonText="Login"
-        onSuccess={responseGoogle}
-        onFailure={responseGoogle}
-        cookiePolicy={'single_host_origin'}
-      />
       <form onSubmit={handleSubmit}>
-        <button onClick={googleRedirect}>Google</button>
         <input
           type='text'
           name='username'
@@ -60,6 +38,7 @@ function Login(props) {
         </input>
         <button type='submit'>Submit</button>
       </form>
+      <a href='https://fierce-plains-47590.herokuapp.com/api/auth/google'>Google Oauth</a>
     </>
   )
 }

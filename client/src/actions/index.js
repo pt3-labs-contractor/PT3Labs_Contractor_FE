@@ -9,10 +9,13 @@ export const SET_DAY = 'SET_DAY';
 
 export const fetchAccts = () => dispatch => {
   dispatch({ type: LOADING });
+  const bearer = 'Bearer ' + localStorage.getItem('jwt');
+  console.log(bearer)
+  const headers = { authorization: bearer }
 
   axios.all([
-    axios.get('https://fierce-plains-47590.herokuapp.com/users'),
-    axios.get('https://fierce-plains-47590.herokuapp.com/contractors')
+    axios.get('https://fierce-plains-47590.herokuapp.com/api/users', { headers }),
+    axios.get('https://fierce-plains-47590.herokuapp.com/api/contractors', { headers })
   ])
     .then(axios.spread((userRes, contRes) => {
       const accounts = {
