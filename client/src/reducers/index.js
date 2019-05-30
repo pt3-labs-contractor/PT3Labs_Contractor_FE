@@ -1,9 +1,19 @@
-import { LOADING, SUCCESS, FAILURE, SELECTED, SET_DAY, SET_MONTH } from '../actions';
+import { 
+  LOADING, SUCCESS, FAILURE, 
+  SELECTED, SET_DAY, SET_MONTH, 
+
+  SINGLE_CONTRACTOR_LOADING, FETCH_SINGLE_CONTRACTOR_SUCCESS, FETCH_SINGLE_CONTRACTOR_FAIL
+
+
+} from '../actions';
+
+
 
 const initialState = {
   accounts: {
     users: [],
-    contractors: []
+    contractors: [],
+    singleContractor: []
   },
   loading: false,
   error: null,
@@ -32,6 +42,13 @@ export default (state = initialState, action) => {
       return { ...state, thisDay: action.payload }
     case SET_MONTH:
       return { ...state, thisMonth: action.payload }
+
+    case SINGLE_CONTRACTOR_LOADING: 
+      return { ...state, accounts: {users: [], contractors: []}, loading: true, error: null };
+    case FETCH_SINGLE_CONTRACTOR_SUCCESS:
+      return { ...state, accounts: {singleContractor: []}, loading: false, error: null}
+      case FETCH_SINGLE_CONTRACTOR_FAIL:
+          return { ...state, accounts: {users: [], contractors: []}, loading: false, error: action.error };
     default:
       return state;
   }

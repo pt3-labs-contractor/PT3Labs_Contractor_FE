@@ -7,12 +7,14 @@ import { IoMdCreate } from 'react-icons/io'
 
 
 function ContractorList(props) {
+  console.log(props);
   return (
     <div>
         <h2>Contractor Setting Page</h2>{"\n"}
         <form>
           Contractor Email<input
             value="contractor Email"
+            
           />
           Contractor Phone<input
             value="contractor phonenumber"
@@ -38,7 +40,7 @@ function ContractorList(props) {
 const mapStateToProps = state => {
     console.log(state)
   return {
-    // contractors: state.accounts.contractors,
+    contractor: state.accounts.singleContractor,
     loading: state.loading,
     error: state.error
   }

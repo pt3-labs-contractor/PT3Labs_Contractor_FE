@@ -7,6 +7,11 @@ export const SELECTED = 'SELECTED';
 export const SET_MONTH = 'SET_MONTH';
 export const SET_DAY = 'SET_DAY';
 
+export const SINGLE_CONTRACTOR_LOADING = 'SINGLE_CONTRACTOR_LOADING'
+export const FETCH_SINGLE_CONTRACTOR_SUCCESS = 'FETCH_SINGLE_CONTRACTOR'
+export const FETCH_SINGLE_CONTRACTOR_FAIL = 'FETCH_SINGLE_CONTRACTOR_FAIL'
+
+
 export const fetchAccts = () => dispatch => {
   dispatch({ type: LOADING });
 
@@ -30,6 +35,20 @@ export const selectContractor = (id, list) => dispatch => {
   const selected = list.filter(item => item.id === id);
   dispatch({ type: SELECTED, payload: selected[0]})
 }
+
+
+
+export const selectSingleContractorSetting = (id) => dispatch => {
+  dispatch({ type: SINGLE_CONTRACTOR_LOADING })
+
+    axios.get(`https://fierce-plains-47590.herokuapp.com/api/contractors/${id}`)
+  .then( res => {
+     dispatch({ type: FETCH_SINGLE_CONTRACTOR_SUCCESS, payload: res.data})
+  })
+  .catch(err => dispatch({ type: FETCH_SINGLE_CONTRACTOR_FAIL, payload: err}))
+}
+
+
 
 export const setDay = day => dispatch => {
   dispatch({ type: SET_DAY, payload: day })
