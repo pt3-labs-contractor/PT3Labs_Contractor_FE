@@ -39,10 +39,7 @@ function App(props) {
           <Route path="/contractors/:id" component={Contractor} />
           <Route path="/login" component={Login} />
           <Route path="/redirect/:token" component={Redirect} />
-          <Route
-            path="/register"
-            render={props => <Register {...props} oauth={true} />}
-          />
+          <Route path="/register" component={Register} />
           <Route
             path="/calendar"
             render={props => <Calendar contractor={{}} />}

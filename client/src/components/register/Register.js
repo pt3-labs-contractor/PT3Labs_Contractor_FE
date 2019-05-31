@@ -18,14 +18,7 @@ function Register(props) {
     event.preventDefault();
     const bearer = 'Bearer ' + localStorage.getItem('jwt');
     const headers = { authorization: bearer };
-    const {
-      email,
-      phoneNumber,
-      streetAddress,
-      city,
-      stateAbbr,
-      zipCode,
-    } = values;
+    // var { email, phoneNumber } = values;
 
     if (!oauth) {
       axios
@@ -42,18 +35,11 @@ function Register(props) {
           console.log(err);
         });
     } else {
-      const userUpdate = Object.entries({
-        email,
-        phoneNumber,
-      });
+      const userUpdate = {};
+      userUpdate.email = values.email;
+      userUpdate.phoneNumber = values.phoneNumber;
 
-      const contractorUpdate = Object.entries({
-        phoneNumber,
-        streetAddress,
-        city,
-        stateAbbr,
-        zipCode,
-      });
+      const { email, ...contractorUpdate } = values;
 
       if (contractor) {
         axios
@@ -80,15 +66,13 @@ function Register(props) {
           .put(
             'https://fierce-plains-47590.herokuapp.com/api/users',
             userUpdate,
-            {
-              headers,
-            }
+            { headers }
           )
           .then(res => {
             props.history.push('/');
           })
           .catch(err => {
-            console.log(err);
+            console.log(err.response.data.message);
           });
       }
     }
@@ -122,6 +106,11 @@ function Register(props) {
         />
         {contractor && (
           <>
+            <input
+              name="contractorName"
+              placeholder="Name"
+              onChange={handleChange}
+            />
             <input
               name="streetAddress"
               placeholder="Street Address"
