@@ -1,0 +1,13 @@
+.cal {
+  height: 700px;
+  width: 100%;
+}
+
+.calComp {
+  height: 700px;
+  width: 100%;
+}
+
+.hidden {
+  display: none;
+}
