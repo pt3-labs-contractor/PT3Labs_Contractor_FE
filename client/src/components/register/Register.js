@@ -1,72 +1,149 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import axios from 'axios';
 
 function Register(props) {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [email, setEmail] = useState('');
-    const [phonenumber, setPhoneNumber] = useState('')
-    
-    function handleSubmit(e) {
-        e.preventDefault();
-        axios.post()
-            .then(res => {
-                props.history.push('/')
-            })
-            .catch(err => {
-                console.log(err)
-            })
+  const [contractor, setContractor] = useState(false);
+  const [values, setValues] = useState({});
+  const { oauth } = props;
+
+  function handleChange(event) {
+    event.persist();
+    setValues(values => ({
+      ...values,
+      [event.target.name]: event.target.value,
+    }));
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    const bearer = 'Bearer ' + localStorage.getItem('jwt');
+    const headers = { authorization: bearer };
+    const {
+      email,
+      phoneNumber,
+      streetAddress,
+      city,
+      stateAbbr,
+      zipCode,
+    } = values;
+
+    if (!oauth) {
+      axios
+        .post(
+          'https://fierce-plains-47590.herokuapp.com/api/auth/register',
+          values,
+          { headers }
+        )
+        .then(res => {
+          localStorage.setItem('jwt', res.data.token);
+          props.history.push('/');
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    } else {
+      const userUpdate = Object.entries({
+        email,
+        phoneNumber,
+      });
+
+      const contractorUpdate = Object.entries({
+        phoneNumber,
+        streetAddress,
+        city,
+        stateAbbr,
+        zipCode,
+      });
+
+      if (contractor) {
+        axios
+          .all([
+            axios.post(
+              'https://fierce-plains-47590.herokuapp.com/api/contractors',
+              contractorUpdate,
+              { headers }
+            ),
+            axios.put(
+              'https://fierce-plains-47590.herokuapp.com/api/users',
+              userUpdate,
+              { headers }
+            ),
+          ])
+          .then(res => {
+            props.history.push('/');
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      } else {
+        axios
+          .put(
+            'https://fierce-plains-47590.herokuapp.com/api/users',
+            userUpdate,
+            {
+              headers,
+            }
+          )
+          .then(res => {
+            props.history.push('/');
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      }
     }
+  }
 
-
-    return (
-        <>
-            <h3>User Register</h3>
-            <form onSubmit={handleSubmit}>
-                <h4>Username</h4>
-                <input
-                    type='text'
-                    name='username'
-                    placeholder = 'Username'
-                    onChange={(e) => setUsername(e.target.value)}
-                    value={username}
-                >
-                </input>
-
-                <h4>Email</h4>
-                <input
-                    type='email'
-                    name='email'
-                    placeholder = 'Email'
-                    onChange={(e) => setEmail(e.target.value)}
-                    value={email}
-                >
-                </input>
-
-                <h4>Password</h4>
-                <input
-                    type='password'
-                    name='password'
-                    placeholder = 'Username'
-                    onChange={(e) => setPassword(e.target.value)}
-                    value={password}
-                >
-                </input>
-                <h4>Phone Number</h4>
-                <input
-                    type='tel'
-                    name='phonenumber'
-                    placeholder = '(123)-456-7890'
-                    pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
-                    onChange={(e) => setPhoneNumber(e.target.value)}
-                    value={phonenumber}
-                >
-                </input>
-                <button type='submit'>Submit</button>
-            </form>
-        </>
-    )
+  return (
+    <div>
+      <button onClick={() => setContractor(true)}>Contractor</button>
+      <button onClick={() => setContractor(false)}>User </button>
+      <form onSubmit={handleSubmit}>
+        {!oauth && (
+          <>
+            <input
+              name="username"
+              placeholder="Username"
+              onChange={handleChange}
+            />
+            <input
+              name="password"
+              type="password"
+              placeholder="Password"
+              onChange={handleChange}
+            />
+          </>
+        )}
+        <input name="email" placeholder="E-mail" onChange={handleChange} />
+        <input
+          name="phoneNumber"
+          placeholder="Phone#"
+          onChange={handleChange}
+        />
+        {contractor && (
+          <>
+            <input
+              name="streetAddress"
+              placeholder="Street Address"
+              onChange={handleChange}
+            />
+            <input name="city" placeholder="City" onChange={handleChange} />
+            <input
+              name="stateAbbr"
+              placeholder="State"
+              onChange={handleChange}
+            />
+            <input
+              name="zipCode"
+              placeholder="Zip Code"
+              onChange={handleChange}
+            />
+          </>
+        )}
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  );
 }
 
 export default Register;
-
