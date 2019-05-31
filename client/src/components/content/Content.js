@@ -6,9 +6,11 @@ export default function Content() {
   return (
     <div>
       <section className="built-on">
-        <div className="container">
+        <div className="container .dark-overlay">
           <div className="section-heading">
-            <h1>Built On</h1>
+            <h1>
+              <span className="tech">Technology</span> Stack
+            </h1>
           </div>
           <div className="stacks">
             <div className="stack">
@@ -18,6 +20,7 @@ export default function Content() {
               <h1>Front-End</h1>
               <ul className="dev-tools">
                 <li>React</li>
+                <li>React-hooks</li>
                 <li>Redux</li>
                 <li>HTML5</li>
                 <li>CSS</li>
@@ -34,6 +37,7 @@ export default function Content() {
                 <li>Express</li>
                 <li>Postgres</li>
                 <li>SQL</li>
+                <li>GraphQL</li>
               </ul>
             </div>
 
@@ -47,6 +51,9 @@ export default function Content() {
                 <li>Heroku</li>
                 <li>Git</li>
                 <li>Github</li>
+                <li>Stripe</li>
+                <li>O-auth</li>
+                <li>Twilio</li>
               </ul>
             </div>
           </div>

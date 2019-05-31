@@ -1,6 +1,23 @@
+.team-page {
+    background-color: var(--dark-color);
+    border-top: 1px solid black;
+    
+}
+
+.meet-the-team {
+    height: auto;
+    width: 100%;
+    position: absolute;
+    background-color: rgba(0,0,0,0.1);
+}
+
+.team {
+    color:var(--primary-color)
+}
 .heading {
-    text-transform: uppercase;
-    margin-bottom: 5rem;
+    font-size: 3rem;
+    margin-top: 8rem;
+    margin-bottom: 3rem;
     text-align: center;
     position: relative;
 }
@@ -8,10 +25,10 @@
 .heading::after {
     content: "";
     width: 10rem;
-    height: 0.5rem;
-    background-color: #8C20F8;
+    height: 0.2rem;
+    background-color: black;
     position: absolute;
-    bottom: -2rem;
+    bottom: -1rem;
     left: 50%;
     transform: translateX(-50%);
     border-radius: 2rem;
@@ -25,6 +42,8 @@
     flex-wrap: wrap;
     justify-content: space-evenly;
     padding: 0 .2rem;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .card {
