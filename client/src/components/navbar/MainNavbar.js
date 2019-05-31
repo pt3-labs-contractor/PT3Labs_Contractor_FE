@@ -1,34 +1,30 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-
 import './MainNavbar.css';
 
-export default function MainNavbar() {
+function Navbar() {
   return (
     <div>
-      <header className="main-navbar">
-        <div className="main-navbar-logo">
-          <NavLink to="/">
-            <h1>Digital Contractor</h1>
-          </NavLink>
-        </div>
-        <nav className="main-navbar-items">
-          <ul>
-            <li>
-              <NavLink to="/login">Log in</NavLink>
-            </li>
-            <li>
-              <NavLink to="/logout">Sign up</NavLink>
-            </li>
-            <li>
-              <NavLink to="/contractors">Contractors</NavLink>
-            </li>
-            <li>
-              <NavLink to="/user">User</NavLink>
-            </li>
-          </ul>
-        </nav>
-      </header>
+      <nav className="navbar bg-dark">
+        <NavLink to="/">
+          <h1>
+            <i className="far fa-calendar-alt"> Digital Calendar</i>
+          </h1>
+        </NavLink>
+        <ul>
+          <li>
+            <NavLink to="/team">Developers</NavLink>
+          </li>
+          <li>
+            <NavLink to="/register">Register</NavLink>
+          </li>
+          <li>
+            <NavLink to="/login">Login</NavLink>
+          </li>
+        </ul>
+      </nav>
     </div>
   );
 }
+
+export default Navbar;

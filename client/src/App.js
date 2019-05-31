@@ -5,18 +5,15 @@ import { connect } from 'react-redux';
 import './App.css';
 
 import { fetchAccts } from './actions/index';
-import Homepage from './components/homepage/Homepage'
+import Homepage from './components/homepage/Homepage';
 import Users from './components/users/Users';
 import ContractorList from './components/contractors/ContractorList';
 import Login from './components/login/Login';
 import Register from './components/register/Register';
-import MainNavbar from './components/navbar/MainNavbar'
-import Preloader from './components/preloader/Preloader'
-import User from './components/user/User'
-import Team from './components/team/Team'
+import MainNavbar from './components/navbar/MainNavbar';
+import User from './components/user/User';
 
 function App(props) {
-
   useEffect(() => {
     props.fetchAccts();
     // eslint-disable-next-line
@@ -26,9 +23,8 @@ function App(props) {
     <div className="App">
       <MainNavbar />
       <main className="main-content">
-      <Preloader />
         <Switch>
-          <Route exact path="/" component={Homepage} /> 
+          <Route exact path="/" component={Homepage} />
           <Route path="/users" component={Users} />
           <Route path="/contractors" component={ContractorList} />
           <Route path="/login" component={Login} />
@@ -40,4 +36,9 @@ function App(props) {
   );
 }
 
-export default withRouter(connect(null, { fetchAccts })(App));
+export default withRouter(
+  connect(
+    null,
+    { fetchAccts }
+  )(App)
+);

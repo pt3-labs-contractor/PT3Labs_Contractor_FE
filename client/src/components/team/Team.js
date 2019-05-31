@@ -4,9 +4,11 @@ import './Team.css';
 
 export default function Team() {
   return (
-    <div>
-      <container className="container">
-        <h1 className="heading">Meet The Team</h1>
+    <div className="team-page">
+      <section className="meet-the-team">
+        <h1 className="heading">
+          Developer<span className="team"> Team</span>
+        </h1>
         <div className="card-wrapper">
           <div className="card">
             <img
@@ -164,7 +166,7 @@ export default function Team() {
             </ul>
           </div>
         </div>
-      </container>
+      </section>
     </div>
   );
 }
