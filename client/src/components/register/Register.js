@@ -18,7 +18,6 @@ function Register(props) {
     event.preventDefault();
     const bearer = 'Bearer ' + localStorage.getItem('jwt');
     const headers = { authorization: bearer };
-    // var { email, phoneNumber } = values;
 
     if (!oauth) {
       axios
