@@ -7,7 +7,7 @@ function Login(props) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    const bearer = 'Bearer ' + localStorage.getItem('jwt');
+    const bearer = `Bearer ${localStorage.getItem('jwt')}`;
     const headers = { authorization: bearer };
     const credentials = { username, password };
 
@@ -26,6 +26,9 @@ function Login(props) {
         console.log(err);
       });
   }
+  // state = {
+  //   username: ''
+  // }
 
   return (
     <>

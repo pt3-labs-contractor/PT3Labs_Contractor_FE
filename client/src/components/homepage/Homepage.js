@@ -1,12 +1,16 @@
-import React from 'react'
+import React from 'react';
+
+import Team from '../team/Team';
+import Content from '../content/Content';
+import './Homepage.css';
+import LandingPage from '../landingpage/LandingPage';
 
 export default function Homepage() {
   return (
-    <div>    
-      <section>
-        <h1>Easy, Stress-Free Scheduling</h1>
-        <p>Find and schedule the perfect contractor that fits your time as easy as one click.</p>     
-      </section>
+    <div>
+      <LandingPage />
+      <Content />
+      <Team />
     </div>
-  )
+  );
 }
