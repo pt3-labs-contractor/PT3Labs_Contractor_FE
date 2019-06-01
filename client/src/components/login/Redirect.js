@@ -1,17 +1,13 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from 'react';
 
 function Redirect(props) {
   useEffect(() => {
     const { token } = props.match.params;
     localStorage.setItem('jwt', token);
-    props.history.push('/');
-  }, [props.history, props.match.params]) 
+    props.history.push('/register/oauth');
+  }, [props.history, props.match.params]);
 
-  return (
-    <div>
-      
-    </div>
-  )
+  return <div />;
 }
 
-export default Redirect
+export default Redirect;

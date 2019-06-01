@@ -10,7 +10,6 @@ export const SET_DAY = 'SET_DAY';
 export const fetchAccts = () => dispatch => {
   dispatch({ type: LOADING });
   const bearer = 'Bearer ' + localStorage.getItem('jwt');
-  console.log(bearer)
   const headers = { authorization: bearer }
 
   axios.all([
