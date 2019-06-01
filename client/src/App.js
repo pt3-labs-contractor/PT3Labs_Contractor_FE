@@ -8,28 +8,45 @@ import { fetchAccts } from './actions/index';
 import Homepage from './components/homepage/Homepage';
 import Users from './components/users/Users';
 import ContractorList from './components/contractors/ContractorList';
+import Contractor from './components/contractors/Contractor';
 import Login from './components/login/Login';
+import Redirect from './components/login/Redirect';
 import Register from './components/register/Register';
+import Calendar from './components/calendar/Calendar';
 import MainNavbar from './components/navbar/MainNavbar';
-import User from './components/user/User';
+import NavBarUser from './components/navbar/NavBarUser';
+import NavBarContractor from './components/navbar/NavBarContractor';
+import Settings from './components/settings/Settings';
+import ContractorFeedback from './components/feedback/ContractorFeedback';
+import UserFeedback from './components/feedback/UserFeedback';
 
 function App(props) {
   useEffect(() => {
     props.fetchAccts();
     // eslint-disable-next-line
-  }, [])
+  }, []);
 
   return (
     <div className="App">
       <MainNavbar />
       <main className="main-content">
+        <NavBarUser />
+        <NavBarContractor />
         <Switch>
           <Route exact path="/" component={Homepage} />
           <Route path="/users" component={Users} />
-          <Route path="/contractors" component={ContractorList} />
+          <Route exact path="/contractors" component={ContractorList} />
+          <Route path="/contractors/:id" component={Contractor} />
           <Route path="/login" component={Login} />
+          <Route path="/redirect/:token" component={Redirect} />
           <Route path="/register" component={Register} />
-          <Route path="/user" component={User} />
+          <Route
+            path="/calendar"
+            render={props => <Calendar contractor={{}} />}
+          />
+          <Route path="/settings" component={Settings} />
+          <Route path="/contractorFeedback" component={ContractorFeedback} />
+          <Route path="/userFeedback" component={UserFeedback} />
         </Switch>
       </main>
     </div>

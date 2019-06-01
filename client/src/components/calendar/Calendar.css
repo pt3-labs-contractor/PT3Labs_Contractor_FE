@@ -1,0 +1,27 @@
+.calendar-nav {
+  display: flex;
+  justify-content: center;
+}
+
+.day-container {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.cell-container {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-auto-rows: 100px;
+}
+
+.cell {
+  border: 1px solid #000;
+}
+
+.cell.selected {
+  background-color: #0000dd;
+}
+
+.cell.disable {
+  opacity: 0.25;
+}

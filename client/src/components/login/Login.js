@@ -20,6 +20,7 @@ function Login(props) {
   //   username: ''
   // }
 
+
   return (
     <>
       <form onSubmit={handleSubmit}>
@@ -31,14 +32,15 @@ function Login(props) {
           value={username}
         />
         <input
-          type="text"
-          name="password"
-          placeholder="Password"
-          onChange={e => setPassword(e.target.value)}
+          type='password'
+          name='password'
+          placeholder='Password'
+          onChange={(e) => setPassword(e.target.value)}
           value={password}
         />
         <button type="submit">Submit</button>
       </form>
+      <a href='https://fierce-plains-47590.herokuapp.com/api/auth/google'>Google Oauth</a>
     </>
   );
 }
