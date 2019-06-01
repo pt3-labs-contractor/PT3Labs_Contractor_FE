@@ -14,7 +14,8 @@ function Login(props) {
       .catch(err => {
         console.log(err)
       })
-  } 
+  }
+
 
   return (
     <>
@@ -37,6 +38,7 @@ function Login(props) {
         </input>
         <button type='submit'>Submit</button>
       </form>
+      <a href='https://fierce-plains-47590.herokuapp.com/api/auth/google'>Google Oauth</a>
     </>
   )
 }

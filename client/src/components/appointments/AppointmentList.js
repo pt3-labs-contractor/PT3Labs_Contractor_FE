@@ -9,13 +9,14 @@ function AppointmentList(props) {
   useEffect(() => {
     const date = schedule.filter(item => dateFns.isSameDay(item, selectedDay));
     setAppointment(date);
-  }, [schedule, selectedDay])
+    // eslint-disable-next-line
+  }, [selectedDay])
 
   return (
     <div>
       {appointment.map(item => (
         <>
-        {dateFns.format(item, "MMM Do HH:mm ")}
+        {dateFns.format(item, "HH:mm ")}
         </>
       ))}
     </div>
@@ -24,8 +25,7 @@ function AppointmentList(props) {
 
 const mapStateToProps = state => {
   return {
-    schedule: state.schedule,
-    selectedDay: state.thisDay
+    schedule: state.schedule
   }
 }
 
