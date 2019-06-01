@@ -6,16 +6,20 @@ import { connect } from 'react-redux';
 
 
 
-function ContractorList(props) {
+function ContractorSetting(props) {
+  // console.log(props);
   return (
     <div>
         <h2>Contractor Setting Page</h2>{"\n"}
         <form>
           Contractor Email<input
             value="contractor Email"
+            // value={props.contractor.}
+            
           />
           Contractor Phone<input
-            value="contractor phonenumber"
+            // value="contractor phonenumber"
+            value={props.contractor.phone_number}
           />
           Old Password<input/>
           New Passowrd<input/>
@@ -37,12 +41,12 @@ function ContractorList(props) {
 }
 
 const mapStateToProps = state => {
-    console.log(state)
+    // console.log(state)
   return {
-    // contractors: state.accounts.contractors,
+    contractor: state.thisContractor,
     loading: state.loading,
     error: state.error
   }
 }
 
-export default connect(mapStateToProps)(ContractorList);
+export default connect(mapStateToProps)(ContractorSetting);
