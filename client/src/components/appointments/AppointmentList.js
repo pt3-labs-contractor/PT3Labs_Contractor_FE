@@ -1,32 +1,32 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import dateFns from 'date-fns';
 
 function AppointmentList(props) {
   const [appointment, setAppointment] = useState([]);
-  const {selectedDay, schedule} = props;
+  const { selectedDay, schedule } = props;
 
   useEffect(() => {
-    const date = schedule.filter(item => dateFns.isSameDay(item, selectedDay));
+    const date = schedule.filter(item =>
+      dateFns.isSameDay(item.startTime, selectedDay)
+    );
     setAppointment(date);
     // eslint-disable-next-line
-  }, [selectedDay])
+  }, [selectedDay]);
 
   return (
     <div>
       {appointment.map(item => (
-        <>
-        {dateFns.format(item, "HH:mm ")}
-        </>
+        <>{dateFns.format(item.startTime, 'HH:mm ')}</>
       ))}
     </div>
-  )
+  );
 }
 
 const mapStateToProps = state => {
   return {
-    schedule: state.schedule
-  }
-}
+    schedule: state.schedule,
+  };
+};
 
 export default connect(mapStateToProps)(AppointmentList);
