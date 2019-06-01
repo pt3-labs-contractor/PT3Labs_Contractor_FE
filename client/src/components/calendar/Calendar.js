@@ -4,7 +4,7 @@ import dateFns from 'date-fns';
 
 import { setDay, setMonth } from '../../actions/index';
 
-import AppointmentList from '../appointments/AppointmentList';
+import AvailabilityList from '../appointments/AvailabilityList';
 
 import './Calendar.css';
 
@@ -14,12 +14,11 @@ function Calendar(props) {
   function CalendarNav() {
     return (
       <div class="calendar-nav">
-        {/* { !dateFns.isThisMonth(selectedMonth) 
-          ? <div onClick={() => setMonth(dateFns.subMonths(selectedMonth, 1))}>&lt;</div> 
-          : null } */}
-        <div onClick={() => setMonth(dateFns.subMonths(selectedMonth, 1))}>
-          &lt;
-        </div>
+        {!dateFns.isThisMonth(selectedMonth) ? (
+          <div onClick={() => setMonth(dateFns.subMonths(selectedMonth, 1))}>
+            &lt;
+          </div>
+        ) : null}
         <div>{dateFns.format(selectedMonth, 'MMMM YYYY')}</div>
         <div onClick={() => setMonth(dateFns.addMonths(selectedMonth, 1))}>
           &gt;
@@ -63,7 +62,7 @@ function Calendar(props) {
         >
           {dateFns.format(day, 'D')}
           {props.contractor.name ? (
-            <AppointmentList selectedDay={temp} />
+            <AvailabilityList selectedDay={temp} />
           ) : null}
         </div>
       );

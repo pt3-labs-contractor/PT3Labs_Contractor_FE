@@ -12,8 +12,6 @@ export const FAIL_SCHEDULE = 'FAIL_SCHEDULE';
 export const fetchAccts = () => dispatch => {
   dispatch({ type: LOADING });
   const headers = setHeaders();
-  // const bearer = 'Bearer ' + localStorage.getItem('jwt');
-  // const headers = { authorization: bearer };
 
   axios
     .all([

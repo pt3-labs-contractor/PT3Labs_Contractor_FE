@@ -16,15 +16,15 @@ function ContractorList(props) {
         </Link>
       ))}
     </div>
-  )
+  );
 }
 
 const mapStateToProps = state => {
   return {
     contractors: state.accounts.contractors,
     loading: state.loading,
-    error: state.error
-  }
-}
+    error: state.error,
+  };
+};
 
 export default connect(mapStateToProps)(ContractorList);

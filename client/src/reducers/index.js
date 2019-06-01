@@ -53,9 +53,17 @@ export default (state = initialState, action) => {
     case SET_MONTH:
       return { ...state, thisMonth: action.payload };
     case SET_SCHEDULE:
-      return { ...state, schedule: action.payload };
+      return {
+        ...state,
+        schedule: action.payload,
+        errorSchedule: null,
+      };
     case FAIL_SCHEDULE:
-      return { ...state, schedule: [], errorSchedule: action.error };
+      return {
+        ...state,
+        schedule: [],
+        errorSchedule: action.error,
+      };
     default:
       return state;
   }
