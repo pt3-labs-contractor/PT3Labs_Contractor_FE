@@ -36,7 +36,6 @@ export const CONTRACTOR_APP_FAIL = 'CONTRACTOR_APP_FAIL'
 export const fetchAccts = () => dispatch => {
   dispatch({ type: LOADING_USERS });
   const bearer = 'Bearer ' + localStorage.getItem('jwt');
-  console.log(bearer)
   const headers = { authorization: bearer }
 
   axios.all([

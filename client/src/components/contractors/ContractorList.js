@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
+import ContractorCard from './ContractorCard';
+
 function ContractorList(props) {
   return (
     <div>
@@ -9,7 +11,9 @@ function ContractorList(props) {
       {props.loading ? <p>Loading...</p> : null}
       {props.error ? <p>{props.error}</p> : null}
       {props.contractors.map(contractor => (
-        <Link to={`/contractors/${contractor.id}`} key={contractor.id}>{contractor.name}</Link>
+        <Link to={`/contractors/${contractor.id}`} key={contractor.id}>
+          <ContractorCard contractor={contractor} />
+        </Link>
       ))}
     </div>
   )
