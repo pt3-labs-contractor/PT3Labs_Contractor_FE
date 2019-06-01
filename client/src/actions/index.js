@@ -23,6 +23,13 @@ export const USER_WRITTEN_FEEDBACK_FAIL = 'USER_WRITTEN_FEEDBACK_FAIL'
 export const CONTRACTOR_FEEDBACK_LOADING = 'CONTRACTOR_FEEDBACK_LOADING'
 export const FETCH_CONTRACTOR_FEEDBACK_SUCCESS = 'FETCH_CONTRACTOR_FEEDBACK_SUCCESS'
 export const CONTRACTOR_FEEDBACK_FAIL = 'CONTRACTOR_FEEDBACK_FAIL'
+
+//exports for retrieving current contractor user appointments
+export const CONTRACTOR_APP_LOADING  = 'CONTRACTOR_APP_LOADING'
+export const RET_CONTRACTOR_APP_SUCC = 'RET_CONTRACTOR_APP_SUCC'
+export const CONTRACTOR_APP_FAIL = 'CONTRACTOR_APP_FAIL'
+
+
 // ---------------------------------------------------------------
 
 //axios get all accounts
@@ -91,7 +98,16 @@ export const postFeedback = event => dispatch => {
   .catch(err => dispatch({type: POST_FEEDBACK_FAIL, payload: err}))
 }
 
+//axios get appointments when current user is contractor
+export const seeMyAppointments = (id) = dispatch => {
+  dispatch({ type: CONTRACTOR_APP_LOADING })
 
+  axios.get('')
+  .then( res => {
+    dispatch({ type: RET_CONTRACTOR_APP_SUCC, payload: res.data })
+  })
+  .catch(err => dispatch({ type: CONTRACTOR_APP_FAIL, payload:err }))
+}
 
 export const setDay = day => dispatch => {
   dispatch({ type: SET_DAY, payload: day })
