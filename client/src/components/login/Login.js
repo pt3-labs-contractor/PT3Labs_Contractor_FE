@@ -7,8 +7,18 @@ function Login(props) {
 
   function handleSubmit(e) {
     e.preventDefault();
+    const bearer = `Bearer ${localStorage.getItem('jwt')}`;
+    const headers = { authorization: bearer };
+    const credentials = { username, password };
+
     axios
-      .post()
+      .post(
+        'https://fierce-plains-47590.herokuapp.com/api/auth/login',
+        credentials,
+        {
+          headers,
+        }
+      )
       .then(res => {
         props.history.push('/contractors');
       })
@@ -19,7 +29,6 @@ function Login(props) {
   // state = {
   //   username: ''
   // }
-
 
   return (
     <>
@@ -32,15 +41,17 @@ function Login(props) {
           value={username}
         />
         <input
-          type='password'
-          name='password'
-          placeholder='Password'
-          onChange={(e) => setPassword(e.target.value)}
+          type="password"
+          name="password"
+          placeholder="Password"
+          onChange={e => setPassword(e.target.value)}
           value={password}
         />
         <button type="submit">Submit</button>
       </form>
-      <a href='https://fierce-plains-47590.herokuapp.com/api/auth/google'>Google Oauth</a>
+      <a href="https://fierce-plains-47590.herokuapp.com/api/auth/google">
+        Google Oauth
+      </a>
     </>
   );
 }

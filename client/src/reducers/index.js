@@ -6,7 +6,11 @@ import {
   FETCHING_USERS_FAILURE, 
   
   //fetching calander
-  SET_DAY, SET_MONTH, 
+  SET_DAY, SET_MONTH,
+  
+  //fetching schedule
+  SET_SCHEDULE,
+  FAIL_SCHEDULE,
 
   //fetching single contractor
   SINGLE_CONTRACTOR_LOADING, 
@@ -45,12 +49,8 @@ const initialState = {
   thisContractor: {}, 
   thisMonth: new Date(),
   thisDay: new Date(),
-  schedule: [
-    new Date(2019, 4, 5, 4, 0),
-    new Date(2019, 4, 5, 6, 0),
-    new Date(2019, 4, 19, 12, 0),
-    new Date(2019, 4, 20, 3, 0)
-  ]
+  schedule: [],
+  errorSchedule: null,
 };
 
 export default (state = initialState, action) => {
@@ -66,9 +66,21 @@ export default (state = initialState, action) => {
 
     //calander
     case SET_DAY:
-      return { ...state, thisDay: action.payload }
+      return { ...state, thisDay: action.payload };
     case SET_MONTH:
-      return { ...state, thisMonth: action.payload }
+      return { ...state, thisMonth: action.payload };
+    case SET_SCHEDULE:
+      return {
+        ...state,
+        schedule: action.payload,
+        errorSchedule: null,
+      };
+    case FAIL_SCHEDULE:
+      return {
+        ...state,
+        schedule: [],
+        errorSchedule: action.error,
+      };
           
     //fetching single contractor
     case SINGLE_CONTRACTOR_LOADING: 
@@ -105,4 +117,4 @@ export default (state = initialState, action) => {
     default:
       return state;
   }
-}
+};

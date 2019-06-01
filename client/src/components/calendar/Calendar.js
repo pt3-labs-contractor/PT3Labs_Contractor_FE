@@ -1,26 +1,30 @@
-import React from 'react'
+import React from 'react';
 import { connect } from 'react-redux';
 import dateFns from 'date-fns';
 
 import { setDay, setMonth } from '../../actions/index';
 
-import AppointmentList from '../appointments/AppointmentList';
+import AvailabilityList from '../appointments/AvailabilityList';
 
 import './Calendar.css';
 
 function Calendar(props) {
-  const { selectedDay, selectedMonth, setMonth } = props
+  const { selectedDay, selectedMonth, setMonth } = props;
 
   function CalendarNav() {
     return (
       <div class="calendar-nav">
-        { !dateFns.isThisMonth(selectedMonth) 
-          ? <div onClick={() => setMonth(dateFns.subMonths(selectedMonth, 1))}>&lt;</div> 
-          : null }
-        <div>{dateFns.format(selectedMonth, "MMMM YYYY")}</div>
-        <div onClick={() => setMonth(dateFns.addMonths(selectedMonth, 1))}>&gt;</div>
+        {!dateFns.isThisMonth(selectedMonth) ? (
+          <div onClick={() => setMonth(dateFns.subMonths(selectedMonth, 1))}>
+            &lt;
+          </div>
+        ) : null}
+        <div>{dateFns.format(selectedMonth, 'MMMM YYYY')}</div>
+        <div onClick={() => setMonth(dateFns.addMonths(selectedMonth, 1))}>
+          &gt;
+        </div>
       </div>
-    )
+    );
   }
 
   function DaysOfWeek() {
@@ -28,15 +32,11 @@ function Calendar(props) {
 
     let start = dateFns.startOfWeek(selectedMonth);
 
-    for(let i = 0; i < 7; i++) {
-      days.push(
-        <div>
-          {dateFns.format(dateFns.addDays(start, i), 'dddd')}
-        </div>
-      )
+    for (let i = 0; i < 7; i++) {
+      days.push(<div>{dateFns.format(dateFns.addDays(start, i), 'dddd')}</div>);
     }
-    return <div class="day-container">{days}</div>
-  };
+    return <div class="day-container">{days}</div>;
+  }
 
   function DaysOfMonth() {
     const startMonth = dateFns.startOfMonth(selectedMonth);
@@ -47,52 +47,58 @@ function Calendar(props) {
     let day = startCalendar;
     let days = [];
 
-    while(day <= endCalendar) {
-      const temp = day
+    while (day <= endCalendar) {
+      const temp = day;
       days.push(
-        <div 
+        <div
           class={`cell ${
-            dateFns.isSameDay(temp, selectedDay) 
-              ? " selected" 
-              : !dateFns.isSameMonth(temp, selectedMonth) 
-                ? "disable" : ""}`}
+            dateFns.isSameDay(temp, selectedDay)
+              ? ' selected'
+              : !dateFns.isSameMonth(temp, selectedMonth)
+              ? 'disable'
+              : ''
+          }`}
           onClick={() => handleSelect(temp)}
         >
           {dateFns.format(day, 'D')}
-          {props.contractor.name ? <AppointmentList selectedDay={temp} /> : null}
+          {props.contractor.name ? (
+            <AvailabilityList selectedDay={temp} />
+          ) : null}
         </div>
-      )
+      );
       day = dateFns.addDays(day, 1);
     }
 
-    return <div class="cell-container">{days}</div>
+    return <div class="cell-container">{days}</div>;
   }
 
   function handleSelect(day) {
-    if(dateFns.isSameMonth(day, selectedMonth)) {
+    if (dateFns.isSameMonth(day, selectedMonth)) {
       props.setDay(day);
-    } else if(!dateFns.isBefore(day, dateFns.startOfMonth(new Date()))) {
-      props.setMonth(day)
+    } else if (!dateFns.isBefore(day, dateFns.startOfMonth(new Date()))) {
+      props.setMonth(day);
       props.setDay(day);
     }
   }
 
   return (
     <div>
-      <CalendarNav/>
-      <DaysOfWeek/>
-      <DaysOfMonth/>
+      <CalendarNav />
+      <DaysOfWeek />
+      <DaysOfMonth />
     </div>
-  )
+  );
 }
 
 const mapStateToProps = state => {
   return {
     selectedDay: state.thisDay,
-    selectedMonth: state.thisMonth
+    selectedMonth: state.thisMonth,
     // contractor: state.thisContractor
-  }
-}
+  };
+};
 
-
-export default connect(mapStateToProps, { setDay, setMonth })(Calendar);
+export default connect(
+  mapStateToProps,
+  { setDay, setMonth }
+)(Calendar);
