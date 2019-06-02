@@ -13,7 +13,7 @@ function Calendar(props) {
 
   function CalendarNav() {
     return (
-      <div class="calendar-nav">
+      <div className="calendar-nav">
         {!dateFns.isThisMonth(selectedMonth) ? (
           <div onClick={() => setMonth(dateFns.subMonths(selectedMonth, 1))}>
             &lt;
@@ -28,14 +28,16 @@ function Calendar(props) {
   }
 
   function DaysOfWeek() {
-    let days = [];
+    const days = [];
 
-    let start = dateFns.startOfWeek(selectedMonth);
+    const start = dateFns.startOfWeek(selectedMonth);
 
     for (let i = 0; i < 7; i++) {
-      days.push(<div>{dateFns.format(dateFns.addDays(start, i), 'dddd')}</div>);
+      days.push(
+        <div key={i}>{dateFns.format(dateFns.addDays(start, i), 'dddd')}</div>
+      );
     }
-    return <div class="day-container">{days}</div>;
+    return <div className="day-container">{days}</div>;
   }
 
   function DaysOfMonth() {
@@ -45,13 +47,13 @@ function Calendar(props) {
     const endCalendar = dateFns.endOfWeek(endMonth);
 
     let day = startCalendar;
-    let days = [];
+    const days = [];
 
     while (day <= endCalendar) {
       const temp = day;
       days.push(
         <div
-          class={`cell ${
+          className={`cell ${
             dateFns.isSameDay(temp, selectedDay)
               ? ' selected'
               : !dateFns.isSameMonth(temp, selectedMonth)
@@ -69,7 +71,7 @@ function Calendar(props) {
       day = dateFns.addDays(day, 1);
     }
 
-    return <div class="cell-container">{days}</div>;
+    return <div className="cell-container">{days}</div>;
   }
 
   function handleSelect(day) {

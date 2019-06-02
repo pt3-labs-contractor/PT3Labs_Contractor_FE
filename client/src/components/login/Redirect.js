@@ -5,7 +5,7 @@ function Redirect(props) {
   useEffect(() => {
     // const { token } = props.match.params;
     const { token, registrationComplete } = queryString.parse(
-      window.location.search
+      props.location.search
     );
     localStorage.setItem('jwt', token);
     if (!registrationComplete) {
@@ -13,7 +13,7 @@ function Redirect(props) {
     } else {
       props.history.push('/');
     }
-  }, [props.history, props.match.params]);
+  }, [props]);
 
   return <div />;
 }
