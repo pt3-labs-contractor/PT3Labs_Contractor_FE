@@ -7,6 +7,7 @@ function Redirect(props) {
     const { token, registrationComplete } = queryString.parse(
       props.location.search
     );
+    console.log(token);
     localStorage.setItem('jwt', token);
     if (!registrationComplete) {
       props.history.push('/register');

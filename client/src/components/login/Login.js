@@ -20,6 +20,7 @@ function Login(props) {
         }
       )
       .then(res => {
+        localStorage.setItem('jwt', res.data.token);
         props.history.push('/contractors');
       })
       .catch(err => {
