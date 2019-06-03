@@ -1,11 +1,47 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import 'tui-calendar/dist/tui-calendar.css';
 import Calendar from '@toast-ui/react-calendar';
 import Cpop from './creationPop.jsx';
 import OnClickPop from './onClickPop.jsx';
 import './zCal.css';
+import { seeMyAppointments } from '../../actions/index';
 
 const MyComponent = props => {
+  const appointments = props.appointments || [];
+  let [schedules, setSchedules] = useState([
+    {
+      id: '1fa566e4-670d-42af-8f75-2422a228d664',
+      contractor_id: '6dcfb8c7-ff21-44fd-82b1-4a40e08a0f9e',
+      user_id: '0d17c960-f8d5-4605-93ec-244ceb9f99f7',
+      service_id: '32c6740d-010e-41e7-b4d3-58d10e3f377c',
+      appointment_datetime: '2019-05-28T11:30:06.819Z',
+      duration: {
+        hours: 1,
+        minutes: 19,
+      },
+      appointment_datetime_end: '2019-05-28T12:30:06.819Z',
+      created_at: '2019-06-03T09:49:41.321Z',
+      title: 'Testing',
+      start: new Date(),
+      end: new Date('2019-06-03T12:30:06.819Z'),
+      dueDateClass: '',
+      calendarId: '0',
+      category: 'time',
+      isReadOnly: false,
+    },
+  ]);
+
+  useEffect(() => {
+    props.seeMyAppointments('6dcfb8c7-ff21-44fd-82b1-4a40e08a0f9e');
+    const newSched = schedules.slice();
+    appointments.forEach(app => {
+      newSched.push(app);
+    });
+    setSchedules(newSched);
+  }, [appointments.length]);
+
+  console.log(schedules);
   const [readOnly, setReadOnly] = useState(false);
   let [start, setStart] = useState(new Date());
   let [end, setEnd] = useState(new Date());
@@ -14,23 +50,22 @@ const MyComponent = props => {
   // const [location, setLocation] = useState();
   const [hidden, setHidden] = useState(true);
   const [hiddenTwo, setHiddenTwo] = useState(true);
-  let [schedule, setSchedule] = useState({});
-  let [schedules, setSchedules] = useState([]);
-  let [delSchedules, setDelSchedules] = useState([]);
+  const [schedule, setSchedule] = useState({});
+  const [delSchedules, setDelSchedules] = useState([]);
   let [create, setCreate] = useState(true);
-  const today = new Date();
-  const getDate = (type, start, value, operator) => {
-    start = new Date(start);
-    type = type.charAt(0).toUpperCase() + type.slice(1);
-
-    if (operator === '+') {
-      start[`set${type}`](start[`get${type}`]() + value);
-    } else {
-      start[`set${type}`](start[`get${type}`]() - value);
-    }
-
-    return start;
-  };
+  // const today = new Date();
+  // const getDate = (type, start, value, operator) => {
+  //   start = new Date(start);
+  //   type = type.charAt(0).toUpperCase() + type.slice(1);
+  //
+  //   if (operator === '+') {
+  //     start[`set${type}`](start[`get${type}`]() + value);
+  //   } else {
+  //     start[`set${type}`](start[`get${type}`]() - value);
+  //   }
+  //
+  //   return start;
+  // };
 
   const calRef = React.createRef();
   const change = e => {
@@ -48,39 +83,42 @@ const MyComponent = props => {
       case e.target.id === 'week':
         cRef.changeView('week', true);
         break;
+      case e.target.id === 'month':
+        cRef.changeView('month', true);
+        break;
     }
   };
 
-  const getSchedules = () => {
-    console.log(schedules);
-    return schedules;
-  };
+  // const getSchedules = () => {
+  //   console.log(schedules);
+  //   return schedules;
+  // };
 
   const editSch = (e, sch) => {
-    const schedule = e.schedule;
+    const { schedule } = e;
     const startTime = e.start;
     const endTime = e.end;
-    const title = schedule.title;
-    const location = schedule.location;
-    const newSched = {
-      start: startTime,
-      end: endTime,
-      title: title,
-      location: location,
-    };
+    const { title } = schedule;
+    const { location } = schedule;
+    // const newSched = {
+    //   start: startTime,
+    //   end: endTime,
+    //   title: title,
+    //   location: location,
+    // };
     schedules = [...schedules, { ...schedule }];
     let selected = schedules.find(s => {
       return s.id === schedule.id;
     });
-    let dSched = schedules.filter(s => {
+    const dSched = schedules.filter(s => {
       return s.id !== schedule.id;
     });
     selected = {
       ...selected,
       start: startTime,
       end: endTime,
-      title: title,
-      location: location,
+      title,
+      location,
     };
     schedules = [...dSched, selected];
     setSchedules([...dSched, selected]);
@@ -100,10 +138,10 @@ const MyComponent = props => {
     return newId;
   };
 
-  const clear = () => {
-    const cRef = calRef.current.getInstance();
-    cRef.clear();
-  };
+  // const clear = () => {
+  //   const cRef = calRef.current.getInstance();
+  //   cRef.clear();
+  // };
 
   const createSch = e => {
     console.log(schedules);
@@ -111,22 +149,22 @@ const MyComponent = props => {
       setHidden(false);
       const startTime = e.start;
       const endTime = e.end;
-      const title = e.title;
-      const location = e.location;
+      const { title } = e;
+      const { location } = e;
       const schedule = {
         id: String(greatestId()),
         calendarId: '0',
-        title: title,
+        title,
         category: 'time',
         dueDateClass: '',
         start: e.start,
         end: e.end,
-        location: location,
+        location,
         isReadOnly: false,
       };
       start = new Date(e.start);
       end = new Date(e.end);
-      schedules.push(schedule);
+      schedules = [...schedules, schedule];
       setMount(false);
       setReadOnly(true);
       setSchedules(schedules);
@@ -156,10 +194,10 @@ const MyComponent = props => {
     } else {
       sched = schedules[schedules.length - 1];
     }
-    const start = sched.start;
-    const end = sched.end;
-    const title = sch.title;
-    const location = sch.location;
+    const { start } = sched;
+    const { end } = sched;
+    const { title } = sch;
+    const { location } = sch;
     schedules = schedules.map(s => {
       if (s.id === sched.id) {
         s.title = sch.title;
@@ -192,7 +230,7 @@ const MyComponent = props => {
   const schBox = e => {
     setHiddenTwo(false);
     setMount(false);
-    let schedule = e.schedule;
+    const { schedule } = e;
     console.log(e.schedule);
     schedule.start = new Date(schedule.start);
     schedule.end = new Date(schedule.end);
@@ -250,7 +288,7 @@ const MyComponent = props => {
             borderColor: '#00a9ff',
           },
         ]}
-        disableDblClick={true}
+        disableDblClick
         isReadOnly={readOnly}
         scheduleView
         taskView={false}
@@ -284,10 +322,10 @@ const MyComponent = props => {
         // ]}
         // useDetailPopup
         // useCreationPopup
-        week={{
-          hourStart: 7,
-          hourEnd: 18,
-        }}
+        // week={{
+        //   hourStart: 7,
+        //   hourEnd: 18,
+        // }}
       />
       <button id="next" onClick={change}>
         Next
@@ -301,8 +339,20 @@ const MyComponent = props => {
       <button id="week" onClick={change}>
         Week
       </button>
+      <button id="month" onClick={change}>
+        Month
+      </button>
     </div>
   );
 };
 
-export default MyComponent;
+const mstp = state => {
+  return {
+    appointments: state.accounts.appointments,
+  };
+};
+
+export default connect(
+  mstp,
+  { seeMyAppointments }
+)(MyComponent);
