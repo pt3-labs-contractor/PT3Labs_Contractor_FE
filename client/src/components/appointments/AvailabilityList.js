@@ -12,18 +12,19 @@ function AvailabilityList(props) {
     );
     setAvailability(date);
     // eslint-disable-next-line
-  }, [props.schedule]);
+  }, [selectedDay, schedule]);
 
   const RenderTimes = () => {
     const times = availability.map(item => {
       const start = dateFns.startOfHour(item.startTime);
       const end = dateFns.addHours(start, item.duration.hours);
       return (
-        <p key={item.id}>
-          {dateFns.format(start, 'HH:mm') +
-            ' - ' +
-            dateFns.format(end, 'HH:mm')}
-        </p>
+        <div key={item.id}>
+          {`${dateFns.format(start, 'HH:mm')} - ${dateFns.format(
+            end,
+            'HH:mm'
+          )}`}
+        </div>
       );
     });
     return <>{times}</>;

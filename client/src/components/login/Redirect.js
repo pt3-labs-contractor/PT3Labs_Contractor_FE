@@ -5,15 +5,16 @@ function Redirect(props) {
   useEffect(() => {
     // const { token } = props.match.params;
     const { token, registrationComplete } = queryString.parse(
-      window.location.search
+      props.location.search
     );
+    console.log(token);
     localStorage.setItem('jwt', token);
     if (!registrationComplete) {
       props.history.push('/register');
     } else {
       props.history.push('/');
     }
-  }, [props.history, props.match.params]);
+  }, [props]);
 
   return <div />;
 }

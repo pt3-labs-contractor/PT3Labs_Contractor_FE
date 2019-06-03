@@ -5,15 +5,28 @@ import Calendar from '../calendar/Calendar';
 import ContractorCard from './ContractorCard';
 import AvailabilityList from '../appointments/AvailabilityList';
 
-import { selectContractor, fetchSchedule } from '../../actions/index';
+import {
+  selectSingleContractorSetting,
+  fetchSchedule,
+} from '../../actions/index';
 
 function Contractor(props) {
   useEffect(() => {
     const { id } = props.match.params;
-    props.selectContractor(id, props.list);
-    props.fetchSchedule(id);
+    // props.selectSingleContractorSetting(id);
+    // props.fetchSchedule(id);
+    Promise.all([
+      props.selectSingleContractorSetting(id),
+      props.fetchSchedule(id),
+    ]);
     // eslint-disable-next-line
-  }, [props.selectedDay]);
+  }, []);
+
+  // useEffect(() => {
+  //   // const { id } = props.match.params;
+  //   // props.fetchSchedule(id);
+  //   // eslint-disable-next-line
+  // }, [props.selectedDay]);
 
   return (
     <div>
@@ -36,5 +49,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { selectContractor, fetchSchedule }
+  { selectSingleContractorSetting, fetchSchedule }
 )(Contractor);
