@@ -10,7 +10,7 @@ function Redirect(props) {
     console.log(token, registrationComplete);
     localStorage.setItem('jwt', token);
     if (!registrationComplete) {
-      props.history.push('/register');
+      props.history.push(`/register/oauth`);
     } else {
       props.history.push('/');
     }
