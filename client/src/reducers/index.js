@@ -30,6 +30,8 @@ import {
   // fetching current contractor appointments
   CONTRACTOR_APP_LOADING,
   RET_CONTRACTOR_APP_SUCC,
+  RET_EDIT_CONTRACTOR_APP_SUCC,
+  SENDING_PUT_REQ,
   CONTRACTOR_APP_FAIL,
 } from '../actions';
 
@@ -118,12 +120,33 @@ export default (state = initialState, action) => {
 
     // fetching current contractor appointments
     case CONTRACTOR_APP_LOADING:
-      return { ...state, loading: true, eror: null };
+      return { ...state, loading: true, error: null };
     case RET_CONTRACTOR_APP_SUCC:
       return {
         ...state,
         loading: false,
         accounts: { appointments: action.payload },
+      };
+    case SENDING_PUT_REQ:
+      return { ...state, loading: true, error: null };
+    case RET_EDIT_CONTRACTOR_APP_SUCC:
+      const toBeEdit = state.accounts.appointments.map(a => {
+        if (a.id === action.payload.id) {
+          const mod = action.payload;
+          const retMod = {
+            ...a,
+            appointment_datetime: mod.appointment_datetime,
+            appointment_datetime_end: mod.appointment_datetime_end,
+          };
+          a = retMod;
+          return a;
+        }
+        return a;
+      });
+      return {
+        ...state,
+        loading: false,
+        accounts: { appointments: toBeEdit },
       };
     case CONTRACTOR_APP_FAIL:
       return { ...state, loading: false, error: action.error };

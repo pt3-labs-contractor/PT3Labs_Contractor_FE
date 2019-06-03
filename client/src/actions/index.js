@@ -36,6 +36,8 @@ export const CONTRACTOR_FEEDBACK_FAIL = 'CONTRACTOR_FEEDBACK_FAIL';
 // exports for retrieving current contractor user appointments
 export const CONTRACTOR_APP_LOADING = 'CONTRACTOR_APP_LOADING';
 export const RET_CONTRACTOR_APP_SUCC = 'RET_CONTRACTOR_APP_SUCC';
+export const RET_EDIT_CONTRACTOR_APP_SUCC = 'RET_EDIT_CONTRACTOR_APP_SUCC';
+export const SENDING_PUT_REQ = 'SENDING_PUT_REQ';
 export const CONTRACTOR_APP_FAIL = 'CONTRACTOR_APP_FAIL';
 
 // ---------------------------------------------------------------
@@ -173,6 +175,21 @@ export const seeMyAppointments = id => {
           type: RET_CONTRACTOR_APP_SUCC,
           payload: newAppointments,
         });
+      })
+      .catch(err => {
+        dispatch({ type: CONTRACTOR_APP_FAIL, payload: err });
+      });
+  };
+};
+
+export const editMyAppointments = (id, editedApp) => {
+  return dispatch => {
+    dispatch({ type: SENDING_PUT_REQ });
+    axios
+      .put(`http://localhost:5000/api/appointments/${id}`, editedApp)
+      .then(res => {
+        console.log(res.data);
+        dispatch({ type: RET_EDIT_CONTRACTOR_APP_SUCC, payload: res.data });
       })
       .catch(err => {
         dispatch({ type: CONTRACTOR_APP_FAIL, payload: err });

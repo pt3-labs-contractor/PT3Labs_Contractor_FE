@@ -5,41 +5,42 @@ import Calendar from '@toast-ui/react-calendar';
 import Cpop from './creationPop.jsx';
 import OnClickPop from './onClickPop.jsx';
 import './zCal.css';
-import { seeMyAppointments } from '../../actions/index';
+import { seeMyAppointments, editMyAppointments } from '../../actions/index';
 
 const MyComponent = props => {
   const appointments = props.appointments || [];
   let [schedules, setSchedules] = useState([
-    {
-      id: '1fa566e4-670d-42af-8f75-2422a228d664',
-      contractor_id: '6dcfb8c7-ff21-44fd-82b1-4a40e08a0f9e',
-      user_id: '0d17c960-f8d5-4605-93ec-244ceb9f99f7',
-      service_id: '32c6740d-010e-41e7-b4d3-58d10e3f377c',
-      appointment_datetime: '2019-05-28T11:30:06.819Z',
-      duration: {
-        hours: 1,
-        minutes: 19,
-      },
-      appointment_datetime_end: '2019-05-28T12:30:06.819Z',
-      created_at: '2019-06-03T09:49:41.321Z',
-      title: 'Testing',
-      start: new Date(),
-      end: new Date('2019-06-03T12:30:06.819Z'),
-      dueDateClass: '',
-      calendarId: '0',
-      category: 'time',
-      isReadOnly: false,
-    },
+    // {
+    //   id: '1fa566e4-670d-42af-8f75-2422a228d664',
+    //   contractor_id: '6dcfb8c7-ff21-44fd-82b1-4a40e08a0f9e',
+    //   user_id: '0d17c960-f8d5-4605-93ec-244ceb9f99f7',
+    //   service_id: '32c6740d-010e-41e7-b4d3-58d10e3f377c',
+    //   appointment_datetime: '2019-05-28T11:30:06.819Z',
+    //   duration: {
+    //     hours: 1,
+    //     minutes: 19,
+    //   },
+    //   appointment_datetime_end: '2019-05-28T12:30:06.819Z',
+    //   created_at: '2019-06-03T09:49:41.321Z',
+    //   title: 'Testing',
+    //   start: new Date(),
+    //   end: new Date('2019-06-03T12:30:06.819Z'),
+    //   dueDateClass: '',
+    //   calendarId: '0',
+    //   category: 'time',
+    //   isReadOnly: false,
+    // },
   ]);
 
+  const stringify = JSON.stringify(appointments);
   useEffect(() => {
     props.seeMyAppointments('6dcfb8c7-ff21-44fd-82b1-4a40e08a0f9e');
-    const newSched = schedules.slice();
+    const newSched = [];
     appointments.forEach(app => {
       newSched.push(app);
     });
     setSchedules(newSched);
-  }, [appointments.length]);
+  }, [stringify]);
 
   console.log(schedules);
   const [readOnly, setReadOnly] = useState(false);
@@ -94,35 +95,35 @@ const MyComponent = props => {
   //   return schedules;
   // };
 
-  const editSch = (e, sch) => {
+  const editSch = e => {
     const { schedule } = e;
-    const startTime = e.start;
-    const endTime = e.end;
+    const startTime = new Date(e.start);
+    const endTime = new Date(e.end);
     const { title } = schedule;
     const { location } = schedule;
-    // const newSched = {
+    const newSched = {
+      appointment_datetime: startTime,
+      appointment_datetime_end: endTime,
+      // title,
+      // location,
+      id: schedule.id,
+    };
+    // let selected = schedules.find(s => {
+    //   return s.id === schedule.id;
+    // });
+    // const dSched = schedules.filter(s => {
+    //   return s.id !== schedule.id;
+    // });
+    // selected = {
+    //   ...selected,
     //   start: startTime,
     //   end: endTime,
-    //   title: title,
-    //   location: location,
+    //   title,
+    //   location,
     // };
-    schedules = [...schedules, { ...schedule }];
-    let selected = schedules.find(s => {
-      return s.id === schedule.id;
-    });
-    const dSched = schedules.filter(s => {
-      return s.id !== schedule.id;
-    });
-    selected = {
-      ...selected,
-      start: startTime,
-      end: endTime,
-      title,
-      location,
-    };
-    schedules = [...dSched, selected];
-    setSchedules([...dSched, selected]);
-    console.log('test');
+    // schedules = [...dSched, selected];
+    // setSchedules([...dSched, selected]);
+    props.editMyAppointments(schedule.id, newSched);
   };
 
   const greatestId = () => {
@@ -354,5 +355,5 @@ const mstp = state => {
 
 export default connect(
   mstp,
-  { seeMyAppointments }
+  { seeMyAppointments, editMyAppointments }
 )(MyComponent);
