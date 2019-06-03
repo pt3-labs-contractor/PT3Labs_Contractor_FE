@@ -35,6 +35,7 @@ function Register(props) {
         });
     } else {
       const userUpdate = {};
+      userUpdate.username = values.username;
       userUpdate.email = values.email;
       userUpdate.phoneNumber = values.phoneNumber;
 
@@ -82,13 +83,9 @@ function Register(props) {
       <button onClick={() => setContractor(true)}>Contractor</button>
       <button onClick={() => setContractor(false)}>User </button>
       <form onSubmit={handleSubmit}>
+        <input name="username" placeholder="Username" onChange={handleChange} />
         {!oauth && (
           <>
-            <input
-              name="username"
-              placeholder="Username"
-              onChange={handleChange}
-            />
             <input
               name="password"
               type="password"
