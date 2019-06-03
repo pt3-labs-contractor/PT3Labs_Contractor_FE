@@ -13,20 +13,12 @@ import {
 function Contractor(props) {
   useEffect(() => {
     const { id } = props.match.params;
-    // props.selectSingleContractorSetting(id);
-    // props.fetchSchedule(id);
     Promise.all([
       props.selectSingleContractorSetting(id),
       props.fetchSchedule(id),
     ]);
     // eslint-disable-next-line
   }, []);
-
-  // useEffect(() => {
-  //   // const { id } = props.match.params;
-  //   // props.fetchSchedule(id);
-  //   // eslint-disable-next-line
-  // }, [props.selectedDay]);
 
   return (
     <div>

@@ -1,20 +1,26 @@
-import React from 'react'
+import React from 'react';
 
 function ContractorCard(props) {
-  const { name, phone_number, street_address, city, state_abbr, zip_code } = props.contractor;
+  const {
+    name,
+    phoneNumber,
+    streetAddress,
+    city,
+    stateAbbr,
+    zipCode,
+  } = props.contractor;
 
   return (
     <div>
       <h3>{name}</h3>
       <address>
-        <p>{phone_number}</p>
-        <p>{street_address}</p>
-        <p>{city}</p>
-        <p>{state_abbr}</p>
-        <p>{zip_code}</p>
+        <p>{phoneNumber}</p>
+        <p>{streetAddress}</p>
+        <p>{`${city} ${stateAbbr}`}</p>
+        <p>{zipCode}</p>
       </address>
     </div>
-  )
+  );
 }
 
-export default ContractorCard
+export default ContractorCard;
