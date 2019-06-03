@@ -16,7 +16,7 @@ function Register(props) {
 
   function handleSubmit(event) {
     event.preventDefault();
-    const bearer = 'Bearer ' + localStorage.getItem('jwt');
+    const bearer = `Bearer ${localStorage.getItem('jwt')}`;
     const headers = { authorization: bearer };
 
     if (!oauth) {
