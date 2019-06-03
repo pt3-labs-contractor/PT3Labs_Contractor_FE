@@ -2,16 +2,22 @@ import React, { useState, useEffect } from 'react';
 import 'tui-calendar/dist/tui-calendar.css';
 import Calendar from '@toast-ui/react-calendar';
 import Cpop from './creationPop.jsx';
+import OnClickPop from './onClickPop.jsx';
 import './zCal.css';
 
-const MyComponent = () => {
+const MyComponent = props => {
   const [readOnly, setReadOnly] = useState(false);
   let [start, setStart] = useState(new Date());
   let [end, setEnd] = useState(new Date());
-  const [title, setTitle] = useState();
-  const [location, setLocation] = useState();
+  const [mount, setMount] = useState(false);
+  // const [title, setTitle] = useState();
+  // const [location, setLocation] = useState();
   const [hidden, setHidden] = useState(true);
-  const myTheme = {};
+  const [hiddenTwo, setHiddenTwo] = useState(true);
+  let [schedule, setSchedule] = useState({});
+  let [schedules, setSchedules] = useState([]);
+  let [delSchedules, setDelSchedules] = useState([]);
+  let [create, setCreate] = useState(true);
   const today = new Date();
   const getDate = (type, start, value, operator) => {
     start = new Date(start);
@@ -27,47 +33,6 @@ const MyComponent = () => {
   };
 
   const calRef = React.createRef();
-  let [schedules, setSchedules] = useState([
-    // {
-    //   id: "1",
-    //   calendarId: "0",
-    //   title: "TOAST UI Calendar Study",
-    //   category: "time",
-    //   dueDateClass: "",
-    //   start: today.toISOString(),
-    //   end: getDate("hours", today, 3, "+").toISOString()
-    // },
-    // {
-    //   id: "2",
-    //   calendarId: "0",
-    //   title: "Practice",
-    //   category: "milestone",
-    //   dueDateClass: "",
-    //   start: getDate("date", today, 1, "+").toISOString(),
-    //   end: getDate("date", today, 1, "+").toISOString(),
-    //   isReadOnly: true
-    // },
-    // {
-    //   id: "3",
-    //   calendarId: "0",
-    //   title: "FE Workshop",
-    //   category: "allday",
-    //   dueDateClass: "",
-    //   start: getDate("date", today, 2, "-").toISOString(),
-    //   end: getDate("date", today, 1, "-").toISOString(),
-    //   isReadOnly: true
-    // },
-    {
-      id: '4',
-      calendarId: '0',
-      title: 'Report',
-      category: 'time',
-      dueDateClass: '',
-      start: today.toISOString(),
-      end: getDate('hours', today, 1, '+').toISOString(),
-    },
-  ]);
-
   const change = e => {
     const cRef = calRef.current.getInstance();
     switch (true) {
@@ -135,32 +100,43 @@ const MyComponent = () => {
     return newId;
   };
 
-  const createSch = e => {
-    setHidden(false);
-    console.log(schedules);
-    // const cRef = calRef.current.getInstance();
-    // cRef.clear();
-    const startTime = e.start;
-    const endTime = e.end;
-    const title = e.title;
-    const location = e.location;
-    const schedule = {
-      id: String(greatestId()),
-      calendarId: '0',
-      title: title,
-      category: 'time',
-      dueDateClass: '',
-      start: e.start,
-      end: e.end,
-      location: location,
-      isReadOnly: false,
-    };
-    start = new Date(e.start);
-    end = new Date(e.end);
-    schedules = [...schedules, schedule];
-    setReadOnly(true);
-    setSchedules(schedules);
+  const clear = () => {
+    const cRef = calRef.current.getInstance();
+    cRef.clear();
   };
+
+  const createSch = e => {
+    console.log(schedules);
+    if (create === true) {
+      setHidden(false);
+      const startTime = e.start;
+      const endTime = e.end;
+      const title = e.title;
+      const location = e.location;
+      const schedule = {
+        id: String(greatestId()),
+        calendarId: '0',
+        title: title,
+        category: 'time',
+        dueDateClass: '',
+        start: e.start,
+        end: e.end,
+        location: location,
+        isReadOnly: false,
+      };
+      start = new Date(e.start);
+      end = new Date(e.end);
+      schedules.push(schedule);
+      setMount(false);
+      setReadOnly(true);
+      setSchedules(schedules);
+    } else {
+      schedules = schedules.filter(s => {
+        return s.id !== schedule.id;
+      });
+    }
+  };
+  // console.log(schedules);
 
   const lastSch = e => {
     const cRef = calRef.current.getInstance();
@@ -174,13 +150,18 @@ const MyComponent = () => {
 
   const credForm = sch => {
     // const cRef = calRef.current.getInstance();
-    let schedule = schedules[schedules.length - 1];
-    const start = schedule.start;
-    const end = schedule.end;
+    let sched;
+    if (schedule.id) {
+      sched = schedule;
+    } else {
+      sched = schedules[schedules.length - 1];
+    }
+    const start = sched.start;
+    const end = sched.end;
     const title = sch.title;
     const location = sch.location;
     schedules = schedules.map(s => {
-      if (s.id === schedule.id) {
+      if (s.id === sched.id) {
         s.title = sch.title;
         s.location = sch.location;
       }
@@ -189,31 +170,70 @@ const MyComponent = () => {
     setHidden(true);
     setReadOnly(false);
     setSchedules(schedules);
+    setSchedule({});
   };
 
-  const delSch = e => {
-    const schedule = e.schedule;
+  const setCre = () => {
+    create = false;
+    setCreate(false);
+  };
+
+  const delSch = () => {
+    const sched = schedule;
     schedules = schedules.filter(s => {
-      return s.id !== schedule.id;
+      return s.id !== sched.id;
     });
+    console.log(schedules);
     setSchedules(schedules);
+    setHiddenTwo(true);
+    setCre(true);
+  };
+
+  const schBox = e => {
+    setHiddenTwo(false);
+    setMount(false);
+    let schedule = e.schedule;
+    console.log(e.schedule);
+    schedule.start = new Date(schedule.start);
+    schedule.end = new Date(schedule.end);
+    setSchedule(schedule);
+    setMount(true);
+  };
+
+  const editClick = () => {
+    setHidden(false);
+    setHiddenTwo(true);
+    setMount(false);
   };
 
   return (
     <div className="calComp">
       <Cpop
-        start={start}
-        end={end}
         cred={credForm}
         edit={editSch}
         klass={hidden}
+        title={schedule.title}
+        location={schedule.location}
+        data={schedule}
+        mount={mount}
+      />
+      <OnClickPop
+        klass={hiddenTwo}
+        title={schedule.title || ''}
+        location={schedule.location || ''}
+        start={String(schedule.start)}
+        end={String(schedule.end)}
+        editClick={editClick}
+        delSch={delSch}
+        setCre={setCre}
+        createSch={createSch}
       />
       <Calendar
         schedules={schedules}
         onBeforeUpdateSchedule={editSch}
         onBeforeCreateSchedule={createSch}
-        onBeforeDeleteSchedule={delSch}
-        // onAfterRenderSchedule={lastSch}
+        onBeforeDeleteSchedule={createSch}
+        onClickSchedule={schBox}
         height="100%"
         ref={calRef}
         calendars={[
@@ -250,7 +270,6 @@ const MyComponent = () => {
             return 'All Day';
           },
         }}
-        theme={myTheme}
         // timezones={[
         //   {
         //     timezoneOffset: 540,
