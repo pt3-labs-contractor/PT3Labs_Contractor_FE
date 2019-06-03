@@ -1,23 +1,27 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import Calendar from '../calendar/Calendar';
+import ContractorCard from './ContractorCard';
+import AvailabilityList from '../appointments/AvailabilityList';
 
-import { selectContractor } from '../../actions/index';
+import { selectContractor, fetchSchedule } from '../../actions/index';
 
 function Contractor(props) {
-
   useEffect(() => {
-    props.selectContractor(props.match.params.id, props.list) // replace with get request
+    const { id } = props.match.params;
+    props.selectContractor(id, props.list);
+    props.fetchSchedule(id);
     // eslint-disable-next-line
-  }, [props.contractor])
+  }, [props.selectedDay]);
 
   return (
     <div>
-      <h3>{props.contractor.name}</h3>
+      <ContractorCard contractor={props.contractor} />
       <Calendar contractor={props.contractor} />
+      <AvailabilityList selectedDay={props.selectedDay} />
     </div>
-  )
+  );
 }
 
 const mapStateToProps = state => {
@@ -25,8 +29,12 @@ const mapStateToProps = state => {
     list: state.accounts.contractors,
     contractor: state.thisContractor,
     selectedDay: state.thisDay,
-    schedule: state.schedule
-  }
-}
+    schedule: state.schedule,
+    error: state.errorSchedule,
+  };
+};
 
-export default connect(mapStateToProps, { selectContractor })(Contractor);
+export default connect(
+  mapStateToProps,
+  { selectContractor, fetchSchedule }
+)(Contractor);

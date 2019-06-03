@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import axios from 'axios';
 
 function Login(props) {
@@ -7,40 +7,53 @@ function Login(props) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    axios.post()
+    const bearer = `Bearer ${localStorage.getItem('jwt')}`;
+    const headers = { authorization: bearer };
+    const credentials = { username, password };
+
+    axios
+      .post(
+        'https://fierce-plains-47590.herokuapp.com/api/auth/login',
+        credentials,
+        {
+          headers,
+        }
+      )
       .then(res => {
         props.history.push('/contractors');
       })
       .catch(err => {
-        console.log(err)
-      })
+        console.log(err);
+      });
   }
-
+  // state = {
+  //   username: ''
+  // }
 
   return (
     <>
       <form onSubmit={handleSubmit}>
         <input
-          type='text'
-          name='username'
-          placeholder='Username'
-          onChange={(e) => setUsername(e.target.value)}
+          type="text"
+          name="username"
+          placeholder="Username"
+          onChange={e => setUsername(e.target.value)}
           value={username}
-        >
-        </input>
+        />
         <input
-          type='password'
-          name='password'
-          placeholder='Password'
-          onChange={(e) => setPassword(e.target.value)}
+          type="password"
+          name="password"
+          placeholder="Password"
+          onChange={e => setPassword(e.target.value)}
           value={password}
-        >
-        </input>
-        <button type='submit'>Submit</button>
+        />
+        <button type="submit">Submit</button>
       </form>
-      <a href='https://fierce-plains-47590.herokuapp.com/api/auth/google'>Google Oauth</a>
+      <a href="https://fierce-plains-47590.herokuapp.com/api/auth/google">
+        Google Oauth
+      </a>
     </>
-  )
+  );
 }
 
 export default Login;

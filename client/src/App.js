@@ -38,9 +38,18 @@ function App(props) {
           <Route exact path="/contractors" component={ContractorList} />
           <Route path="/contractors/:id" component={Contractor} />
           <Route path="/login" component={Login} />
+<<<<<<< HEAD
           <Route path="/redirect/:token" component={Redirect} />
           <Route path="/register" component={Register} />
           <Route path="/calendar" render={props => <MyComponent />} />
+=======
+          <Route path="/redirect" component={Redirect} />
+          <Route path="/register" component={Register} />
+          <Route
+            path="/calendar"
+            render={props => <Calendar contractor={{}} />}
+          />
+>>>>>>> Development
           <Route path="/settings" component={Settings} />
           <Route path="/contractorFeedback" component={ContractorFeedback} />
           <Route path="/userFeedback" component={UserFeedback} />
