@@ -1,0 +1,53 @@
+.form-container {
+  max-width: 500px;
+  margin: auto;
+  padding: 1rem 2rem;
+  margin-top: 6rem;
+  margin-bottom: 3rem;
+  background-color: var(--dark-color);
+  opacity: .9;
+  text-align: center;
+  color: white;
+}
+
+.text-primary {
+  color: var(--primary-color)
+}
+
+input {
+  margin: 1.2rem 0;
+}
+
+.form-links {
+  color: var(--secondary-color);
+  font-size: 1.35rem;
+}
+
+input {
+  display: block;
+  width: 100%;
+  padding: 0.4rem;
+  font-size: 1.rems;
+  border: 1px solid #ccc;
+}
+
+.form-options {
+  display: block;
+  width: 100%;
+  padding: 0.4rem;
+  font-size: 1.rems;
+  border: 1px solid #ccc;
+  margin-top: 1rem;
+}
+
+.fa-google-plus-g {
+  color: #4285f4;
+}
+
+.lead {
+  margin-bottom: 1rem;
+}
+
+.btn-light:hover {
+  background-color: var(--primary-color)
+}

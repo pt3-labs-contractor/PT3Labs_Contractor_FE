@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import axios from 'axios';
+
+import './Register.css';
 
 function Register(props) {
   const [contractor, setContractor] = useState(false);
@@ -16,7 +19,7 @@ function Register(props) {
 
   function handleSubmit(event) {
     event.preventDefault();
-    const bearer = 'Bearer ' + localStorage.getItem('jwt');
+    const bearer = `Bearer ${localStorage.getItem('jwt')}`;
     const headers = { authorization: bearer };
     // var { email, phoneNumber } = values;
 
@@ -79,9 +82,17 @@ function Register(props) {
   }
 
   return (
-    <div>
-      <button onClick={() => setContractor(true)}>Contractor</button>
-      <button onClick={() => setContractor(false)}>User </button>
+    <div className="form-container">
+      <h1 className="text-primary">Register</h1>
+      <p className="lead">
+        <i className="fas fa-user" /> Create your account:
+      </p>
+      <button className="btn btn-light" onClick={() => setContractor(true)}>
+        Contractor
+      </button>
+      <button className="btn btn-light" onClick={() => setContractor(false)}>
+        User{' '}
+      </button>
       <form onSubmit={handleSubmit}>
         {!oauth && (
           <>
@@ -127,9 +138,15 @@ function Register(props) {
               placeholder="Zip Code"
               onChange={handleChange}
             />
+            <input type="submit" value="Log In" className="btn btn-primary" />
           </>
         )}
-        <button type="submit">Submit</button>
+        <p>
+          Already have an account?{' '}
+          <NavLink to="/login" className="form-links">
+            Sign In
+          </NavLink>
+        </p>
       </form>
     </div>
   );

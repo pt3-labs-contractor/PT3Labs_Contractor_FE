@@ -17,7 +17,7 @@ function LandingPage() {
               <NavLink to="/signup" className="btn btn-primary">
                 Sign Up
               </NavLink>
-              <NavLink to="/login" className="btn btn-light">
+              <NavLink to="/login" className="btn btn-dark">
                 Log In
               </NavLink>
             </div>
