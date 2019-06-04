@@ -1,11 +1,14 @@
 import React from 'react';
 // import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import Rating from 'react-rating'
+import Rating from 'react-rating';
+import NavBarContractor from '../navbar/NavBarContractor';
 
 function ContractorFeedback(props) {
   return (
-    <div>
+    <>
+      <NavBarContractor />
+      <div>
         <h2>Contractor OWN Feedback Page</h2>
         {props.loading ? <p>Loading...</p> : null}
         {props.error ? <p>{props.error}</p> : null}
@@ -23,17 +26,17 @@ function ContractorFeedback(props) {
             Message: {props.feedback.message}
           </div>
         ))} */}
-
-    </div>
-  )
+      </div>
+    </>
+  );
 }
 
 const mapStateToProps = state => {
   return {
     // contractors: state.accounts.contractors,
     loading: state.loading,
-    error: state.error
-  }
-}
+    error: state.error,
+  };
+};
 
 export default connect(mapStateToProps)(ContractorFeedback);

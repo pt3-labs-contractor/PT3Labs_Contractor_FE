@@ -28,10 +28,10 @@ function App(props) {
 
   return (
     <div className="App">
-      <MainNavbar />
+      {/* <MainNavbar /> */}
       <main className="main-content">
-        <NavBarUser />
-        <NavBarContractor />
+        {/* <NavBarUser />
+        <NavBarContractor /> */}
         <Switch>
           <Route exact path="/" component={Homepage} />
           <Route path="/users" component={Users} />

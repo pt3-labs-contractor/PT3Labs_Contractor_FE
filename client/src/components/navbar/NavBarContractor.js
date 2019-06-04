@@ -1,22 +1,37 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 // import Settings from './components/settings/Settings';
 
-
 function NavBarContractor() {
-    return (
-      <div>
-          <h3>NavBarContractor</h3>
-          <Link to={'/calendar'}>Appointments</Link>
-          <Link to={'/contractorFeedback'}>Feedback</Link>
-          <Link to={'/billing'}>Billing</Link>
-          <Link to={'/settings'}>Settings</Link>
-          <button>Log Out</button>
-
-      </div>
-    )
-  }
-  
+  return (
+    <div>
+      <nav className="navbar bg-dark">
+        <NavLink to="/">
+          <h1>
+            <i className="far fa-calendar-alt"> Digital Calendar- contractor</i>
+          </h1>
+        </NavLink>
+        <ul>
+          <li>
+            <NavLink to="/calendar">Appointments</NavLink>
+          </li>
+          <li>
+            <NavLink to="/contractorFeedback">Feedback</NavLink>
+          </li>
+          <li>
+            <NavLink to="/billing">Billing</NavLink>
+          </li>
+          <li>
+            <NavLink to="/settings">Setting</NavLink>
+          </li>
+          <li>
+            <NavLink to="/">Log Out</NavLink>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  );
+}
 
 export default connect()(NavBarContractor);
