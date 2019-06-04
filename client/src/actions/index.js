@@ -52,11 +52,24 @@ export const fetchAccts = () => dispatch => {
     ])
     .then(
       axios.spread((userRes, contRes) => {
-        const accounts = {
-          users: userRes.data.users,
-          contractors: contRes.data.contractors,
-        };
-        dispatch({ type: FETCHING_USERS_SUCCESS, payload: accounts });
+        let { user } = userRes.data;
+        console.log('user: ', user);
+        if (user.contractorId) {
+          axios
+            .get(
+              `https://fierce-plains-47590.herokuapp.com/api/contractors/${
+                user.contractorId
+              }`,
+              { headers }
+            )
+            .then(res => {
+              user = Object.assign(user, res.data.contractor[0]);
+            });
+        }
+        dispatch({
+          type: FETCHING_USERS_SUCCESS,
+          payload: { user, contractors: contRes.data.contractors },
+        });
       })
     )
     .catch(() => {

@@ -35,12 +35,10 @@ import {
 } from '../actions';
 
 const initialState = {
-  accounts: {
-    users: [],
-    contractors: [],
-    // feedback: []
-    appointments: [],
-  },
+  user: {},
+  contractors: [],
+  // feedback: []
+  appointments: [],
   loading: false,
   error: null,
   thisContractor: {},
@@ -56,21 +54,24 @@ export default (state = initialState, action) => {
     case LOADING_USERS:
       return {
         ...state,
-        accounts: { users: [], contractors: [] },
+        user: {},
+        contractors: [],
         loading: true,
         error: null,
       };
     case FETCHING_USERS_SUCCESS:
       return {
         ...state,
-        accounts: action.payload,
+        user: action.payload.user,
+        contractors: action.payload.contractors,
         loading: false,
         error: null,
       };
     case FETCHING_USERS_FAILURE:
       return {
         ...state,
-        accounts: { users: [], contractors: [] },
+        user: {},
+        contractors: [],
         loading: false,
         error: action.error,
       };

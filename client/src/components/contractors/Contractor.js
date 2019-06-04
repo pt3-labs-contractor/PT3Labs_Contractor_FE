@@ -31,7 +31,6 @@ function Contractor(props) {
 
 const mapStateToProps = state => {
   return {
-    list: state.accounts.contractors,
     contractor: state.thisContractor,
     selectedDay: state.thisDay,
     schedule: state.schedule,
