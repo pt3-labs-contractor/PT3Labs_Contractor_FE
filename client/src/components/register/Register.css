@@ -48,6 +48,9 @@ input {
   margin-bottom: 1rem;
 }
 
-.btn-light:hover {
+.btn-register {
+  background-color: var(--light-color)
+}
+.btn-register:hover {
   background-color: var(--primary-color)
 }

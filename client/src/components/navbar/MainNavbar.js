@@ -13,9 +13,6 @@ function Navbar() {
         </NavLink>
         <ul>
           <li>
-            <NavLink to="/team">Developers</NavLink>
-          </li>
-          <li>
             <NavLink to="/register">Register</NavLink>
           </li>
           <li>

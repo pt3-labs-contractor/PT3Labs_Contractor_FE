@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import axios from 'axios';
+import MainNavbar from '../navbar/MainNavbar';
 
 import './Register.css';
 
@@ -82,73 +83,86 @@ function Register(props) {
   }
 
   return (
-    <div className="form-container">
-      <h1 className="text-primary">Register</h1>
-      <p className="lead">
-        <i className="fas fa-user" /> Create your account:
-      </p>
-      <button className="btn btn-light" onClick={() => setContractor(true)}>
-        Contractor
-      </button>
-      <button className="btn btn-light" onClick={() => setContractor(false)}>
-        User{' '}
-      </button>
-      <form onSubmit={handleSubmit}>
-        {!oauth && (
-          <>
-            <input
-              name="username"
-              placeholder="Username"
-              onChange={handleChange}
-            />
-            <input
-              name="password"
-              type="password"
-              placeholder="Password"
-              onChange={handleChange}
-            />
-          </>
-        )}
-        <input name="email" placeholder="E-mail" onChange={handleChange} />
-        <input
-          name="phoneNumber"
-          placeholder="Phone#"
-          onChange={handleChange}
-        />
-        {contractor && (
-          <>
-            <input
-              name="contractorName"
-              placeholder="Name"
-              onChange={handleChange}
-            />
-            <input
-              name="streetAddress"
-              placeholder="Street Address"
-              onChange={handleChange}
-            />
-            <input name="city" placeholder="City" onChange={handleChange} />
-            <input
-              name="stateAbbr"
-              placeholder="State"
-              onChange={handleChange}
-            />
-            <input
-              name="zipCode"
-              placeholder="Zip Code"
-              onChange={handleChange}
-            />
-            <input type="submit" value="Log In" className="btn btn-primary" />
-          </>
-        )}
-        <p>
-          Already have an account?{' '}
-          <NavLink to="/login" className="form-links">
-            Sign In
-          </NavLink>
+    <>
+      <MainNavbar />
+      <div className="form-container">
+        <h1 className="text-primary">Register</h1>
+        <p className="lead">
+          <i className="fas fa-user" /> Create your account:
         </p>
-      </form>
-    </div>
+        <button
+          className="btn btn-register"
+          onClick={() => setContractor(true)}
+        >
+          Contractor
+        </button>
+        <button
+          className="btn btn-register"
+          onClick={() => setContractor(false)}
+        >
+          User{' '}
+        </button>
+        <form onSubmit={handleSubmit}>
+          {!oauth && (
+            <>
+              <input
+                name="username"
+                placeholder="Username"
+                onChange={handleChange}
+              />
+              <input
+                name="password"
+                type="password"
+                placeholder="Password"
+                onChange={handleChange}
+              />
+            </>
+          )}
+          <input name="email" placeholder="E-mail" onChange={handleChange} />
+          <input
+            name="phoneNumber"
+            placeholder="Phone#"
+            onChange={handleChange}
+          />
+          {contractor && (
+            <>
+              <input
+                name="contractorName"
+                placeholder="Name"
+                onChange={handleChange}
+              />
+              <input
+                name="streetAddress"
+                placeholder="Street Address"
+                onChange={handleChange}
+              />
+              <input name="city" placeholder="City" onChange={handleChange} />
+              <input
+                name="stateAbbr"
+                placeholder="State"
+                onChange={handleChange}
+              />
+              <input
+                name="zipCode"
+                placeholder="Zip Code"
+                onChange={handleChange}
+              />
+            </>
+          )}
+          <input
+            type="submit"
+            value="Create Account"
+            className="btn btn-primary"
+          />
+          <p>
+            Already have an account?{' '}
+            <NavLink to="/login" className="form-links">
+              Sign In
+            </NavLink>
+          </p>
+        </form>
+      </div>
+    </>
   );
 }
 
