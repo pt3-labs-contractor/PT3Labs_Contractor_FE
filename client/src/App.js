@@ -19,6 +19,8 @@ import NavBarContractor from './components/navbar/NavBarContractor';
 import Settings from './components/settings/Settings';
 import ContractorFeedback from './components/feedback/ContractorFeedback';
 import UserFeedback from './components/feedback/UserFeedback';
+import AppointmentList from './components/appointments/AppointmentList';
+
 
 function App(props) {
   useEffect(() => {
@@ -44,6 +46,7 @@ function App(props) {
             path="/calendar"
             render={props => <Calendar contractor={{}} />}
           />
+          <Route path="/appointments" component={AppointmentList} />
           <Route path="/settings" component={Settings} />
           <Route path="/contractorFeedback" component={ContractorFeedback} />
           <Route path="/userFeedback" component={UserFeedback} />

@@ -102,6 +102,7 @@ export default (state = initialState, action) => {
     //   return {...state, accounts:{appointments: action.payload }}
     // case CONTRACTOR_APP_FAIL:
     //   return {...state, loading: false, error: action.error}
+    
     default:
       return state;
   }
