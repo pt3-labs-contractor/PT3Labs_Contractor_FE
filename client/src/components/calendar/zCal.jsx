@@ -5,7 +5,13 @@ import Calendar from '@toast-ui/react-calendar';
 import Cpop from './creationPop.jsx';
 import OnClickPop from './onClickPop.jsx';
 import './zCal.css';
-import { seeMyAppointments, editMyAppointments } from '../../actions/index';
+import {
+  seeMyAppointments,
+  editMyAppointments,
+  createNewAppointment,
+  deleteAppointment,
+} from '../../actions/index';
+import moment from 'moment';
 
 const MyComponent = props => {
   const appointments = props.appointments || [];
@@ -44,8 +50,8 @@ const MyComponent = props => {
 
   console.log(schedules);
   const [readOnly, setReadOnly] = useState(false);
-  let [start, setStart] = useState(new Date());
-  let [end, setEnd] = useState(new Date());
+  const [start, setStart] = useState(new Date());
+  const [end, setEnd] = useState(new Date());
   const [mount, setMount] = useState(false);
   // const [title, setTitle] = useState();
   // const [location, setLocation] = useState();
@@ -96,34 +102,39 @@ const MyComponent = props => {
   // };
 
   const editSch = e => {
-    const { schedule } = e;
-    const startTime = new Date(e.start);
-    const endTime = new Date(e.end);
-    const { title } = schedule;
-    const { location } = schedule;
-    const newSched = {
-      appointment_datetime: startTime,
-      appointment_datetime_end: endTime,
-      // title,
-      // location,
-      id: schedule.id,
-    };
-    // let selected = schedules.find(s => {
-    //   return s.id === schedule.id;
-    // });
-    // const dSched = schedules.filter(s => {
-    //   return s.id !== schedule.id;
-    // });
-    // selected = {
-    //   ...selected,
-    //   start: startTime,
-    //   end: endTime,
-    //   title,
-    //   location,
-    // };
-    // schedules = [...dSched, selected];
+    if (e) {
+      console.log('testing');
+      const { schedule } = e;
+      const startTime = new Date(e.start);
+      const endTime = new Date(e.end);
+      const { title } = schedule;
+      const { location } = schedule;
+      const newSched = {
+        appointment_datetime: startTime,
+        appointment_datetime_end: endTime,
+        title,
+        location,
+        id: schedule.id,
+      };
+      // let selected = schedules.find(s => {
+      //   return s.id === schedule.id;
+      // });
+      // const dSched = schedules.filter(s => {
+      //   return s.id !== schedule.id;
+      // });
+      // selected = {
+      //   ...selected,
+      //   start: startTime,
+      //   end: endTime,
+      //   title,
+      //   location,
+      // };
+      // schedules = [...dSched, selected];
+      props.editMyAppointments(schedule.id, newSched);
+    } else {
+      console.log(schedules);
+    }
     // setSchedules([...dSched, selected]);
-    props.editMyAppointments(schedule.id, newSched);
   };
 
   const greatestId = () => {
@@ -145,34 +156,37 @@ const MyComponent = props => {
   // };
 
   const createSch = e => {
-    console.log(schedules);
-    if (create === true) {
-      setHidden(false);
-      const startTime = e.start;
-      const endTime = e.end;
-      const { title } = e;
-      const { location } = e;
-      const schedule = {
-        id: String(greatestId()),
-        calendarId: '0',
-        title,
-        category: 'time',
-        dueDateClass: '',
-        start: e.start,
-        end: e.end,
-        location,
-        isReadOnly: false,
-      };
-      start = new Date(e.start);
-      end = new Date(e.end);
-      schedules = [...schedules, schedule];
-      setMount(false);
-      setReadOnly(true);
-      setSchedules(schedules);
+    if (e) {
+      if (create === true) {
+        console.log(e);
+        setHidden(false);
+        const startTime = e.start;
+        const endTime = e.end;
+        const { title } = e;
+        const { location } = e;
+        const schedule = {
+          calendarId: '0',
+          title,
+          category: 'time',
+          dueDateClass: '',
+          start: e.start,
+          end: e.end,
+          location,
+          isReadOnly: false,
+        };
+
+        // start = new Date(e.start);
+        // end = new Date(e.end);
+        setSchedule(schedule);
+        setMount(false);
+        setReadOnly(true);
+      } else {
+        schedules = schedules.filter(s => {
+          return s.id !== schedule.id;
+        });
+      }
     } else {
-      schedules = schedules.filter(s => {
-        return s.id !== schedule.id;
-      });
+      console.log(schedules);
     }
   };
   // console.log(schedules);
@@ -190,7 +204,7 @@ const MyComponent = props => {
   const credForm = sch => {
     // const cRef = calRef.current.getInstance();
     let sched;
-    if (schedule.id) {
+    if (schedule.calendarId) {
       sched = schedule;
     } else {
       sched = schedules[schedules.length - 1];
@@ -199,17 +213,38 @@ const MyComponent = props => {
     const { end } = sched;
     const { title } = sch;
     const { location } = sch;
-    schedules = schedules.map(s => {
-      if (s.id === sched.id) {
-        s.title = sch.title;
-        s.location = sch.location;
-      }
-      return s;
-    });
+    // schedules = schedules.map(s => {
+    //   if (s.id === sched.id) {
+    //     s.title = sch.title;
+    //     s.location = sch.location;
+    //   }
+    //   return s;
+    // });
+    let startOne = new Date(start);
+    let endOne = new Date(end);
+    startOne = moment(startOne);
+    endOne = moment(endOne);
+    const minutediff = endOne.diff(startOne, 'minutes');
+    const hour = Math.floor(minutediff / 60);
+    let minutes;
+    if (minutediff % 60 !== 0) {
+      minutes = 30;
+    } else {
+      minutes = 0;
+    }
+    const dbSched = {
+      contractor_id: '6dcfb8c7-ff21-44fd-82b1-4a40e08a0f9e',
+      user_id: '21cd662b-4a55-45c3-9e88-a9a8f3c19512',
+      service_id: '32c6740d-010e-41e7-b4d3-58d10e3f377c',
+      appointment_datetime: new Date(start),
+      duration: { hours: hour, minutes },
+      appointment_datetime_end: new Date(end),
+    };
     setHidden(true);
     setReadOnly(false);
-    setSchedules(schedules);
+    // setSchedules(schedules);
     setSchedule({});
+    props.createNewAppointment(dbSched);
   };
 
   const setCre = () => {
@@ -219,11 +254,8 @@ const MyComponent = props => {
 
   const delSch = () => {
     const sched = schedule;
-    schedules = schedules.filter(s => {
-      return s.id !== sched.id;
-    });
-    console.log(schedules);
-    setSchedules(schedules);
+    props.deleteAppointment(sched.id);
+    console.log(typeof sched.id);
     setHiddenTwo(true);
     setCre(true);
   };
@@ -232,7 +264,6 @@ const MyComponent = props => {
     setHiddenTwo(false);
     setMount(false);
     const { schedule } = e;
-    console.log(e.schedule);
     schedule.start = new Date(schedule.start);
     schedule.end = new Date(schedule.end);
     setSchedule(schedule);
@@ -293,22 +324,22 @@ const MyComponent = props => {
         isReadOnly={readOnly}
         scheduleView
         taskView={false}
-        template={{
-          milestone(schedule) {
-            return `<span style="color:#fff;background-color: ${
-              schedule.bgColor
-            };">${schedule.title}</span>`;
-          },
-          milestoneTitle() {
-            return 'Milestone';
-          },
-          allday(schedule) {
-            return `${schedule.title}<i class="fa fa-refresh"></i>`;
-          },
-          alldayTitle() {
-            return 'All Day';
-          },
-        }}
+        // template={{
+        //   milestone(schedule) {
+        //     return `<span style="color:#fff;background-color: ${
+        //       schedule.bgColor
+        //     };">${schedule.title}</span>`;
+        //   },
+        //   milestoneTitle() {
+        //     return 'Milestone';
+        //   },
+        //   allday(schedule) {
+        //     return `${schedule.title}<i class="fa fa-refresh"></i>`;
+        //   },
+        //   alldayTitle() {
+        //     return 'All Day';
+        //   },
+        // }}
         // timezones={[
         //   {
         //     timezoneOffset: 540,
@@ -323,10 +354,10 @@ const MyComponent = props => {
         // ]}
         // useDetailPopup
         // useCreationPopup
-        // week={{
-        //   hourStart: 7,
-        //   hourEnd: 18,
-        // }}
+        week={{
+          hourStart: 7,
+          hourEnd: 18,
+        }}
       />
       <button id="next" onClick={change}>
         Next
@@ -334,9 +365,9 @@ const MyComponent = props => {
       <button id="prev" onClick={change}>
         Prev
       </button>
-      <button id="day" onClick={change}>
-        Day
-      </button>
+      {/* <button id="day" onClick={change}> */}
+      {/*   Day */}
+      {/* </button> */}
       <button id="week" onClick={change}>
         Week
       </button>
@@ -355,5 +386,10 @@ const mstp = state => {
 
 export default connect(
   mstp,
-  { seeMyAppointments, editMyAppointments }
+  {
+    seeMyAppointments,
+    editMyAppointments,
+    createNewAppointment,
+    deleteAppointment,
+  }
 )(MyComponent);

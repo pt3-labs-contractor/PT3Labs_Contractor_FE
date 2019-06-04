@@ -33,6 +33,13 @@ import {
   RET_EDIT_CONTRACTOR_APP_SUCC,
   SENDING_PUT_REQ,
   CONTRACTOR_APP_FAIL,
+  RET_DELETE_APP_SUCC,
+  SENDING_DELETE_REQ,
+
+  // user appointments
+  SENDING_POST_REQ,
+  RET_POST_USER_APP_SUCC,
+  USER_APP_FAIL,
 } from '../actions';
 
 const initialState = {
@@ -149,6 +156,27 @@ export default (state = initialState, action) => {
         accounts: { appointments: toBeEdit },
       };
     case CONTRACTOR_APP_FAIL:
+      return { ...state, loading: false, error: action.error };
+
+    // User appointments
+    case SENDING_POST_REQ:
+      return { ...state, loading: true, error: null };
+    case RET_DELETE_APP_SUCC:
+      console.log('hello');
+      const app = state.accounts.appointments.filter(a => {
+        return a.id !== action.payload;
+      });
+      return { ...state, loading: false, accounts: { appointments: app } };
+    case RET_POST_USER_APP_SUCC:
+      console.log('hello');
+      const newApp = action.payload;
+      const appoints = state.accounts.appointments.slice();
+      return {
+        ...state,
+        loading: false,
+        accounts: { appointments: [...appoints, newApp] },
+      };
+    case USER_APP_FAIL:
       return { ...state, loading: false, error: action.error };
     default:
       return state;

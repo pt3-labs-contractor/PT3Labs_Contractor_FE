@@ -39,6 +39,13 @@ export const RET_CONTRACTOR_APP_SUCC = 'RET_CONTRACTOR_APP_SUCC';
 export const RET_EDIT_CONTRACTOR_APP_SUCC = 'RET_EDIT_CONTRACTOR_APP_SUCC';
 export const SENDING_PUT_REQ = 'SENDING_PUT_REQ';
 export const CONTRACTOR_APP_FAIL = 'CONTRACTOR_APP_FAIL';
+export const SENDING_DELETE_REQ = 'SENDING_DELETE_REQ';
+export const RET_DELETE_APP_SUCC = 'RET_DELETE_APP_SUCC';
+
+// exports for user appointments
+export const SENDING_POST_REQ = 'SENDING_POST_REQ';
+export const RET_POST_USER_APP_SUCC = 'RET_POST_USER_APP_SUCC';
+export const USER_APP_FAIL = 'USER_APP_FAIL';
 
 // ---------------------------------------------------------------
 
@@ -190,6 +197,37 @@ export const editMyAppointments = (id, editedApp) => {
       .then(res => {
         console.log(res.data);
         dispatch({ type: RET_EDIT_CONTRACTOR_APP_SUCC, payload: res.data });
+      })
+      .catch(err => {
+        dispatch({ type: CONTRACTOR_APP_FAIL, payload: err });
+      });
+  };
+};
+
+export const createNewAppointment = appoint => {
+  return dispatch => {
+    dispatch({ type: SENDING_POST_REQ });
+    axios
+      .post('http://localhost:5000/api/appointments', appoint)
+      .then(res => {
+        dispatch({ type: RET_POST_USER_APP_SUCC, payload: res.data });
+      })
+      .catch(err => {
+        dispatch({ type: USER_APP_FAIL, payload: err });
+      });
+  };
+};
+
+export const deleteAppointment = id => {
+  const theId = id;
+  console.log(id);
+  return dispatch => {
+    dispatch({ type: SENDING_DELETE_REQ });
+    axios
+      .delete(`http://localhost:5000/api/appointments/${id}`)
+      .then(res => {
+        console.log('test');
+        dispatch({ type: RET_DELETE_APP_SUCC, payload: theId });
       })
       .catch(err => {
         dispatch({ type: CONTRACTOR_APP_FAIL, payload: err });
