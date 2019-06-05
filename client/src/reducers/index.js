@@ -39,6 +39,18 @@ const initialState = {
   contractors: [],
   // feedback: []
   appointments: [],
+  services: [
+    {
+      id: 1,
+      name: "Plumbing",
+      price: "$100.00"
+    },
+    {
+      id: 2,
+      name: "Carpentry",
+      price: "$250.00"
+    }
+  ],
   loading: false,
   error: null,
   thisContractor: {},
