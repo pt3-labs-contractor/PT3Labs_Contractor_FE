@@ -5,6 +5,7 @@ import Calendar from '../calendar/Calendar';
 import ContractorCard from './ContractorCard';
 import AvailabilityList from '../appointments/AvailabilityList';
 import NavBarContractor from '../navbar/NavBarContractor';
+import AppointmentForm from '../appointments/AppointmentForm';
 
 import {
   selectSingleContractorSetting,
@@ -12,7 +13,8 @@ import {
 } from '../../actions/index';
 
 function Contractor(props) {
-  const [selectedService, setService] = useState({});
+  const [service, setService] = useState({});
+  const [appointment, setAppointment] = useState({});
 
   useEffect(() => {
     const { id } = props.match.params;
@@ -23,7 +25,9 @@ function Contractor(props) {
     // eslint-disable-next-line
   }, []);
 
-  const makeAppointment = () => {};
+  const makeAppointment = date => {
+    setAppointment(date);
+  };
 
   return (
     <div>
@@ -36,8 +40,12 @@ function Contractor(props) {
         </div>
       ))}
       <Calendar contractor={props.contractor} />
-      <AvailabilityList selectedDay={props.selectedDay} />
-      <div>{selectedService.name}</div>
+      <AvailabilityList
+        contractor
+        selectedDay={props.selectedDay}
+        setAppointment={makeAppointment}
+      />
+      <AppointmentForm appointment={appointment} service={service} />
     </div>
   );
 }
