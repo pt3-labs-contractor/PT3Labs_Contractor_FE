@@ -11,9 +11,20 @@ function Login(props) {
 
   function handleSubmit(e) {
     e.preventDefault();
+    const bearer = `Bearer ${localStorage.getItem('jwt')}`;
+    const headers = { authorization: bearer };
+    const credentials = { username, password };
+
     axios
-      .post()
+      .post(
+        'https://fierce-plains-47590.herokuapp.com/api/auth/login',
+        credentials,
+        {
+          headers,
+        }
+      )
       .then(res => {
+        localStorage.setItem('jwt', res.data.token);
         props.history.push('/contractors');
       })
       .catch(err => {
@@ -29,10 +40,10 @@ function Login(props) {
       <MainNavbar />
       <div className="form-container">
         <h1 className="text-primary">Log In</h1>
-        <p>
-          <i className="fas fa-user signin-p" /> Sign in with:{' '}
+        <p className="lead">
+          <i className="fas fa-user" /> Sign in with:{' '}
         </p>
-        <div className="google-oauth">
+        <div className="social-container google-oauth">
           <a href="https://fierce-plains-47590.herokuapp.com/api/auth/google">
             Google Oauth <i className="fab fa-google-plus-g" />
           </a>
@@ -53,9 +64,8 @@ function Login(props) {
             onChange={e => setPassword(e.target.value)}
             value={password}
           />
-          <input type="submit" value="Log In" className="btn btn-primary" />
+          <input type="submit" value="Sign In" className="btn btn-primary" />
         </form>
-
         <p>
           Don't have an account?{' '}
           <NavLink to="/register" className="form-links">

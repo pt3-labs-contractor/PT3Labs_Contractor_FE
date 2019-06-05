@@ -2,6 +2,16 @@
   margin: 1rem;
 }
 
+.google-oauth:hover {
+  margin: 1rem;
+  opacity: .7;
+}
+
 .google-oauth a {
   color: #4285f4;
+
+}
+
+.form-links:hover {
+  opacity: .7;
 }

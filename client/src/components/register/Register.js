@@ -22,7 +22,6 @@ function Register(props) {
     event.preventDefault();
     const bearer = `Bearer ${localStorage.getItem('jwt')}`;
     const headers = { authorization: bearer };
-    // var { email, phoneNumber } = values;
 
     if (!oauth) {
       axios
@@ -40,6 +39,7 @@ function Register(props) {
         });
     } else {
       const userUpdate = {};
+      userUpdate.username = values.username;
       userUpdate.email = values.email;
       userUpdate.phoneNumber = values.phoneNumber;
 

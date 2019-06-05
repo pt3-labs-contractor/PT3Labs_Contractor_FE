@@ -4,7 +4,7 @@ import dateFns from 'date-fns';
 
 import { setDay, setMonth } from '../../actions/index';
 
-import AppointmentList from '../appointments/AppointmentList';
+import AvailabilityList from '../appointments/AvailabilityList';
 
 import './Calendar.css';
 import NavBarUser from '../navbar/NavBarUser';
@@ -34,7 +34,9 @@ function Calendar(props) {
     const start = dateFns.startOfWeek(selectedMonth);
 
     for (let i = 0; i < 7; i++) {
-      days.push(<div>{dateFns.format(dateFns.addDays(start, i), 'dddd')}</div>);
+      days.push(
+        <div key={i}>{dateFns.format(dateFns.addDays(start, i), 'dddd')}</div>
+      );
     }
     return <div className="day-container">{days}</div>;
   }
@@ -63,7 +65,7 @@ function Calendar(props) {
         >
           {dateFns.format(day, 'D')}
           {props.contractor.name ? (
-            <AppointmentList selectedDay={temp} />
+            <AvailabilityList selectedDay={temp} />
           ) : null}
         </div>
       );
@@ -84,6 +86,7 @@ function Calendar(props) {
 
   return (
     <div>
+      <NavBarUser />
       <CalendarNav />
       <DaysOfWeek />
       <DaysOfMonth />

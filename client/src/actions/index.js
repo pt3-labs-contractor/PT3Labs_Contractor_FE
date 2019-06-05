@@ -8,6 +8,9 @@ export const FETCHING_USERS_FAILURE = 'FAILURE';
 // exports for calander
 export const SET_MONTH = 'SET_MONTH';
 export const SET_DAY = 'SET_DAY';
+export const SET_SCHEDULE = 'SET_SCHEDULE';
+export const LOAD_SCHEDULE = 'LOAD_SCHEDULE';
+export const FAIL_SCHEDULE = 'FAIL_SCHEDULE';
 
 // exports for finding single contractor
 export const SINGLE_CONTRACTOR_LOADING = 'SINGLE_CONTRACTOR_LOADING';
@@ -31,17 +34,12 @@ export const CONTRACTOR_APP_LOADING = 'CONTRACTOR_APP_LOADING';
 export const RET_CONTRACTOR_APP_SUCC = 'RET_CONTRACTOR_APP_SUCC';
 export const CONTRACTOR_APP_FAIL = 'CONTRACTOR_APP_FAIL';
 
-export const POST_FEEDBACK_SUCCESS = 'POST_FEEDBACK_SUCCESS';
-export const POST_FEEDBACK_FAIL = 'POST_FEEDBACK_FAIL';
-export const POST_FEEDBACK_LOADING = 'POST_FEEDBACK_LOADING';
-export const SELECTED = 'SELECTED';
 // ---------------------------------------------------------------
 
 // axios get all accounts
 export const fetchAccts = () => dispatch => {
   dispatch({ type: LOADING_USERS });
-  const bearer = `Bearer ${localStorage.getItem('jwt')}`;
-  const headers = { authorization: bearer };
+  const headers = setHeaders();
 
   axios
     .all([
@@ -69,14 +67,36 @@ export const fetchAccts = () => dispatch => {
     });
 };
 
+export const fetchSchedule = id => dispatch => {
+  dispatch({ type: LOAD_SCHEDULE });
+  const headers = setHeaders();
+  axios
+    .get(
+      `https://fierce-plains-47590.herokuapp.com/api/schedules/contractor/${id}`,
+      { headers }
+    )
+    .then(res => {
+      dispatch({ type: SET_SCHEDULE, payload: res.data.schedule });
+    })
+    .catch(() => {
+      dispatch({ type: FAIL_SCHEDULE, error: 'Something went wrong' });
+    });
+};
+
 // axios get single contractor
 export const selectSingleContractorSetting = id => dispatch => {
   dispatch({ type: SINGLE_CONTRACTOR_LOADING });
+  const headers = setHeaders();
 
   axios
-    .get(`https://fierce-plains-47590.herokuapp.com/api/contractors/${id}`)
+    .get(`https://fierce-plains-47590.herokuapp.com/api/contractors/${id}`, {
+      headers,
+    })
     .then(res => {
-      dispatch({ type: FETCH_SINGLE_CONTRACTOR_SUCCESS, payload: res.data });
+      dispatch({
+        type: FETCH_SINGLE_CONTRACTOR_SUCCESS,
+        payload: res.data.contractor[0],
+      });
     })
     .catch(err =>
       dispatch({ type: FETCH_SINGLE_CONTRACTOR_FAIL, payload: err })
@@ -108,26 +128,24 @@ export const getContractorFeedback = id => dispatch => {
 };
 
 // axios post feedback about a contractor
-export const postFeedback = event => dispatch => {
-  axios
-    .post('', event)
-    .then(res => {
-      dispatch({ type: POST_FEEDBACK_SUCCESS, payload: res.data });
-    })
-    .catch(err => dispatch({ type: POST_FEEDBACK_FAIL, payload: err }));
-};
+// export const postFeedback = event => dispatch => {
+//   axios.post('', event)
+//   .then(res => {
+//     dispatch({ type: POST_FEEDBACK_SUCCESS, payload: res.data});
+//   })
+//   .catch(err => dispatch({type: POST_FEEDBACK_FAIL, payload: err}))
+// }
 
 // axios get appointments when current user is contractor
-// export const seeMyAppointments = (id = dispatch => {
-//   dispatch({ type: CONTRACTOR_APP_LOADING });
+// export const seeMyAppointments = (id) = dispatch => {
+//   dispatch({ type: CONTRACTOR_APP_LOADING })
 
-//   axios
-//     .get('')
-//     .then(res => {
-//       dispatch({ type: RET_CONTRACTOR_APP_SUCC, payload: res.data });
-//     })
-//     .catch(err => dispatch({ type: CONTRACTOR_APP_FAIL, payload: err }));
-// });
+//   axios.get('')
+//   .then( res => {
+//     dispatch({ type: RET_CONTRACTOR_APP_SUCC, payload: res.data })
+//   })
+//   .catch(err => dispatch({ type: CONTRACTOR_APP_FAIL, payload:err }))
+// }
 
 export const setDay = day => dispatch => {
   dispatch({ type: SET_DAY, payload: day });
@@ -137,7 +155,13 @@ export const setMonth = day => dispatch => {
   dispatch({ type: SET_MONTH, payload: day });
 };
 
-export const selectContractor = (id, list) => dispatch => {
-  const selected = list.filter(item => item.id === id);
-  dispatch({ type: SELECTED, payload: selected[0] });
-};
+function setHeaders() {
+  const bearer = `Bearer ${localStorage.getItem('jwt')}`;
+  const headers = { authorization: bearer };
+  return headers;
+}
+
+// export const selectContractor = (id, list) => dispatch => {
+//   const selected = list.filter(item => item.id === id);
+//   dispatch({ type: SELECTED, payload: selected[0]})
+// }
