@@ -4,8 +4,10 @@ import { connect } from 'react-redux';
 import Calendar from '../calendar/Calendar';
 import ContractorCard from './ContractorCard';
 import AvailabilityList from '../appointments/AvailabilityList';
-import NavBarContractor from '../navbar/NavBarContractor';
+import NavBarUser from '../navbar/NavBarUser';
 import AppointmentForm from '../appointments/AppointmentForm';
+
+import './Contractor.css';
 
 import {
   selectSingleContractorSetting,
@@ -31,7 +33,7 @@ function Contractor(props) {
 
   return (
     <div>
-      <NavBarContractor />
+      <NavBarUser />
       <ContractorCard contractor={props.contractor} />
       {props.services.map(service => (
         <div key={service.id} onClick={() => setService(service)}>
