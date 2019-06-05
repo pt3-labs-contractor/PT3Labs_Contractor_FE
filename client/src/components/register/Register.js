@@ -83,7 +83,6 @@ function Register(props) {
   }
 
   return (
-<<<<<<< HEAD
     <>
       <MainNavbar />
       <div className="form-container">
@@ -164,57 +163,6 @@ function Register(props) {
         </form>
       </div>
     </>
-=======
-    <div>
-      <button onClick={() => setContractor(true)}>Contractor</button>
-      <button onClick={() => setContractor(false)}>User </button>
-      <form onSubmit={handleSubmit}>
-        <input name="username" placeholder="Username" onChange={handleChange} />
-        {!oauth && (
-          <>
-            <input
-              name="password"
-              type="password"
-              placeholder="Password"
-              onChange={handleChange}
-            />
-          </>
-        )}
-        <input name="email" placeholder="E-mail" onChange={handleChange} />
-        <input
-          name="phoneNumber"
-          placeholder="Phone#"
-          onChange={handleChange}
-        />
-        {contractor && (
-          <>
-            <input
-              name="contractorName"
-              placeholder="Name"
-              onChange={handleChange}
-            />
-            <input
-              name="streetAddress"
-              placeholder="Street Address"
-              onChange={handleChange}
-            />
-            <input name="city" placeholder="City" onChange={handleChange} />
-            <input
-              name="stateAbbr"
-              placeholder="State"
-              onChange={handleChange}
-            />
-            <input
-              name="zipCode"
-              placeholder="Zip Code"
-              onChange={handleChange}
-            />
-          </>
-        )}
-        <button type="submit">Submit</button>
-      </form>
-    </div>
->>>>>>> 5f9194abc78c77a5100f4514654b489635b9b9df
   );
 }
 

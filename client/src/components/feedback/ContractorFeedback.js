@@ -1,20 +1,6 @@
 import React from 'react';
 // import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-<<<<<<< HEAD
-import Rating from 'react-rating';
-import NavBarContractor from '../navbar/NavBarContractor';
-
-function ContractorFeedback(props) {
-  return (
-    <>
-      <NavBarContractor />
-      <div>
-        <h2>Contractor OWN Feedback Page</h2>
-        {props.loading ? <p>Loading...</p> : null}
-        {props.error ? <p>{props.error}</p> : null}
-        {/* {props.feedback.map(contractor => (
-=======
 // import Rating from 'react-rating';
 
 function ContractorFeedback(props) {
@@ -24,7 +10,6 @@ function ContractorFeedback(props) {
       {props.loading ? <p>Loading...</p> : null}
       {props.error ? <p>{props.error}</p> : null}
       {/* {props.feedback.map(contractor => (
->>>>>>> 5f9194abc78c77a5100f4514654b489635b9b9df
           <div>
             Username: {props.feedback.users.username}
 
@@ -38,12 +23,7 @@ function ContractorFeedback(props) {
             Message: {props.feedback.message}
           </div>
         ))} */}
-<<<<<<< HEAD
-      </div>
-    </>
-=======
     </div>
->>>>>>> 5f9194abc78c77a5100f4514654b489635b9b9df
   );
 }
 
