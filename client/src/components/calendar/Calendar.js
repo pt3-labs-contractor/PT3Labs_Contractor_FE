@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import dateFns from 'date-fns';
+import ServiceForm from '../servicesForm';
+import Scheduler from '../scheduler';
 
 import { setDay, setMonth } from '../../actions/index';
 
@@ -54,6 +56,7 @@ function Calendar(props) {
       const temp = day;
       days.push(
         <div
+          key={temp}
           className={`cell ${
             dateFns.isSameDay(temp, selectedDay)
               ? ' selected'
@@ -70,6 +73,7 @@ function Calendar(props) {
         </div>
       );
       day = dateFns.addDays(day, 1);
+      console.log(day);
     }
 
     return <div className="cell-container">{days}</div>;
@@ -90,6 +94,8 @@ function Calendar(props) {
       <CalendarNav />
       <DaysOfWeek />
       <DaysOfMonth />
+      <ServiceForm />
+      <Scheduler />
     </div>
   );
 }

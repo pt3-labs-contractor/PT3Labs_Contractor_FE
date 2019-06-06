@@ -1,4 +1,8 @@
 import {
+  SEND_SERV,
+  SEND_SERV_COMP,
+  SEND_SCHED,
+  SEND_SCHED_COMP,
   // fetching users
   LOADING_USERS,
   FETCHING_USERS_SUCCESS,
@@ -138,6 +142,17 @@ export default (state = initialState, action) => {
     //   return {...state, accounts:{appointments: action.payload }}
     // case CONTRACTOR_APP_FAIL:
     //   return {...state, loading: false, error: action.error}
+    case SEND_SERV:
+      return {
+        ...state,
+        loading: true,
+      };
+    case SEND_SERV_COMP:
+      return { ...state, loading: false };
+    case SEND_SCHED:
+      return { ...state, loading: true };
+    case SEND_SCHED_COMP:
+      return { ...state, loading: false };
     default:
       return state;
   }

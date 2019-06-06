@@ -1,5 +1,10 @@
 import axios from 'axios';
 
+export const SEND_SERV = 'SEND_SERV';
+export const SEND_SERV_COMP = 'SEND_SERV_COMP';
+export const SEND_SCHED = 'SEND_SCHED';
+export const SEND_SCHED_COMP = 'SEND_SCHED_COMP';
+
 // exports for fetching all users
 export const LOADING_USERS = 'LOADING';
 export const FETCHING_USERS_SUCCESS = 'SUCCESS';
@@ -39,7 +44,8 @@ export const CONTRACTOR_APP_FAIL = 'CONTRACTOR_APP_FAIL';
 // axios get all accounts
 export const fetchAccts = () => dispatch => {
   dispatch({ type: LOADING_USERS });
-  const headers = setHeaders();
+  const bearer = `Bearer ${localStorage.getItem('jwt')}`;
+  const headers = { authorization: bearer };
 
   axios
     .all([
@@ -52,8 +58,10 @@ export const fetchAccts = () => dispatch => {
     ])
     .then(
       axios.spread((userRes, contRes) => {
+        console.log(userRes.data);
+        console.log(contRes.data);
         const accounts = {
-          users: userRes.data.users,
+          users: userRes.data.user,
           contractors: contRes.data.contractors,
         };
         dispatch({ type: FETCHING_USERS_SUCCESS, payload: accounts });
@@ -93,6 +101,7 @@ export const selectSingleContractorSetting = id => dispatch => {
       headers,
     })
     .then(res => {
+      console.log(res.data.contractor[0]);
       dispatch({
         type: FETCH_SINGLE_CONTRACTOR_SUCCESS,
         payload: res.data.contractor[0],
@@ -146,6 +155,44 @@ export const getContractorFeedback = id => dispatch => {
 //   })
 //   .catch(err => dispatch({ type: CONTRACTOR_APP_FAIL, payload:err }))
 // }
+//
+export const postNewService = serv => {
+  return dispatch => {
+    dispatch({ type: SEND_SERV });
+    const bearer = `Bearer ${localStorage.getItem('jwt')}`;
+    const headers = { authorization: bearer };
+    axios
+      .post('https://fierce-plains-47590.herokuapp.com/api/services', serv, {
+        headers,
+      })
+      .then(res => {
+        console.log(res.data);
+        dispatch({ type: SEND_SERV_COMP });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+};
+
+export const postNewSchedule = sched => {
+  const bearer = `Bearer ${localStorage.getItem('jwt')}`;
+  const headers = { authorization: bearer };
+  return dispatch => {
+    dispatch({ type: SEND_SCHED });
+    axios
+      .post('https://fierce-plains-47590.herokuapp.com/api/schedules', sched, {
+        headers,
+      })
+      .then(res => {
+        console.log(res.data);
+        dispatch({ type: SEND_SCHED_COMP });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+};
 
 export const setDay = day => dispatch => {
   dispatch({ type: SET_DAY, payload: day });

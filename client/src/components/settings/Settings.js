@@ -7,7 +7,7 @@ import './Settings.css';
 import NavBarContractor from '../navbar/NavBarContractor';
 
 function ContractorSetting(props) {
-  // console.log(props);
+  console.log(props);
   return (
     <>
       <NavBarContractor />
