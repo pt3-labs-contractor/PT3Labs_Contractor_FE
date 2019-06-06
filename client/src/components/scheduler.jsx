@@ -51,7 +51,7 @@ const Scheduler = props => {
 const mstp = state => {
   return {
     today: state.thisDay,
-    user: state.accounts.users,
+    user: state.user,
   };
 };
 

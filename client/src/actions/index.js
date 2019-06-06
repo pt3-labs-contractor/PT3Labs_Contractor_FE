@@ -69,13 +69,13 @@ export const fetchAccts = () => dispatch => {
           users: userRes.data.user,
           contractors: contRes.data.contractors,
         };
-        dispatch({ type: FETCHING_USERS_SUCCESS, payload: accounts });
+        // dispatch({ type: FETCHING_USERS_SUCCESS, payload: accounts });
         let { user } = userRes.data;
         console.log('user: ', user);
         if (user.contractorId) {
           axios
             .get(
-              `https://fierce-plains-47590.herokuapp.com/api/contractors/${
+              `https:fierce-plains-47590.herokuapp.com/api/contractors/${
                 user.contractorId
               }`,
               { headers }

@@ -72,7 +72,6 @@ function Calendar(props) {
         </div>
       );
       day = dateFns.addDays(day, 1);
-      console.log(day);
     }
 
     return <div className="cell-container">{days}</div>;

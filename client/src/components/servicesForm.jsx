@@ -3,15 +3,9 @@ import { connect } from 'react-redux';
 import { fetchAccts, postNewService } from '../actions/index.js';
 
 const ServiceForm = props => {
-  // const [service, setService] = useState({
-  //   name: '',
-  //   price: '',
-  //   contractorId: '',
-  // });
   const [name, setName] = useState('');
   const [amount, setAmount] = useState();
   const { contractorId } = props.user;
-  console.log(contractorId);
 
   const onChange = e => {
     e.target.id === 'name'
@@ -59,7 +53,7 @@ const ServiceForm = props => {
 
 const mstp = state => {
   return {
-    user: state.accounts.users,
+    user: state.user,
   };
 };
 
