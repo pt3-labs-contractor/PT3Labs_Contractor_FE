@@ -12,6 +12,11 @@ export const SET_SCHEDULE = 'SET_SCHEDULE';
 export const LOAD_SCHEDULE = 'LOAD_SCHEDULE';
 export const FAIL_SCHEDULE = 'FAIL_SCHEDULE';
 
+// export for services
+export const SET_SERVICES = 'SET_SERVICES';
+export const LOAD_SERVICES = 'LOAD_SERVICES';
+export const FAIL_SERVICES = 'FAIL_SERVICES';
+
 // exports for finding single contractor
 export const SINGLE_CONTRACTOR_LOADING = 'SINGLE_CONTRACTOR_LOADING';
 export const FETCH_SINGLE_CONTRACTOR_SUCCESS =
@@ -93,6 +98,23 @@ export const fetchSchedule = id => dispatch => {
     })
     .catch(() => {
       dispatch({ type: FAIL_SCHEDULE, error: 'Something went wrong' });
+    });
+};
+
+export const fetchServices = id => dispatch => {
+  dispatch({ type: LOAD_SERVICES });
+  const headers = setHeaders();
+
+  axios
+    .get(
+      `https://fierce-plains-47590.herokuapp.com/api/services/contractor/${id}`,
+      { headers }
+    )
+    .then(res => {
+      dispatch({ type: SET_SERVICES, payload: res.data.services });
+    })
+    .catch(() => {
+      dispatch({ type: FAIL_SERVICES, error: 'Something went wrong.' });
     });
 };
 

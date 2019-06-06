@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import dateFns from 'date-fns';
+import axios from 'axios';
 
 import ConfirmModal from './ConfirmModal';
 
@@ -7,8 +8,30 @@ function AppointmentForm(props) {
   const [confirm, setConfirm] = useState(false);
   const { startTime } = props.appointment;
 
-  function postAppointment() {
-    console.log('It worked!');
+  function postAppointment(check) {
+    if (check) {
+      const bearer = `Bearer ${localStorage.getItem('jwt')}`;
+      const headers = { authorization: bearer };
+      const appointment = {
+        contractorId: props.contractor,
+        serviceId: props.service.id,
+        scheduleId: props.appointment.id,
+        appointmentDatetime: startTime,
+        duration: `${props.appointment.duration.hours}h`,
+      };
+      axios
+        .post(
+          'https://fierce-plains-47590.herokuapp.com/api/appointments',
+          appointment,
+          { headers }
+        )
+        .then(res => {
+          console.log('Created!');
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
     setConfirm(false);
   }
 

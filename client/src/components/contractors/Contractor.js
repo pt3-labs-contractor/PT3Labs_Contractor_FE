@@ -12,17 +12,19 @@ import './Contractor.css';
 import {
   selectSingleContractorSetting,
   fetchSchedule,
+  fetchServices,
 } from '../../actions/index';
 
 function Contractor(props) {
   const [service, setService] = useState({});
   const [appointment, setAppointment] = useState({});
+  const { id } = props.match.params;
 
   useEffect(() => {
-    const { id } = props.match.params;
     Promise.all([
       props.selectSingleContractorSetting(id),
       props.fetchSchedule(id),
+      props.fetchServices(id),
     ]);
     // eslint-disable-next-line
   }, []);
@@ -47,7 +49,11 @@ function Contractor(props) {
         selectedDay={props.selectedDay}
         setAppointment={makeAppointment}
       />
-      <AppointmentForm appointment={appointment} service={service} />
+      <AppointmentForm
+        contractor={id}
+        appointment={appointment}
+        service={service}
+      />
     </div>
   );
 }
@@ -64,5 +70,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { selectSingleContractorSetting, fetchSchedule }
+  { selectSingleContractorSetting, fetchSchedule, fetchServices }
 )(Contractor);

@@ -13,6 +13,11 @@ import {
   LOAD_SCHEDULE,
   FAIL_SCHEDULE,
 
+  // fetching services
+  SET_SERVICES,
+  LOAD_SERVICES,
+  FAIL_SERVICES,
+
   // fetching single contractor
   SINGLE_CONTRACTOR_LOADING,
   FETCH_SINGLE_CONTRACTOR_SUCCESS,
@@ -39,18 +44,7 @@ const initialState = {
   contractors: [],
   // feedback: []
   appointments: [],
-  services: [
-    {
-      id: 1,
-      name: "Plumbing",
-      price: "$100.00"
-    },
-    {
-      id: 2,
-      name: "Carpentry",
-      price: "$250.00"
-    }
-  ],
+  services: [],
   loading: false,
   error: null,
   thisContractor: {},
@@ -127,6 +121,19 @@ export default (state = initialState, action) => {
       };
     case FETCH_SINGLE_CONTRACTOR_FAIL:
       return { ...state, loading: false, error: action.error };
+
+    // fetching services
+    case SET_SERVICES:
+      return {
+        ...state,
+        services: action.payload,
+        loading: false,
+        error: null,
+      };
+    case LOAD_SERVICES:
+      return { ...state, services: [], loading: true, error: null };
+    case FAIL_SERVICES:
+      return { ...state, services: [], loading: false, error: action.error };
 
     // fetching current user written feedback
     // case USER_WRITTEN_FEEDBACK_LOADING:
