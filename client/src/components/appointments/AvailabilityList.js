@@ -19,7 +19,10 @@ function AvailabilityList(props) {
       const start = dateFns.startOfHour(item.startTime);
       const end = dateFns.addHours(start, item.duration.hours);
       return (
-        <div key={item.id}>
+        <div
+          key={item.id}
+          onClick={props.contractor ? () => props.setAppointment(item) : null}
+        >
           {`${dateFns.format(start, 'HH:mm')} - ${dateFns.format(
             end,
             'HH:mm'

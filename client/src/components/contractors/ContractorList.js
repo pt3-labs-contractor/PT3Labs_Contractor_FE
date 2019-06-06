@@ -21,7 +21,8 @@ function ContractorList(props) {
 
 const mapStateToProps = state => {
   return {
-    contractors: state.accounts.contractors,
+    contractors: state.contractors,
+    user: state.user,
     loading: state.loading,
     error: state.error,
   };
