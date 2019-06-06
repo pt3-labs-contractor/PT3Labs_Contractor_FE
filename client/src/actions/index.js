@@ -106,9 +106,10 @@ export const selectSingleContractorSetting = id => dispatch => {
 // axios get feedback written by the current user
 export const getUserWrittenFeedback = id => dispatch => {
   dispatch({ type: USER_WRITTEN_FEEDBACK_LOADING });
+  const headers = setHeaders();
 
   axios
-    .get('')
+    .get('',headers)
     .then(res => {
       dispatch({ type: USER_WRITTEN_FEEDBACK_SUCCESS, payload: res.data });
     })
@@ -118,9 +119,10 @@ export const getUserWrittenFeedback = id => dispatch => {
 // axios get feedback targeting a contractor
 export const getContractorFeedback = id => dispatch => {
   dispatch({ type: CONTRACTOR_FEEDBACK_LOADING });
+  const headers = setHeaders();
 
   axios
-    .get('')
+    .get('',headers)
     .then(res => {
       dispatch({ type: FETCH_CONTRACTOR_FEEDBACK_SUCCESS, payload: res.data });
     })
@@ -129,7 +131,8 @@ export const getContractorFeedback = id => dispatch => {
 
 // axios post feedback about a contractor
 // export const postFeedback = event => dispatch => {
-//   axios.post('', event)
+  // const headers = setHeaders();
+//   axios.post('',headers, event)
 //   .then(res => {
 //     dispatch({ type: POST_FEEDBACK_SUCCESS, payload: res.data});
 //   })
@@ -139,8 +142,9 @@ export const getContractorFeedback = id => dispatch => {
 // axios get appointments when current user is contractor
 // export const seeMyAppointments = (id) = dispatch => {
 //   dispatch({ type: CONTRACTOR_APP_LOADING })
+// const headers = setHeaders();
 
-//   axios.get('')
+//   axios.get('',headers)
 //   .then( res => {
 //     dispatch({ type: RET_CONTRACTOR_APP_SUCC, payload: res.data })
 //   })

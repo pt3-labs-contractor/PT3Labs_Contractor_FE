@@ -44,8 +44,8 @@ const mapStateToProps = state => {
     // console.log(state)
   return {
     contractor: state.thisContractor,
-    loading: state.loading,
-    error: state.error
+    // loading: state.loading,
+    // error: state.error
   }
 }
 
