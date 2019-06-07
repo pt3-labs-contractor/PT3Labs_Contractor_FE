@@ -1,17 +1,25 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import dateFns from 'date-fns';
 import ServiceForm from '../servicesForm';
 import Scheduler from '../scheduler';
+import SchduleList from '../scheduleList';
 
-import { setDay, setMonth } from '../../actions/index';
+import { setDay, setMonth, getSchedules } from '../../actions/index';
 
 import AvailabilityList from '../appointments/AvailabilityList';
 
 import './Calendar.css';
 
 function Calendar(props) {
+  const [id, setId] = useState('');
+  const [formHidden, setFormHidden] = useState(true);
   const { selectedDay, selectedMonth, setMonth } = props;
+  const stringify = JSON.stringify(props.schedules);
+  useEffect(() => {
+    setId(props.id);
+    props.getSchedules(props.id);
+  }, [stringify, props.id]);
 
   function CalendarNav() {
     return (
@@ -53,6 +61,9 @@ function Calendar(props) {
 
     while (day <= endCalendar) {
       const temp = day;
+      const daySched = props.schedules.filter(s => {
+        return dateFns.isSameDay(s.startTime, temp);
+      });
       days.push(
         <div
           key={temp}
@@ -69,6 +80,7 @@ function Calendar(props) {
           {props.contractor.name ? (
             <AvailabilityList selectedDay={temp} />
           ) : null}
+          {daySched.length > 0 ? <SchduleList schs={daySched} /> : null}
         </div>
       );
       day = dateFns.addDays(day, 1);
@@ -101,11 +113,13 @@ const mapStateToProps = state => {
   return {
     selectedDay: state.thisDay,
     selectedMonth: state.thisMonth,
+    schedules: state.schedule,
+    id: state.user.contractorId,
     // contractor: state.thisContractor
   };
 };
 
 export default connect(
   mapStateToProps,
-  { setDay, setMonth }
+  { setDay, setMonth, getSchedules }
 )(Calendar);

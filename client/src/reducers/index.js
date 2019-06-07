@@ -3,6 +3,11 @@ import {
   SEND_SERV_COMP,
   SEND_SCHED,
   SEND_SCHED_COMP,
+  GET_SCHED,
+  DEL_SCHED,
+  DEL_SCHED_COMP,
+  UP_SCHED,
+  UP_SCHED_COMP,
   // fetching users
   LOADING_USERS,
   FETCHING_USERS_SUCCESS,
@@ -172,7 +177,34 @@ export default (state = initialState, action) => {
     case SEND_SCHED:
       return { ...state, loading: true };
     case SEND_SCHED_COMP:
-      return { ...state, loading: false };
+      const newSchedual = [...state.schedule];
+      return {
+        ...state,
+        loading: false,
+        schedule: [...newSchedual, action.payload],
+      };
+    case GET_SCHED:
+      return { ...state, loading: true };
+    case SET_SCHEDULE:
+      return { ...state, schedule: [action.payload] };
+    case DEL_SCHED:
+      return { ...state, loading: true };
+    case DEL_SCHED_COMP:
+      const newState = state.schedule.filter(sch => {
+        return sch.id !== action.payload;
+      });
+      return { ...state, loading: false, schedule: newState };
+    case UP_SCHED:
+      return { ...state, loading: true };
+    case UP_SCHED_COMP:
+      const updatedSched = state.schedule.filter(s => {
+        return s.id !== action.payload.id;
+      });
+      return {
+        ...state,
+        loading: false,
+        schedule: [...updatedSched, action.payload],
+      };
     default:
       return state;
   }

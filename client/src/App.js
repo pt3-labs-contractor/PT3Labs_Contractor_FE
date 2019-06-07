@@ -32,26 +32,26 @@ function App(props) {
       <main className="main-content">
         {/* <NavBarUser />
         <NavBarContractor /> */}
-        <Switch>
-          <Route exact path="/" component={Homepage} />
-          <Route path="/users" component={Users} />
-          <Route exact path="/contractors" component={ContractorList} />
-          <Route path="/contractors/:id" component={Contractor} />
-          <Route path="/login" component={Login} />
-          <Route path="/redirect" component={Redirect} />
-          <Route exact path="/register" component={Register} />
-          <Route
-            path="/register/oauth"
-            render={props => <Register {...props} oauth />}
-          />
-          <Route
-            path="/calendar"
-            render={props => <Calendar contractor={{}} />}
-          />
-          <Route path="/settings" component={Settings} />
-          <Route path="/contractorFeedback" component={ContractorFeedback} />
-          <Route path="/userFeedback" component={UserFeedback} />
-        </Switch>
+        {/* <Switch> */}
+        <Route exact path="/" component={Homepage} />
+        <Route path="/users" component={Users} />
+        <Route exact path="/contractors" component={ContractorList} />
+        <Route path="/contractors/:id" component={Contractor} />
+        <Route path="/login" component={Login} />
+        <Route path="/redirect" component={Redirect} />
+        <Route exact path="/register" component={Register} />
+        <Route
+          path="/register/oauth"
+          render={props => <Register {...props} oauth />}
+        />
+        <Route
+          path="/calendar"
+          render={props => <Calendar contractor={{}} />}
+        />
+        <Route path="/settings" component={Settings} />
+        <Route path="/contractorFeedback" component={ContractorFeedback} />
+        <Route path="/userFeedback" component={UserFeedback} />
+        {/* </Switch> */}
       </main>
     </div>
   );
