@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import './App.css';
@@ -28,7 +28,6 @@ function App(props) {
 
   return (
     <div className="App">
-      {/* <MainNavbar /> */}
       <main className="main-content">
         {/* <NavBarUser />
         <NavBarContractor /> */}
@@ -37,6 +36,14 @@ function App(props) {
         <Route path="/users" component={Users} />
         <Route exact path="/contractors" component={ContractorList} />
         <Route path="/contractors/:id" component={Contractor} />
+        <Route exact path="/" component={Homepage} />
+        <Route
+          path="/app"
+          component={props.user.contractorId ? NavBarContractor : NavBarUser}
+        />
+        <Route path="/users" component={Users} />
+        <Route exact path="/app/contractors" component={ContractorList} />
+        <Route path="/app/contractors/:id" component={Contractor} />
         <Route path="/login" component={Login} />
         <Route path="/redirect" component={Redirect} />
         <Route exact path="/register" component={Register} />
@@ -51,15 +58,22 @@ function App(props) {
         <Route path="/settings" component={Settings} />
         <Route path="/contractorFeedback" component={ContractorFeedback} />
         <Route path="/userFeedback" component={UserFeedback} />
+<<<<<<< HEAD
         {/* </Switch> */}
       </main>
     </div>
   );
 }
 
+const mapStateToProps = state => {
+  return {
+    user: state.user,
+  };
+};
+
 export default withRouter(
   connect(
-    null,
+    mapStateToProps,
     { fetchAccts }
   )(App)
 );

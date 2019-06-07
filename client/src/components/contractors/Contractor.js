@@ -33,28 +33,42 @@ function Contractor(props) {
     setAppointment(date);
   };
 
+  const clearAppointment = () => {
+    setAppointment({});
+    setService({});
+  };
+
   return (
-    <div>
+    <>
       <NavBarUser />
-      <ContractorCard contractor={props.contractor} />
-      {props.services.map(service => (
-        <div key={service.id} onClick={() => setService(service)}>
-          <p>{service.name}</p>
-          <p>{service.price}</p>
+      <div className="contractor-container">
+        <ContractorCard contractor={props.contractor} />
+        <div className="services-container">
+          {props.services.map(service => (
+            <div key={service.id} onClick={() => setService(service)}>
+              <p>{service.name}</p>
+              <p>{service.price}</p>
+            </div>
+          ))}
         </div>
-      ))}
-      <Calendar contractor={props.contractor} />
-      <AvailabilityList
-        contractor
-        selectedDay={props.selectedDay}
-        setAppointment={makeAppointment}
-      />
-      <AppointmentForm
-        contractor={id}
-        appointment={appointment}
-        service={service}
-      />
-    </div>
+        <div className="contractor-calendar">
+          <Calendar contractor={props.contractor} />
+          <div className="availability-list">
+            <AvailabilityList
+              contractor
+              selectedDay={props.selectedDay}
+              setAppointment={makeAppointment}
+            />
+          </div>
+        </div>
+        <AppointmentForm
+          contractor={id}
+          clearAppointment={clearAppointment}
+          appointment={appointment}
+          service={service}
+        />
+      </div>
+    </>
   );
 }
 

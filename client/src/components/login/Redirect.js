@@ -3,7 +3,6 @@ import queryString from 'query-string';
 
 function Redirect(props) {
   useEffect(() => {
-    // const { token } = props.match.params;
     const { token, registrationComplete } = queryString.parse(
       props.location.search
     );

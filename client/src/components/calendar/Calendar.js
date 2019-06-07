@@ -29,7 +29,9 @@ function Calendar(props) {
             &lt;
           </div>
         ) : null}
-        <div>{dateFns.format(selectedMonth, 'MMMM YYYY')}</div>
+        <div className="nav-month">
+          {dateFns.format(selectedMonth, 'MMMM YYYY')}
+        </div>
         <div onClick={() => setMonth(dateFns.addMonths(selectedMonth, 1))}>
           &gt;
         </div>
@@ -44,7 +46,9 @@ function Calendar(props) {
 
     for (let i = 0; i < 7; i++) {
       days.push(
-        <div key={i}>{dateFns.format(dateFns.addDays(start, i), 'dddd')}</div>
+        <div className="day-cell" key={i}>
+          {dateFns.format(dateFns.addDays(start, i), 'dddd')}
+        </div>
       );
     }
     return <div className="day-container">{days}</div>;
