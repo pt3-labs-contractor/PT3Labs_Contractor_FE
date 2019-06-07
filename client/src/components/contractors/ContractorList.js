@@ -11,7 +11,7 @@ function ContractorList(props) {
       {props.loading ? <p>Loading...</p> : null}
       {props.error ? <p>{props.error}</p> : null}
       {props.contractors.map(contractor => (
-        <Link to={`/contractors/${contractor.id}`} key={contractor.id}>
+        <Link to={`/app/contractors/${contractor.id}`} key={contractor.id}>
           <ContractorCard contractor={contractor} />
         </Link>
       ))}
