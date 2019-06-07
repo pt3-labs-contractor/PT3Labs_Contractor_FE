@@ -43,7 +43,7 @@ export const CONTRACTOR_APP_FAIL = 'CONTRACTOR_APP_FAIL';
 
 // axios get all accounts
 export const fetchAccts = () => dispatch => {
-  dispatch({ type: LOADING_USERS });
+  // dispatch({ type: LOADING_USERS });
   const headers = setHeaders();
 
   axios
@@ -71,6 +71,19 @@ export const fetchAccts = () => dispatch => {
               user = Object.assign(user, res.data.contractor[0]);
             });
         }
+        // const { contractors } = contRes.data;
+        // const length = contractors.length + 1;
+        // const limit = 25;
+        // const dividedContractors = [];
+        // for (let x = 1; x < Math.ceil(length / limit); x++) {
+        //   const temp = [];
+        //   const pageItems = length / (limit * x) > 1 ? limit : length % limit;
+        //   for (let y = 0; y < pageItems; y++) {
+        //     temp.push(contractors[(x - 1) * limit + y]);
+        //   }
+        //   // dividedContractors = { ...dividedContractors, [`page${x}`]: temp };
+        //   dividedContractors.push(temp);
+        // }
         dispatch({
           type: FETCHING_USERS_SUCCESS,
           payload: { user, contractors: contRes.data.contractors },
