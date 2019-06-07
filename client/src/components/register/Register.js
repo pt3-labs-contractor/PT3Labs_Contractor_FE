@@ -103,13 +103,13 @@ function Register(props) {
           User{' '}
         </button>
         <form onSubmit={handleSubmit}>
+          <input
+            name="username"
+            placeholder="Username"
+            onChange={handleChange}
+          />
           {!oauth && (
             <>
-              <input
-                name="username"
-                placeholder="Username"
-                onChange={handleChange}
-              />
               <input
                 name="password"
                 type="password"
