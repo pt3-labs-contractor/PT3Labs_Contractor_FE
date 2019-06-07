@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import './App.css';
@@ -30,11 +30,7 @@ function App(props) {
 
   return (
     <div className="App">
-      {/* <MainNavbar /> */}
       <main className="main-content">
-        {/* <NavBarUser />
-        <NavBarContractor /> */}
-        <Switch>
           <Route exact path="/" component={Homepage} />
           <Route path="/users" component={Users} />
           <Route exact path="/contractors" component={ContractorList} />
@@ -50,7 +46,6 @@ function App(props) {
           <Route path="/settings" component={Settings} />
           <Route path="/contractorFeedback" component={ContractorFeedback} />
           <Route path="/userFeedback" component={UserFeedback} />
-        </Switch>
       </main>
     </div>
   );

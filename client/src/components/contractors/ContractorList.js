@@ -3,8 +3,13 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import ContractorCard from './ContractorCard';
+// import NavBarUser from './components/navbar/NavBarUser';
+
 
 function ContractorList(props) {
+  // console.log(props.user)
+  // <NavBarUser/>
+  // props.history.push('/')
   return (
     <div>
       <h3>Contractors:</h3>

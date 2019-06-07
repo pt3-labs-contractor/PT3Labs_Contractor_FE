@@ -1,49 +1,37 @@
 import axios from 'axios';
 
 // exports for fetching all users
-export const LOADING_USERS = 'LOADING';
+export const LOADING = 'LOADING';
 export const FETCHING_USERS_SUCCESS = 'SUCCESS';
-export const FETCHING_USERS_FAILURE = 'FAILURE';
+export const FAILURE = 'FAILURE';
 
 // exports for calander
 export const SET_MONTH = 'SET_MONTH';
 export const SET_DAY = 'SET_DAY';
 export const SET_SCHEDULE = 'SET_SCHEDULE';
-export const LOAD_SCHEDULE = 'LOAD_SCHEDULE';
-export const FAIL_SCHEDULE = 'FAIL_SCHEDULE';
 
 // export for services
 export const SET_SERVICES = 'SET_SERVICES';
-export const LOAD_SERVICES = 'LOAD_SERVICES';
-export const FAIL_SERVICES = 'FAIL_SERVICES';
 
 // exports for finding single contractor
-export const SINGLE_CONTRACTOR_LOADING = 'SINGLE_CONTRACTOR_LOADING';
 export const FETCH_SINGLE_CONTRACTOR_SUCCESS =
   'FETCH_SINGLE_CONTRACTOR_SUCCESS';
-export const FETCH_SINGLE_CONTRACTOR_FAIL = 'FETCH_SINGLE_CONTRACTOR_FAIL';
 
 // exports for retreiving feedback written by current user
-export const USER_WRITTEN_FEEDBACK_LOADING = 'USER_WRITTEN_FEEDBACK_LOADING';
 export const USER_WRITTEN_FEEDBACK_SUCCESS = 'USER_WRITTEN_FEEDBACK_SUCCESS';
-export const USER_WRITTEN_FEEDBACK_FAIL = 'USER_WRITTEN_FEEDBACK_FAIL';
 
 // exports for retrieving single contractor feedback
-export const CONTRACTOR_FEEDBACK_LOADING = 'CONTRACTOR_FEEDBACK_LOADING';
 export const FETCH_CONTRACTOR_FEEDBACK_SUCCESS =
   'FETCH_CONTRACTOR_FEEDBACK_SUCCESS';
-export const CONTRACTOR_FEEDBACK_FAIL = 'CONTRACTOR_FEEDBACK_FAIL';
 
 // exports for retrieving current contractor user appointments
-export const CONTRACTOR_APP_LOADING = 'CONTRACTOR_APP_LOADING';
 export const RET_CONTRACTOR_APP_SUCC = 'RET_CONTRACTOR_APP_SUCC';
-export const CONTRACTOR_APP_FAIL = 'CONTRACTOR_APP_FAIL';
 
 // ---------------------------------------------------------------
 
 // axios get all accounts
 export const fetchAccts = () => dispatch => {
-  dispatch({ type: LOADING_USERS });
+  dispatch({ type: LOADING });
   const headers = setHeaders();
 
   axios
@@ -58,7 +46,7 @@ export const fetchAccts = () => dispatch => {
     .then(
       axios.spread((userRes, contRes) => {
         let { user } = userRes.data;
-        console.log('user: ', user);
+        // console.log('user: ', user);
         if (user.contractorId) {
           axios
             .get(
@@ -79,14 +67,14 @@ export const fetchAccts = () => dispatch => {
     )
     .catch(() => {
       dispatch({
-        type: FETCHING_USERS_FAILURE,
+        type: FAILURE,
         error: 'Something went wrong.',
       });
     });
 };
 
 export const fetchSchedule = id => dispatch => {
-  dispatch({ type: LOAD_SCHEDULE });
+  dispatch({ type: LOADING });
   const headers = setHeaders();
   axios
     .get(
@@ -97,12 +85,12 @@ export const fetchSchedule = id => dispatch => {
       dispatch({ type: SET_SCHEDULE, payload: res.data.schedule });
     })
     .catch(() => {
-      dispatch({ type: FAIL_SCHEDULE, error: 'Something went wrong' });
+      dispatch({ type: FAILURE, error: 'Something went wrong' });
     });
 };
 
 export const fetchServices = id => dispatch => {
-  dispatch({ type: LOAD_SERVICES });
+  dispatch({ type: LOADING });
   const headers = setHeaders();
 
   axios
@@ -114,13 +102,13 @@ export const fetchServices = id => dispatch => {
       dispatch({ type: SET_SERVICES, payload: res.data.services });
     })
     .catch(() => {
-      dispatch({ type: FAIL_SERVICES, error: 'Something went wrong.' });
+      dispatch({ type: FAILURE, error: 'Something went wrong.' });
     });
 };
 
 // axios get single contractor
 export const selectSingleContractorSetting = id => dispatch => {
-  dispatch({ type: SINGLE_CONTRACTOR_LOADING });
+  dispatch({ type: LOADING });
   const headers = setHeaders();
 
   axios
@@ -134,13 +122,13 @@ export const selectSingleContractorSetting = id => dispatch => {
       });
     })
     .catch(err =>
-      dispatch({ type: FETCH_SINGLE_CONTRACTOR_FAIL, payload: err })
+      dispatch({ type: FAILURE, payload: err })
     );
 };
 
 // axios get feedback written by the current user
 export const getUserWrittenFeedback = id => dispatch => {
-  dispatch({ type: USER_WRITTEN_FEEDBACK_LOADING });
+  dispatch({ type: LOADING });
   const headers = setHeaders();
 
   axios
@@ -148,12 +136,12 @@ export const getUserWrittenFeedback = id => dispatch => {
     .then(res => {
       dispatch({ type: USER_WRITTEN_FEEDBACK_SUCCESS, payload: res.data });
     })
-    .catch(err => dispatch({ type: USER_WRITTEN_FEEDBACK_FAIL, payload: err }));
+    .catch(err => dispatch({ type: FAILURE, payload: err }));
 };
 
 // axios get feedback targeting a contractor
 export const getContractorFeedback = id => dispatch => {
-  dispatch({ type: CONTRACTOR_FEEDBACK_LOADING });
+  dispatch({ type: LOADING });
   const headers = setHeaders();
 
   axios
@@ -161,7 +149,7 @@ export const getContractorFeedback = id => dispatch => {
     .then(res => {
       dispatch({ type: FETCH_CONTRACTOR_FEEDBACK_SUCCESS, payload: res.data });
     })
-    .catch(err => dispatch({ type: CONTRACTOR_FEEDBACK_FAIL, payload: err }));
+    .catch(err => dispatch({ type: FAILURE, payload: err }));
 };
 
 // axios post feedback about a contractor
@@ -171,7 +159,7 @@ export const getContractorFeedback = id => dispatch => {
 //   .then(res => {
 //     dispatch({ type: POST_FEEDBACK_SUCCESS, payload: res.data});
 //   })
-//   .catch(err => dispatch({type: POST_FEEDBACK_FAIL, payload: err}))
+//   .catch(err => dispatch({type: FAILURE, payload: err}))
 // }
 
 // axios get appointments when current user is contractor
@@ -183,7 +171,7 @@ export const getContractorFeedback = id => dispatch => {
 //   .then( res => {
 //     dispatch({ type: RET_CONTRACTOR_APP_SUCC, payload: res.data })
 //   })
-//   .catch(err => dispatch({ type: CONTRACTOR_APP_FAIL, payload:err }))
+//   .catch(err => dispatch({ type: FAILURE, payload:err }))
 // }
 
 export const setDay = day => dispatch => {
