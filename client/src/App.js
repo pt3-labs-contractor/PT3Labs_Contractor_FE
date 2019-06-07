@@ -19,7 +19,7 @@ import NavBarContractor from './components/navbar/NavBarContractor';
 import Settings from './components/settings/Settings';
 import ContractorFeedback from './components/feedback/ContractorFeedback';
 import UserFeedback from './components/feedback/UserFeedback';
-import AppointmentList from './components/appointments/AppointmentList';
+import AvailabilityList from './components/appointments/AvailabilityList';
 
 
 function App(props) {
@@ -30,10 +30,10 @@ function App(props) {
 
   return (
     <div className="App">
-      <MainNavbar />
+      {/* <MainNavbar /> */}
       <main className="main-content">
-        <NavBarUser />
-        <NavBarContractor />
+        {/* <NavBarUser />
+        <NavBarContractor /> */}
         <Switch>
           <Route exact path="/" component={Homepage} />
           <Route path="/users" component={Users} />
@@ -46,7 +46,7 @@ function App(props) {
             path="/calendar"
             render={props => <Calendar contractor={{}} />}
           />
-          <Route path="/appointments" component={AppointmentList} />
+          <Route path="/appointments" component={AvailabilityList} />
           <Route path="/settings" component={Settings} />
           <Route path="/contractorFeedback" component={ContractorFeedback} />
           <Route path="/userFeedback" component={UserFeedback} />

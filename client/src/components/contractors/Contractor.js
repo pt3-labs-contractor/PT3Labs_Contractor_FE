@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Calendar from '../calendar/Calendar';
 import ContractorCard from './ContractorCard';
 import AvailabilityList from '../appointments/AvailabilityList';
+import NavBarContractor from '../navbar/NavBarContractor';
 
 import {
   selectSingleContractorSetting,
@@ -22,6 +23,7 @@ function Contractor(props) {
 
   return (
     <div>
+      <NavBarContractor />
       <ContractorCard contractor={props.contractor} />
       <Calendar contractor={props.contractor} />
       <AvailabilityList selectedDay={props.selectedDay} />

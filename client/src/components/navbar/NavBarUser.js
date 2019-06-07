@@ -1,20 +1,34 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
+import './NavBarUser.css';
 
 function NavBarUser() {
-    return (
-      <div>
-          <h3>NavBarUser</h3>
-          <Link to={'/calendar'}>Calendar</Link>
-          <Link to={'/appointments'}>Appointments</Link>
-          <Link to={'/userFeedback'}>Feedback</Link>
-          <Link to={'/contractors'}>Contractors</Link>
-          <button>Log Out</button>
-
-      </div>
-    )
-  }
-  
+  return (
+    <div>
+      <nav className="navbar bg-dark">
+        <NavLink to="/">
+          <h1>
+            <i className="far fa-calendar-alt"> Digital Calendar - user</i>
+          </h1>
+        </NavLink>
+        <ul>
+          <li>
+            <NavLink to="/calendar">Calendar</NavLink>
+          </li>
+          <li>
+            <NavLink to="/userFeedback">Feedback</NavLink>
+          </li>
+          <li>
+            <NavLink to="/contractors">Contractors</NavLink>
+          </li>
+          <li>
+            <NavLink to="/">Log Out</NavLink>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  );
+}
 
 export default connect()(NavBarUser);
