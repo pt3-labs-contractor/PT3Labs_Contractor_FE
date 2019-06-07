@@ -13,6 +13,11 @@ import {
   LOAD_SCHEDULE,
   FAIL_SCHEDULE,
 
+  // fetching services
+  SET_SERVICES,
+  LOAD_SERVICES,
+  FAIL_SERVICES,
+
   // fetching single contractor
   SINGLE_CONTRACTOR_LOADING,
   FETCH_SINGLE_CONTRACTOR_SUCCESS,
@@ -35,12 +40,11 @@ import {
 } from '../actions';
 
 const initialState = {
-  accounts: {
-    users: [],
-    contractors: [],
-    // feedback: []
-    appointments: [],
-  },
+  user: {},
+  contractors: [],
+  // feedback: []
+  appointments: [],
+  services: [],
   loading: false,
   error: null,
   thisContractor: {},
@@ -56,21 +60,24 @@ export default (state = initialState, action) => {
     case LOADING_USERS:
       return {
         ...state,
-        accounts: { users: [], contractors: [] },
+        user: {},
+        contractors: [],
         loading: true,
         error: null,
       };
     case FETCHING_USERS_SUCCESS:
       return {
         ...state,
-        accounts: action.payload,
+        user: action.payload.user,
+        contractors: action.payload.contractors,
         loading: false,
         error: null,
       };
     case FETCHING_USERS_FAILURE:
       return {
         ...state,
-        accounts: { users: [], contractors: [] },
+        user: {},
+        contractors: [],
         loading: false,
         error: action.error,
       };
@@ -114,6 +121,19 @@ export default (state = initialState, action) => {
       };
     case FETCH_SINGLE_CONTRACTOR_FAIL:
       return { ...state, loading: false, error: action.error };
+
+    // fetching services
+    case SET_SERVICES:
+      return {
+        ...state,
+        services: action.payload,
+        loading: false,
+        error: null,
+      };
+    case LOAD_SERVICES:
+      return { ...state, services: [], loading: true, error: null };
+    case FAIL_SERVICES:
+      return { ...state, services: [], loading: false, error: action.error };
 
     // fetching current user written feedback
     // case USER_WRITTEN_FEEDBACK_LOADING:

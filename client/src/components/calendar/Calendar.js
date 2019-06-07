@@ -7,7 +7,6 @@ import { setDay, setMonth } from '../../actions/index';
 import AvailabilityList from '../appointments/AvailabilityList';
 
 import './Calendar.css';
-import NavBarUser from '../navbar/NavBarUser';
 
 function Calendar(props) {
   const { selectedDay, selectedMonth, setMonth } = props;
@@ -20,7 +19,9 @@ function Calendar(props) {
             &lt;
           </div>
         ) : null}
-        <div>{dateFns.format(selectedMonth, 'MMMM YYYY')}</div>
+        <div className="nav-month">
+          {dateFns.format(selectedMonth, 'MMMM YYYY')}
+        </div>
         <div onClick={() => setMonth(dateFns.addMonths(selectedMonth, 1))}>
           &gt;
         </div>
@@ -35,7 +36,9 @@ function Calendar(props) {
 
     for (let i = 0; i < 7; i++) {
       days.push(
-        <div key={i}>{dateFns.format(dateFns.addDays(start, i), 'dddd')}</div>
+        <div className="day-cell" key={i}>
+          {dateFns.format(dateFns.addDays(start, i), 'dddd')}
+        </div>
       );
     }
     return <div className="day-container">{days}</div>;
@@ -85,8 +88,7 @@ function Calendar(props) {
   }
 
   return (
-    <div>
-      <NavBarUser />
+    <div className="calendar">
       <CalendarNav />
       <DaysOfWeek />
       <DaysOfMonth />
