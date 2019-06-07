@@ -7,7 +7,6 @@ import { setDay, setMonth } from '../../actions/index';
 import AvailabilityList from '../appointments/AvailabilityList';
 
 import './Calendar.css';
-import NavBarUser from '../navbar/NavBarUser';
 
 function Calendar(props) {
   const { selectedDay, selectedMonth, setMonth } = props;
@@ -85,8 +84,7 @@ function Calendar(props) {
   }
 
   return (
-    <div>
-      <NavBarUser />
+    <div className="calendar">
       <CalendarNav />
       <DaysOfWeek />
       <DaysOfMonth />
