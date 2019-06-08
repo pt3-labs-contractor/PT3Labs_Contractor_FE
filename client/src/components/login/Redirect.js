@@ -11,7 +11,7 @@ function Redirect(props) {
     if (!registrationComplete) {
       props.history.push(`/register/oauth`);
     } else {
-      props.history.push('/');
+      props.history.push('/app');
     }
   }, [props]);
 

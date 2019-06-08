@@ -1,16 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import dateFns from 'date-fns';
 
 import { setDay, setMonth } from '../../actions/index';
 
-import AvailabilityList from '../appointments/AvailabilityList';
-
 import './Calendar.css';
 
 function Calendar(props) {
   const { selectedDay, selectedMonth, setMonth, schedule } = props;
-  // const [available, setAvailable] = useState(false);
 
   function CalendarNav() {
     return (
@@ -58,13 +55,14 @@ function Calendar(props) {
       const temp = day;
       let available = false;
       if (schedule) {
-        const date = props.schedule.find(item =>
+        const date = schedule.find(item =>
           dateFns.isSameDay(item.startTime, temp)
         );
         available = date ? dateFns.isSameDay(date.startTime, temp) : false;
       }
       days.push(
         <div
+          key={temp}
           className={`cell ${
             dateFns.isSameDay(temp, selectedDay)
               ? ' selected'
@@ -77,9 +75,6 @@ function Calendar(props) {
           onClick={() => handleSelect(temp)}
         >
           {dateFns.format(day, 'D')}
-          {/* {props.contractor.name ? (
-            <AvailabilityList selectedDay={temp} />
-          ) : null} */}
         </div>
       );
       day = dateFns.addDays(day, 1);

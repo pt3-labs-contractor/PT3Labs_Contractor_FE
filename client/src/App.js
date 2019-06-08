@@ -6,13 +6,13 @@ import './App.css';
 
 import { fetchAccts } from './actions/index';
 import Homepage from './components/homepage/Homepage';
-import Users from './components/users/Users';
 import ContractorList from './components/contractors/ContractorList';
 import Contractor from './components/contractors/Contractor';
 import Login from './components/login/Login';
 import Redirect from './components/login/Redirect';
 import Register from './components/register/Register';
 import Calendar from './components/calendar/Calendar';
+import UserLandingPage from './components/landingpage/UserLandingPage';
 import NavBarUser from './components/navbar/NavBarUser';
 import NavBarContractor from './components/navbar/NavBarContractor';
 import Settings from './components/settings/Settings';
@@ -33,7 +33,7 @@ function App(props) {
           path="/app"
           component={props.user.contractorId ? NavBarContractor : NavBarUser}
         />
-        <Route path="/users" component={Users} />
+        <Route exact path="/app" component={UserLandingPage} />
         <Route exact path="/app/contractors" component={ContractorList} />
         <Route path="/app/contractors/:id" component={Contractor} />
         <Route path="/login" component={Login} />

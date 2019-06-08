@@ -54,11 +54,13 @@ export const fetchAccts = () => dispatch => {
       axios.get('https://fierce-plains-47590.herokuapp.com/api/contractors', {
         headers,
       }),
+      axios.get('https://fierce-plains-47590.herokuapp.com/api/appointments', {
+        headers,
+      }),
     ])
     .then(
-      axios.spread((userRes, contRes) => {
+      axios.spread((userRes, contRes, apmtRes) => {
         let { user } = userRes.data;
-        console.log('user: ', user);
         if (user.contractorId) {
           axios
             .get(
@@ -84,9 +86,19 @@ export const fetchAccts = () => dispatch => {
         //   // dividedContractors = { ...dividedContractors, [`page${x}`]: temp };
         //   dividedContractors.push(temp);
         // }
+        const { appointments } = apmtRes.data;
+        appointments.sort((a, b) => {
+          return (
+            new Date(a.appointmentDatetime) - new Date(b.appointmentDatetime)
+          );
+        });
         dispatch({
           type: FETCHING_USERS_SUCCESS,
-          payload: { user, contractors: contRes.data.contractors },
+          payload: {
+            user,
+            contractors: contRes.data.contractors,
+            appointments,
+          },
         });
       })
     )
