@@ -1,12 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 // import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 // import { IoIosTrash } from 'react-icons/io'
 // import { IoMdCreate } from 'react-icons/io'
 import './Settings.css';
 import NavBarContractor from '../navbar/NavBarContractor';
+// import ContractorCard from './ContractorCard';
+
+import { selectSingleContractorSetting } from '../../actions/index';
 
 function ContractorSetting(props) {
+  const { id } = props.match.params;
+  // console.log(id)
+  useEffect(() => {
+    Promise.all([
+      props.selectSingleContractorSetting(id)
+    ])
+  })
   // console.log(props);
   return (
     <>
@@ -17,8 +27,8 @@ function ContractorSetting(props) {
         <form>
           Contractor Email
           <input
-            value="contractor Email"
-            // value={props.contractor.}
+            // value="contractor Email"
+            value={props.contractor.email}
           />
           Contractor Phone
           <input
@@ -57,4 +67,4 @@ const mapStateToProps = state => {
 };
 
 
-export default connect(mapStateToProps)(ContractorSetting);
+export default connect(mapStateToProps, selectSingleContractorSetting)(ContractorSetting);

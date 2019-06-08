@@ -7,7 +7,7 @@ import ContractorCard from './ContractorCard';
 
 
 function ContractorList(props) {
-  // console.log(props.user)
+  console.log(props.user)
   // <NavBarUser/>
   // props.history.push('/')
   return (
