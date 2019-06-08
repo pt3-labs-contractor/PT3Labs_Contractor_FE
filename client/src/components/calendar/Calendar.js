@@ -1,38 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import dateFns from 'date-fns';
-// import { Route } from 'react-router-dom';
-// import ServiceForm from '../servicesForm';
-// import Scheduler from '../scheduler';
-// import SchduleList from '../scheduleList';
-// import EScheduler from '../editForm.jsx';
-
-import { setDay, setMonth, getSchedules } from '../../actions/index';
+import { setDay, setMonth } from '../../actions/index';
 
 import AvailabilityList from '../appointments/AvailabilityList';
 
 import './Calendar.css';
 
 function Calendar(props) {
-  const [id, setId] = useState('');
-  // const [formHidden, setFormHidden] = useState(true);
-  // const [start, setStart] = useState();
-  // const [end, setEnd] = useState();
-  // const [schedId, setSchedId] = useState();
   const { selectedDay, selectedMonth, setMonth } = props;
-  // const stringify = JSON.stringify(props.schedules);
-  // useEffect(() => {
-  //   setId(props.id);
-  //   props.getSchedules(props.id);
-  //   startEndId(start, end, schedId);
-  // }, [stringify, props.id, start]);
-
-  // const startEndId = (start, end, id) => {
-  //   setStart(start);
-  //   setEnd(end);
-  //   setSchedId(id);
-  // };
-
   function CalendarNav() {
     return (
       <div className="calendar-nav">
@@ -77,9 +53,6 @@ function Calendar(props) {
 
     while (day <= endCalendar) {
       const temp = day;
-      const daySched = props.schedules.filter(s => {
-        return dateFns.isSameDay(s.startTime, temp);
-      });
       days.push(
         <div
           key={temp}

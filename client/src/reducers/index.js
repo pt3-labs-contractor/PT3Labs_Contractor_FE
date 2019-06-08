@@ -185,8 +185,8 @@ export default (state = initialState, action) => {
       };
     case GET_SCHED:
       return { ...state, loading: true };
-    case SET_SCHEDULE:
-      return { ...state, schedule: [action.payload] };
+    // case SET_SCHEDULE:
+    //   return { ...state, schedule: [action.payload] };
     case DEL_SCHED:
       return { ...state, loading: true };
     case DEL_SCHED_COMP:

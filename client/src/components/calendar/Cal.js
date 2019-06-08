@@ -83,27 +83,39 @@ function ContCalendar(props) {
       days.push(
         <div
           key={temp}
-          className={`cell ${
+          className={`spacer ${
             dateFns.isSameDay(temp, selectedDay)
-              ? ' selected'
+              ? ' selected day'
               : !dateFns.isSameMonth(temp, selectedMonth)
               ? 'disable'
               : ''
           }`}
           onClick={() => handleSelect(temp)}
         >
-          {dateFns.format(day, 'D')}
-          {props.contractor.name ? (
-            <AvailabilityList selectedDay={temp} />
-          ) : null}
-          {daySched.length > 0 ? (
-            <SchduleList
-              {...props}
-              getSE={startEndId}
-              schs={daySched}
-              contID={props.id}
-            />
-          ) : null}
+          <div
+            key={temp}
+            className={`cell ${
+              dateFns.isSameDay(temp, selectedDay)
+                ? ' selected day'
+                : !dateFns.isSameMonth(temp, selectedMonth)
+                ? 'disable'
+                : ''
+            }`}
+            onClick={() => handleSelect(temp)}
+          >
+            {dateFns.format(day, 'D')}
+            {props.contractor.name ? (
+              <AvailabilityList selectedDay={temp} />
+            ) : null}
+            {daySched.length > 0 ? (
+              <SchduleList
+                {...props}
+                getSE={startEndId}
+                schs={daySched}
+                contID={props.id}
+              />
+            ) : null}
+          </div>
         </div>
       );
       day = dateFns.addDays(day, 1);

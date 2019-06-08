@@ -26,8 +26,6 @@ const Scheduler = props => {
   const submit = e => {
     e.preventDefault();
     const minutes = dateFns.differenceInMinutes(end, start);
-    const hours = dateFns.differenceInHours(end, start);
-    const minutesLeft = minutes - hours * 60;
     const duration = `${minutes / 60}h`;
     const { contractorId } = props.user;
     const newSchedule = {
