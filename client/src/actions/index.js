@@ -132,7 +132,7 @@ export const getUserWrittenFeedback = id => dispatch => {
   const headers = setHeaders();
 
   axios
-    .get('',headers)
+    .get(`https://fierce-plains-47590.herokuapp.com/api/api/feedback/${id}`,headers)
     .then(res => {
       dispatch({ type: USER_WRITTEN_FEEDBACK_SUCCESS, payload: res.data });
     })

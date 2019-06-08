@@ -18,7 +18,7 @@ import {
   FETCH_SINGLE_CONTRACTOR_SUCCESS,
 
   // fetching current user written feedback
-  // USER_WRITTEN_FEEDBACK_SUCCESS,
+  USER_WRITTEN_FEEDBACK_SUCCESS,
 
   // fetching single contractor feedback
   // FETCH_CONTRACTOR_FEEDBACK_SUCCESS,
@@ -30,7 +30,7 @@ import {
 const initialState = {
   user: {},
   contractors: [],
-  // feedback: []
+  feedback: [],
   appointments: [],
   services: [],
   loading: false,
@@ -103,8 +103,8 @@ export default (state = initialState, action) => {
       };
 
     // fetching current user written feedback
-    // case USER_WRITTEN_FEEDBACK_SUCCESS:
-    //   return { ...state, accounts: { feedback: action.payload }}
+    case USER_WRITTEN_FEEDBACK_SUCCESS:
+      return { ...state, feedback: action.payload }
 
     // fetching single contractors feedback
     // case FETCH_CONTRACTOR_FEEDBACK_SUCCESS:

@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Rating from 'react-rating';
 import NavBarUser from '../navbar/NavBarUser';
+import { getUserWrittenFeedback } from '../../actions/index';
 
 function UserFeedback(props) {
   return (
@@ -12,6 +13,14 @@ function UserFeedback(props) {
         <div>
           <h2>Appointment Info</h2>
         </div>
+      <div>
+      {/** need to write up a card for the feedback to map through */}
+        {/* {props.loading ? <p>Loading...</p> : null}
+        {props.error ? <p>{props.error}</p> : null}
+        {props.feedback.map(feedback => (
+            <ContractorCard feedback={feedback} />
+        ))} */}
+      </div>
         <form>
           <h4>Feedback Form</h4>
           <div>
@@ -51,6 +60,7 @@ function UserFeedback(props) {
             <input placeholder="Details" />
           </div>
         </form>
+
       </div>
     </>
   );
@@ -58,10 +68,11 @@ function UserFeedback(props) {
 
 const mapStateToProps = state => {
   return {
+    feedback: state.feedback,
     // contractors: state.accounts.contractors,
     loading: state.loading,
     error: state.error,
   };
 };
 
-export default connect(mapStateToProps)(UserFeedback);
+export default connect(mapStateToProps, getUserWrittenFeedback)(UserFeedback);
