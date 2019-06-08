@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import dateFns from 'date-fns';
 
@@ -9,7 +9,8 @@ import AvailabilityList from '../appointments/AvailabilityList';
 import './Calendar.css';
 
 function Calendar(props) {
-  const { selectedDay, selectedMonth, setMonth } = props;
+  const { selectedDay, selectedMonth, setMonth, schedule } = props;
+  // const [available, setAvailable] = useState(false);
 
   function CalendarNav() {
     return (
@@ -55,6 +56,13 @@ function Calendar(props) {
 
     while (day <= endCalendar) {
       const temp = day;
+      let available = false;
+      if (schedule) {
+        const date = props.schedule.find(item =>
+          dateFns.isSameDay(item.startTime, temp)
+        );
+        available = date ? dateFns.isSameDay(date.startTime, temp) : false;
+      }
       days.push(
         <div
           className={`cell ${
@@ -62,14 +70,16 @@ function Calendar(props) {
               ? ' selected'
               : !dateFns.isSameMonth(temp, selectedMonth)
               ? 'disable'
+              : available
+              ? 'available'
               : ''
           }`}
           onClick={() => handleSelect(temp)}
         >
           {dateFns.format(day, 'D')}
-          {props.contractor.name ? (
+          {/* {props.contractor.name ? (
             <AvailabilityList selectedDay={temp} />
-          ) : null}
+          ) : null} */}
         </div>
       );
       day = dateFns.addDays(day, 1);
@@ -100,7 +110,6 @@ const mapStateToProps = state => {
   return {
     selectedDay: state.thisDay,
     selectedMonth: state.thisMonth,
-    // contractor: state.thisContractor
   };
 };
 

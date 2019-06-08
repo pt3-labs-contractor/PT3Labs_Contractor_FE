@@ -24,6 +24,7 @@ function ContractorList(props) {
       dividedContractors.push(temp);
     }
     setContractors(dividedContractors);
+    // eslint-disable-next-line
   }, [props.contractors]);
 
   useEffect(() => {
