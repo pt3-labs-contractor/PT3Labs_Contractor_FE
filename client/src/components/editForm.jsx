@@ -9,10 +9,10 @@ const EScheduler = props => {
   const [end, setEnd] = useState(props.end);
   const { id } = props;
 
-  // useEffect(() => {
-  //   setStart(props.today);
-  //   setEnd(props.today);
-  // }, [props.today]);
+  useEffect(() => {
+    setStart(props.start);
+    setEnd(props.end);
+  }, [props.start, props.end]);
 
   const schange = value => {
     setStart(value);
@@ -21,6 +21,10 @@ const EScheduler = props => {
 
   const echange = value => {
     setEnd(value);
+  };
+
+  const closeEdit = () => {
+    props.history.push('/contractorCalendar');
   };
 
   const submit = e => {
@@ -36,10 +40,13 @@ const EScheduler = props => {
       duration,
     };
     props.updateSchedule(id, newSchedule);
-    console.log(newSchedule);
+    props.history.push('/calendar');
   };
   return (
     <div className="schedulerCont">
+      <div className="close" onClick={closeEdit}>
+        Close
+      </div>
       <DateTimePicker className="start" value={start} onChange={schange} />
       <DateTimePicker className="end" value={end} onChange={echange} />
       <button className="submit" onClick={submit}>

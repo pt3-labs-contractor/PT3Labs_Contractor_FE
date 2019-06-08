@@ -56,6 +56,8 @@ export const fetchAccts = () => dispatch => {
   dispatch({ type: LOADING_USERS });
   const bearer = `Bearer ${localStorage.getItem('jwt')}`;
   const headers = { authorization: bearer };
+  // dispatch({ type: LOADING_USERS });
+  // const headers = setHeaders();
 
   axios
     .all([
@@ -78,16 +80,29 @@ export const fetchAccts = () => dispatch => {
         const { user } = userRes.data;
         console.log('user: ', user);
         // if (user.contractorId) {
-        // axios
-        //   .get(
-        //     `https:fierce-plains-47590.herokuapp.com/api/contractors/${
-        //       user.contractorId
-        //     }`,
-        //     { headers }
-        //   )
-        //   .then(res => {
-        //     user = Object.assign(user, res.data.contractor[0]);
-        //   });
+        //   axios
+        //     .get(
+        //       `https://fierce-plains-47590.herokuapp.com/api/contractors/${
+        //         user.contractorId
+        //       }`,
+        //       { headers }
+        //     )
+        //     .then(res => {
+        //       user = Object.assign(user, res.data.contractor[0]);
+        //     });
+        // }
+        // const { contractors } = contRes.data;
+        // const length = contractors.length + 1;
+        // const limit = 25;
+        // const dividedContractors = [];
+        // for (let x = 1; x < Math.ceil(length / limit); x++) {
+        //   const temp = [];
+        //   const pageItems = length / (limit * x) > 1 ? limit : length % limit;
+        //   for (let y = 0; y < pageItems; y++) {
+        //     temp.push(contractors[(x - 1) * limit + y]);
+        //   }
+        //   // dividedContractors = { ...dividedContractors, [`page${x}`]: temp };
+        //   dividedContractors.push(temp);
         // }
         dispatch({
           type: FETCHING_USERS_SUCCESS,

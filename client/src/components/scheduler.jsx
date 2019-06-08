@@ -5,6 +5,7 @@ import dateFns from 'date-fns';
 import { postNewSchedule } from '../actions/index.js';
 
 const Scheduler = props => {
+  console.log(props);
   const [start, setStart] = useState(props.today || new Date());
   const [end, setEnd] = useState(new Date());
 
