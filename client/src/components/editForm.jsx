@@ -40,7 +40,7 @@ const EScheduler = props => {
       duration,
     };
     props.updateSchedule(id, newSchedule);
-    props.history.push('/calendar');
+    props.history.push('/contractorCalendar');
   };
   return (
     <div className="schedulerCont">
