@@ -1,6 +1,6 @@
 .calendar {
   width: 60%;
-  max-width: 750px;
+  max-width: 73vh;
   /* margin: 0 20px; */
   /* max-height: 70vh; */
 }
@@ -11,6 +11,8 @@
 }
 
 .nav-month {
+  text-align: center;
+  width: 30%;
   padding: 0 20px;
 }
 
@@ -19,22 +21,13 @@
   grid-template-columns: repeat(7, 1fr);
 }
 
-.dayCont {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-}
-
 .cell-container {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  grid-auto-rows: 10.5vh;
+  grid-auto-rows: 9vh;
 }
 
-.cell {
-  height: 9vh;
-  overflow: hidden;
-}
-
+.cell,
 .day-cell {
   border: 1px solid #000;
 }
@@ -43,18 +36,14 @@
   text-align: center;
 }
 
-.spacer.selected {
-  background-color: #e4e4e4;
-  z-index: 100;
-}
-
 .cell.selected {
-  background-color: #e4e4e4;
-  height: max-content;
-  padding-bottom: 0px;
-  margin-bottom: 0px;
+  background-color: #0000dd;
 }
 
 .cell.disable {
   opacity: 0.25;
+}
+
+.cell.available {
+  border: 3px solid green;
 }

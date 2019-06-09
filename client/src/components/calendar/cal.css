@@ -1,0 +1,123 @@
+.calendar {
+  width: 60%;
+  max-width: 750px;
+  /* margin: 0 20px; */
+  /* max-height: 70vh; */
+}
+
+.calendar-nav {
+  display: flex;
+  justify-content: center;
+}
+
+.nav-month {
+  padding: 0 20px;
+}
+
+.day-container {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.dayCont {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.cel-container {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-auto-rows: 10.5vh;
+}
+
+.cel {
+  height: 7vh;
+  overflow: hidden;
+}
+
+.day-cell {
+  border: 1px solid #000;
+}
+
+.day-cell {
+  text-align: center;
+}
+
+.spacer.selected {
+  background-color: #e4e4e4;
+  z-index: 100;
+}
+
+.cel.selected {
+  background-color: #e4e4e4;
+  height: max-content;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+}
+
+.spacer.disable {
+  opacity: 0.25;
+}
+.btn:hover {
+  background-color: darken();
+}
+.delete:hover {
+  cursor: pointer;
+}
+
+.edit:hover {
+  cursor: pointer;
+}
+
+.close {
+  padding: 20px;
+}
+
+.close:hover {
+  cursor: pointer;
+}
+
+.timeSlot {
+  font-size: 0.7rem;
+  margin-top: 0px;
+  margin-bottom: 5px;
+}
+
+.cel {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.listCont {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.scheduleCont {
+  width: 100%;
+}
+
+.editLink {
+  padding: 0px;
+  margin: 0px;
+  font-size: 0px;
+}
+
+.spacer {
+  border: 1px solid black;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.add {
+  width: 15px;
+}
+
+.add:hover {
+  cursor: pointer;
+}

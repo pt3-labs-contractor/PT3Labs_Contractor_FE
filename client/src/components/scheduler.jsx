@@ -5,7 +5,6 @@ import dateFns from 'date-fns';
 import { postNewSchedule } from '../actions/index.js';
 
 const Scheduler = props => {
-  console.log(props);
   const [start, setStart] = useState(props.today || new Date());
   const [end, setEnd] = useState(new Date());
 
@@ -34,10 +33,16 @@ const Scheduler = props => {
       duration,
     };
     props.postNewSchedule(newSchedule);
-    console.log(newSchedule);
+    close();
+  };
+  const close = () => {
+    props.history.push('/contractorCalendar');
   };
   return (
     <div className="schedulerCont">
+      <div className="close" onClick={close}>
+        Close
+      </div>
       <DateTimePicker className="start" value={start} onChange={schange} />
       <DateTimePicker className="end" value={end} onChange={echange} />
       <button className="submit" onClick={submit}>

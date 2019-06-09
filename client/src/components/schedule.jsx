@@ -24,10 +24,6 @@ const Schedule = props => {
 
   const newEnd = new Date(end);
 
-  const deleteSched = () => {
-    props.deleteSchedule(id);
-  };
-
   const setEditData = () => {
     props.getSE(start, newEnd, id);
   };
@@ -43,16 +39,13 @@ const Schedule = props => {
           {/* </div> */}
           <Link
             className="editLink"
-            to={`/contractorCalendar/sched/edit/${id}`}
+            to={`/contractorCalendar/sched/${id}`}
             onClick={setEditData}
           >
             <p className="timeSlot">
               {modifiedStart} - {modifiedEnd}{' '}
             </p>
           </Link>
-          {/* <div id={id} className="edit" onClick={unhide}> */}
-          {/* Edit */}
-          {/* </div> */}
         </>
       ) : (
         <p className="timeSlot">
@@ -64,7 +57,6 @@ const Schedule = props => {
 };
 
 const mstp = state => {
-  console.log(state);
   return {
     contractorId: state.user.contractorId,
   };

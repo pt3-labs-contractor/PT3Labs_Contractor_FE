@@ -2,7 +2,6 @@ import React from 'react';
 import Schedule from './schedule.jsx';
 
 const ScheduleList = props => {
-  console.log(props);
   return (
     <div className="listCont">
       {props.schs.map(s => {
@@ -14,6 +13,7 @@ const ScheduleList = props => {
             duration={s.duration}
             getSE={props.getSE}
             contID={props.contID}
+            today={props.today}
           />
         );
       })}

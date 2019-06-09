@@ -17,7 +17,20 @@ function AvailabilityList(props) {
   const RenderTimes = () => {
     const times = availability.map(item => {
       const start = dateFns.startOfHour(item.startTime);
-      const end = dateFns.addHours(start, item.duration.hours);
+      // let end; dateFns.addHours(start, item.duration.hours);
+      let end = start;
+      if (item.duration.hours) {
+        end = dateFns.addHours(start, item.duration.hours);
+      }
+      if (item.duration.minutes) {
+        end = dateFns.addMinutes(end, item.duration.minutes);
+      }
+      if (item.duration.seconds) {
+        end = dateFns.addSeconds(end, item.duration.seconds);
+      }
+      if (item.duration.milliseconds) {
+        end = dateFns.addMilliseconds(end, item.duration.milliseconds);
+      }
       return (
         <div
           key={item.id}

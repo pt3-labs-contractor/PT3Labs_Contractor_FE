@@ -6,6 +6,8 @@ import ServiceForm from '../servicesForm';
 import Scheduler from '../scheduler';
 import SchduleList from '../scheduleList';
 import EScheduler from '../editForm.jsx';
+import PopBoxSched from '../popBox.jsx';
+import './cal.css';
 
 import { setDay, setMonth, getSchedules } from '../../actions/index';
 
@@ -21,11 +23,12 @@ function ContCalendar(props) {
   const [schedId, setSchedId] = useState();
   const { selectedDay, selectedMonth, setMonth } = props;
   const stringify = JSON.stringify(props.schedules);
+  const [selDay, setSelDay] = useState();
   useEffect(() => {
     setId(props.id);
     props.getSchedules(props.id);
     startEndId(start, end, schedId);
-  }, [stringify, props.id, start]);
+  }, [stringify, props.id, start, props.selectedDay]);
 
   const startEndId = (start, end, id) => {
     setStart(start);
@@ -92,9 +95,18 @@ function ContCalendar(props) {
           }`}
           onClick={() => handleSelect(temp)}
         >
+          {dateFns.format(day, 'D')}
+          <div
+            className="add"
+            onClick={() => {
+              props.history.push('/contractorCalendar/newSched');
+            }}
+          >
+            +
+          </div>
           <div
             key={temp}
-            className={`cell ${
+            className={`cel ${
               dateFns.isSameDay(temp, selectedDay)
                 ? ' selected day'
                 : !dateFns.isSameMonth(temp, selectedMonth)
@@ -103,7 +115,6 @@ function ContCalendar(props) {
             }`}
             onClick={() => handleSelect(temp)}
           >
-            {dateFns.format(day, 'D')}
             {props.contractor.name ? (
               <AvailabilityList selectedDay={temp} />
             ) : null}
@@ -113,6 +124,7 @@ function ContCalendar(props) {
                 getSE={startEndId}
                 schs={daySched}
                 contID={props.id}
+                today={props.selectedDay}
               />
             ) : null}
           </div>
@@ -139,7 +151,14 @@ function ContCalendar(props) {
       <DaysOfWeek />
       <DaysOfMonth />
       <ServiceForm />
-      <Scheduler />
+      <Route exact path="/contractorCalendar/newSched" component={Scheduler} />
+      <Route
+        exact
+        path="/contractorCalendar/sched/:id"
+        render={props => (
+          <PopBoxSched {...props} start={start} end={end} id={schedId} />
+        )}
+      />
       <Route
         exact
         path="/contractorCalendar/sched/edit/:id"
