@@ -50,6 +50,7 @@ function AppointmentForm(props) {
       {dateFns.isValid(new Date(startTime)) && props.service.name ? (
         <button onClick={() => setConfirm(true)}>Set Appointment</button>
       ) : null}
+      <button onClick={props.clearAppointment}>X</button>
       <ConfirmModal confirm={confirm} postAppointment={postAppointment} />
     </div>
   );

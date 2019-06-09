@@ -4,12 +4,10 @@ import dateFns from 'date-fns';
 
 import { setDay, setMonth } from '../../actions/index';
 
-import AvailabilityList from '../appointments/AvailabilityList';
-
 import './Calendar.css';
 
 function Calendar(props) {
-  const { selectedDay, selectedMonth, setMonth } = props;
+  const { selectedDay, selectedMonth, setMonth, schedule } = props;
 
   function CalendarNav() {
     return (
@@ -55,21 +53,28 @@ function Calendar(props) {
 
     while (day <= endCalendar) {
       const temp = day;
+      let available = false;
+      if (schedule) {
+        const date = schedule.find(item =>
+          dateFns.isSameDay(item.startTime, temp)
+        );
+        available = date ? dateFns.isSameDay(date.startTime, temp) : false;
+      }
       days.push(
         <div
+          key={temp}
           className={`cell ${
             dateFns.isSameDay(temp, selectedDay)
               ? ' selected'
               : !dateFns.isSameMonth(temp, selectedMonth)
               ? 'disable'
+              : available
+              ? 'available'
               : ''
           }`}
           onClick={() => handleSelect(temp)}
         >
           {dateFns.format(day, 'D')}
-          {props.contractor.name ? (
-            <AvailabilityList selectedDay={temp} />
-          ) : null}
         </div>
       );
       day = dateFns.addDays(day, 1);
@@ -100,7 +105,6 @@ const mapStateToProps = state => {
   return {
     selectedDay: state.thisDay,
     selectedMonth: state.thisMonth,
-    // contractor: state.thisContractor
   };
 };
 
