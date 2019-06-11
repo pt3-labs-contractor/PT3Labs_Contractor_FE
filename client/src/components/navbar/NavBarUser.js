@@ -5,7 +5,7 @@ import './NavBarUser.css';
 
 function NavBarUser() {
   return (
-    <div>
+    <div className="header">
       <nav className="navbar bg-dark">
         <NavLink to="/">
           <h1>
