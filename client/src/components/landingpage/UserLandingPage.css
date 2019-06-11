@@ -1,0 +1,13 @@
+.user.container {
+  margin-top: 75px;
+}
+
+.user-calendar {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.user-contractor-list {
+  display: flex;
+  flex-direction: column;
+}

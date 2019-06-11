@@ -16,7 +16,7 @@ function AppointmentForm(props) {
         contractorId: props.contractor,
         serviceId: props.service.id,
         scheduleId: props.appointment.id,
-        appointmentDatetime: startTime,
+        startTime,
         duration: `${props.appointment.duration.hours}h`,
       };
       axios

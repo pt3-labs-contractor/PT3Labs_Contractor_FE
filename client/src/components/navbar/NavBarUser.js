@@ -7,7 +7,7 @@ function NavBarUser() {
   return (
     <div>
       <nav className="navbar bg-dark">
-        <NavLink to="/">
+        <NavLink to="/app">
           <h1>
             <i className="far fa-calendar-alt"> Digital Calendar - user</i>
           </h1>
@@ -20,7 +20,7 @@ function NavBarUser() {
             <NavLink to="/userFeedback">Feedback</NavLink>
           </li>
           <li>
-            <NavLink to="/contractors">Contractors</NavLink>
+            <NavLink to="/app/contractors">Contractors</NavLink>
           </li>
           <li>
             <NavLink to="/">Log Out</NavLink>

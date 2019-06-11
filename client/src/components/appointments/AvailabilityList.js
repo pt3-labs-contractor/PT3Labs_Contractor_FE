@@ -32,10 +32,7 @@ function AvailabilityList(props) {
         end = dateFns.addMilliseconds(end, item.duration.milliseconds);
       }
       return (
-        <div
-          key={item.id}
-          onClick={props.contractor ? () => props.setAppointment(item) : null}
-        >
+        <div key={item.id} onClick={() => props.setAppointment(item)}>
           {`${dateFns.format(start, 'HH:mm')} - ${dateFns.format(
             end,
             'HH:mm'

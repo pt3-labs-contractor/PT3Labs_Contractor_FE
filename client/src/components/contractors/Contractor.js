@@ -52,7 +52,7 @@ function Contractor(props) {
           ))}
         </div>
         <div className="contractor-calendar">
-          <Calendar contractor={props.contractor} />
+          <Calendar contractor={props.contractor} schedule={props.schedule} />
           <div className="availability-list">
             <AvailabilityList
               contractor

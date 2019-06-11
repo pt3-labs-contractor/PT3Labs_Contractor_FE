@@ -1,4 +1,6 @@
 import axios from 'axios';
+import dateFns from 'date-fns';
+import store from '../index';
 
 export const SEND_SERV = 'SEND_SERV';
 export const SEND_SERV_COMP = 'SEND_SERV_COMP';
@@ -21,6 +23,8 @@ export const SET_DAY = 'SET_DAY';
 export const SET_SCHEDULE = 'SET_SCHEDULE';
 export const LOAD_SCHEDULE = 'LOAD_SCHEDULE';
 export const FAIL_SCHEDULE = 'FAIL_SCHEDULE';
+
+export const SET_AVAILABILITY_BY_DAY = 'SET_AVAILABILITY_BY_DAY';
 
 // export for services
 export const SET_SERVICES = 'SET_SERVICES';
@@ -67,6 +71,9 @@ export const fetchAccts = () => dispatch => {
       axios.get('https://fierce-plains-47590.herokuapp.com/api/contractors', {
         headers,
       }),
+      axios.get('https://fierce-plains-47590.herokuapp.com/api/appointments', {
+        headers,
+      }),
     ])
     .then(
       axios.spread((userRes, contRes) => {
@@ -91,6 +98,22 @@ export const fetchAccts = () => dispatch => {
         //       user = Object.assign(user, res.data.contractor[0]);
         //     });
         // }
+      axios.spread((userRes, contRes, apmtRes) => {
+        let { user } = userRes.data;
+        if (user.contractorId) {
+          axios
+            .get(
+              `https://fierce-plains-47590.herokuapp.com/api/contractors/${
+                user.contractorId
+              }`,
+              { headers }
+            )
+            .then(res => {
+              user = Object.assign(user, res.data.contractor[0]);
+            });
+        }
+        const dateString = dateFns.format(new Date(), 'YYYY-MM-DD');
+        fetchAvailabilityByDay(dateString);
         // const { contractors } = contRes.data;
         // const length = contractors.length + 1;
         // const limit = 25;
@@ -108,8 +131,21 @@ export const fetchAccts = () => dispatch => {
         //   type: FETCHING_USERS_SUCCESS,
         //   payload: { user, contractors: contRes.data.contractors },
         // });
+        const { appointments } = apmtRes.data;
+        appointments.sort((a, b) => {
+          return (
+            new Date(a.appointmentDatetime) - new Date(b.appointmentDatetime)
+          );
+        });
+        dispatch({
+          type: FETCHING_USERS_SUCCESS,
+          payload: {
+            user,
+            contractors: contRes.data.contractors,
+            appointments,
+          },
+        });
       })
-    )
     .catch(() => {
       dispatch({
         type: FETCHING_USERS_FAILURE,
@@ -148,6 +184,28 @@ export const fetchServices = id => dispatch => {
     })
     .catch(() => {
       dispatch({ type: FAIL_SERVICES, error: 'Something went wrong.' });
+    });
+};
+
+export const fetchAvailabilityByDay = date => dispatch => {
+  // dispatch({ type: LOADING });
+  const headers = setHeaders();
+  const state = store.getState();
+
+  axios
+    .get(
+      `https://fierce-plains-47590.herokuapp.com/api/schedules/date/${date}`,
+      { headers }
+    )
+    .then(res => {
+      const filter = res.data.appointments.map(item => item.contractorId);
+      const list = state.contractors.filter(contractor =>
+        filter.includes(contractor.id)
+      );
+      dispatch({ type: SET_AVAILABILITY_BY_DAY, payload: list });
+    })
+    .catch(() => {
+      // dispatch({ type: ERROR, error: 'Something went wrong.' });
     });
 };
 

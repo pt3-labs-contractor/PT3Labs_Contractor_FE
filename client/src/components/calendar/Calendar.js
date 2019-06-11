@@ -5,10 +5,13 @@ import { setDay, setMonth } from '../../actions/index';
 
 import AvailabilityList from '../appointments/AvailabilityList';
 
+import { setDay, setMonth, fetchAvailabilityByDay } from '../../actions/index';
+
 import './Calendar.css';
 
 function Calendar(props) {
-  const { selectedDay, selectedMonth, setMonth } = props;
+  const { selectedDay, selectedMonth, setMonth, schedule } = props;
+
   function CalendarNav() {
     return (
       <div className="calendar-nav">
@@ -53,6 +56,14 @@ function Calendar(props) {
 
     while (day <= endCalendar) {
       const temp = day;
+      const dateString = dateFns.format(day, 'YYYY-MM-DD');
+      let available = false;
+      if (schedule) {
+        const date = schedule.find(item =>
+          dateFns.isSameDay(item.startTime, temp)
+        );
+        available = date ? dateFns.isSameDay(date.startTime, temp) : false;
+      }
       days.push(
         <div
           key={temp}
@@ -61,14 +72,16 @@ function Calendar(props) {
               ? ' selected'
               : !dateFns.isSameMonth(temp, selectedMonth)
               ? 'disable'
+              : available
+              ? 'available'
               : ''
           }`}
-          onClick={() => handleSelect(temp)}
+          onClick={() => {
+            handleSelect(temp);
+            props.user && props.fetchAvailabilityByDay(dateString);
+          }}
         >
           {dateFns.format(day, 'D')}
-          {props.contractor.name ? (
-            <AvailabilityList selectedDay={temp} />
-          ) : null}
         </div>
       );
       day = dateFns.addDays(day, 1);
@@ -108,5 +121,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { setDay, setMonth }
+  { setDay, setMonth, fetchAvailabilityByDay }
 )(Calendar);
