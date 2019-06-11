@@ -70,7 +70,6 @@ export default (state = initialState, action) => {
         ...state,
         user: action.payload.user,
         contractors: action.payload.contractors,
-        appointments: action.payload.appointments,
         loading: false,
         error: null,
       };
