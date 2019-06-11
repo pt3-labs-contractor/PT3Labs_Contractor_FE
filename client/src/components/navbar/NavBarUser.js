@@ -20,7 +20,7 @@ function NavBarUser() {
             <NavLink to="/userFeedback">Feedback</NavLink>
           </li>
           <li>
-            <NavLink to="/app/contractors">Contractors</NavLink>
+            <NavLink to="/contractors">Contractors</NavLink>
           </li>
           <li>
             <NavLink to="/">Log Out</NavLink>

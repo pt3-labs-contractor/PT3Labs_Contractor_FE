@@ -1,7 +1,7 @@
 * {
   box-sizing: border-box;
   margin: 0;
-  padding: 0;
+  padding: 0
 }
 
 body {
@@ -12,9 +12,9 @@ p {
   line-height: 1.25;
 }
 
-.navbar a {
+a {
   text-decoration: none;
-  color: var(--light-color);
+  color: var(--light-color)
 }
 
 ul {
@@ -39,6 +39,6 @@ img {
   outline: none;
 }
 
-.btn:hover {
-  background-color: darken();
+.btn:hover{
+  background-color: darken()
 }

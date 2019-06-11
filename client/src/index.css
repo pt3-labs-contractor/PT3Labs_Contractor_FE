@@ -1,6 +1,6 @@
 :root {
-  --primary-color: #febd17;
-  --secondary-color: #8c20f8;
+  --primary-color: #FEBD17;
+  --secondary-color: #8C20F8;
   --dark-color: #343a40;
   --light-color: #f4f4f4;
   --danger-color: #dc3545;
@@ -9,23 +9,23 @@
 }
 
 .bg-primary {
-  background-color: var(--primary-color);
+  background-color: var(--primary-color)
 }
 .bg-secondary {
-  background-color: var(--secondary-color);
+  background-color: var(--secondary-color)
 }
-.bg-dark {
-  background-color: var(--dark-color);
+.bg-dark{
+  background-color: var(--dark-color)
 }
 .bg-light {
-  background-color: var(--light-color);
+  background-color: var(--light-color)
 }
 .bg-danger {
-  background-color: var(--danger-color);
+  background-color: var(--danger-color)
 }
 .bg-success {
-  background-color: var(--success-color);
+  background-color: var(--success-color)
 }
 .bg-white {
-  background-color: #fff;
+  background-color: #FFF
 }
