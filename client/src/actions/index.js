@@ -145,7 +145,7 @@ export const getContractorFeedback = id => dispatch => {
   const headers = setHeaders();
 
   axios
-    .get('',headers)
+    .get(`https://fierce-plains-47590.herokuapp.com/api/api/feedback/${id}`,headers)
     .then(res => {
       dispatch({ type: FETCH_CONTRACTOR_FEEDBACK_SUCCESS, payload: res.data });
     })
@@ -163,16 +163,16 @@ export const getContractorFeedback = id => dispatch => {
 // }
 
 // axios get appointments when current user is contractor
-// export const seeMyAppointments = (id) = dispatch => {
-//   dispatch({ type: CONTRACTOR_APP_LOADING })
-// const headers = setHeaders();
+export const seeMyAppointments = (id) = dispatch => {
+  dispatch({ type: LOADING })
+  const headers = setHeaders();
 
-//   axios.get('',headers)
-//   .then( res => {
-//     dispatch({ type: RET_CONTRACTOR_APP_SUCC, payload: res.data })
-//   })
-//   .catch(err => dispatch({ type: FAILURE, payload:err }))
-// }
+  axios.get(`https://fierce-plains-47590.herokuapp.com/api/api/appointments/${id}`,headers)
+  .then( res => {
+    dispatch({ type: RET_CONTRACTOR_APP_SUCC, payload: res.data })
+  })
+  .catch(err => dispatch({ type: FAILURE, payload:err }))
+}
 
 export const setDay = day => dispatch => {
   dispatch({ type: SET_DAY, payload: day });

@@ -17,7 +17,7 @@ function ContractorSetting(props) {
       props.selectSingleContractorSetting(id)
     ])
   })
-  // console.log(props);
+  console.log(props);
   return (
     <>
       <NavBarContractor />

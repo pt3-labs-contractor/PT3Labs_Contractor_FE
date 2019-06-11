@@ -1,10 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import Rating from 'react-rating';
 import NavBarUser from '../navbar/NavBarUser';
 import { getUserWrittenFeedback } from '../../actions/index';
 
 function UserFeedback(props) {
+  const { id } = props.match.params;
+  useEffect(() => {
+    Promise.all([
+      props.getUserWrittenFeedback(id)
+    ])
+  })
+  console.log(props)
   return (
     <>
       <NavBarUser />

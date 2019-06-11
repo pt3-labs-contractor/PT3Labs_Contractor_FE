@@ -24,7 +24,8 @@ import {
   // FETCH_CONTRACTOR_FEEDBACK_SUCCESS,
 
   // fetching current contractor appointments
-  // RET_CONTRACTOR_APP_SUCC,
+  RET_CONTRACTOR_APP_SUCC,
+
 } from '../actions';
 
 const initialState = {
@@ -115,6 +116,9 @@ export default (state = initialState, action) => {
     // case RET_CONTRACTOR_APP_SUCC:
     //   return {...state, accounts:{appointments: action.payload }}
 
+    //fetching appointments for a contractor
+    case RET_CONTRACTOR_APP_SUCC:
+      return {...state, appointments: action.payload}
     
     default:
       return state;
