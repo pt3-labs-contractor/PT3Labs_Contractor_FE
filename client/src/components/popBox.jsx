@@ -10,6 +10,8 @@ const PopBoxSched = props => {
   const hDiff = dateFns.differenceInHours(props.end, props.start);
   const mDiff = dateFns.differenceInMinutes(props.end, props.start);
   const { id } = props;
+  const x = props.x + 50;
+  const { y } = props;
   let finalMin;
   if (mDiff % 60 !== 0) {
     const min = hDiff * 60;
@@ -23,9 +25,15 @@ const PopBoxSched = props => {
     props.history.push('/contractorCalendar');
   };
 
-  console.log(props);
+  const position = {
+    position: 'relative',
+    left: `${x}` + 'px',
+    top: `${-y}` + 'px',
+    zIndex: '100',
+    backgroundColor: 'white',
+  };
   return (
-    <div className="boxCont">
+    <div className="boxCont" style={position}>
       <div className="close" onClick={close}>
         Close
       </div>

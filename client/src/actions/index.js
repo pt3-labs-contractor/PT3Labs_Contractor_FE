@@ -70,14 +70,14 @@ export const fetchAccts = () => dispatch => {
     ])
     .then(
       axios.spread((userRes, contRes) => {
-        console.log(userRes.data);
+        console.log(userRes.data.user);
         console.log(contRes.data);
         const accounts = {
-          users: userRes.data.user,
+          user: userRes.data.user,
           contractors: contRes.data.contractors,
         };
-        // dispatch({ type: FETCHING_USERS_SUCCESS, payload: accounts });
-        const { user } = userRes.data;
+        dispatch({ type: FETCHING_USERS_SUCCESS, payload: accounts });
+        const { user } = userRes.data.user;
         console.log('user: ', user);
         // if (user.contractorId) {
         //   axios
@@ -104,10 +104,10 @@ export const fetchAccts = () => dispatch => {
         //   // dividedContractors = { ...dividedContractors, [`page${x}`]: temp };
         //   dividedContractors.push(temp);
         // }
-        dispatch({
-          type: FETCHING_USERS_SUCCESS,
-          payload: { user, contractors: contRes.data.contractors },
-        });
+        // dispatch({
+        //   type: FETCHING_USERS_SUCCESS,
+        //   payload: { user, contractors: contRes.data.contractors },
+        // });
       })
     )
     .catch(() => {
@@ -161,10 +161,10 @@ export const selectSingleContractorSetting = id => dispatch => {
       headers,
     })
     .then(res => {
-      console.log(res.data.contractor[0]);
+      console.log(res.data.contractor);
       dispatch({
         type: FETCH_SINGLE_CONTRACTOR_SUCCESS,
-        payload: res.data.contractor[0],
+        payload: res.data.contractor,
       });
     })
     .catch(err =>

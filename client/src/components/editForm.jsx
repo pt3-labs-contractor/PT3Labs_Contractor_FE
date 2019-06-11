@@ -27,6 +27,8 @@ const EScheduler = props => {
     props.history.push('/contractorCalendar');
   };
 
+
+
   const submit = e => {
     e.preventDefault();
     const minutes = dateFns.differenceInMinutes(end, start);
@@ -41,7 +43,7 @@ const EScheduler = props => {
     props.history.push('/contractorCalendar');
   };
   return (
-    <div className="schedulerCont">
+    <div className="schedulerCont" >
       <div className="close" onClick={closeEdit}>
         Close
       </div>

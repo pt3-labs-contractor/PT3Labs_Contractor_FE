@@ -16,14 +16,16 @@ import AvailabilityList from '../appointments/AvailabilityList';
 import './Calendar.css';
 
 function ContCalendar(props) {
+  const [x, setX] = useState();
+  const [y, setY] = useState();
+  const { selectedDay, selectedMonth, setMonth } = props;
   const [id, setId] = useState('');
-  // const [formHidden, setFormHidden] = useState(true);
+  const [refs, setRefs] = useState([]);
   const [start, setStart] = useState();
   const [end, setEnd] = useState();
   const [schedId, setSchedId] = useState();
-  const { selectedDay, selectedMonth, setMonth } = props;
-  const stringify = JSON.stringify(props.schedules);
   const [selDay, setSelDay] = useState();
+  const stringify = JSON.stringify(props.schedules);
   useEffect(() => {
     setId(props.id);
     props.getSchedules(props.id);
@@ -34,6 +36,13 @@ function ContCalendar(props) {
     setStart(start);
     setEnd(end);
     setSchedId(id);
+  };
+
+  const setPosition = (x, y) => {
+    console.log(x);
+    console.log(y);
+    setX(x);
+    setY(y);
   };
 
   function CalendarNav() {
@@ -125,6 +134,7 @@ function ContCalendar(props) {
                 schs={daySched}
                 contID={props.id}
                 today={props.selectedDay}
+                setPosition={setPosition}
               />
             ) : null}
           </div>
@@ -156,14 +166,28 @@ function ContCalendar(props) {
         exact
         path="/contractorCalendar/sched/:id"
         render={props => (
-          <PopBoxSched {...props} start={start} end={end} id={schedId} />
+          <PopBoxSched
+            {...props}
+            x={x}
+            y={y}
+            start={start}
+            end={end}
+            id={schedId}
+          />
         )}
       />
       <Route
         exact
         path="/contractorCalendar/sched/edit/:id"
         render={props => (
-          <EScheduler {...props} start={start} end={end} id={schedId} />
+          <EScheduler
+            {...props}
+            x={x}
+            y={y}
+            start={start}
+            end={end}
+            id={schedId}
+          />
         )}
       />
     </div>

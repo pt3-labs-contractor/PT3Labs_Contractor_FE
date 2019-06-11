@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+import { connect } from 'react-redux';
 import Schedule from './schedule.jsx';
 
 const ScheduleList = props => {
   return (
     <div className="listCont">
-      {props.schs.map(s => {
+      {props.schs.map((s, i) => {
         return (
           <Schedule
             {...props}
@@ -14,6 +15,7 @@ const ScheduleList = props => {
             getSE={props.getSE}
             contID={props.contID}
             today={props.today}
+            setPosition={props.setPosition}
           />
         );
       })}
@@ -21,4 +23,10 @@ const ScheduleList = props => {
   );
 };
 
-export default ScheduleList;
+const mstp = state => {
+  return {
+    scheds: state.schedule,
+  };
+};
+
+export default connect(mstp)(ScheduleList);

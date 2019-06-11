@@ -39,10 +39,12 @@ function App(props) {
         <Route exact path="/contractors" component={ContractorList} />
         <Route path="/contractors/:id" component={Contractor} />
         <Route exact path="/" component={Homepage} />
-        <Route
-          path="/app"
-          component={props.user.contractorId ? NavBarContractor : NavBarUser}
-        />
+        {props.user !== {} ? (
+          <Route
+            path="/app"
+            component={props.user.contractorId ? NavBarContractor : NavBarUser}
+          />
+        ) : null}
         <Route path="/users" component={Users} />
         <Route exact path="/app/contractors" component={ContractorList} />
         <Route path="/app/contractors/:id" component={Contractor} />
