@@ -13,7 +13,7 @@ function ContractorList(props) {
   useEffect(() => {
     const { contractors } = props;
     const length = contractors.length + 1;
-    const limit = 25;
+    const limit = props.userLanding ? 5 : 25;
     const dividedContractors = [];
     for (let x = 1; x <= Math.ceil(length / limit); x++) {
       const temp = [];
@@ -24,6 +24,7 @@ function ContractorList(props) {
       dividedContractors.push(temp);
     }
     setContractors(dividedContractors);
+    setPageNum(0);
     // eslint-disable-next-line
   }, [props.contractors]);
 
@@ -49,18 +50,34 @@ function ContractorList(props) {
       </button>
       {props.loading ? <p>Loading...</p> : null}
       {props.error ? <p>{props.error}</p> : null}
-      {list.map(contractor => (
-        <Link to={`/app/contractors/${contractor.id}`} key={contractor.id}>
-          <ContractorCard contractor={contractor} />
-        </Link>
-      ))}
+      {list.map(contractor =>
+        props.userLanding ? (
+          <div key={contractor.id}>
+            {contractor.services.map(service => (
+              <button
+                key={service.id}
+                onClick={() => props.selectService(service)}
+              >
+                {service.name}
+              </button>
+            ))}
+            <div onClick={() => props.selectContractor(contractor)}>
+              <ContractorCard contractor={contractor} />
+            </div>
+          </div>
+        ) : (
+          <Link to={`/app/contractors/${contractor.id}`} key={contractor.id}>
+            <ContractorCard contractor={contractor} />
+          </Link>
+        )
+      )}
     </div>
   );
 }
 
 const mapStateToProps = state => {
   return {
-    contractors: state.contractors,
+    contractors: state.sortedContractors,
     user: state.user,
     loading: state.loading,
     error: state.error,

@@ -12,6 +12,7 @@ import {
   SET_SCHEDULE,
   LOAD_SCHEDULE,
   FAIL_SCHEDULE,
+  SET_AVAILABILITY_BY_DAY,
 
   // fetching services
   SET_SERVICES,
@@ -48,6 +49,7 @@ const initialState = {
   loading: false,
   error: null,
   thisContractor: {},
+  sortedContractors: [],
   thisMonth: new Date(),
   thisDay: new Date(),
   schedule: [],
@@ -70,6 +72,7 @@ export default (state = initialState, action) => {
         ...state,
         user: action.payload.user,
         contractors: action.payload.contractors,
+        sortedContractors: action.payload.contractors,
         appointments: action.payload.appointments,
         loading: false,
         error: null,
@@ -95,6 +98,8 @@ export default (state = initialState, action) => {
         errorSchedule: null,
         loadSchedule: false,
       };
+    case SET_AVAILABILITY_BY_DAY:
+      return { ...state, sortedContractors: action.payload };
     case LOAD_SCHEDULE:
       return {
         ...state,

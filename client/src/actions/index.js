@@ -1,4 +1,6 @@
 import axios from 'axios';
+import dateFns from 'date-fns';
+import store from '../index';
 
 // exports for fetching all users
 export const LOADING_USERS = 'LOADING';
@@ -11,6 +13,8 @@ export const SET_DAY = 'SET_DAY';
 export const SET_SCHEDULE = 'SET_SCHEDULE';
 export const LOAD_SCHEDULE = 'LOAD_SCHEDULE';
 export const FAIL_SCHEDULE = 'FAIL_SCHEDULE';
+
+export const SET_AVAILABILITY_BY_DAY = 'SET_AVAILABILITY_BY_DAY';
 
 // export for services
 export const SET_SERVICES = 'SET_SERVICES';
@@ -73,6 +77,8 @@ export const fetchAccts = () => dispatch => {
               user = Object.assign(user, res.data.contractor[0]);
             });
         }
+        const dateString = dateFns.format(new Date(), 'YYYY-MM-DD');
+        fetchAvailabilityByDay(dateString);
         // const { contractors } = contRes.data;
         // const length = contractors.length + 1;
         // const limit = 25;
@@ -143,6 +149,28 @@ export const fetchServices = id => dispatch => {
     });
 };
 
+export const fetchAvailabilityByDay = date => dispatch => {
+  // dispatch({ type: LOADING });
+  const headers = setHeaders();
+  const state = store.getState();
+
+  axios
+    .get(
+      `https://fierce-plains-47590.herokuapp.com/api/schedules/date/${date}`,
+      { headers }
+    )
+    .then(res => {
+      const filter = res.data.appointments.map(item => item.contractorId);
+      const list = state.contractors.filter(contractor =>
+        filter.includes(contractor.id)
+      );
+      dispatch({ type: SET_AVAILABILITY_BY_DAY, payload: list });
+    })
+    .catch(() => {
+      // dispatch({ type: ERROR, error: 'Something went wrong.' });
+    });
+};
+
 // axios get single contractor
 export const selectSingleContractorSetting = id => dispatch => {
   dispatch({ type: SINGLE_CONTRACTOR_LOADING });
@@ -155,7 +183,7 @@ export const selectSingleContractorSetting = id => dispatch => {
     .then(res => {
       dispatch({
         type: FETCH_SINGLE_CONTRACTOR_SUCCESS,
-        payload: res.data.contractor[0],
+        payload: res.data.contractor,
       });
     })
     .catch(err =>

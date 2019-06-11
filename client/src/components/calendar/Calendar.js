@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import dateFns from 'date-fns';
 
-import { setDay, setMonth } from '../../actions/index';
+import { setDay, setMonth, fetchAvailabilityByDay } from '../../actions/index';
 
 import './Calendar.css';
 
@@ -53,6 +53,7 @@ function Calendar(props) {
 
     while (day <= endCalendar) {
       const temp = day;
+      const dateString = dateFns.format(day, 'YYYY-MM-DD');
       let available = false;
       if (schedule) {
         const date = schedule.find(item =>
@@ -72,7 +73,10 @@ function Calendar(props) {
               ? 'available'
               : ''
           }`}
-          onClick={() => handleSelect(temp)}
+          onClick={() => {
+            handleSelect(temp);
+            props.user && props.fetchAvailabilityByDay(dateString);
+          }}
         >
           {dateFns.format(day, 'D')}
         </div>
@@ -110,5 +114,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { setDay, setMonth }
+  { setDay, setMonth, fetchAvailabilityByDay }
 )(Calendar);
