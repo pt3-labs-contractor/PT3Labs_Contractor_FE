@@ -4,14 +4,22 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { deleteSchedule } from '../actions/index.js';
 
+import './popBox.css';
+
 const PopBoxSched = props => {
   const start = dateFns.format(props.start, 'ddd HH:mm');
   const end = dateFns.format(props.end, 'ddd HH:mm');
   const hDiff = dateFns.differenceInHours(props.end, props.start);
   const mDiff = dateFns.differenceInMinutes(props.end, props.start);
   const { id } = props;
-  const x = props.x + 50;
+  const { x } = props;
   const { y } = props;
+  const { w } = props;
+  const { h } = props;
+  const centerPop = 75;
+  const centerBox = w / 2;
+  const xper = x - centerPop + centerBox;
+  const yper = y - 150 - h / 2;
   let finalMin;
   if (mDiff % 60 !== 0) {
     const min = hDiff * 60;
@@ -26,9 +34,9 @@ const PopBoxSched = props => {
   };
 
   const position = {
-    position: 'relative',
-    left: `${x}` + 'px',
-    top: `${-y}` + 'px',
+    position: 'absolute',
+    left: `${xper}` + 'px',
+    top: `${yper}` + 'px',
     zIndex: '100',
     backgroundColor: 'white',
   };

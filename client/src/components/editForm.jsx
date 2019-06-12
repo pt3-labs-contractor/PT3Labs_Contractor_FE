@@ -3,11 +3,26 @@ import { connect } from 'react-redux';
 import DateTimePicker from 'react-datetime-picker';
 import dateFns from 'date-fns';
 import { postNewSchedule, updateSchedule } from '../actions/index.js';
+import './editForm.css';
 
 const EScheduler = props => {
+  const { x, y, w, h } = props;
   const [start, setStart] = useState(props.start);
   const [end, setEnd] = useState(props.end);
   const { id } = props;
+
+  const centerPop = 75;
+  const centerBox = w / 2;
+  const xper = x - centerPop + centerBox;
+  const yper = y - 150 - h / 2;
+
+  const position = {
+    position: 'absolute',
+    left: `${xper}` + 'px',
+    top: `${yper}` + 'px',
+    zIndex: '100',
+    backgroundColor: 'white',
+  };
 
   useEffect(() => {
     setStart(props.start);
@@ -27,8 +42,6 @@ const EScheduler = props => {
     props.history.push('/contractorCalendar');
   };
 
-
-
   const submit = e => {
     e.preventDefault();
     const minutes = dateFns.differenceInMinutes(end, start);
@@ -43,7 +56,7 @@ const EScheduler = props => {
     props.history.push('/contractorCalendar');
   };
   return (
-    <div className="schedulerCont" >
+    <div className="schedulerCont" style={position}>
       <div className="close" onClick={closeEdit}>
         Close
       </div>

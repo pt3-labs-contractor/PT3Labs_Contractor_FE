@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import dateFns from 'date-fns';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -8,6 +8,7 @@ const Schedule = props => {
   let { id, start, duration } = props;
   const modifiedStart = dateFns.format(start, 'HH:mm A');
   start = new Date(start);
+  const [size, setSize] = useState();
   let end = start;
 
   if (duration.hours) {
@@ -26,19 +27,27 @@ const Schedule = props => {
   const newEnd = new Date(end);
 
   const theE = e => {
+    const pos = props.refs.find(r => {
+      return r.id.id === e.target.dataset.id;
+    });
+    console.log(pos);
     const x = e.clientX;
     const y = e.clientY;
     // console.log(props.setPostion);
-    props.setPosition(x, y);
+    // props.setPosition(x, y);
   };
 
-  const setEditData = () => {
+  const setEditData = e => {
+    const pos = props.refs.find(r => {
+      return r.id.id === e.target.dataset.id;
+    });
+    props.setPosition(pos);
     props.getSE(start, newEnd, id);
   };
 
   const modifiedEnd = dateFns.format(end, 'HH:mm A');
   return (
-    <div id={id} className="schedCont" onClick={theE}>
+    <div id={id} className="schedCont">
       {props.contractorId === props.contID ? (
         <>
           {/* <div className="delete" onClick={deleteSched}> */}
@@ -50,7 +59,7 @@ const Schedule = props => {
             to={`/contractorCalendar/sched/${id}`}
             onClick={setEditData}
           >
-            <p className="timeSlot">
+            <p className="timeSlot" data-id={id}>
               {modifiedStart} - {modifiedEnd}{' '}
             </p>
           </Link>
@@ -67,6 +76,7 @@ const Schedule = props => {
 const mstp = state => {
   return {
     contractorId: state.user.contractorId,
+    refs: state.refs,
   };
 };
 

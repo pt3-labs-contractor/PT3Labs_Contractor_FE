@@ -11,6 +11,7 @@ export const DEL_SCHED = 'DEL_SCHED';
 export const DEL_SCHED_COMP = 'DEL_SCHED_COMP';
 export const UP_SCHED = 'UP_SCHED';
 export const UP_SCHED_COMP = 'UP_SCHED_COMP';
+export const REFS = 'REFS';
 
 // exports for fetching all users
 export const LOADING_USERS = 'LOADING';
@@ -56,12 +57,107 @@ export const CONTRACTOR_APP_FAIL = 'CONTRACTOR_APP_FAIL';
 // ---------------------------------------------------------------
 
 // axios get all accounts
+// export const fetchAccts = () => dispatch => {
+//   dispatch({ type: LOADING_USERS });
+//   const bearer = `Bearer ${localStorage.getItem('jwt')}`;
+//   const headers = { authorization: bearer };
+//   // dispatch({ type: LOADING_USERS });
+//   // const headers = setHeaders();
+//
+//   axios
+//     .all([
+//       axios.get('https://fierce-plains-47590.herokuapp.com/api/users', {
+//         headers,
+//       }),
+//       axios.get('https://fierce-plains-47590.herokuapp.com/api/contractors', {
+//         headers,
+//       }),
+//       axios.get('https://fierce-plains-47590.herokuapp.com/api/appointments', {
+//         headers,
+//       }),
+//     ])
+//     .then(
+//       axios.spread((userRes, contRes) => {
+//         console.log(userRes.data.user);
+//         console.log(contRes.data);
+//         const accounts = {
+//           user: userRes.data.user,
+//           contractors: contRes.data.contractors,
+//         };
+//         dispatch({ type: FETCHING_USERS_SUCCESS, payload: accounts });
+//         const { user } = userRes.data.user;
+//         console.log('user: ', user);
+//         // if (user.contractorId) {
+//         //   axios
+//         //     .get(
+//         //       `https://fierce-plains-47590.herokuapp.com/api/contractors/${
+//         //         user.contractorId
+//         //       }`,
+//         //       { headers }
+//         //     )
+//         //     .then(res => {
+//         //       user = Object.assign(user, res.data.contractor[0]);
+//         //     });
+//         // }
+//       axios.spread((userRes, contRes, apmtRes) => {
+//         let { user } = userRes.data;
+//         if (user.contractorId) {
+//           axios
+//             .get(
+//               `https://fierce-plains-47590.herokuapp.com/api/contractors/${
+//                 user.contractorId
+//               }`,
+//               { headers }
+//             )
+//             .then(res => {
+//               user = Object.assign(user, res.data.contractor[0]);
+//             });
+//         }
+//         const dateString = dateFns.format(new Date(), 'YYYY-MM-DD');
+//         fetchAvailabilityByDay(dateString);
+//         // const { contractors } = contRes.data;
+//         // const length = contractors.length + 1;
+//         // const limit = 25;
+//         // const dividedContractors = [];
+//         // for (let x = 1; x < Math.ceil(length / limit); x++) {
+//         //   const temp = [];
+//         //   const pageItems = length / (limit * x) > 1 ? limit : length % limit;
+//         //   for (let y = 0; y < pageItems; y++) {
+//         //     temp.push(contractors[(x - 1) * limit + y]);
+//         //   }
+//         //   // dividedContractors = { ...dividedContractors, [`page${x}`]: temp };
+//         //   dividedContractors.push(temp);
+//         // }
+//         // dispatch({
+//         //   type: FETCHING_USERS_SUCCESS,
+//         //   payload: { user, contractors: contRes.data.contractors },
+//         // });
+//         const { appointments } = apmtRes.data;
+//         appointments.sort((a, b) => {
+//           return (
+//             new Date(a.appointmentDatetime) - new Date(b.appointmentDatetime)
+//           );
+//         });
+//         dispatch({
+//           type: FETCHING_USERS_SUCCESS,
+//           payload: {
+//             user,
+//             contractors: contRes.data.contractors,
+//             appointments,
+//           },
+//         });
+//       })
+//     .catch(() => {
+//       dispatch({
+//         type: FETCHING_USERS_FAILURE,
+//         error: 'Something went wrong.',
+//       });
+//     });
+// };
+
 export const fetchAccts = () => dispatch => {
-  dispatch({ type: LOADING_USERS });
-  const bearer = `Bearer ${localStorage.getItem('jwt')}`;
-  const headers = { authorization: bearer };
   // dispatch({ type: LOADING_USERS });
-  // const headers = setHeaders();
+  const headers = setHeaders();
 
   axios
     .all([
@@ -76,28 +172,6 @@ export const fetchAccts = () => dispatch => {
       }),
     ])
     .then(
-      axios.spread((userRes, contRes) => {
-        console.log(userRes.data.user);
-        console.log(contRes.data);
-        const accounts = {
-          user: userRes.data.user,
-          contractors: contRes.data.contractors,
-        };
-        dispatch({ type: FETCHING_USERS_SUCCESS, payload: accounts });
-        const { user } = userRes.data.user;
-        console.log('user: ', user);
-        // if (user.contractorId) {
-        //   axios
-        //     .get(
-        //       `https://fierce-plains-47590.herokuapp.com/api/contractors/${
-        //         user.contractorId
-        //       }`,
-        //       { headers }
-        //     )
-        //     .then(res => {
-        //       user = Object.assign(user, res.data.contractor[0]);
-        //     });
-        // }
       axios.spread((userRes, contRes, apmtRes) => {
         let { user } = userRes.data;
         if (user.contractorId) {
@@ -127,10 +201,6 @@ export const fetchAccts = () => dispatch => {
         //   // dividedContractors = { ...dividedContractors, [`page${x}`]: temp };
         //   dividedContractors.push(temp);
         // }
-        // dispatch({
-        //   type: FETCHING_USERS_SUCCESS,
-        //   payload: { user, contractors: contRes.data.contractors },
-        // });
         const { appointments } = apmtRes.data;
         appointments.sort((a, b) => {
           return (
@@ -146,6 +216,7 @@ export const fetchAccts = () => dispatch => {
           },
         });
       })
+    )
     .catch(() => {
       dispatch({
         type: FETCHING_USERS_FAILURE,
@@ -371,6 +442,12 @@ export const updateSchedule = (id, obj) => {
       .catch(err => {
         console.log(err);
       });
+  };
+};
+
+export const setRefs = rfs => {
+  return dispatch => {
+    dispatch({ type: REFS, payload: rfs });
   };
 };
 

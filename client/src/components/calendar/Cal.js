@@ -18,6 +18,8 @@ import './Calendar.css';
 function ContCalendar(props) {
   const [x, setX] = useState();
   const [y, setY] = useState();
+  const [w, setW] = useState();
+  const [h, setH] = useState();
   const { selectedDay, selectedMonth, setMonth } = props;
   const [id, setId] = useState('');
   const [refs, setRefs] = useState([]);
@@ -38,11 +40,12 @@ function ContCalendar(props) {
     setSchedId(id);
   };
 
-  const setPosition = (x, y) => {
-    console.log(x);
-    console.log(y);
-    setX(x);
-    setY(y);
+  const setPosition = pos => {
+    console.log(pos);
+    setX(pos.pos.x);
+    setY(pos.pos.y);
+    setW(pos.pos.width);
+    setH(pos.pos.height);
   };
 
   function CalendarNav() {
@@ -156,7 +159,7 @@ function ContCalendar(props) {
   }
 
   return (
-    <div className="calendar">
+    <div className="cal">
       <CalendarNav />
       <DaysOfWeek />
       <DaysOfMonth />
@@ -170,6 +173,8 @@ function ContCalendar(props) {
             {...props}
             x={x}
             y={y}
+            w={w}
+            h={h}
             start={start}
             end={end}
             id={schedId}
@@ -184,6 +189,8 @@ function ContCalendar(props) {
             {...props}
             x={x}
             y={y}
+						w={w}
+						h={h}
             start={start}
             end={end}
             id={schedId}

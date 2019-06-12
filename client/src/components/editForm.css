@@ -1,0 +1,19 @@
+.schedulerCont {
+  display: flex;
+  flex-wrap: wrap;
+  height: 150px;
+  width: 300px;
+}
+
+.react-datetime-picker {
+  font-size: 0.5rem;
+  height: 25px;
+}
+.react-datetime-picker__wrapper {
+  height: 25px;
+}
+
+.react-datetime-picker__inputGroup__input {
+  height: 25px;
+  margin-top: 0px;
+}

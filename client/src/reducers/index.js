@@ -8,6 +8,7 @@ import {
   DEL_SCHED_COMP,
   UP_SCHED,
   UP_SCHED_COMP,
+  REFS,
   // fetching users
   LOADING_USERS,
   FETCHING_USERS_SUCCESS,
@@ -211,6 +212,12 @@ export default (state = initialState, action) => {
         loading: false,
         schedule: [...updatedSched, action.payload],
       };
+    case REFS:
+      return {
+        ...state,
+        refs: action.payload,
+      };
+
     default:
       return state;
   }
