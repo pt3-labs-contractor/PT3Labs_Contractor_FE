@@ -25,7 +25,7 @@ function Login(props) {
       )
       .then(res => {
         localStorage.setItem('jwt', res.data.token);
-        props.history.push('/contractors');
+        props.history.push('/app');
       })
       .catch(err => {
         console.log(err);
