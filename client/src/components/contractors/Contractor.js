@@ -33,6 +33,11 @@ function Contractor(props) {
     setAppointment(date);
   };
 
+  const clearAppointment = () => {
+    setAppointment({});
+    setService({});
+  };
+
   return (
     <>
       <NavBarUser />
@@ -42,11 +47,12 @@ function Contractor(props) {
           {props.services.map(service => (
             <div key={service.id} onClick={() => setService(service)}>
               <p>{service.name}</p>
+              <p>{service.price}</p>
             </div>
           ))}
         </div>
         <div className="contractor-calendar">
-          <Calendar contractor={props.contractor} />
+          <Calendar contractor={props.contractor} schedule={props.schedule} />
           <div className="availability-list">
             <AvailabilityList
               contractor
@@ -57,6 +63,7 @@ function Contractor(props) {
         </div>
         <AppointmentForm
           contractor={id}
+          clearAppointment={clearAppointment}
           appointment={appointment}
           service={service}
         />
