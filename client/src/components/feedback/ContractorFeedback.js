@@ -15,7 +15,7 @@ function ContractorFeedback(props) {
   console.log(props);
   return (
     <>
-      <NavBarContractor />
+      {/* <NavBarContractor /> */}
       <div>
       <h2>Contractor OWN Feedback Page</h2>
       {props.loading ? <p>Loading...</p> : null}

@@ -163,16 +163,16 @@ export const getContractorFeedback = id => dispatch => {
 // }
 
 // axios get appointments when current user is contractor
-export const seeMyAppointments = (id) = dispatch => {
-  dispatch({ type: LOADING })
-  const headers = setHeaders();
+// export const seeMyAppointments = (id) = dispatch => {
+//   dispatch({ type: LOADING })
+//   const headers = setHeaders();
 
-  axios.get(`https://fierce-plains-47590.herokuapp.com/api/api/appointments/${id}`,headers)
-  .then( res => {
-    dispatch({ type: RET_CONTRACTOR_APP_SUCC, payload: res.data })
-  })
-  .catch(err => dispatch({ type: FAILURE, payload:err }))
-}
+//   axios.get(`https://fierce-plains-47590.herokuapp.com/api/api/appointments/${id}`,headers)
+//   .then( res => {
+//     dispatch({ type: RET_CONTRACTOR_APP_SUCC, payload: res.data })
+//   })
+//   .catch(err => dispatch({ type: FAILURE, payload:err }))
+// }
 
 export const setDay = day => dispatch => {
   dispatch({ type: SET_DAY, payload: day });
