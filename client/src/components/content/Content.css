@@ -2,13 +2,16 @@
     height: 100%;
     max-width: 1200px;
     text-align: center;
-    margin: 8rem auto;
+    margin: 7rem auto 4rem;
 }
 
 .tech {
     color:var(--primary-color)
 }
 
+.dark-tech {
+    color:var(--dark-color)
+}
 .section-heading {
     margin-bottom: 3rem;
     text-align: center;
@@ -77,6 +80,27 @@
 .dev-tools li {
     list-style: square;
     font-size: 1.4rem;
+}
+
+.arrow-content {
+    width: 47px;
+    border-radius: 55%;
+    display: flex;
+    margin: 0 auto;
+    animation: pulse-2 2s infinite;
+
+}
+.arrow-motion {
+    color: var(--secondary-color);
+    font-size: 3rem;
+    margin: 0 auto;
+
+}
+
+@keyframes pulse-2 {
+    0%{box-shadow: 0 0 0 0 rgba(224, 196, 253, 0.9)}
+    70%{box-shadow: 0 0 0 1rem rgba(140, 32, 248, 0)}
+    100%{box-shadow: 0 0 0 0 rgba(254, 189, 23, 0.9)}
 }
 
 @media (max-width: 760px) {
