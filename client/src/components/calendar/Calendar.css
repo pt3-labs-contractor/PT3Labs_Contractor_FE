@@ -1,4 +1,5 @@
 .calendar {
+  margin-left: 210px;
   width: 60%;
   max-width: 73vh;
   /* margin: 0 20px; */
@@ -46,4 +47,8 @@
 
 .cell.available {
   border: 3px solid green;
+}
+
+.calendar-test {
+
 }

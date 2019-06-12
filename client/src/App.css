@@ -42,3 +42,7 @@ img {
 .btn:hover {
   background-color: darken();
 }
+
+.main-body {
+  margin-left: 210px;
+}

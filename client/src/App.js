@@ -18,6 +18,7 @@ import NavBarContractor from './components/navbar/NavBarContractor';
 import Settings from './components/settings/Settings';
 import ContractorFeedback from './components/feedback/ContractorFeedback';
 import UserFeedback from './components/feedback/UserFeedback';
+import MyBookings from './components/bookings/MyBookings';
 
 function App(props) {
   useEffect(() => {
@@ -50,6 +51,7 @@ function App(props) {
         <Route path="/settings" component={Settings} />
         <Route path="/contractorFeedback" component={ContractorFeedback} />
         <Route path="/userFeedback" component={UserFeedback} />
+        <Route path="/mybookings" component={MyBookings} />
       </main>
     </div>
   );

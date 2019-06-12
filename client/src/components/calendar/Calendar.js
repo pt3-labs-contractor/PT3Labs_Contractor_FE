@@ -93,7 +93,7 @@ function Calendar(props) {
   }
 
   return (
-    <div className="calendar">
+    <div className="calendar calendar-test">
       <CalendarNav />
       <DaysOfWeek />
       <DaysOfMonth />
