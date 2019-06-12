@@ -4,13 +4,14 @@ import { connect } from 'react-redux';
 // import { IoIosTrash } from 'react-icons/io'
 // import { IoMdCreate } from 'react-icons/io'
 import './Settings.css';
-import NavBarUser from '../navbar/NavBarUser';
+
+import NavBarContractor from '../navbar/NavBarContractor';
 
 function ContractorSetting(props) {
   // console.log(props);
   return (
     <>
-      <NavBarUser />
+      <NavBarContractor />
       <div className="settings-container">
         <h2>Contractor Setting Page</h2>
         {'\n'}

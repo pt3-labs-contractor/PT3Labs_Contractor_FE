@@ -26,11 +26,15 @@ function NavBarUser() {
         <i className="fas fa-users" />
         <span className="side-listing"> Feedback</span>
       </NavLink>
-      <NavLink to="/settings" className="side-link" activeClassName="current">
+      <NavLink
+        to="/usersettings"
+        className="side-link"
+        activeClassName="current"
+      >
         <i className="fas fa-user-cog" />
         <span className="side-listing"> Settings</span>
       </NavLink>
-      <NavLink to="/app/contractors">Contractors</NavLink>
+      <NavLink to="/contractorschedule">Contractors</NavLink>
     </div>
   );
 }
