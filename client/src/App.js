@@ -28,7 +28,7 @@ function App(props) {
 
   return (
     <div className="App">
-      <main className="main-content">
+      <main>
         <Route exact path="/" component={Homepage} />
         <Route
           path="/app"
