@@ -137,13 +137,11 @@ export const selectSingleContractorSetting = id => dispatch => {
   const headers = setHeaders();
 
   axios
-    .get(`https://fierce-plains-47590.herokuapp.com/api/contractors/${id}`, {
-      headers,
-    })
+    .get(`https://fierce-plains-47590.herokuapp.com/api/users/${id}`,{headers})
     .then(res => {
       dispatch({
         type: FETCH_SINGLE_CONTRACTOR_SUCCESS,
-        payload: res.data.contractor[0],
+        payload: res.data
       });
     })
     .catch(err =>
@@ -152,13 +150,13 @@ export const selectSingleContractorSetting = id => dispatch => {
 };
 
 // axios get feedback written by the current user
-export const getUserWrittenFeedback = id => dispatch => {
+export const getUserWrittenFeedback = (id) => dispatch => {
   dispatch({ type: LOADING });
   const headers = setHeaders();
 
+
   axios
-    // .get(`https://fierce-plains-47590.herokuapp.com/api/feedback`,headers)
-    .get(`localhost:5000/api/feedback/${id}`,headers)
+    .get(`https://fierce-plains-47590.herokuapp.com/api/feedback/${id}`,{headers})
 
     .then(res => {
       dispatch({ type: USER_WRITTEN_FEEDBACK_SUCCESS, payload: res.data });
@@ -173,7 +171,7 @@ export const getContractorFeedback = id => dispatch => {
   const headers = setHeaders();
 
   axios
-    .get(`https://fierce-plains-47590.herokuapp.com/api/api/feedback/${id}`,headers)
+    .get(`https://fierce-plains-47590.herokuapp.com/api/api/feedback/`,{headers})
     .then(res => {
       dispatch({ type: FETCH_CONTRACTOR_FEEDBACK_SUCCESS, payload: res.data });
     })

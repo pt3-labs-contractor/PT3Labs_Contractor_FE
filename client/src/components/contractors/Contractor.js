@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import Calendar from '../calendar/Calendar';
 import ContractorCard from './ContractorCard';
 import AvailabilityList from '../appointments/AvailabilityList';
-import NavBarUser from '../navbar/NavBarUser';
 import AppointmentForm from '../appointments/AppointmentForm';
+import NavBarContractor from '../navbar/NavBarContractor';
 
 import './Contractor.css';
 
@@ -40,7 +40,7 @@ function Contractor(props) {
 
   return (
     <>
-      <NavBarUser />
+      <NavBarContractor />
       <div className="contractor-container">
         <ContractorCard contractor={props.contractor} />
         <div className="services-container">

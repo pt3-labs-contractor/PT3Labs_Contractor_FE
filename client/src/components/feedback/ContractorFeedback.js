@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 // import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import NavBarContractor from '../navbar/NavBarContractor';
 // import Rating from 'react-rating';
 import { getContractorFeedback } from '../../actions/index';
 
@@ -15,26 +16,26 @@ function ContractorFeedback(props) {
   console.log(props);
   return (
     <>
-      {/* <NavBarContractor /> */}
-      <div>
-      <h2>Contractor OWN Feedback Page</h2>
-      {props.loading ? <p>Loading...</p> : null}
-      {props.error ? <p>{props.error}</p> : null} 
-      {/* {props.feedback.map(contractor => (
-//           <div>
-//             Username: {props.feedback.users.username}
+      <NavBarContractor />
+      <div className="main-body">
+        <h2>Contractor OWN Feedback Page</h2>
+        {props.loading ? <p>Loading...</p> : null}
+        {props.error ? <p>{props.error}</p> : null}
+        {/* {props.feedback.map(contractor => (
+          <div>
+            Username: {props.feedback.users.username}
 
-//             Rating: <Rating
-//                 emptySymbol={<span className="icon-text">&#9734;</span>}
-//                 fullSymbol={<span className="icon-text">&#9733;</span>}
-//                 readonly
-//                 placeholderRating={props.feedback.stars}
-//                 stop={3}
-//                 />
-//             Message: {props.feedback.message}
-//           </div>
-//         ))} */}
-//     </div>
+            Rating: <Rating
+                emptySymbol={<span className="icon-text">&#9734;</span>}
+                fullSymbol={<span className="icon-text">&#9733;</span>}
+                readonly
+                placeholderRating={props.feedback.stars}
+                stop={3}
+                />
+            Message: {props.feedback.message}
+          </div>
+        ))} */}
+      </div>
     </>
   );
 }

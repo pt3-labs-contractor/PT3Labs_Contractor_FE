@@ -5,24 +5,25 @@ import NavBarUser from '../navbar/NavBarUser';
 import { getUserWrittenFeedback } from '../../actions/index';
 
 function UserFeedback(props) {
-  const token = localStorage.getItem('jwt')
+  // const token = localStorage.getItem('jwt')
   // console.log(jwt)
-  const base = token.split('.')[1]
+  // const base = token.split('.')[1]
   // console.log(decoded)
-  const decoded = JSON.parse(window.atob(base));
+  // const decoded = JSON.parse(window.atob(base));
   // console.log(decoded)
   
 
-  const { id } = decoded;
+  const { id } = props.match.params;
   useEffect(() => {
     getUserWrittenFeedback(id)
-}, [])
-  // console.log(props.user.id)
+  })
+  console.log(props)
   // console.log(id)
   return (
+    
     <>
       <NavBarUser />
-      <div>
+      <div className="main-body">
         <h2>User giving Feedback Page</h2>
         <div>
           <h2>Appointment Info</h2>
@@ -73,6 +74,14 @@ function UserFeedback(props) {
             />
             <input placeholder="Details" />
           </div>
+          <div>
+            <select>
+              {props.contractor.map(contractor => (
+
+                <option>{contractor.name}</option>
+                ))}
+            </select>
+          </div>
         </form>
 
       </div>
@@ -86,6 +95,7 @@ const mapStateToProps = state => {
     user: state.user,
     loading: state.loading,
     error: state.error,
+    contractor: state.contractors
   };
 };
 

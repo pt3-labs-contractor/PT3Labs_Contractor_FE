@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 // import { IoIosTrash } from 'react-icons/io'
 // import { IoMdCreate } from 'react-icons/io'
 import './Settings.css';
+
 import NavBarContractor from '../navbar/NavBarContractor';
 // import ContractorCard from './ContractorCard';
 
