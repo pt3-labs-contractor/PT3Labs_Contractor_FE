@@ -11,6 +11,7 @@ export const DEL_SCHED = 'DEL_SCHED';
 export const DEL_SCHED_COMP = 'DEL_SCHED_COMP';
 export const UP_SCHED = 'UP_SCHED';
 export const UP_SCHED_COMP = 'UP_SCHED_COMP';
+export const GET_APP = 'GET_APP';
 export const REFS = 'REFS';
 
 // exports for fetching all users
@@ -174,20 +175,32 @@ export const fetchAccts = () => dispatch => {
     .then(
       axios.spread((userRes, contRes, apmtRes) => {
         let { user } = userRes.data;
+        const services = [];
         if (user.contractorId) {
-          axios
-            .get(
+          Promise.all([
+            axios.get(
               `https://fierce-plains-47590.herokuapp.com/api/contractors/${
                 user.contractorId
               }`,
               { headers }
-            )
-            .then(res => {
-              user = Object.assign(user, res.data.contractor[0]);
+            ),
+            axios.get(
+              `https://fierce-plains-47590.herokuapp.com/api/services/contractor/${
+                user.contractorId
+              }`,
+              { headers }
+            ),
+          ]).then(([resOne, resTwo]) => {
+            user = Object.assign(user, resOne.data.contractor);
+            const serv = resTwo.data.services;
+            serv.forEach(s => {
+              services.push(s);
             });
+          });
         }
         const dateString = dateFns.format(new Date(), 'YYYY-MM-DD');
         fetchAvailabilityByDay(dateString);
+        console.log(services);
         // const { contractors } = contRes.data;
         // const length = contractors.length + 1;
         // const limit = 25;
@@ -213,6 +226,7 @@ export const fetchAccts = () => dispatch => {
             user,
             contractors: contRes.data.contractors,
             appointments,
+            services,
           },
         });
       })
@@ -396,6 +410,10 @@ export const getSchedules = id => {
         }
       )
       .then(res => {
+        const scheds = res.data.schedule;
+        scheds.sort((a, b) => {
+          return new Date(a.startTime) - new Date(b.startTime);
+        });
         dispatch({ type: SET_SCHEDULE, payload: res.data.schedule });
       })
       .catch(err => {

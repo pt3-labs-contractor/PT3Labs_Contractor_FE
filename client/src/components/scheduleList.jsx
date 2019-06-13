@@ -17,7 +17,6 @@ const ScheduleList = props => {
           });
           if (!xs.includes(ref.id.id)) {
             const modSize = [...newSize, ref];
-            console.log(modSize);
             props.setRefs(modSize);
             // setSize([...newSize, loc]);
           }
@@ -45,6 +44,9 @@ const ScheduleList = props => {
               contID={props.contID}
               today={props.today}
               setPosition={props.setPosition}
+              appointments={props.appointments}
+              setServIdUp={props.setServIdUp}
+              setRefs={props.setRefs}
             />
           </div>
         );

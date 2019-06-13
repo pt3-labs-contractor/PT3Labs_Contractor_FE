@@ -3,6 +3,7 @@ import dateFns from 'date-fns';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { deleteSchedule } from '../actions/index';
+import Appointment from './appointment.jsx';
 
 const Schedule = props => {
   let { id, start, duration } = props;
@@ -24,18 +25,19 @@ const Schedule = props => {
     end = dateFns.addMilliseconds(end, duration.milliseconds);
   }
 
+  const apps = props.appointments.filter(app => {
+    return app.scheduleId === id;
+  });
+
   const newEnd = new Date(end);
 
-  const theE = e => {
-    const pos = props.refs.find(r => {
-      return r.id.id === e.target.dataset.id;
-    });
-    console.log(pos);
-    const x = e.clientX;
-    const y = e.clientY;
-    // console.log(props.setPostion);
-    // props.setPosition(x, y);
-  };
+  // const theE = e => {
+  //   const pos = props.refs.find(r => {
+  //     return r.id.id === e.target.dataset.id;
+  // });
+  // console.log(props.setPostion);
+  // props.setPosition(x, y);
+  // };
 
   const setEditData = e => {
     const pos = props.refs.find(r => {
@@ -43,6 +45,33 @@ const Schedule = props => {
     });
     props.setPosition(pos);
     props.getSE(start, newEnd, id);
+  };
+
+  const refCallback = el => {
+    if (el) {
+      // console.log(el);
+      const loc = el.getBoundingClientRect();
+      const ref = { id: el.id, pos: loc };
+      const add = loc.x + loc.y;
+      if (props.refs) {
+        const newSize = [...props.refs];
+        if (newSize.length > 0) {
+          const xs = newSize.map(s => {
+            return s.id;
+          });
+          if (!xs.includes(ref.id)) {
+            const modSize = [...newSize, ref];
+            props.setRefs(modSize);
+            // setSize([...newSize, loc]);
+          }
+        }
+      } else {
+        // setSize([loc]);
+        props.setRefs([ref]);
+      }
+
+      // props.getSize(el.getBoundingClientRect());
+    }
   };
 
   const modifiedEnd = dateFns.format(end, 'HH:mm A');
@@ -63,6 +92,21 @@ const Schedule = props => {
               {modifiedStart} - {modifiedEnd}{' '}
             </p>
           </Link>
+          {apps.map(a => {
+            return (
+              <div className="appContRef" id={a.id} ref={refCallback}>
+                <Appointment
+                  id={a.id}
+                  sevId={a.serviceId}
+                  start={a.startTime}
+                  duration={a.duration}
+                  contID={props.contID}
+                  setServIdUp={props.setServIdUp}
+                  setPosition={props.setPosition}
+                />
+              </div>
+            );
+          })}
         </>
       ) : (
         <p className="timeSlot">

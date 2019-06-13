@@ -7,6 +7,7 @@ import Scheduler from '../scheduler';
 import SchduleList from '../scheduleList';
 import EScheduler from '../editForm.jsx';
 import PopBoxSched from '../popBox.jsx';
+import AppInfo from '../appointConf.jsx';
 import './cal.css';
 
 import { setDay, setMonth, getSchedules } from '../../actions/index';
@@ -20,6 +21,7 @@ function ContCalendar(props) {
   const [y, setY] = useState();
   const [w, setW] = useState();
   const [h, setH] = useState();
+  const [appId, setAppId] = useState();
   const { selectedDay, selectedMonth, setMonth } = props;
   const [id, setId] = useState('');
   const [refs, setRefs] = useState([]);
@@ -41,11 +43,14 @@ function ContCalendar(props) {
   };
 
   const setPosition = pos => {
-    console.log(pos);
     setX(pos.pos.x);
     setY(pos.pos.y);
     setW(pos.pos.width);
     setH(pos.pos.height);
+  };
+
+  const setServIdUp = theId => {
+    setAppId(theId);
   };
 
   function CalendarNav() {
@@ -95,6 +100,9 @@ function ContCalendar(props) {
       const daySched = props.schedules.filter(s => {
         return dateFns.isSameDay(s.startTime, temp);
       });
+      const dayApp = props.appointments.filter(a => {
+        return dateFns.isSameDay(a.startTime, temp);
+      });
       days.push(
         <div
           key={temp}
@@ -138,6 +146,8 @@ function ContCalendar(props) {
                 contID={props.id}
                 today={props.selectedDay}
                 setPosition={setPosition}
+                setServIdUp={setServIdUp}
+                appointments={dayApp}
               />
             ) : null}
           </div>
@@ -189,12 +199,19 @@ function ContCalendar(props) {
             {...props}
             x={x}
             y={y}
-						w={w}
-						h={h}
+            w={w}
+            h={h}
             start={start}
             end={end}
             id={schedId}
           />
+        )}
+      />
+      <Route
+        exact
+        path="/contractorCalendar/app/:id"
+        render={props => (
+          <AppInfo {...props} sevId={appId} x={x} y={y} w={w} h={h} />
         )}
       />
     </div>
@@ -206,6 +223,7 @@ const mapStateToProps = state => {
     selectedDay: state.thisDay,
     selectedMonth: state.thisMonth,
     schedules: state.schedule,
+    appointments: state.appointments,
     id: state.user.contractorId,
     // contractor: state.thisContractor
   };

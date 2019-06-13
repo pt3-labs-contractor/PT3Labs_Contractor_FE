@@ -8,6 +8,7 @@ import {
   DEL_SCHED_COMP,
   UP_SCHED,
   UP_SCHED_COMP,
+  GET_APP,
   REFS,
   // fetching users
   LOADING_USERS,
@@ -78,12 +79,14 @@ export default (state = initialState, action) => {
         error: null,
       };
     case FETCHING_USERS_SUCCESS:
+      console.log(action.payload.services);
       return {
         ...state,
         user: action.payload.user,
         contractors: action.payload.contractors,
         sortedContractors: action.payload.contractors,
         appointments: action.payload.appointments,
+        services: action.payload.services,
         loading: false,
         error: null,
       };

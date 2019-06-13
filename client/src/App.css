@@ -42,3 +42,6 @@ img {
 .btn:hover {
   background-color: darken();
 }
+.contractor-list-container {
+  margin-top: 100px;
+}

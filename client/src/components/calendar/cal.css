@@ -32,7 +32,7 @@
 }
 
 .cel {
-  height: 7vh;
+  height: 6vh;
   overflow: hidden;
 }
 
@@ -108,6 +108,12 @@
   font-size: 0px;
 }
 
+.appLink {
+  padding: 0px;
+  margin: 0px;
+  font-size: 0px;
+}
+
 .spacer {
   border: 1px solid black;
   display: flex;
@@ -121,4 +127,20 @@
 
 .add:hover {
   cursor: pointer;
+}
+
+.appCont:last-child {
+  margin-bottom: 30px;
+}
+
+.appSlot {
+  list-style: none;
+  margin-bottom: 10px;
+  font-size: 0.5rem;
+  margin-left: 15px;
+}
+
+.infoCont {
+  height: 150px;
+  width: 150px;
 }
