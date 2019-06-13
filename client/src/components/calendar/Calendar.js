@@ -55,7 +55,6 @@ function Calendar(props) {
 
     while (day <= endCalendar) {
       const temp = day;
-      const dateString = dateFns.format(day, 'YYYY-MM-DD');
       let available = false;
       if (schedule) {
         const date = schedule.find(item =>
@@ -75,10 +74,7 @@ function Calendar(props) {
               ? 'available'
               : ''
           }`}
-          onClick={() => {
-            handleSelect(temp);
-            props.user && props.fetchAvailabilityByDay(dateString);
-          }}
+          onClick={() => handleSelect(temp)}
         >
           {dateFns.format(day, 'D')}
         </div>
@@ -99,7 +95,7 @@ function Calendar(props) {
   }
 
   return (
-    <div className="calendar">
+    <div className="calendar calendar-test">
       <CalendarNav />
       <DaysOfWeek />
       <DaysOfMonth />

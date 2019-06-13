@@ -21,6 +21,10 @@ import Settings from './components/settings/Settings';
 import ContractorFeedback from './components/feedback/ContractorFeedback';
 import UserFeedback from './components/feedback/UserFeedback';
 import EScheduler from './components/editForm.jsx';
+import MyBookings from './components/bookings/MyBookings';
+import Plans from './components/plans/Plans';
+import UserSettings from './components/settings/UserSettings';
+import ContractorSchedule from './components/contractors/ContractorSchedule';
 
 function App(props) {
   useEffect(() => {
@@ -30,7 +34,7 @@ function App(props) {
 
   return (
     <div className="App">
-      <main className="main-content">
+      <main>
         <Route exact path="/" component={Homepage} />
         <Route
           path="/app"
@@ -55,8 +59,12 @@ function App(props) {
           render={props => <ContCalendar {...props} contractor={{}} />}
         />
         <Route path="/settings" component={Settings} />
-        <Route path="/contractorFeedback" component={ContractorFeedback} />
-        <Route path="/userFeedback" component={UserFeedback} />
+        <Route path="/usersettings" component={UserSettings} />
+        <Route path="/contractorfeedback" component={ContractorFeedback} />
+        <Route path="/userfeedback" component={UserFeedback} />
+        <Route path="/mybookings" component={MyBookings} />
+        <Route path="/plans" component={Plans} />
+        <Route path="/contractorschedule" component={ContractorSchedule} />
       </main>
     </div>
   );

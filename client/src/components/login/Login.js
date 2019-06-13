@@ -43,7 +43,7 @@ function Login(props) {
       <div className="form-container">
         <h1 className="text-primary">Log In</h1>
         <p className="lead">
-          <i className="fas fa-user" /> Sign in with:{' '}
+          <i className="fas fa-user" /> Sign in with:
         </p>
         <div className="social-container google-oauth">
           <a href="https://fierce-plains-47590.herokuapp.com/api/auth/google">
@@ -69,7 +69,7 @@ function Login(props) {
           <input type="submit" value="Sign In" className="btn btn-primary" />
         </form>
         <p>
-          Don't have an account?{' '}
+          Don't have an account?
           <NavLink to="/register" className="form-links">
             Sign Up
           </NavLink>
