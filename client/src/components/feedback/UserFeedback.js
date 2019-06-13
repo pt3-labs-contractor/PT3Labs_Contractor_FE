@@ -7,7 +7,7 @@ function UserFeedback(props) {
   return (
     <>
       <NavBarUser />
-      <div>
+      <div className="main-body">
         <h2>User giving Feedback Page</h2>
         <div>
           <h2>Appointment Info</h2>
