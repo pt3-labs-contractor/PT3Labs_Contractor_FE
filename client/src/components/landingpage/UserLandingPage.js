@@ -46,6 +46,7 @@ function UserLandingPage(props) {
 
   const selectTime = item => {
     setTime(item);
+    console.log('appointment', item);
   };
 
   const handleSort = event => {

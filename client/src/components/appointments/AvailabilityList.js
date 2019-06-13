@@ -31,7 +31,7 @@ function AvailabilityList(props) {
   };
 
   return (
-    <div>
+    <div className="availability-list">
       <RenderTimes />
     </div>
   );
