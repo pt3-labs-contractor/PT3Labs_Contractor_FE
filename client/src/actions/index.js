@@ -150,13 +150,13 @@ export const selectSingleContractorSetting = id => dispatch => {
 };
 
 // axios get feedback written by the current user
-export const getUserWrittenFeedback = (id) => dispatch => {
+export const getUserWrittenFeedback = () => dispatch => {
   dispatch({ type: LOADING });
   const headers = setHeaders();
 
 
   axios
-    .get(`https://fierce-plains-47590.herokuapp.com/api/feedback/${id}`,{headers})
+    .get(`https://fierce-plains-47590.herokuapp.com/api/feedback`,{headers})
 
     .then(res => {
       dispatch({ type: USER_WRITTEN_FEEDBACK_SUCCESS, payload: res.data });
@@ -171,7 +171,7 @@ export const getContractorFeedback = id => dispatch => {
   const headers = setHeaders();
 
   axios
-    .get(`https://fierce-plains-47590.herokuapp.com/api/api/feedback/`,{headers})
+    .get(`https://fierce-plains-47590.herokuapp.com/api/api/feedback/${id}`,{headers})
     .then(res => {
       dispatch({ type: FETCH_CONTRACTOR_FEEDBACK_SUCCESS, payload: res.data });
     })
@@ -179,14 +179,14 @@ export const getContractorFeedback = id => dispatch => {
 };
 
 // axios post feedback about a contractor
-// export const postFeedback = event => dispatch => {
-  // const headers = setHeaders();
-//   axios.post('',headers, event)
-//   .then(res => {
-//     dispatch({ type: POST_FEEDBACK_SUCCESS, payload: res.data});
-//   })
-//   .catch(err => dispatch({type: FAILURE, payload: err}))
-// }
+export const postFeedback = event => dispatch => {
+  const headers = setHeaders();
+  axios.post(`https://fierce-plains-47590.herokuapp.com/api/api/feedback/${id}`,headers, event)
+  .then(res => {
+    dispatch({ type: POST_FEEDBACK_SUCCESS, payload: res.data});
+  })
+  .catch(err => dispatch({type: FAILURE, payload: err}))
+}
 
 // axios get appointments when current user is contractor
 // export const seeMyAppointments = (id) = dispatch => {
