@@ -12,7 +12,8 @@ import {
   SET_SCHEDULE,
   LOAD_SCHEDULE,
   FAIL_SCHEDULE,
-  SET_AVAILABILITY_BY_DAY,
+  SET_SORTED_CONTRACTORS,
+  SET_SERVICE_SORT,
 
   // fetching services
   SET_SERVICES,
@@ -54,6 +55,7 @@ const initialState = {
   thisDay: new Date(),
   schedule: [],
   errorSchedule: null,
+  serviceFilter: '',
 };
 
 export default (state = initialState, action) => {
@@ -98,8 +100,10 @@ export default (state = initialState, action) => {
         errorSchedule: null,
         loadSchedule: false,
       };
-    case SET_AVAILABILITY_BY_DAY:
+    case SET_SORTED_CONTRACTORS:
       return { ...state, sortedContractors: action.payload };
+    case SET_SERVICE_SORT:
+      return { ...state, serviceFilter: action.payload };
     case LOAD_SCHEDULE:
       return {
         ...state,

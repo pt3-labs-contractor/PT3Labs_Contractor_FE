@@ -9,13 +9,27 @@ import AppointmentForm from '../appointments/AppointmentForm';
 // import ContractorCard from '../contractors/ContractorCard';
 import './UserLandingPage.css';
 
-import { fetchSchedule } from '../../actions/index';
+import dateFns from 'date-fns';
+
+import {
+  fetchSchedule,
+  fetchAvailabilityByDay,
+  sortContractorsByService,
+  storeServiceName,
+} from '../../actions/index';
 
 function UserLandingPage(props) {
-  const [showList, setShowList] = useState(false);
   const [contractor, setContractor] = useState({});
   const [time, setTime] = useState({});
   const [service, setService] = useState({});
+  const [serviceSort, setServiceSort] = useState('Pick a service');
+
+  useEffect(() => {
+    const dateString = dateFns.format(props.selectedDay, 'YYYY-MM-DD');
+    props.fetchAvailabilityByDay(dateString);
+    clearAppointment();
+    // eslint-disable-next-line
+  }, [props.selectedDay, serviceSort]);
 
   useEffect(() => {
     contractor.id && props.fetchSchedule(contractor.id);
@@ -24,15 +38,20 @@ function UserLandingPage(props) {
 
   const selectContractor = item => {
     setContractor(item);
+    const filter = item.services.filter(service => {
+      return service.name === serviceSort;
+    });
+    setService(filter[0]);
   };
 
   const selectTime = item => {
     setTime(item);
   };
 
-  const selectService = item => {
-    setService(item);
-    console.log('fired', item);
+  const handleSort = event => {
+    setServiceSort(event.target.value);
+    props.storeServiceName(event.target.value);
+    clearAppointment();
   };
 
   const clearAppointment = () => {
@@ -43,25 +62,30 @@ function UserLandingPage(props) {
 
   return (
     <div className="user container">
-      <button onClick={() => setShowList(!showList)}>
-        Select a contractor
-      </button>
+      <form>
+        <select value={serviceSort} onChange={handleSort}>
+          <option value="">Pick a service</option>
+          <option value="electrical">Electrical</option>
+          <option value="plumbing">Plumbing</option>
+          <option value="landscaping">Landscaping</option>
+          <option value="carpentry">Carpentry</option>
+          <option value="health and beauty">Health and beauty</option>
+          <option value="masonry">Masonry</option>
+          <option value="roofing and siding">Roofing and Siding</option>
+        </select>
+      </form>
       <div className="user-calendar">
         <Calendar user />
-        {showList ? <ContractorList /> : null}
-        <ContractorList
-          userLanding
-          selectService={selectService}
-          selectContractor={selectContractor}
-        />
+        <ContractorList userLanding selectContractor={selectContractor} />
         {contractor.id && (
           <AvailabilityList
             setAppointment={selectTime}
-            selectedDay={props.selectedDay}
+            // selectedDay={props.selectedDay}
           />
         )}
-        {contractor.id && service.id && time.id && (
+        {contractor.id && time.id && (
           <AppointmentForm
+            user
             contractor={contractor.id}
             clearAppointment={clearAppointment}
             appointment={time}
@@ -76,12 +100,17 @@ function UserLandingPage(props) {
 
 const mapStateToProps = state => {
   return {
-    contractors: state.sortedContractors,
+    sorted: state.sortedContractors,
     selectedDay: state.thisDay,
   };
 };
 
 export default connect(
   mapStateToProps,
-  { fetchSchedule }
+  {
+    fetchSchedule,
+    fetchAvailabilityByDay,
+    sortContractorsByService,
+    storeServiceName,
+  }
 )(UserLandingPage);

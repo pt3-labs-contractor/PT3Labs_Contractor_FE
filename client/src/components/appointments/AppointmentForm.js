@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import dateFns from 'date-fns';
 import axios from 'axios';
 
@@ -56,4 +57,10 @@ function AppointmentForm(props) {
   );
 }
 
-export default AppointmentForm;
+const mapStateToProps = state => {
+  return {
+    sort: state.serviceFilter,
+  };
+};
+
+export default connect(mapStateToProps)(AppointmentForm);

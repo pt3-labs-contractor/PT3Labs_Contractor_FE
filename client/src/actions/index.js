@@ -14,7 +14,8 @@ export const SET_SCHEDULE = 'SET_SCHEDULE';
 export const LOAD_SCHEDULE = 'LOAD_SCHEDULE';
 export const FAIL_SCHEDULE = 'FAIL_SCHEDULE';
 
-export const SET_AVAILABILITY_BY_DAY = 'SET_AVAILABILITY_BY_DAY';
+export const SET_SORTED_CONTRACTORS = 'SET_SORTED_CONTRACTORS';
+export const SET_SERVICE_SORT = 'SET_SERVICE_SORT';
 
 // export for services
 export const SET_SERVICES = 'SET_SERVICES';
@@ -77,26 +78,10 @@ export const fetchAccts = () => dispatch => {
               user = Object.assign(user, res.data.contractor[0]);
             });
         }
-        const dateString = dateFns.format(new Date(), 'YYYY-MM-DD');
-        fetchAvailabilityByDay(dateString);
-        // const { contractors } = contRes.data;
-        // const length = contractors.length + 1;
-        // const limit = 25;
-        // const dividedContractors = [];
-        // for (let x = 1; x < Math.ceil(length / limit); x++) {
-        //   const temp = [];
-        //   const pageItems = length / (limit * x) > 1 ? limit : length % limit;
-        //   for (let y = 0; y < pageItems; y++) {
-        //     temp.push(contractors[(x - 1) * limit + y]);
-        //   }
-        //   // dividedContractors = { ...dividedContractors, [`page${x}`]: temp };
-        //   dividedContractors.push(temp);
-        // }
+
         const { appointments } = apmtRes.data;
         appointments.sort((a, b) => {
-          return (
-            new Date(a.appointmentDatetime) - new Date(b.appointmentDatetime)
-          );
+          return new Date(a.startTime) - new Date(b.startTime);
         });
         dispatch({
           type: FETCHING_USERS_SUCCESS,
@@ -160,15 +145,32 @@ export const fetchAvailabilityByDay = date => dispatch => {
       { headers }
     )
     .then(res => {
-      const filter = res.data.appointments.map(item => item.contractorId);
-      const list = state.contractors.filter(contractor =>
+      const contractors = serviceSort(state.serviceFilter, state.contractors);
+      const filter = res.data.appointments
+        .filter(item =>
+          dateFns.isSameDay(dateFns.addDays(new Date(date), 1), item.startTime)
+        )
+        .map(item => item.contractorId);
+      const list = contractors.filter(contractor =>
         filter.includes(contractor.id)
       );
-      dispatch({ type: SET_AVAILABILITY_BY_DAY, payload: list });
+      dispatch({ type: SET_SORTED_CONTRACTORS, payload: list });
     })
     .catch(() => {
       // dispatch({ type: ERROR, error: 'Something went wrong.' });
     });
+};
+
+export const sortContractorsByService = query => dispatch => {
+  const state = store.getState();
+  const list = state.contractors.filter(contractor => {
+    return contractor.services.some(service => service.name.includes(query));
+  });
+  dispatch({ type: SET_SORTED_CONTRACTORS, payload: list });
+};
+
+export const storeServiceName = service => dispatch => {
+  dispatch({ type: SET_SERVICE_SORT, payload: service });
 };
 
 // axios get single contractor
@@ -247,6 +249,13 @@ function setHeaders() {
   const bearer = `Bearer ${localStorage.getItem('jwt')}`;
   const headers = { authorization: bearer };
   return headers;
+}
+
+function serviceSort(query, state) {
+  const list = state.filter(contractor => {
+    return contractor.services.some(service => service.name.includes(query));
+  });
+  return list;
 }
 
 // export const selectContractor = (id, list) => dispatch => {

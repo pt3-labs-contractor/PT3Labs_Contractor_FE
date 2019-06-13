@@ -7,7 +7,7 @@ import ContractorCard from './ContractorCard';
 
 function ContractorList(props) {
   const [pageNum, setPageNum] = useState(0);
-  const [contractors, setContractors] = useState([]);
+  const [contractorList, setContractors] = useState([]);
   const [list, setList] = useState([]);
 
   useEffect(() => {
@@ -29,8 +29,8 @@ function ContractorList(props) {
   }, [props.contractors]);
 
   useEffect(() => {
-    setList(contractors[pageNum] || []);
-  }, [pageNum, contractors]);
+    setList(contractorList[pageNum] || []);
+  }, [pageNum, contractorList]);
 
   const pageChange = dir => {
     setPageNum(pageNum + dir);
@@ -44,7 +44,7 @@ function ContractorList(props) {
       </button>
       <button
         onClick={() => pageChange(1)}
-        disabled={pageNum >= contractors.length - 1}
+        disabled={pageNum >= contractorList.length - 1}
       >
         Page up
       </button>
@@ -53,14 +53,6 @@ function ContractorList(props) {
       {list.map(contractor =>
         props.userLanding ? (
           <div key={contractor.id}>
-            {contractor.services.map(service => (
-              <button
-                key={service.id}
-                onClick={() => props.selectService(service)}
-              >
-                {service.name}
-              </button>
-            ))}
             <div onClick={() => props.selectContractor(contractor)}>
               <ContractorCard contractor={contractor} />
             </div>
