@@ -8,11 +8,6 @@ import ContractorCard from './ContractorCard';
 
 
 function ContractorList(props) {
-<<<<<<< HEAD
-  console.log(props.user)
-  // <NavBarUser/>
-  // props.history.push('/')
-=======
   const [pageNum, setPageNum] = useState(0);
   const [contractors, setContractors] = useState([]);
   const [list, setList] = useState([]);
@@ -42,7 +37,6 @@ function ContractorList(props) {
     setPageNum(pageNum + dir);
   };
 
->>>>>>> 5452b0cb19bd73c23603de1bae808761d2d55be5
   return (
     <div className="contractor-list-container">
       <h3>Contractors:</h3>

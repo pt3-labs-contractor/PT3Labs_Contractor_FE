@@ -18,35 +18,19 @@ import NavBarContractor from './components/navbar/NavBarContractor';
 import Settings from './components/settings/Settings';
 import ContractorFeedback from './components/feedback/ContractorFeedback';
 import UserFeedback from './components/feedback/UserFeedback';
-import AvailabilityList from './components/appointments/AvailabilityList';
+// import AvailabilityList from './components/appointments/AvailabilityList';
 
 
 function App(props) {
   useEffect(() => {
     props.fetchAccts();
+    // console.log(props)
     // eslint-disable-next-line
   }, []);
 
   return (
     <div className="App">
       <main className="main-content">
-<<<<<<< HEAD
-          <Route exact path="/" component={Homepage} />
-          <Route path="/users" component={Users} />
-          <Route exact path="/contractors" component={ContractorList} />
-          <Route path="/contractors/:id" component={Contractor} />
-          <Route path="/login" component={Login} />
-          <Route path="/redirect/:token" component={Redirect} />
-          <Route path="/register" component={Register} />
-          <Route
-            path="/calendar"
-            render={props => <Calendar contractor={{}} />}
-          />
-          <Route path="/appointments" component={AvailabilityList} />
-          <Route path="/settings" component={Settings} />
-          <Route path="/contractorFeedback" component={ContractorFeedback} />
-          <Route path="/userFeedback" component={UserFeedback} />
-=======
         <Route exact path="/" component={Homepage} />
         <Route
           path="/app"
@@ -69,7 +53,6 @@ function App(props) {
         <Route path="/settings" component={Settings} />
         <Route path="/contractorFeedback" component={ContractorFeedback} />
         <Route path="/userFeedback" component={UserFeedback} />
->>>>>>> 5452b0cb19bd73c23603de1bae808761d2d55be5
       </main>
     </div>
   );

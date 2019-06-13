@@ -31,11 +31,7 @@ export const RET_CONTRACTOR_APP_SUCC = 'RET_CONTRACTOR_APP_SUCC';
 
 // axios get all accounts
 export const fetchAccts = () => dispatch => {
-<<<<<<< HEAD
-  dispatch({ type: LOADING });
-=======
   // dispatch({ type: LOADING_USERS });
->>>>>>> 5452b0cb19bd73c23603de1bae808761d2d55be5
   const headers = setHeaders();
 
   axios
@@ -53,10 +49,6 @@ export const fetchAccts = () => dispatch => {
     .then(
       axios.spread((userRes, contRes, apmtRes) => {
         let { user } = userRes.data;
-<<<<<<< HEAD
-        // console.log('user: ', user);
-=======
->>>>>>> 5452b0cb19bd73c23603de1bae808761d2d55be5
         if (user.contractorId) {
           axios
             .get(
@@ -165,9 +157,12 @@ export const getUserWrittenFeedback = id => dispatch => {
   const headers = setHeaders();
 
   axios
-    .get(`https://fierce-plains-47590.herokuapp.com/api/api/feedback/${id}`,headers)
+    // .get(`https://fierce-plains-47590.herokuapp.com/api/feedback`,headers)
+    .get(`localhost:5000/api/feedback/${id}`,headers)
+
     .then(res => {
       dispatch({ type: USER_WRITTEN_FEEDBACK_SUCCESS, payload: res.data });
+      console.log(res)
     })
     .catch(err => dispatch({ type: FAILURE, payload: err }));
 };

@@ -106,12 +106,7 @@ export default (state = initialState, action) => {
 
     // fetching current user written feedback
     case USER_WRITTEN_FEEDBACK_SUCCESS:
-      return { ...state, feedback: action.payload }
-
-    // fetching single contractors feedback
-    // case FETCH_CONTRACTOR_FEEDBACK_SUCCESS:
-    //   return {...state, accounts: { feedback: action.payload }}
-
+      return { ...state, feedback: action.payload, loading: false }
 
     // fetching current contractor appointments
     // case RET_CONTRACTOR_APP_SUCC:

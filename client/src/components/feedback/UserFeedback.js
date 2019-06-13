@@ -5,13 +5,20 @@ import NavBarUser from '../navbar/NavBarUser';
 import { getUserWrittenFeedback } from '../../actions/index';
 
 function UserFeedback(props) {
-  const { id } = props.match.params;
+  const token = localStorage.getItem('jwt')
+  // console.log(jwt)
+  const base = token.split('.')[1]
+  // console.log(decoded)
+  const decoded = JSON.parse(window.atob(base));
+  // console.log(decoded)
+  
+
+  const { id } = decoded;
   useEffect(() => {
-    Promise.all([
-      props.getUserWrittenFeedback(id)
-    ])
-  })
-  console.log(props)
+    getUserWrittenFeedback(id)
+}, [])
+  // console.log(props.user.id)
+  // console.log(id)
   return (
     <>
       <NavBarUser />
@@ -76,10 +83,10 @@ function UserFeedback(props) {
 const mapStateToProps = state => {
   return {
     feedback: state.feedback,
-    // contractors: state.accounts.contractors,
+    user: state.user,
     loading: state.loading,
     error: state.error,
   };
 };
 
-export default connect(mapStateToProps, getUserWrittenFeedback)(UserFeedback);
+export default connect(mapStateToProps, {getUserWrittenFeedback})(UserFeedback);
