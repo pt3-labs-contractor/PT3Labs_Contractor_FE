@@ -18,7 +18,7 @@ export const FETCH_SINGLE_CONTRACTOR_SUCCESS =
   'FETCH_SINGLE_CONTRACTOR_SUCCESS';
 
 // exports for retreiving feedback written by current user
-export const USER_WRITTEN_FEEDBACK_SUCCESS = 'USER_WRITTEN_FEEDBACK_SUCCESS';
+export const FEEDBACK_SUCCESS = 'FEEDBACK_SUCCESS';
 
 // exports for retrieving single contractor feedback
 export const FETCH_CONTRACTOR_FEEDBACK_SUCCESS =
@@ -153,34 +153,33 @@ export const selectSingleContractorSetting = id => dispatch => {
     );
 };
 
-// axios get feedback written by the current user
-export const getUserWrittenFeedback = () => dispatch => {
+// axios get feedback
+export const getFeedback = () => dispatch => {
   dispatch({ type: LOADING });
   const headers = setHeaders();
-
 
   axios
     .get(`https://fierce-plains-47590.herokuapp.com/api/feedback`,{headers})
 
     .then(res => {
-      dispatch({ type: USER_WRITTEN_FEEDBACK_SUCCESS, payload: res.data });
+      dispatch({ type: FEEDBACK_SUCCESS, payload: res.data });
       console.log(res)
     })
     .catch(err => dispatch({ type: FAILURE, payload: err }));
 };
 
 // axios get feedback targeting a contractor
-export const getContractorFeedback = id => dispatch => {
-  dispatch({ type: LOADING });
-  const headers = setHeaders();
+// export const getContractorFeedback = id => dispatch => {
+//   dispatch({ type: LOADING });
+//   const headers = setHeaders();
 
-  axios
-    .get(`https://fierce-plains-47590.herokuapp.com/api/feedback/${id}`,{headers})
-    .then(res => {
-      dispatch({ type: FETCH_CONTRACTOR_FEEDBACK_SUCCESS, payload: res.data });
-    })
-    .catch(err => dispatch({ type: FAILURE, payload: err }));
-};
+//   axios
+//     .get(`https://fierce-plains-47590.herokuapp.com/api/feedback/${id}`,{headers})
+//     .then(res => {
+//       dispatch({ type: FETCH_CONTRACTOR_FEEDBACK_SUCCESS, payload: res.data });
+//     })
+//     .catch(err => dispatch({ type: FAILURE, payload: err }));
+// };
 
 //axios put request to update users settings
 export const editUserSettings = (data) => dispatch => {

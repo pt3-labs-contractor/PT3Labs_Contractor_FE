@@ -1,20 +1,10 @@
-import React, { useEffect } from 'react';
-// import { Link } from 'react-router-dom';
+import React from 'react';
 import { connect } from 'react-redux';
 import NavBarContractor from '../navbar/NavBarContractor';
-// import Rating from 'react-rating';
-import { getContractorFeedback } from '../../actions/index';
+import Rating from 'react-rating';
 
 function ContractorFeedback(props) {
-  console.log(props)
-  const { id } = props.match.params;
-  // // console.log(id)
-  // useEffect(() => {
-  //   Promise.all([
-  //     props.getContractorFeedback(id)
-  //   ])
-  // })
-  // console.log(props);
+
   return (
     <>
       <NavBarContractor />
@@ -22,33 +12,36 @@ function ContractorFeedback(props) {
         <h2>Contractor OWN Feedback Page</h2>
         {props.loading ? <p>Loading...</p> : null}
         {props.error ? <p>{props.error}</p> : null}
-        {/* {props.feedback.map(contractor => (
+        
+        {props.Feedback.map(feedback => (
           <div>
-            Username: {props.feedback.users.username}
+            By: {feedback.username}
+            {'\n'}
 
             Rating: <Rating
                 emptySymbol={<span className="icon-text">&#9734;</span>}
                 fullSymbol={<span className="icon-text">&#9733;</span>}
                 readonly
-                placeholderRating={props.feedback.stars}
+                placeholderRating={feedback.stars}
                 stop={3}
                 />
-            Message: {props.feedback.message}
+             {'\n'}
+
+            Message: {feedback.message}
           </div>
-        ))} */}
+        ))}
       </div>
     </>
   );
 }
 
 const mapStateToProps = state => {
-  // console.log(state)
   return {
-    feedback: state.feedback,
+    Feedback: state.feedback,
     loading: state.loading,
     error: state.error,
   };
 };
 
 
-export default connect(mapStateToProps, {getContractorFeedback})(ContractorFeedback);
+export default connect(mapStateToProps)(ContractorFeedback);

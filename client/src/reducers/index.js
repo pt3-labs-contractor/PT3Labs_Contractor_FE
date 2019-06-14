@@ -15,17 +15,18 @@ import {
   SET_SERVICES,
 
   // fetching single contractor
-  FETCH_SINGLE_CONTRACTOR_SUCCESS,
+  // FETCH_SINGLE_CONTRACTOR_SUCCESS,
 
-  // fetching current user written feedback
-  USER_WRITTEN_FEEDBACK_SUCCESS,
+  // fetching feedback by or about user
+  FEEDBACK_SUCCESS,
 
   // fetching single contractor feedback
-  FETCH_CONTRACTOR_FEEDBACK_SUCCESS,
+  // FETCH_CONTRACTOR_FEEDBACK_SUCCESS,
 
   // fetching current contractor appointments
   RET_CONTRACTOR_APP_SUCC,
 
+  //edit the user information
   EDIT_USER_SUCCESS
 
 } from '../actions';
@@ -89,13 +90,13 @@ export default (state = initialState, action) => {
   
 
     // fetching single contractor
-    case FETCH_SINGLE_CONTRACTOR_SUCCESS:
-      return {
-        ...state,
-        thisContractor: action.payload,
-        loading: false,
-        error: null,
-      };
+    // case FETCH_SINGLE_CONTRACTOR_SUCCESS:
+    //   return {
+    //     ...state,
+    //     thisContractor: action.payload,
+    //     loading: false,
+    //     error: null,
+    //   };
 
     // fetching services
     case SET_SERVICES:
@@ -107,13 +108,13 @@ export default (state = initialState, action) => {
       };
 
     // fetching current user written feedback
-    case USER_WRITTEN_FEEDBACK_SUCCESS:
-      return { ...state, feedback: action.payload}
+    case FEEDBACK_SUCCESS:
+      return { ...state, feedback: action.payload.feedback}
 
 
     //fetching feedback on a specfic contractor
-    case FETCH_CONTRACTOR_FEEDBACK_SUCCESS: 
-      return {...state, feedback: action.payload}
+    // case FETCH_CONTRACTOR_FEEDBACK_SUCCESS: 
+    //   return {...state, feedback: action.payload}
       
     // fetching current contractor appointments
     // case RET_CONTRACTOR_APP_SUCC:
@@ -127,6 +128,7 @@ export default (state = initialState, action) => {
     //edit user settigns
     case EDIT_USER_SUCCESS: 
       return {...state, user: action.payload}
+
     default:
       return state;
   }

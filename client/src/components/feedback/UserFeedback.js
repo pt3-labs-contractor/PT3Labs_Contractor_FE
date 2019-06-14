@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import Rating from 'react-rating';
 import NavBarUser from '../navbar/NavBarUser';
-import { getUserWrittenFeedback } from '../../actions/index';
+import { getFeedback } from '../../actions/index';
 
 
 function UserFeedback(props) {
@@ -140,4 +140,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, {getUserWrittenFeedback})(UserFeedback);
+export default connect(mapStateToProps, {getFeedback})(UserFeedback);
