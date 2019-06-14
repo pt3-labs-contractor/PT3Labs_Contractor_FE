@@ -37,7 +37,7 @@ function ContractorList(props) {
   };
 
   return (
-    <div className="contractor-list-container">
+    <div className="contractor-list container">
       <h3>Contractors:</h3>
       <button onClick={() => pageChange(-1)} disabled={pageNum <= 0}>
         Page down

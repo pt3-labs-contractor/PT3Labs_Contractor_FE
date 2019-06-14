@@ -1,5 +1,8 @@
 .user.container {
   margin-top: 75px;
+  margin-left: 15%;
+  padding-left: 10px;
+  width: 85%;
 }
 
 .user-calendar {
@@ -7,7 +10,19 @@
   justify-content: flex-start;
 }
 
-.user-contractor-list {
-  display: flex;
-  flex-direction: column;
+.user-calendar .calendar {
+  margin-left: 0px;
+}
+
+.user-calendar .contractor-list {
+  margin-right: 0px;
+  margin-left: 0px;
+  width: 15%;
+  max-height: 73vh;
+  font-size: 12px;
+}
+
+.user-calendar > div:not(.calendar) {
+  margin-top: 15px;
+  padding-left: 5px;
 }
