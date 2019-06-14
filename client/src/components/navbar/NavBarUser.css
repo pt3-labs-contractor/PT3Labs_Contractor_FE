@@ -1,6 +1,6 @@
 .sideNav {
   height: 100%;
-  width: 200px;
+  width: 15%;
   position: fixed;
   top: 0px;
   left: 0px;
@@ -14,26 +14,25 @@
 .side-link {
   display: flex;
   text-decoration: none;
-  color: #FFFFFF;
+  color: #ffffff;
   display: block;
 }
 
 .current {
-  color: var(--primary-color)
+  color: var(--primary-color);
 }
 
-.sideNav a{
+.sideNav a {
   padding: 1rem 1rem;
   border: none;
   font: inherit;
   background: transparent;
   cursor: pointer;
   margin: 0 auto;
-
 }
 
 .sideNav a:hover {
-  color: #8C20F8;
+  color: #8c20f8;
 }
 @media (max-width: 800px) {
   .side-listing {
@@ -53,6 +52,6 @@
     font-size: 16px;
   }
 }
-@media (max-width: 600px) {
+@media (max-width: 500px) {
 
 }

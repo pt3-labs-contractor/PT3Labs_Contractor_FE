@@ -1,43 +1,40 @@
 import axios from 'axios';
+import dateFns from 'date-fns';
+import store from '../index';
 
 // exports for fetching all users
-export const LOADING_USERS = 'LOADING';
+export const LOADING = 'LOADING';
 export const FETCHING_USERS_SUCCESS = 'SUCCESS';
-export const FETCHING_USERS_FAILURE = 'FAILURE';
+export const FAILURE = 'FAILURE';
 
 // exports for calander
 export const SET_MONTH = 'SET_MONTH';
 export const SET_DAY = 'SET_DAY';
 export const SET_SCHEDULE = 'SET_SCHEDULE';
-export const LOAD_SCHEDULE = 'LOAD_SCHEDULE';
-export const FAIL_SCHEDULE = 'FAIL_SCHEDULE';
+
+export const SET_SORTED_CONTRACTORS = 'SET_SORTED_CONTRACTORS';
+export const SET_SERVICE_SORT = 'SET_SERVICE_SORT';
 
 // export for services
 export const SET_SERVICES = 'SET_SERVICES';
-export const LOAD_SERVICES = 'LOAD_SERVICES';
-export const FAIL_SERVICES = 'FAIL_SERVICES';
 
 // exports for finding single contractor
-export const SINGLE_CONTRACTOR_LOADING = 'SINGLE_CONTRACTOR_LOADING';
 export const FETCH_SINGLE_CONTRACTOR_SUCCESS =
   'FETCH_SINGLE_CONTRACTOR_SUCCESS';
-export const FETCH_SINGLE_CONTRACTOR_FAIL = 'FETCH_SINGLE_CONTRACTOR_FAIL';
 
 // exports for retreiving feedback written by current user
-export const USER_WRITTEN_FEEDBACK_LOADING = 'USER_WRITTEN_FEEDBACK_LOADING';
-export const USER_WRITTEN_FEEDBACK_SUCCESS = 'USER_WRITTEN_FEEDBACK_SUCCESS';
-export const USER_WRITTEN_FEEDBACK_FAIL = 'USER_WRITTEN_FEEDBACK_FAIL';
+export const FEEDBACK_SUCCESS = 'FEEDBACK_SUCCESS';
 
 // exports for retrieving single contractor feedback
-export const CONTRACTOR_FEEDBACK_LOADING = 'CONTRACTOR_FEEDBACK_LOADING';
 export const FETCH_CONTRACTOR_FEEDBACK_SUCCESS =
   'FETCH_CONTRACTOR_FEEDBACK_SUCCESS';
-export const CONTRACTOR_FEEDBACK_FAIL = 'CONTRACTOR_FEEDBACK_FAIL';
 
 // exports for retrieving current contractor user appointments
-export const CONTRACTOR_APP_LOADING = 'CONTRACTOR_APP_LOADING';
 export const RET_CONTRACTOR_APP_SUCC = 'RET_CONTRACTOR_APP_SUCC';
-export const CONTRACTOR_APP_FAIL = 'CONTRACTOR_APP_FAIL';
+
+//export PUT request for users settings
+export const EDIT_USER_SUCCESS = 'EDIT_USER_SUCCESS';
+
 
 // ---------------------------------------------------------------
 
@@ -73,24 +70,10 @@ export const fetchAccts = () => dispatch => {
               user = Object.assign(user, res.data.contractor[0]);
             });
         }
-        // const { contractors } = contRes.data;
-        // const length = contractors.length + 1;
-        // const limit = 25;
-        // const dividedContractors = [];
-        // for (let x = 1; x < Math.ceil(length / limit); x++) {
-        //   const temp = [];
-        //   const pageItems = length / (limit * x) > 1 ? limit : length % limit;
-        //   for (let y = 0; y < pageItems; y++) {
-        //     temp.push(contractors[(x - 1) * limit + y]);
-        //   }
-        //   // dividedContractors = { ...dividedContractors, [`page${x}`]: temp };
-        //   dividedContractors.push(temp);
-        // }
+
         const { appointments } = apmtRes.data;
         appointments.sort((a, b) => {
-          return (
-            new Date(a.appointmentDatetime) - new Date(b.appointmentDatetime)
-          );
+          return new Date(a.startTime) - new Date(b.startTime);
         });
         dispatch({
           type: FETCHING_USERS_SUCCESS,
@@ -104,14 +87,14 @@ export const fetchAccts = () => dispatch => {
     )
     .catch(() => {
       dispatch({
-        type: FETCHING_USERS_FAILURE,
+        type: FAILURE,
         error: 'Something went wrong.',
       });
     });
 };
 
 export const fetchSchedule = id => dispatch => {
-  dispatch({ type: LOAD_SCHEDULE });
+  dispatch({ type: LOADING });
   const headers = setHeaders();
   axios
     .get(
@@ -122,12 +105,12 @@ export const fetchSchedule = id => dispatch => {
       dispatch({ type: SET_SCHEDULE, payload: res.data.schedule });
     })
     .catch(() => {
-      dispatch({ type: FAIL_SCHEDULE, error: 'Something went wrong' });
+      dispatch({ type: FAILURE, error: 'Something went wrong' });
     });
 };
 
 export const fetchServices = id => dispatch => {
-  dispatch({ type: LOAD_SERVICES });
+  dispatch({ type: LOADING });
   const headers = setHeaders();
 
   axios
@@ -139,72 +122,131 @@ export const fetchServices = id => dispatch => {
       dispatch({ type: SET_SERVICES, payload: res.data.services });
     })
     .catch(() => {
-      dispatch({ type: FAIL_SERVICES, error: 'Something went wrong.' });
+      dispatch({ type: FAILURE, error: 'Something went wrong.' });
     });
+};
+
+export const fetchAvailabilityByDay = date => dispatch => {
+  // dispatch({ type: LOADING });
+  const headers = setHeaders();
+  const state = store.getState();
+
+  axios
+    .get(
+      `https://fierce-plains-47590.herokuapp.com/api/schedules/date/${date}`,
+      { headers }
+    )
+    .then(res => {
+      const contractors = serviceSort(state.serviceFilter, state.contractors);
+      const filter = res.data.appointments
+        .filter(item =>
+          dateFns.isSameDay(dateFns.addDays(new Date(date), 1), item.startTime)
+        )
+        .map(item => item.contractorId);
+      const list = contractors.filter(contractor =>
+        filter.includes(contractor.id)
+      );
+      dispatch({ type: SET_SORTED_CONTRACTORS, payload: list });
+    })
+    .catch(() => {
+      // dispatch({ type: ERROR, error: 'Something went wrong.' });
+    });
+};
+
+export const sortContractorsByService = query => dispatch => {
+  const state = store.getState();
+  const list = state.contractors.filter(contractor => {
+    return contractor.services.some(service => service.name.includes(query));
+  });
+  dispatch({ type: SET_SORTED_CONTRACTORS, payload: list });
+};
+
+export const storeServiceName = service => dispatch => {
+  dispatch({ type: SET_SERVICE_SORT, payload: service });
 };
 
 // axios get single contractor
 export const selectSingleContractorSetting = id => dispatch => {
-  dispatch({ type: SINGLE_CONTRACTOR_LOADING });
+  dispatch({ type: LOADING });
   const headers = setHeaders();
 
   axios
-    .get(`https://fierce-plains-47590.herokuapp.com/api/contractors/${id}`, {
-      headers,
-    })
+    .get(`https://fierce-plains-47590.herokuapp.com/api/users/${id}`,{headers})
     .then(res => {
       dispatch({
         type: FETCH_SINGLE_CONTRACTOR_SUCCESS,
-        payload: res.data.contractor[0],
+        payload: res.data.contractor,
       });
     })
     .catch(err =>
-      dispatch({ type: FETCH_SINGLE_CONTRACTOR_FAIL, payload: err })
+      dispatch({ type: FAILURE, payload: err })
     );
 };
 
-// axios get feedback written by the current user
-export const getUserWrittenFeedback = id => dispatch => {
-  dispatch({ type: USER_WRITTEN_FEEDBACK_LOADING });
+// axios get feedback
+export const getFeedback = () => dispatch => {
+  dispatch({ type: LOADING });
+  const headers = setHeaders();
 
   axios
-    .get('')
+    .get(`https://fierce-plains-47590.herokuapp.com/api/feedback`,{headers})
+
     .then(res => {
-      dispatch({ type: USER_WRITTEN_FEEDBACK_SUCCESS, payload: res.data });
+      dispatch({ type: FEEDBACK_SUCCESS, payload: res.data });
+      console.log(res)
     })
-    .catch(err => dispatch({ type: USER_WRITTEN_FEEDBACK_FAIL, payload: err }));
+    .catch(err => dispatch({ type: FAILURE, payload: err }));
 };
 
 // axios get feedback targeting a contractor
-export const getContractorFeedback = id => dispatch => {
-  dispatch({ type: CONTRACTOR_FEEDBACK_LOADING });
+// export const getContractorFeedback = id => dispatch => {
+//   dispatch({ type: LOADING });
+//   const headers = setHeaders();
+
+//   axios
+//     .get(`https://fierce-plains-47590.herokuapp.com/api/feedback/${id}`,{headers})
+//     .then(res => {
+//       dispatch({ type: FETCH_CONTRACTOR_FEEDBACK_SUCCESS, payload: res.data });
+//     })
+//     .catch(err => dispatch({ type: FAILURE, payload: err }));
+// };
+
+//axios put request to update users settings
+export const editUserSettings = (data) => dispatch => {
+  dispatch({ type: LOADING });
+  const headers = setHeaders();
 
   axios
-    .get('')
+    .put('https://fierce-plains-47590.herokuapp.com/api/users',data,{headers} )
     .then(res => {
-      dispatch({ type: FETCH_CONTRACTOR_FEEDBACK_SUCCESS, payload: res.data });
+      dispatch({ type: EDIT_USER_SUCCESS, payload:res.data })
     })
-    .catch(err => dispatch({ type: CONTRACTOR_FEEDBACK_FAIL, payload: err }));
-};
+    .catch(err => dispatch({ type: FAILURE, payload: err}))
+}
+
+
+
 
 // axios post feedback about a contractor
 // export const postFeedback = event => dispatch => {
-//   axios.post('', event)
+//   const headers = setHeaders();
+//   axios.post(`https://fierce-plains-47590.herokuapp.com/api/feedback/${id}`,headers, event)
 //   .then(res => {
 //     dispatch({ type: POST_FEEDBACK_SUCCESS, payload: res.data});
 //   })
-//   .catch(err => dispatch({type: POST_FEEDBACK_FAIL, payload: err}))
+//   .catch(err => dispatch({type: FAILURE, payload: err}))
 // }
 
 // axios get appointments when current user is contractor
 // export const seeMyAppointments = (id) = dispatch => {
-//   dispatch({ type: CONTRACTOR_APP_LOADING })
+//   dispatch({ type: LOADING })
+//   const headers = setHeaders();
 
-//   axios.get('')
+//   axios.get(`https://fierce-plains-47590.herokuapp.com/api/appointments/${id}`,headers)
 //   .then( res => {
 //     dispatch({ type: RET_CONTRACTOR_APP_SUCC, payload: res.data })
 //   })
-//   .catch(err => dispatch({ type: CONTRACTOR_APP_FAIL, payload:err }))
+//   .catch(err => dispatch({ type: FAILURE, payload:err }))
 // }
 
 export const setDay = day => dispatch => {
@@ -219,6 +261,13 @@ function setHeaders() {
   const bearer = `Bearer ${localStorage.getItem('jwt')}`;
   const headers = { authorization: bearer };
   return headers;
+}
+
+function serviceSort(query, state) {
+  const list = state.filter(contractor => {
+    return contractor.services.some(service => service.name.includes(query));
+  });
+  return list;
 }
 
 // export const selectContractor = (id, list) => dispatch => {

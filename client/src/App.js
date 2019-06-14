@@ -4,7 +4,7 @@ import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import './App.css';
 
-import { fetchAccts } from './actions/index';
+import { fetchAccts, getFeedback} from './actions/index';
 import Homepage from './components/homepage/Homepage';
 import ContractorList from './components/contractors/ContractorList';
 import Contractor from './components/contractors/Contractor';
@@ -26,6 +26,8 @@ import ContractorSchedule from './components/contractors/ContractorSchedule';
 function App(props) {
   useEffect(() => {
     props.fetchAccts();
+    props.getFeedback();
+    // console.log(props)
     // eslint-disable-next-line
   }, []);
 
@@ -66,12 +68,13 @@ function App(props) {
 const mapStateToProps = state => {
   return {
     user: state.user,
+    feedback: state.feedback
   };
 };
 
 export default withRouter(
   connect(
     mapStateToProps,
-    { fetchAccts }
+    { fetchAccts, getFeedback }
   )(App)
 );

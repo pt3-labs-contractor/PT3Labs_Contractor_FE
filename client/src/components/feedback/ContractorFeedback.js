@@ -1,11 +1,12 @@
 import React from 'react';
-// import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Rating from 'react-rating';
 import NavBarContractor from '../navbar/NavBarContractor';
 import './ContractorFeedback.css';
+import Rating from 'react-rating';
 
 function ContractorFeedback(props) {
+
   return (
     <>
       <NavBarContractor />
@@ -51,6 +52,24 @@ function ContractorFeedback(props) {
           </div>
           <div>date:</div>
         </form>
+        
+        {props.Feedback.map(feedback => (
+          <div>
+            By: {feedback.username}
+            {'\n'}
+
+            Rating: <Rating
+                emptySymbol={<span className="icon-text">&#9734;</span>}
+                fullSymbol={<span className="icon-text">&#9733;</span>}
+                readonly
+                placeholderRating={feedback.stars}
+                stop={3}
+                />
+             {'\n'}
+
+            Message: {feedback.message}
+          </div>
+        ))}
       </div>
     </>
   );
@@ -58,10 +77,11 @@ function ContractorFeedback(props) {
 
 const mapStateToProps = state => {
   return {
-    // contractors: state.accounts.contractors,
+    Feedback: state.feedback,
     loading: state.loading,
     error: state.error,
   };
 };
+
 
 export default connect(mapStateToProps)(ContractorFeedback);
