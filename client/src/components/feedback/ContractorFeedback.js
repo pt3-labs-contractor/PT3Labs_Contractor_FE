@@ -6,14 +6,15 @@ import NavBarContractor from '../navbar/NavBarContractor';
 import { getContractorFeedback } from '../../actions/index';
 
 function ContractorFeedback(props) {
+  console.log(props)
   const { id } = props.match.params;
-  // console.log(id)
-  useEffect(() => {
-    Promise.all([
-      props.getContractorFeedback(id)
-    ])
-  })
-  console.log(props);
+  // // console.log(id)
+  // useEffect(() => {
+  //   Promise.all([
+  //     props.getContractorFeedback(id)
+  //   ])
+  // })
+  // console.log(props);
   return (
     <>
       <NavBarContractor />
@@ -50,4 +51,4 @@ const mapStateToProps = state => {
 };
 
 
-export default connect(mapStateToProps, getContractorFeedback)(ContractorFeedback);
+export default connect(mapStateToProps, {getContractorFeedback})(ContractorFeedback);
