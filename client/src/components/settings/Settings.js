@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 // import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 // import { IoIosTrash } from 'react-icons/io'
@@ -11,14 +11,27 @@ import NavBarContractor from '../navbar/NavBarContractor';
 import { selectSingleContractorSetting } from '../../actions/index';
 
 function ContractorSetting(props) {
-  const { id } = props.match.params;
-  // console.log(id)
-  useEffect(() => {
-    Promise.all([
-      props.selectSingleContractorSetting(id)
-    ])
-  })
-  console.log(props);
+  // const [username, setUsername] = useState(props.User.username)
+  // const [phoneNumber, setPhoneNumber] = useState(props.User.phoneNumber)
+  // const [email, setEmail] = useState(props.User.email)
+  
+  console.log(props)
+  // useEffect(() => {
+  //   setUsername(props.User.username)
+  //   setPhoneNumber(props.User.phoneNumber)
+  //   setEmail(props.User.email)
+    
+  // }, [
+  //   props.User.username,
+  //   props.User.phoneNumber,
+  //   props.User.email
+  // ])
+
+  function handleUpdate (e) {
+    e.preventDefault();
+    // props.editUserSettings({email, username, phoneNumber})
+    
+  }
   return (
     <>
       <NavBarContractor />
@@ -26,20 +39,22 @@ function ContractorSetting(props) {
         <h2>Contractor Setting Page</h2>
         {'\n'}
         <form>
-          Contractor Email
+          Email
           <input
             // value="contractor Email"
-            value={props.contractor.email}
+            type="text"
+            name="contEmail"
+            value={props.User.email}
           />
           Contractor Phone
           <input
             // value="contractor phonenumber"
-            value={props.contractor.phone_number}
+            value={props.User.phoneNumber}
           />
-          Old Password
+          {/* Old Password
           <input />
           New Passowrd
-          <input />
+          <input /> */}
           <button>Save</button>
         </form>
         <form>
@@ -61,7 +76,7 @@ function ContractorSetting(props) {
 const mapStateToProps = state => {
   // console.log(state)
   return {
-    contractor: state.thisContractor,
+    User: state.user,
     loading: state.loading,
     error: state.error,
   };

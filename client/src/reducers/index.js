@@ -26,6 +26,8 @@ import {
   // fetching current contractor appointments
   RET_CONTRACTOR_APP_SUCC,
 
+  EDIT_USER_SUCCESS
+
 } from '../actions';
 
 const initialState = {
@@ -121,6 +123,10 @@ export default (state = initialState, action) => {
     case RET_CONTRACTOR_APP_SUCC:
       return {...state, appointments: action.payload}
     
+
+    //edit user settigns
+    case EDIT_USER_SUCCESS: 
+      return {...state, user: action.payload}
     default:
       return state;
   }

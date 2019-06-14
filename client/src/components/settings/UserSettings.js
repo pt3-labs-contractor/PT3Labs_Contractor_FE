@@ -5,32 +5,42 @@ import { connect } from 'react-redux';
 // import { IoMdCreate } from 'react-icons/io'
 import './Settings.css';
 import NavBarUser from '../navbar/NavBarUser';
-import { selectSingleContractorSetting } from '../../actions/index';
+import { editUserSettings } from '../../actions/index';
 
 function UserSetting(props) {
   const [username, setUsername] = useState(props.User.username)
   const [phoneNumber, setPhoneNumber] = useState(props.User.phoneNumber)
   const [email, setEmail] = useState(props.User.email)
-  // const [password, setPassword] = useState({props.User.})
-  // const { id } = props.match.params;
-  // console.log(props);
-  // useEffect(() => {
-  //   props.selectSingleContractorSetting(id)
-  // })
+  
+  // console.log(props)
+  useEffect(() => {
+    setUsername(props.User.username)
+    setPhoneNumber(props.User.phoneNumber)
+    setEmail(props.User.email)
+    
+  }, [
+    props.User.username,
+    props.User.phoneNumber,
+    props.User.email
+  ])
+  function handleUpdate (e) {
+    e.preventDefault();
+    props.editUserSettings({email, username, phoneNumber})
 
-  console.log(props)
+  }
+
   return (
     <>
       <NavBarUser />
       <div className="settings-container">
         <h2>User Setting Page</h2>
         {'\n'}
-        <form>
+        <form onSubmit={handleUpdate}>
           User Email
           <input 
             value={email}
             type="text"
-            name="email"
+            name="userEmail"
             onChange={e => setEmail(e.target.value)} 
           />
 
@@ -38,7 +48,7 @@ function UserSetting(props) {
           <input 
             value={username} 
             type="text"
-            name="username"
+            name="userUsername"
             onChange={e => setUsername(e.target.value)} 
           />
           {/* Old Password
@@ -51,7 +61,7 @@ function UserSetting(props) {
           <input
             value={phoneNumber}  
             type="text"
-            name="phoneNumber"
+            name="userphoneNumber"
             onChange={e => setPhoneNumber(e.target.value)}         
           /> 
 
@@ -75,4 +85,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, {selectSingleContractorSetting})(UserSetting);
+export default connect(mapStateToProps, {editUserSettings})(UserSetting);

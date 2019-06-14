@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import Rating from 'react-rating';
 import NavBarUser from '../navbar/NavBarUser';
-import { getUserWrittenFeedback, postFeedback } from '../../actions/index';
+import { getUserWrittenFeedback } from '../../actions/index';
 
 
 function UserFeedback(props) {
@@ -12,10 +12,10 @@ function UserFeedback(props) {
   const [customerService, setCustormerService] = useState('')
 
 
-  const { id } = props.match.params;
-  useEffect(() => {
-      props.getUserWrittenFeedback(id)
-  })
+  // const { id } = props.match.params;
+  // useEffect(() => {
+  //     props.getUserWrittenFeedback(id)
+  // })
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -111,7 +111,7 @@ function UserFeedback(props) {
         <div>
           <h4>The Feedbacks You've given</h4>
 
-          <div>
+          {/* <div>
             {props.loading ? <p>Loading...</p> : null}
             {props.error ? <p>{props.error}</p> : null}
             {props.feedback.map(feedback => (
@@ -121,7 +121,7 @@ function UserFeedback(props) {
                 <p>{feedback.message}</p>
               </div>
             ))}
-          </div>
+          </div> */}
 
         </div>
 
