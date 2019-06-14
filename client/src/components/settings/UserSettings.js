@@ -23,10 +23,11 @@ function UserSetting(props) {
     props.User.phoneNumber,
     props.User.email
   ])
+
   function handleUpdate (e) {
     e.preventDefault();
     props.editUserSettings({email, username, phoneNumber})
-
+    
   }
 
   return (
