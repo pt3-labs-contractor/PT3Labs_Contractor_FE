@@ -15,7 +15,7 @@ import {
   SET_SERVICES,
 
   // fetching single contractor
-  // FETCH_SINGLE_CONTRACTOR_SUCCESS,
+  FETCH_SINGLE_CONTRACTOR_SUCCESS,
 
   // fetching feedback by or about user
   FEEDBACK_SUCCESS,
@@ -90,13 +90,13 @@ export default (state = initialState, action) => {
   
 
     // fetching single contractor
-    // case FETCH_SINGLE_CONTRACTOR_SUCCESS:
-    //   return {
-    //     ...state,
-    //     thisContractor: action.payload,
-    //     loading: false,
-    //     error: null,
-    //   };
+    case FETCH_SINGLE_CONTRACTOR_SUCCESS:
+      return {
+        ...state,
+        thisContractor: action.payload,
+        loading: false,
+        error: null,
+      };
 
     // fetching services
     case SET_SERVICES:
