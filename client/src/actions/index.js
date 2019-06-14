@@ -1,4 +1,6 @@
 import axios from 'axios';
+import dateFns from 'date-fns';
+import store from '../index';
 
 // exports for fetching all users
 export const LOADING_USERS = 'LOADING';
@@ -11,6 +13,9 @@ export const SET_DAY = 'SET_DAY';
 export const SET_SCHEDULE = 'SET_SCHEDULE';
 export const LOAD_SCHEDULE = 'LOAD_SCHEDULE';
 export const FAIL_SCHEDULE = 'FAIL_SCHEDULE';
+
+export const SET_SORTED_CONTRACTORS = 'SET_SORTED_CONTRACTORS';
+export const SET_SERVICE_SORT = 'SET_SERVICE_SORT';
 
 // export for services
 export const SET_SERVICES = 'SET_SERVICES';
@@ -73,24 +78,10 @@ export const fetchAccts = () => dispatch => {
               user = Object.assign(user, res.data.contractor[0]);
             });
         }
-        // const { contractors } = contRes.data;
-        // const length = contractors.length + 1;
-        // const limit = 25;
-        // const dividedContractors = [];
-        // for (let x = 1; x < Math.ceil(length / limit); x++) {
-        //   const temp = [];
-        //   const pageItems = length / (limit * x) > 1 ? limit : length % limit;
-        //   for (let y = 0; y < pageItems; y++) {
-        //     temp.push(contractors[(x - 1) * limit + y]);
-        //   }
-        //   // dividedContractors = { ...dividedContractors, [`page${x}`]: temp };
-        //   dividedContractors.push(temp);
-        // }
+
         const { appointments } = apmtRes.data;
         appointments.sort((a, b) => {
-          return (
-            new Date(a.appointmentDatetime) - new Date(b.appointmentDatetime)
-          );
+          return new Date(a.startTime) - new Date(b.startTime);
         });
         dispatch({
           type: FETCHING_USERS_SUCCESS,
@@ -143,6 +134,45 @@ export const fetchServices = id => dispatch => {
     });
 };
 
+export const fetchAvailabilityByDay = date => dispatch => {
+  // dispatch({ type: LOADING });
+  const headers = setHeaders();
+  const state = store.getState();
+
+  axios
+    .get(
+      `https://fierce-plains-47590.herokuapp.com/api/schedules/date/${date}`,
+      { headers }
+    )
+    .then(res => {
+      const contractors = serviceSort(state.serviceFilter, state.contractors);
+      const filter = res.data.appointments
+        .filter(item =>
+          dateFns.isSameDay(dateFns.addDays(new Date(date), 1), item.startTime)
+        )
+        .map(item => item.contractorId);
+      const list = contractors.filter(contractor =>
+        filter.includes(contractor.id)
+      );
+      dispatch({ type: SET_SORTED_CONTRACTORS, payload: list });
+    })
+    .catch(() => {
+      // dispatch({ type: ERROR, error: 'Something went wrong.' });
+    });
+};
+
+export const sortContractorsByService = query => dispatch => {
+  const state = store.getState();
+  const list = state.contractors.filter(contractor => {
+    return contractor.services.some(service => service.name.includes(query));
+  });
+  dispatch({ type: SET_SORTED_CONTRACTORS, payload: list });
+};
+
+export const storeServiceName = service => dispatch => {
+  dispatch({ type: SET_SERVICE_SORT, payload: service });
+};
+
 // axios get single contractor
 export const selectSingleContractorSetting = id => dispatch => {
   dispatch({ type: SINGLE_CONTRACTOR_LOADING });
@@ -155,7 +185,7 @@ export const selectSingleContractorSetting = id => dispatch => {
     .then(res => {
       dispatch({
         type: FETCH_SINGLE_CONTRACTOR_SUCCESS,
-        payload: res.data.contractor[0],
+        payload: res.data.contractor,
       });
     })
     .catch(err =>
@@ -219,6 +249,13 @@ function setHeaders() {
   const bearer = `Bearer ${localStorage.getItem('jwt')}`;
   const headers = { authorization: bearer };
   return headers;
+}
+
+function serviceSort(query, state) {
+  const list = state.filter(contractor => {
+    return contractor.services.some(service => service.name.includes(query));
+  });
+  return list;
 }
 
 // export const selectContractor = (id, list) => dispatch => {

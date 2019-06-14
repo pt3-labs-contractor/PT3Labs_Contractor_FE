@@ -12,6 +12,8 @@ import {
   SET_SCHEDULE,
   LOAD_SCHEDULE,
   FAIL_SCHEDULE,
+  SET_SORTED_CONTRACTORS,
+  SET_SERVICE_SORT,
 
   // fetching services
   SET_SERVICES,
@@ -48,10 +50,12 @@ const initialState = {
   loading: false,
   error: null,
   thisContractor: {},
+  sortedContractors: [],
   thisMonth: new Date(),
   thisDay: new Date(),
   schedule: [],
   errorSchedule: null,
+  serviceFilter: '',
 };
 
 export default (state = initialState, action) => {
@@ -70,6 +74,7 @@ export default (state = initialState, action) => {
         ...state,
         user: action.payload.user,
         contractors: action.payload.contractors,
+        sortedContractors: action.payload.contractors,
         appointments: action.payload.appointments,
         loading: false,
         error: null,
@@ -95,6 +100,10 @@ export default (state = initialState, action) => {
         errorSchedule: null,
         loadSchedule: false,
       };
+    case SET_SORTED_CONTRACTORS:
+      return { ...state, sortedContractors: action.payload };
+    case SET_SERVICE_SORT:
+      return { ...state, serviceFilter: action.payload };
     case LOAD_SCHEDULE:
       return {
         ...state,
