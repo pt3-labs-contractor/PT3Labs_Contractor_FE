@@ -63,6 +63,10 @@ function UserLandingPage(props) {
 
   return (
     <div className="user container">
+      <Link to="/app/contractors" className="main-body">
+        Select a contractor
+      </Link>
+      <Calendar />
       <form>
         <select value={serviceSort} onChange={handleSort}>
           <option value="">Pick a service</option>
