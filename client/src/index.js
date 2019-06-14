@@ -14,6 +14,8 @@ import reducer from './reducers';
 
 const store = createStore(reducer, applyMiddleware(thunk, logger));
 
+export default store;
+
 ReactDOM.render(
   <Provider store={store}>
     <Router>

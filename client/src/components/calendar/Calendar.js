@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import dateFns from 'date-fns';
 
-import { setDay, setMonth } from '../../actions/index';
+import { setDay, setMonth, fetchAvailabilityByDay } from '../../actions/index';
 
 import './Calendar.css';
 
@@ -110,5 +110,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { setDay, setMonth }
+  { setDay, setMonth, fetchAvailabilityByDay }
 )(Calendar);

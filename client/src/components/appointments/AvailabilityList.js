@@ -7,9 +7,9 @@ function AvailabilityList(props) {
   const { selectedDay, schedule } = props;
 
   useEffect(() => {
-    const date = schedule.filter(item =>
-      dateFns.isSameDay(item.startTime, selectedDay)
-    );
+    const date = schedule.filter(item => {
+      return dateFns.isSameDay(item.startTime, selectedDay);
+    });
     setAvailability(date);
     // eslint-disable-next-line
   }, [selectedDay, schedule]);
@@ -19,10 +19,7 @@ function AvailabilityList(props) {
       const start = dateFns.startOfHour(item.startTime);
       const end = dateFns.addHours(start, item.duration.hours);
       return (
-        <div
-          key={item.id}
-          onClick={props.contractor ? () => props.setAppointment(item) : null}
-        >
+        <div key={item.id} onClick={() => props.setAppointment(item)}>
           {`${dateFns.format(start, 'HH:mm')} - ${dateFns.format(
             end,
             'HH:mm'
@@ -34,7 +31,7 @@ function AvailabilityList(props) {
   };
 
   return (
-    <div>
+    <div className="availability-list">
       <RenderTimes />
     </div>
   );
@@ -43,6 +40,7 @@ function AvailabilityList(props) {
 const mapStateToProps = state => {
   return {
     schedule: state.schedule,
+    selectedDay: state.thisDay,
   };
 };
 
