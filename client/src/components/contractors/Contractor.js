@@ -5,7 +5,7 @@ import Calendar from '../calendar/Calendar';
 import ContractorCard from './ContractorCard';
 import AvailabilityList from '../appointments/AvailabilityList';
 import AppointmentForm from '../appointments/AppointmentForm';
-import NavBarContractor from '../navbar/NavBarContractor';
+// import NavBarContractor from '../navbar/NavBarContractor';
 
 import './Contractor.css';
 
@@ -40,7 +40,7 @@ function Contractor(props) {
 
   return (
     <>
-      <NavBarContractor />
+      {/* <NavBarContractor /> */}
       <div className="contractor-container">
         <ContractorCard contractor={props.contractor} />
         <div className="services-container">
