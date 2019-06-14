@@ -4,7 +4,7 @@ import dateFns from 'date-fns';
 
 function AppointmentList(props) {
   return (
-    <div>
+    <div className="main-body">
       <h3>Confirmed Appointments</h3>
       {props.appointments.map(item => (
         <div>

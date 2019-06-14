@@ -37,7 +37,7 @@ export default function Plans() {
               <h4>Unlimted Everything!</h4>
               <h4>Unlimted Everything!</h4>
             </div>
-            <Link>Select</Link>
+            <Link className="plan-link">Select</Link>
           </div>
         </div>
       </div>

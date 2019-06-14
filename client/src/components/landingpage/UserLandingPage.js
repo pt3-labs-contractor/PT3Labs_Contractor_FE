@@ -7,7 +7,9 @@ import './UserLandingPage.css';
 function UserLandingPage(props) {
   return (
     <div className="user container">
-      <Link to="/app/contractors">Select a contractor</Link>
+      <Link to="/app/contractors" className="main-body">
+        Select a contractor
+      </Link>
       <Calendar />
       <AppointmentList />
     </div>

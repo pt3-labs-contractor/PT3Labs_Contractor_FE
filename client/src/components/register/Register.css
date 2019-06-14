@@ -54,3 +54,9 @@ input {
 .btn-register:hover {
   background-color: var(--primary-color)
 }
+
+@media (max-width: 500px) {
+  .btn-register {
+    margin-top: 1rem;
+  }
+}
