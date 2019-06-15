@@ -4,7 +4,7 @@ import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import './App.css';
 
-import { fetchAccts, getFeedback} from './actions/index';
+import { fetchAccts, getFeedback } from './actions/index';
 import Homepage from './components/homepage/Homepage';
 import ContractorList from './components/contractors/ContractorList';
 import Contractor from './components/contractors/Contractor';
@@ -68,7 +68,7 @@ function App(props) {
 const mapStateToProps = state => {
   return {
     user: state.user,
-    feedback: state.feedback
+    feedback: state.feedback,
   };
 };
 

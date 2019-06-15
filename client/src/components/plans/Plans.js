@@ -2,10 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import NavBarContractor from '../navbar/NavBarContractor';
 import './Plans.css';
+import TopNavbar from '../navbar/TopNavbar';
 
 export default function Plans() {
   return (
     <>
+      <TopNavbar />
       <NavBarContractor />
       <div className="main-body">
         <h1>Plans Page</h1>

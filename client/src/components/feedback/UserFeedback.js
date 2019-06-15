@@ -4,6 +4,7 @@ import Rating from 'react-rating';
 import NavBarUser from '../navbar/NavBarUser';
 import './UserFeedback.css';
 import { getFeedback } from '../../actions/index';
+import TopNavbar from '../navbar/TopNavbar';
 
 function UserFeedback(props) {
   const [overall, setOverall] = useState('');
@@ -26,6 +27,7 @@ function UserFeedback(props) {
 
   return (
     <>
+      <TopNavbar />
       <NavBarUser />
       <div className="main-body feedback-body">
         <h2>User giving Feedback Page</h2>
@@ -49,9 +51,9 @@ function UserFeedback(props) {
           </div>
         </div>
 
-        <h2 className="feedback-container">Appointment Info</h2>
+        <h2>Appointment Info</h2>
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="feedback-container">
           <h4>Feedback Form</h4>
           <h4>Which Contractor?</h4>
           <div>

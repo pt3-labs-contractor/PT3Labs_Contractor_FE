@@ -1,9 +1,9 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { connect } from 'react-redux';
 import './NavBarUser.css';
 
-function NavBarUser() {
+function NavBarUser(props) {
+  console.log(props);
   return (
     <>
       <div className="sideNav">
@@ -52,4 +52,4 @@ function NavBarUser() {
   );
 }
 
-export default connect()(NavBarUser);
+export default NavBarUser;
