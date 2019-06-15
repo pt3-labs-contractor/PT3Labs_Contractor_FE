@@ -1,6 +1,6 @@
 .sideNav {
   height: 100%;
-  width: 15%;
+  width: 200px;
   position: fixed;
   top: 0px;
   left: 0px;
@@ -52,6 +52,6 @@
     font-size: 16px;
   }
 }
-@media (max-width: 500px) {
+@media (max-width: 600px) {
 
 }
