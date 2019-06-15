@@ -64,7 +64,7 @@ function UserLandingPage(props) {
 
   const selectTime = item => {
     setTime(item);
-    scroll(document.getElementsByClassName('appointment-list')[0]);
+    mql && scroll(document.getElementsByClassName('appointment-list')[0]);
   };
 
   const scroll = element => {
@@ -80,7 +80,7 @@ function UserLandingPage(props) {
     setServiceSort(event.target.value);
     props.storeServiceName(event.target.value);
     clearAppointment();
-    scroll(calendar.current);
+    mql && scroll(calendar.current);
   };
 
   const clearAppointment = () => {

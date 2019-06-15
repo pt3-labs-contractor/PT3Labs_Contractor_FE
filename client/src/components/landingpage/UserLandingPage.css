@@ -30,6 +30,7 @@
 @media (max-width: 600px) {
   .user.container {
     margin-left: 12%;
+    margin-top: 0px;
   }
 
   .service-list {
@@ -37,15 +38,15 @@
     text-align: center;
     display: flex;
     flex-direction: column;
-    padding: 5vh 0;
+    padding: 3vh 0;
     font-size: 2.4rem;
   }
 
   .service-list button {
     background: none;
     border: none;
-    height: 8vh;
-    font-size: 2.4rem;
+    height: 10vh;
+    font-size: 2rem;
   }
 
   .service-list h2,
