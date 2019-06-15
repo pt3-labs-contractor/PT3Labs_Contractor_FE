@@ -26,7 +26,7 @@ const Appointment = props => {
   const modifiedEnd = dateFns.format(end, 'HH:mm A');
 
   const setServId = e => {
-    props.setServIdUp(e.target.dataset.appid);
+    props.setServIdUp(e.target.dataset.sevid, e.target.dataset.refid);
     const pos = props.refs.find(r => {
       return r.id === e.target.dataset.refid;
     });
@@ -43,7 +43,7 @@ const Appointment = props => {
             to={`/contractorCalendar/app/${id}`}
             onClick={setServId}
           >
-            <li className="appSlot" data-refid={id} data-appid={props.sevId}>
+            <li className="appSlot" data-refid={id} data-sevid={props.sevId}>
               {modifiedStart} - {modifiedEnd}{' '}
             </li>
           </Link>

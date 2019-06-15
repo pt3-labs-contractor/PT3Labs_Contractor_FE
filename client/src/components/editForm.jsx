@@ -14,7 +14,7 @@ const EScheduler = props => {
   const centerPop = 75;
   const centerBox = w / 2;
   const xper = x - centerPop + centerBox;
-  const yper = y - 150 - h / 2;
+  const yper = y - 150;
 
   const position = {
     position: 'absolute',

@@ -12,6 +12,8 @@ export const DEL_SCHED_COMP = 'DEL_SCHED_COMP';
 export const UP_SCHED = 'UP_SCHED';
 export const UP_SCHED_COMP = 'UP_SCHED_COMP';
 export const GET_APP = 'GET_APP';
+export const CONFIRMING_APP = 'CONFIRMING_APP';
+export const CONFIRMED_APP = 'CONFIRMED_APP';
 export const REFS = 'REFS';
 
 // exports for fetching all users
@@ -356,6 +358,27 @@ export const updateSchedule = (id, obj) => {
       )
       .then(res => {
         dispatch({ type: UP_SCHED_COMP, payload: res.data });
+        console.log(res.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+};
+
+export const confirmApp = (id, obj) => {
+  const bearer = `Bearer ${localStorage.getItem('jwt')}`;
+  const headers = { authorization: bearer };
+  return dispatch => {
+    dispatch({ type: CONFIRMING_APP });
+    axios
+      .put(
+        `https://fierce-plains-47590.herokuapp.com/api/appointments/${id}`,
+        obj,
+        { headers }
+      )
+      .then(res => {
+        dispatch({ type: CONFIRMED_APP, payload: res.data });
         console.log(res.data);
       })
       .catch(err => {

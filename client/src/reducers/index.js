@@ -9,6 +9,8 @@ import {
   UP_SCHED,
   UP_SCHED_COMP,
   GET_APP,
+  CONFIRMING_APP,
+  CONFIRMED_APP,
   REFS,
   // fetching users
   LOADING_USERS,
@@ -218,6 +220,17 @@ export default (state = initialState, action) => {
         ...state,
         loading: false,
         schedule: [...updatedSched, action.payload],
+      };
+    case CONFIRMING_APP:
+      return { ...state, loading: true, error: null };
+    case CONFIRMED_APP:
+      const newAppState = state.appointments.filter(a => {
+        return a.id !== action.payload.id;
+      });
+      return {
+        ...state,
+        appointments: [...newAppState, action.payload],
+        loading: false,
       };
     case REFS:
       return {

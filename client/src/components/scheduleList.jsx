@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import Schedule from './schedule.jsx';
 import { setRefs } from '../actions/index.js';
@@ -37,6 +37,7 @@ const ScheduleList = props => {
           <div key={props.id + i} className="schedCont" ref={refCallback}>
             <Schedule
               {...props}
+              temp={props.temp}
               id={s.id}
               start={s.startTime}
               duration={s.duration}

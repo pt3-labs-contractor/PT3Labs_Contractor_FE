@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
+import { confirmApp, deleteSchedule } from '../actions/index.js';
 
 const AppInfo = props => {
   const [sevId, setSevId] = useState();
@@ -14,8 +15,8 @@ const AppInfo = props => {
   const { h } = props;
   const centerPop = 75;
   const centerBox = w / 2;
-  const xper = x - centerPop + centerBox;
-  const yper = y - 150 - h / 2;
+  const xper = x - centerPop + centerBox + 6;
+  const yper = y - 150;
 
   const position = {
     position: 'absolute',
@@ -25,16 +26,30 @@ const AppInfo = props => {
     backgroundColor: 'white',
   };
 
-  const returnToCal = e => {
-    e.preventDefault();
+  const returnToCal = () => {
     props.history.push('/contractorCalendar');
   };
 
   const serviceName = props.services.find(s => {
-    console.log(s.id);
-    console.log(props.sevId);
     return s.id === props.sevId;
   });
+
+  const theAppoint = props.appointments.find(a => {
+    return a.id === props.appId;
+  });
+
+  const onConfirm = () => {
+    const { id, startTime, duration, scheduleId } = theAppoint;
+    const returnObj = {
+      startTime,
+      duration,
+      confirmed: true,
+    };
+    props.confirmApp(id, returnObj);
+    // props.deleteSchedule(scheduleId);
+    returnToCal();
+  };
+
   return (
     <div className="infoCont" style={position}>
       <div className="cont">
@@ -50,7 +65,7 @@ const AppInfo = props => {
         <div className="value" />
       </div>
       <div className="buttons">
-        <button className="confirm" onClick={returnToCal}>
+        <button className="confirm" onClick={onConfirm}>
           Confirm
         </button>
         <button className="deny" onClick={returnToCal}>
@@ -64,7 +79,11 @@ const AppInfo = props => {
 const mstp = state => {
   return {
     services: state.services,
+    appointments: state.appointments,
   };
 };
 
-export default connect(mstp)(AppInfo);
+export default connect(
+  mstp,
+  { confirmApp, deleteSchedule }
+)(AppInfo);

@@ -7,6 +7,24 @@ import { postNewSchedule } from '../actions/index.js';
 const Scheduler = props => {
   const [start, setStart] = useState(props.today || new Date());
   const [end, setEnd] = useState(new Date());
+  const { x } = props;
+  const { y } = props;
+  const { w } = props;
+  const { h } = props;
+  const centerPop = 100;
+  const centerBox = w / 2;
+  const xper = x - centerPop + centerBox;
+  const yper = y - 150;
+  console.log(y, h);
+
+  const position = {
+    position: 'absolute',
+    left: `${xper}` + 'px',
+    top: `${yper}` + 'px',
+    zIndex: '100',
+    backgroundColor: 'white',
+  };
+  console.log(position);
 
   useEffect(() => {
     setStart(props.today);
@@ -39,7 +57,7 @@ const Scheduler = props => {
     props.history.push('/contractorCalendar');
   };
   return (
-    <div className="schedulerCont">
+    <div className="schedulerCont" style={position}>
       <div className="close" onClick={close}>
         Close
       </div>

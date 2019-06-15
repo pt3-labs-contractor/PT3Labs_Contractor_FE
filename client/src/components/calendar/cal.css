@@ -51,7 +51,6 @@
 
 .cel.selected {
   background-color: #e4e4e4;
-  height: max-content;
   padding-bottom: 0px;
   margin-bottom: 0px;
 }
@@ -143,4 +142,60 @@
 .infoCont {
   height: 150px;
   width: 150px;
+}
+
+.appLink {
+  text-decoration: none;
+  color: black;
+}
+
+.editLink {
+  text-decoration: none;
+  color: black;
+}
+
+.schedulerCont {
+  width: 200px;
+  height: 150px;
+}
+
+.infoCont {
+  border: 1px solid black;
+}
+
+.boxCont {
+  width: 150px;
+}
+
+.downCont {
+  margin: 0 auto;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 3px;
+  position: relative;
+  top: -25%;
+  height: 17px;
+  width: 98%;
+  background-color: #8c20f8;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.fa-angle-double-down,
+.fa-angle-double-up {
+  font-size: 0.7rem;
+  pointer-events: none;
+}
+
+.disabledLink {
+  pointer-events: none;
+}
+
+.hidden {
+  height: max-content;
+}
+
+.arrowHidden {
+  display: none;
 }

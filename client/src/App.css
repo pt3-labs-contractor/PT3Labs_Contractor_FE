@@ -42,9 +42,11 @@ img {
 .btn:hover {
   background-color: darken();
 }
-.contractor-list-container {
-  margin-top: 100px;
 
 .main-body {
   margin-left: 210px;
+}
+
+.appointment-form {
+  margin-left: 50%;
 }

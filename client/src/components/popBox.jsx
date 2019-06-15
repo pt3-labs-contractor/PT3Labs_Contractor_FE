@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import dateFns from 'date-fns';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -18,8 +18,9 @@ const PopBoxSched = props => {
   const { h } = props;
   const centerPop = 75;
   const centerBox = w / 2;
-  const xper = x - centerPop + centerBox;
-  const yper = y - 150 - h / 2;
+  const xper = centerBox - 75 + x;
+  const yper = y - 150;
+  console.log(x);
   let finalMin;
   if (mDiff % 60 !== 0) {
     const min = hDiff * 60;
@@ -37,7 +38,7 @@ const PopBoxSched = props => {
     position: 'absolute',
     left: `${xper}` + 'px',
     top: `${yper}` + 'px',
-    zIndex: '100',
+    zIndex: '10000',
     backgroundColor: 'white',
   };
   return (
