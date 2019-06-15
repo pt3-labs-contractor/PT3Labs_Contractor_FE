@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Calendar from '../calendar/Calendar';
 import AppointmentList from '../appointments/AppointmentList';

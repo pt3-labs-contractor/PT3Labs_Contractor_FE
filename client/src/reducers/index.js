@@ -30,9 +30,8 @@ import {
   // fetching current contractor appointments
   RET_CONTRACTOR_APP_SUCC,
 
-  //edit the user information
-  EDIT_USER_SUCCESS
-
+  // edit the user information
+  EDIT_USER_SUCCESS,
 } from '../actions';
 
 const initialState = {
@@ -133,25 +132,23 @@ export default (state = initialState, action) => {
 
     // fetching current user written feedback
     case FEEDBACK_SUCCESS:
-      return { ...state, feedback: action.payload.feedback}
+      return { ...state, feedback: action.payload.feedback };
 
-
-    //fetching feedback on a specfic contractor
-    // case FETCH_CONTRACTOR_FEEDBACK_SUCCESS: 
+    // fetching feedback on a specfic contractor
+    // case FETCH_CONTRACTOR_FEEDBACK_SUCCESS:
     //   return {...state, feedback: action.payload}
-      
+
     // fetching current contractor appointments
     // case RET_CONTRACTOR_APP_SUCC:
     //   return {...state, accounts:{appointments: action.payload }}
 
-    //fetching appointments for a contractor
+    // fetching appointments for a contractor
     case RET_CONTRACTOR_APP_SUCC:
-      return {...state, appointments: action.payload}
-    
+      return { ...state, appointments: action.payload };
 
-    //edit user settigns
-    case EDIT_USER_SUCCESS: 
-      return {...state, user: action.payload}
+    // edit user settigns
+    case EDIT_USER_SUCCESS:
+      return { ...state, user: action.payload };
 
     default:
       return state;

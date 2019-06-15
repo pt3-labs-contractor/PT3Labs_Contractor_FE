@@ -5,13 +5,11 @@ import NavBarUser from '../navbar/NavBarUser';
 import './UserFeedback.css';
 import { getFeedback } from '../../actions/index';
 
-
 function UserFeedback(props) {
-  const [overall, setOverall] = useState('')
-  const [consultation, setConsultation] = useState('')
-  const [punctual, setPunctual] = useState('')
-  const [customerService, setCustormerService] = useState('')
-
+  const [overall, setOverall] = useState('');
+  const [consultation, setConsultation] = useState('');
+  const [punctual, setPunctual] = useState('');
+  const [customerService, setCustormerService] = useState('');
 
   // const { id } = props.match.params;
   // useEffect(() => {
@@ -23,7 +21,7 @@ function UserFeedback(props) {
     // useEffect(() => {
     //   props.postFeedback(event)
     // })
-    console.log("I'm handling submitting")
+    console.log("I'm handling submitting");
   }
 
   return (
@@ -50,10 +48,8 @@ function UserFeedback(props) {
             </div>
           </div>
         </div>
-        <form className="feedback-container">
-          <h2>Feedback Form</h2>
 
-        <h2>Appointment Info</h2>
+        <h2 className="feedback-container">Appointment Info</h2>
 
         <form onSubmit={handleSubmit}>
           <h4>Feedback Form</h4>
@@ -62,7 +58,7 @@ function UserFeedback(props) {
             <select>
               {props.contractor.map(contractor => (
                 <option value={contractor.id}>{contractor.name}</option>
-                ))}
+              ))}
             </select>
           </div>
 
@@ -74,7 +70,7 @@ function UserFeedback(props) {
               stop={3}
             />
             <input
-              placeholder="Details" 
+              placeholder="Details"
               type="text"
               name="overallFeedback"
               value={overall}
@@ -89,8 +85,8 @@ function UserFeedback(props) {
               fullSymbol={<span className="icon-text">&#9733;</span>}
               stop={3}
             />
-            <input 
-              placeholder="Details" 
+            <input
+              placeholder="Details"
               type="text"
               name="consulation"
               value={consultation}
@@ -105,8 +101,8 @@ function UserFeedback(props) {
               fullSymbol={<span className="icon-text">&#9733;</span>}
               stop={3}
             />
-            <input 
-              placeholder="punctual" 
+            <input
+              placeholder="punctual"
               type="text"
               name="punctual"
               value={punctual}
@@ -121,12 +117,12 @@ function UserFeedback(props) {
               fullSymbol={<span className="icon-text">&#9733;</span>}
               stop={3}
             />
-            <input 
-              placeholder="Details" 
+            <input
+              placeholder="Details"
               type="text"
               name="CS"
               value={customerService}
-              onChange={e => setCustormerService(e.target.value)}  
+              onChange={e => setCustormerService(e.target.value)}
             />
           </div>
           <textarea className="form-textarea" placeholder="Leave a comment" />
@@ -134,7 +130,6 @@ function UserFeedback(props) {
         </form>
         <div>
           <h4>The Feedbacks You've given</h4>
-
           {/* <div>
             {props.loading ? <p>Loading...</p> : null}
             {props.error ? <p>{props.error}</p> : null}
@@ -146,9 +141,7 @@ function UserFeedback(props) {
               </div>
             ))}
           </div> */}
-
         </div>
-
       </div>
     </>
   );
@@ -160,8 +153,11 @@ const mapStateToProps = state => {
     user: state.user,
     loading: state.loading,
     error: state.error,
-    contractor: state.contractors
+    contractor: state.contractors,
   };
 };
 
-export default connect(mapStateToProps, {getFeedback})(UserFeedback);
+export default connect(
+  mapStateToProps,
+  { getFeedback }
+)(UserFeedback);
