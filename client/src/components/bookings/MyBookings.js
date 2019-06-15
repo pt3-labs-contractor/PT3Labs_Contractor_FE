@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import NavBarUser from '../navbar/NavBarUser';
+import TopNavbar from '../navbar/TopNavbar';
 
 function MyBookings(props) {
   const sendText = () => {
@@ -10,6 +11,7 @@ function MyBookings(props) {
 
   return (
     <div>
+      <TopNavbar />
       <NavBarUser />
       <div className="main-body">
         <h1>MyBookings Page</h1>

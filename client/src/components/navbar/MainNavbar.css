@@ -32,4 +32,7 @@
     .navbar h1{
       font-size: 18px;
     }
+    .mainnav-link {
+      margin: .5rem;
+    }
   }

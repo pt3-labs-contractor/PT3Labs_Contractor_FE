@@ -150,12 +150,13 @@ function Register(props) {
             </>
           )}
           <button
-          type="submit"
-          // value="Create Account"
-          className="btn btn-primary">
+            type="submit"
+            // value="Create Account"
+            className="btn btn-primary"
+          >
             Create Account
           </button>
-         
+
           {/* <button
             type="submit"
             value="Create Account"

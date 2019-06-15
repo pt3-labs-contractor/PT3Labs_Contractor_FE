@@ -3,10 +3,12 @@ import { connect } from 'react-redux';
 import Rating from 'react-rating';
 import NavBarContractor from '../navbar/NavBarContractor';
 import './ContractorFeedback.css';
+import TopNavbar from '../navbar/TopNavbar';
 
 function ContractorFeedback(props) {
   return (
     <>
+      <TopNavbar />
       <NavBarContractor />
       <div className="main-body feedback-body">
         <h2>Contractor OWN Feedback Page</h2>
