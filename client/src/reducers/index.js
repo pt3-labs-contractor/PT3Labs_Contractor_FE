@@ -15,9 +15,9 @@ import {
   GETTING_USER_SUCC,
   REFS,
   // fetching users
-  LOADING_USERS,
+  LOADING,
   FETCHING_USERS_SUCCESS,
-  FETCHING_USERS_FAILURE,
+  FAILURE,
 
   // fetching calander
   SET_DAY,
@@ -32,34 +32,27 @@ import {
 
   // fetching services
   SET_SERVICES,
-  LOAD_SERVICES,
-  FAIL_SERVICES,
 
   // fetching single contractor
-  SINGLE_CONTRACTOR_LOADING,
   FETCH_SINGLE_CONTRACTOR_SUCCESS,
-  FETCH_SINGLE_CONTRACTOR_FAIL,
 
-  // fetching current user written feedback
-  // USER_WRITTEN_FEEDBACK_LOADING,
-  // USER_WRITTEN_FEEDBACK_SUCCESS,
-  // USER_WRITTEN_FEEDBACK_FAIL,
+  // fetching feedback by or about user
+  FEEDBACK_SUCCESS,
 
   // fetching single contractor feedback
-  // CONTRACTOR_FEEDBACK_LOADING,
   // FETCH_CONTRACTOR_FEEDBACK_SUCCESS,
-  // CONTRACTOR_FEEDBACK_FAIL,
 
   // fetching current contractor appointments
-  // CONTRACTOR_APP_LOADING,
-  // RET_CONTRACTOR_APP_SUCC,
-  // CONTRACTOR_APP_FAIL
+  RET_CONTRACTOR_APP_SUCC,
+
+  // edit the user information
+  EDIT_USER_SUCCESS,
 } from '../actions';
 
 const initialState = {
   user: {},
   contractors: [],
-  // feedback: []
+  feedback: [],
   appointments: [],
   services: [],
   loading: false,
@@ -76,7 +69,7 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     // loading all users
-    case LOADING_USERS:
+    case LOADING:
       return {
         ...state,
         user: {},
@@ -96,7 +89,7 @@ export default (state = initialState, action) => {
         loading: false,
         error: null,
       };
-    case FETCHING_USERS_FAILURE:
+    case FAILURE:
       return {
         ...state,
         user: {},
@@ -137,8 +130,6 @@ export default (state = initialState, action) => {
       };
 
     // fetching single contractor
-    case SINGLE_CONTRACTOR_LOADING:
-      return { ...state, loading: true, error: null };
     case FETCH_SINGLE_CONTRACTOR_SUCCESS:
       return {
         ...state,
@@ -146,8 +137,6 @@ export default (state = initialState, action) => {
         loading: false,
         error: null,
       };
-    case FETCH_SINGLE_CONTRACTOR_FAIL:
-      return { ...state, loading: false, error: action.error };
 
     // fetching services
     case SET_SERVICES:
@@ -157,30 +146,16 @@ export default (state = initialState, action) => {
         loading: false,
         error: null,
       };
-    case LOAD_SERVICES:
-      return { ...state, services: [], loading: true, error: null };
-    case FAIL_SERVICES:
-      return { ...state, services: [], loading: false, error: action.error };
 
     // fetching current user written feedback
-    // case USER_WRITTEN_FEEDBACK_LOADING:
-    //   return { ...state, loading: true, error: null };
-    // case USER_WRITTEN_FEEDBACK_SUCCESS:
-    //   return { ...state, accounts: { feedback: action.payload }}
-    // case USER_WRITTEN_FEEDBACK_FAIL:
-    //     return { ...state, loading: false, error: action.error };
+    case FEEDBACK_SUCCESS:
+      return { ...state, feedback: action.payload.feedback };
 
-    // fetching single contractors feedback
-    // case CONTRACTOR_FEEDBACK_LOADING:
-    //   return {...state, loading: true, error: null };
+    // fetching feedback on a specfic contractor
     // case FETCH_CONTRACTOR_FEEDBACK_SUCCESS:
-    //   return {...state, accounts: { feedback: action.payload }}
-    // case CONTRACTOR_FEEDBACK_FAIL:
-    //   return {...state, loading: false, error: action.error}
+    //   return {...state, feedback: action.payload}
 
     // fetching current contractor appointments
-    // case CONTRACTOR_APP_LOADING:
-    //   return{...state, loading: true, eror: null};
     // case RET_CONTRACTOR_APP_SUCC:
     //   return {...state, accounts:{appointments: action.payload }}
     // case CONTRACTOR_APP_FAIL:
@@ -243,6 +218,14 @@ export default (state = initialState, action) => {
         ...state,
         refs: action.payload,
       };
+
+    // fetching appointments for a contractor
+    case RET_CONTRACTOR_APP_SUCC:
+      return { ...state, appointments: action.payload };
+
+    // edit user settigns
+    case EDIT_USER_SUCCESS:
+      return { ...state, user: action.payload };
 
     default:
       return state;

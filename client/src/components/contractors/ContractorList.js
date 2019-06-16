@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import './ContractorList.css';
 
 import ContractorCard from './ContractorCard';
+// import NavBarUser from './components/navbar/NavBarUser';
+
 
 function ContractorList(props) {
   const [pageNum, setPageNum] = useState(0);

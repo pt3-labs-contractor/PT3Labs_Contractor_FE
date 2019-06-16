@@ -24,3 +24,15 @@
   a:hover {
     color: var(--secondary-color)
   }
+
+  @media (max-width:500px) {
+    .navbar {
+      flex-direction: column;
+    }
+    .navbar h1{
+      font-size: 18px;
+    }
+    .mainnav-link {
+      margin: .5rem;
+    }
+  }
