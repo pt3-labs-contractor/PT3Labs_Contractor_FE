@@ -20,7 +20,6 @@ import NavBarContractor from './components/navbar/NavBarContractor';
 import Settings from './components/settings/Settings';
 import ContractorFeedback from './components/feedback/ContractorFeedback';
 import UserFeedback from './components/feedback/UserFeedback';
-import EScheduler from './components/editForm.jsx';
 import MyBookings from './components/bookings/MyBookings';
 import Plans from './components/plans/Plans';
 import UserSettings from './components/settings/UserSettings';

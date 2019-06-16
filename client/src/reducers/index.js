@@ -229,7 +229,6 @@ export default (state = initialState, action) => {
       const newAppState = state.appointments.filter(a => {
         return a.id !== action.payload.updated.id;
       });
-      console.log(newAppState);
       return {
         ...state,
         appointments: [...newAppState, action.payload.updated],

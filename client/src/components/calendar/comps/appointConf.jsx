@@ -7,7 +7,7 @@ import {
   confirmApp,
   deleteSchedule,
   getUser,
-} from '../actions/index.js';
+} from '../../../actions/index.js';
 import './appointConf.css';
 
 const AppInfo = props => {
@@ -21,8 +21,6 @@ const AppInfo = props => {
     setSevId(props.sevId);
     props.getUser(theAppoint.userId);
   }, [props.sevId, theAppoint.id]);
-
-  console.log(props.user);
 
   const { x } = props;
   const { y } = props;
@@ -49,36 +47,64 @@ const AppInfo = props => {
     return s.id === props.sevId;
   });
 
-  const onConfirm = () => {
+  const onConfirm = e => {
+    e.preventDefault();
     const { id, startTime, duration, scheduleId } = theAppoint;
+    let dur;
+    const { hours } = duration;
+    const { minutes } = duration;
+    if (hours && minutes) {
+      dur = `${(hours * 60 + minutes) / 60}h`;
+    }
+    if (hours) {
+      dur = `${hours}h`;
+    }
+    if (minutes) {
+      dur = `${minutes / 60}h`;
+    }
+    console.log(dur);
     const returnObj = {
       startTime,
-      duration,
+      duration: dur,
       confirmed: true,
     };
 
     const scheduleLock = {
       startTime,
-      duration,
+      duration: dur,
       open: false,
     };
+    console.log(returnObj, scheduleLock);
     props.confirmApp(id, returnObj);
     props.updateSchedule(scheduleId, scheduleLock);
     // props.deleteSchedule(scheduleI;
     returnToCal();
   };
 
-  const unConfirm = () => {
+  const unConfirm = e => {
+    e.preventDefault();
     const { id, startTime, duration, scheduleId } = theAppoint;
+    let dur;
+    const { hours } = duration;
+    const { minutes } = duration;
+    if (hours && minutes) {
+      dur = `${(hours * 60 + minutes) / 60}h`;
+    }
+    if (hours) {
+      dur = `${hours}h`;
+    }
+    if (minutes) {
+      dur = `${minutes / 60}h`;
+    }
     const returnObj = {
       startTime,
-      duration,
+      duration: dur,
       confirmed: false,
     };
 
     const scheduleUnLock = {
       startTime,
-      duration,
+      duration: dur,
       open: true,
     };
     props.confirmApp(id, returnObj);
@@ -140,7 +166,6 @@ const AppInfo = props => {
 };
 
 const mstp = state => {
-  console.log(state);
   return {
     user: state.queryUser,
     services: state.services,

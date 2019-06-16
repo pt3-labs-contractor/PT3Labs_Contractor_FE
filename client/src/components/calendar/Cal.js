@@ -7,12 +7,12 @@ import {
   faAngleDoubleDown,
   faAngleDoubleUp,
 } from '@fortawesome/free-solid-svg-icons';
-import ServiceForm from '../servicesForm';
-import Scheduler from '../scheduler';
-import SchduleList from '../scheduleList';
-import EScheduler from '../editForm.jsx';
-import PopBoxSched from '../popBox.jsx';
-import AppInfo from '../appointConf.jsx';
+import ServiceForm from './forms/servicesForm.jsx';
+import Scheduler from './comps/scheduler.jsx';
+import SchduleList from './comps/scheduleList.jsx';
+import EScheduler from './forms/editForm.jsx';
+import PopBoxSched from './popups/popBox.jsx';
+import AppInfo from './comps/appointConf.jsx';
 import './cal.css';
 
 import { setDay, setMonth, getSchedules, setRefs } from '../../actions/index';

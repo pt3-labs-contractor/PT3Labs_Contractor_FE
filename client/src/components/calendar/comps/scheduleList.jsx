@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Schedule from './schedule.jsx';
-import { setRefs } from '../actions/index.js';
+import { setRefs } from '../../../actions/index.js';
 
 const ScheduleList = props => {
   const refCallback = el => {

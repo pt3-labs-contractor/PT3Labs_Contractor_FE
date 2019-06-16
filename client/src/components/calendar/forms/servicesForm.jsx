@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { fetchAccts, postNewService } from '../actions/index.js';
+import {fetchAccts, postNewService} from "../../../actions/index.js"
 
 const ServiceForm = props => {
   const [name, setName] = useState('');

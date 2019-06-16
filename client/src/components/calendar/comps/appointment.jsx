@@ -29,7 +29,6 @@ const Appointment = props => {
     const pos = props.refs.find(r => {
       return r.id === e.target.dataset.refid;
     });
-    console.log(pos);
     props.setPosition(pos);
   };
 

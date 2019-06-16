@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { faHourglassEnd } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { deleteSchedule } from '../actions/index';
+import { deleteSchedule } from '../../../actions/index.js';
 import Appointment from './appointment.jsx';
 
 const Schedule = props => {
@@ -78,7 +78,6 @@ const Schedule = props => {
       return a.id;
     }
   });
-  console.log(confirmed.length);
 
   const modifiedEnd = dateFns.format(end, 'HH:mm A');
   return (

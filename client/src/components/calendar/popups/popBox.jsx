@@ -10,7 +10,7 @@ import {
   faBan,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { deleteSchedule } from '../actions/index.js';
+import { deleteSchedule } from '../../../actions/index.js';
 
 import './popBox.css';
 

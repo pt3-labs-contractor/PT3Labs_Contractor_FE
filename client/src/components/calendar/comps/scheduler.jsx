@@ -4,15 +4,15 @@ import DateTimePicker from 'react-datetime-picker';
 import dateFns from 'date-fns';
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { postNewSchedule, updateSchedule } from '../actions/index.js';
-import './editForm.css';
+import { postNewSchedule } from '../../../actions/index.js';
 
-const EScheduler = props => {
-  const { x, y, w, h } = props;
-  const [start, setStart] = useState(props.start);
-  const [end, setEnd] = useState(props.end);
-  const { id } = props;
-
+const Scheduler = props => {
+  const [start, setStart] = useState(props.today || new Date());
+  const [end, setEnd] = useState(new Date());
+  const { x } = props;
+  const { y } = props;
+  const { w } = props;
+  const { h } = props;
   const centerPop = 100;
   const centerBox = w / 2;
   const xper = x - centerPop + centerBox;
@@ -27,21 +27,17 @@ const EScheduler = props => {
   };
 
   useEffect(() => {
-    setStart(props.start);
-    setEnd(props.end);
-  }, [props.start, props.end]);
+    setStart(props.today);
+    setEnd(props.today);
+  }, [props.today]);
 
   const schange = value => {
     setStart(value);
-    // setEnd(value);
+    setEnd(value);
   };
 
   const echange = value => {
     setEnd(value);
-  };
-
-  const closeEdit = () => {
-    props.history.push('/contractorCalendar');
   };
 
   const submit = e => {
@@ -50,30 +46,32 @@ const EScheduler = props => {
     const duration = `${minutes / 60}h`;
     const { contractorId } = props.user;
     const newSchedule = {
-      startTime: new Date(start),
+      startTime: start,
       duration,
-      open: true,
     };
+    props.postNewSchedule(newSchedule);
     console.log(newSchedule);
-    props.updateSchedule(id, newSchedule);
+    close();
+  };
+  const close = () => {
     props.history.push('/contractorCalendar');
   };
   return (
     <div className="schedulerCont" style={position}>
       <div className="closeIcon">
-        <FontAwesomeIcon icon={faTimesCircle} onClick={closeEdit} />
+        <FontAwesomeIcon icon={faTimesCircle} onClick={close} />
       </div>
       <DateTimePicker
         className="start"
-        value={start}
         clearIcon={null}
+        value={start}
         onChange={schange}
       />
       <DateTimePicker
         className="end"
         value={end}
-        clearIcon={null}
         onChange={echange}
+        clearIcon={null}
       />
       <button className="save" onClick={submit}>
         Save
@@ -83,13 +81,13 @@ const EScheduler = props => {
 };
 
 const mstp = state => {
-  console.log(state.schedule);
   return {
+    today: state.thisDay,
     user: state.user,
   };
 };
 
 export default connect(
   mstp,
-  { postNewSchedule, updateSchedule }
-)(EScheduler);
+  { postNewSchedule }
+)(Scheduler);
