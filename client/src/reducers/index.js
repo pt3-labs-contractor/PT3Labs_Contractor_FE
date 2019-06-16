@@ -11,6 +11,8 @@ import {
   GET_APP,
   CONFIRMING_APP,
   CONFIRMED_APP,
+  GETTING_USER,
+  GETTING_USER_SUCC,
   REFS,
   // fetching users
   LOADING_USERS,
@@ -225,13 +227,18 @@ export default (state = initialState, action) => {
       return { ...state, loading: true, error: null };
     case CONFIRMED_APP:
       const newAppState = state.appointments.filter(a => {
-        return a.id !== action.payload.id;
+        return a.id !== action.payload.updated.id;
       });
+      console.log(newAppState);
       return {
         ...state,
-        appointments: [...newAppState, action.payload],
+        appointments: [...newAppState, action.payload.updated],
         loading: false,
       };
+    case GETTING_USER:
+      return { ...state, loading: true };
+    case GETTING_USER_SUCC:
+      return { ...state, queryUser: [action.payload.user] };
     case REFS:
       return {
         ...state,

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import dateFns from 'date-fns';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -22,7 +22,6 @@ const Appointment = props => {
     end = dateFns.addMilliseconds(end, duration.milliseconds);
   }
 
-  const newEnd = new Date(end);
   const modifiedEnd = dateFns.format(end, 'HH:mm A');
 
   const setServId = e => {
@@ -43,7 +42,13 @@ const Appointment = props => {
             to={`/contractorCalendar/app/${id}`}
             onClick={setServId}
           >
-            <li className="appSlot" data-refid={id} data-sevid={props.sevId}>
+            <li
+              className={`appSlot ${
+                props.confirmed ? 'confirmedSlot' : 'pendingSlot'
+              }`}
+              data-refid={id}
+              data-sevid={props.sevId}
+            >
               {modifiedStart} - {modifiedEnd}{' '}
             </li>
           </Link>

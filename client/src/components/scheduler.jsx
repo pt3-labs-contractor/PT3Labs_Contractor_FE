@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import DateTimePicker from 'react-datetime-picker';
 import dateFns from 'date-fns';
+import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { postNewSchedule } from '../actions/index.js';
 
 const Scheduler = props => {
@@ -15,7 +17,6 @@ const Scheduler = props => {
   const centerBox = w / 2;
   const xper = x - centerPop + centerBox;
   const yper = y - 150;
-  console.log(y, h);
 
   const position = {
     position: 'absolute',
@@ -24,7 +25,6 @@ const Scheduler = props => {
     zIndex: '100',
     backgroundColor: 'white',
   };
-  console.log(position);
 
   useEffect(() => {
     setStart(props.today);
@@ -46,11 +46,11 @@ const Scheduler = props => {
     const duration = `${minutes / 60}h`;
     const { contractorId } = props.user;
     const newSchedule = {
-      contractorId,
       startTime: start,
       duration,
     };
     props.postNewSchedule(newSchedule);
+    console.log(newSchedule);
     close();
   };
   const close = () => {
@@ -58,13 +58,23 @@ const Scheduler = props => {
   };
   return (
     <div className="schedulerCont" style={position}>
-      <div className="close" onClick={close}>
-        Close
+      <div className="closeIcon">
+        <FontAwesomeIcon icon={faTimesCircle} onClick={close} />
       </div>
-      <DateTimePicker className="start" value={start} onChange={schange} />
-      <DateTimePicker className="end" value={end} onChange={echange} />
-      <button className="submit" onClick={submit}>
-        Submit
+      <DateTimePicker
+        className="start"
+        clearIcon={null}
+        value={start}
+        onChange={schange}
+      />
+      <DateTimePicker
+        className="end"
+        value={end}
+        onChange={echange}
+        clearIcon={null}
+      />
+      <button className="save" onClick={submit}>
+        Save
       </button>
     </div>
   );

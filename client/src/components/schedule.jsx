@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import dateFns from 'date-fns';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { faHourglassEnd } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { deleteSchedule } from '../actions/index';
 import Appointment from './appointment.jsx';
 
@@ -9,7 +11,6 @@ const Schedule = props => {
   let { id, start, duration } = props;
   const modifiedStart = dateFns.format(start, 'HH:mm A');
   start = new Date(start);
-  const [size, setSize] = useState();
   let end = start;
 
   if (duration.hours) {
@@ -52,7 +53,6 @@ const Schedule = props => {
       // console.log(el);
       const loc = el.getBoundingClientRect();
       const ref = { id: el.id, pos: loc };
-      const add = loc.x + loc.y;
       if (props.refs) {
         const newSize = [...props.refs];
         if (newSize.length > 0) {
@@ -73,16 +73,18 @@ const Schedule = props => {
       // props.getSize(el.getBoundingClientRect());
     }
   };
+  const confirmed = apps.filter(a => {
+    if (a.confirmed === true) {
+      return a.id;
+    }
+  });
+  console.log(confirmed.length);
 
   const modifiedEnd = dateFns.format(end, 'HH:mm A');
   return (
     <div id={id} className="schedCont">
       {props.contractorId === props.contID ? (
         <>
-          {/* <div className="delete" onClick={deleteSched}> */}
-          {/*   {' '} */}
-          {/*   X{' '} */}
-          {/* </div> */}
           <Link
             className={
               dateFns.isSameDay(props.temp, props.selectedDay)
@@ -92,7 +94,16 @@ const Schedule = props => {
             to={`/contractorCalendar/sched/${id}`}
             onClick={setEditData}
           >
-            <p className="timeSlot" data-id={id}>
+            <p
+              className={`timeSlot ${
+                confirmed.length > 0
+                  ? 'confirmedDot'
+                  : confirmed.length === 0 && apps.length > 0
+                  ? 'pendingDot'
+                  : 'openDot'
+              }`}
+              data-id={id}
+            >
               {modifiedStart} - {modifiedEnd}{' '}
             </p>
           </Link>
@@ -107,6 +118,7 @@ const Schedule = props => {
                   contID={props.contID}
                   setServIdUp={props.setServIdUp}
                   setPosition={props.setPosition}
+                  confirmed={a.confirmed}
                 />
               </div>
             );

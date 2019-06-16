@@ -45,7 +45,6 @@ function ContCalendar(props) {
     if (el) {
       const loc = el.getBoundingClientRect();
       const ref = { id: el.id, pos: loc };
-      const add = loc.x + loc.y;
       if (props.refs) {
         const newSize = [...props.refs];
         if (newSize.length > 0) {
@@ -193,7 +192,7 @@ function ContCalendar(props) {
               />
             ) : null}
           </div>
-          {(daySched.length > 0 && dayApp.length > 0) || daySched > 1 ? (
+          {daySched.length > 1 || (daySched.length > 0 && dayApp.length > 0) ? (
             <>
               <div
                 className={`downCont ${

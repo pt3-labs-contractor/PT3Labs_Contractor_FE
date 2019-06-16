@@ -1,6 +1,6 @@
 .cal {
-  width: 60%;
-  max-width: 750px;
+  width: 65%;
+  max-width: 800px;
   margin: 0 auto;
   /* margin: 0 20px; */
   /* max-height: 70vh; */
@@ -78,9 +78,14 @@
 }
 
 .timeSlot {
+  text-align: center;
   font-size: 0.7rem;
   margin-top: 0px;
   margin-bottom: 5px;
+  padding: 2px;
+  border-radius: 5px;
+  color: black;
+  width: 100%;
 }
 
 .cel {
@@ -98,7 +103,10 @@
 }
 
 .scheduleCont {
+  display: flex;
+  flex-wrap: wrap;
   width: 100%;
+  height: 0px;
 }
 
 .editLink {
@@ -126,10 +134,6 @@
 
 .add:hover {
   cursor: pointer;
-}
-
-.appCont:last-child {
-  margin-bottom: 30px;
 }
 
 .appSlot {
@@ -163,10 +167,6 @@
   border: 1px solid black;
 }
 
-.boxCont {
-  width: 150px;
-}
-
 .downCont {
   margin: 0 auto;
   display: flex;
@@ -174,11 +174,10 @@
   align-items: center;
   padding-right: 3px;
   position: relative;
-  top: -25%;
+  top: -21%;
   height: 17px;
-  width: 98%;
-  background-color: #8c20f8;
-  border-radius: 5px;
+  width: 100%;
+  background-color: none;
   cursor: pointer;
 }
 
@@ -198,4 +197,81 @@
 
 .arrowHidden {
   display: none;
+}
+
+/* .react-datetime-picker__inputGroup__month, */
+/* .react-datetime-picker__inputGroup__day, */
+/* .react-datetime-picker__inputGroup__year { */
+/*   pointer-events: none; */
+/* } */
+
+.react-calendar {
+  width: 200px;
+}
+
+.react-calendar__navigation {
+  justify-content: center;
+}
+
+.react-datetime-picker__clock {
+  display: none;
+}
+
+.confirmedDot {
+  font-size: 0.7rem;
+  display: list-item;
+  background-color: #febd17;
+}
+
+.pendingDot {
+  font-size: 0.7rem;
+  background-color: #8c20f8;
+  color: white;
+}
+
+.openDot {
+  display: list-item;
+  font-size: 0.7rem;
+  background-color: white;
+  border: 1px solid black;
+  color: black;
+}
+
+.confirmedSlot {
+  display: flex;
+  justify-content: flex-end;
+  list-style: none;
+  margin-left: 5px;
+  height: 0px;
+}
+
+.confirmedSlot::before {
+  display: inline-block;
+  content: '\2022';
+  color: #febd17;
+  font-weight: bold;
+  font-size: 1rem;
+  height: 0px;
+  margin-left: -1px;
+  margin-right: 2px;
+  margin-top: -5px;
+}
+
+.pendingSlot {
+  display: flex;
+  justify-content: flex-end;
+  list-style: none;
+  margin-left: 5px;
+}
+
+.pendingSlot::before {
+  display: inline-block;
+  content: '\2022';
+  color: #8c20f8;
+  font-weight: bold;
+  font-size: 1rem;
+  height: 0px;
+  margin-left: -1px;
+  margin-right: 2px;
+  margin-top: -5px;
 }

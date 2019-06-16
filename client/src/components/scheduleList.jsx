@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import Schedule from './schedule.jsx';
 import { setRefs } from '../actions/index.js';
@@ -8,7 +8,6 @@ const ScheduleList = props => {
     if (el) {
       const loc = el.getBoundingClientRect();
       const ref = { id: el.firstChild, pos: loc };
-      const add = loc.x + loc.y;
       if (props.refs) {
         const newSize = [...props.refs];
         if (newSize.length > 0) {

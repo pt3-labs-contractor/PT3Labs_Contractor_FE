@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import dateFns from 'date-fns';
 
-import AvailabilityList from '../appointments/AvailabilityList';
+// import AvailabilityList from '../appointments/AvailabilityList';
 
 import { setDay, setMonth, fetchAvailabilityByDay } from '../../actions/index';
 

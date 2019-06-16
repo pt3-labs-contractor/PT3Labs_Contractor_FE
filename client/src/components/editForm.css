@@ -1,19 +1,58 @@
 .schedulerCont {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   height: 150px;
   width: 300px;
+  box-shadow: 0 3px 20px #555555;
+  border-radius: 5px;
+}
+
+.closeIcon {
+  width: 100%;
+  text-align: right;
+  margin-top: 5px;
+  margin-right: 5px;
+  height: min-content;
+  cursor: pointer;
 }
 
 .react-datetime-picker {
-  font-size: 0.5rem;
-  height: 25px;
+  display: flex;
+  height: min-content;
+  font-size: 0.7rem;
+  margin: 0px;
+  padding: 0px;
+  justify-content: center;
 }
 .react-datetime-picker__wrapper {
-  height: 25px;
+  width: 95%;
+  margin-top: 0px;
+  padding-top: 0px;
+}
+
+.react-datetime-picker__input {
+  width: 55%;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .react-datetime-picker__inputGroup__input {
   height: 25px;
   margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.react-datetime-picker__calendar-button {
+  height: 10px;
+}
+
+.save {
+  font-size: 0.7rem;
+  background-color: #febd17;
+  height: 20px;
+  border: none;
+  border-radius: 5px;
+  padding-left: 15px;
+  padding-right: 15px;
 }

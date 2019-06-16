@@ -1,4 +1,4 @@
-.boxCont {
+.infoContApp {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
@@ -8,7 +8,7 @@
   border-radius: 5px;
   font-size: 0.8rem;
 }
-.closeIconEdit {
+.closeIconEditApp {
   width: 100%;
   text-align: right;
   margin-top: 5px;
@@ -21,36 +21,12 @@
   width: min-content;
 }
 
-.infoList {
-  width: 95%;
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.start {
-  width: 100%;
-}
-
-.end {
-  width: 100%;
-}
-
-.duration {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.hours {
+.cont {
   width: 100%;
   padding-left: 15px;
 }
 
-.min {
-  width: 100%;
-  padding-left: 15px;
-}
-
-.actions {
+.buttons {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -61,51 +37,36 @@
   margin-right: 15px;
 }
 
-.delete {
+.deny {
   text-align: center;
   font-size: 0.8rem;
   border: none;
   border-left: 1px solid #e4e4e4;
   width: 50%;
   background-color: white;
-  height: 60%;
+  height: 80%;
+  padding: 10px;
+  cursor: pointer;
 }
 
-.delete:hover {
-  color: #8c20f8;
+.deny:hover {
+  background-color: red;
+  color: white;
+  border-radius: 5px;
 }
 
-.edit {
-  padding-top: 4px;
-  margin-left: 0px;
-  margin-right: 0px;
+.confirm {
   text-align: center;
-  text-decoration: none;
-  color: black;
   font-size: 0.8rem;
+  border: none;
   width: 50%;
-  height: 60%;
+  background-color: white;
+  height: 80%;
+  cursor: pointer;
 }
 
-.pending {
-  display: flex;
-  align-items: center;
-}
-
-.fa-check {
-  width: 10%;
-  margin: 0px;
-  padding: 0px;
-  padding-left: 7px;
-  color: green;
-  font-size: 1.5rem;
-}
-
-.fa-ban {
-  width: 10%;
-  margin: 0px;
-  padding: 0px;
-  padding-left: 7px;
-  color: red;
-  font-size: 1.5rem;
+.confirm:hover {
+  background-color: green;
+  color: white;
+  border-radius: 5px;
 }

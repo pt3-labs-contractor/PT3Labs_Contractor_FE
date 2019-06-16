@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import DateTimePicker from 'react-datetime-picker';
 import dateFns from 'date-fns';
+import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { postNewSchedule, updateSchedule } from '../actions/index.js';
 import './editForm.css';
 
@@ -11,7 +13,7 @@ const EScheduler = props => {
   const [end, setEnd] = useState(props.end);
   const { id } = props;
 
-  const centerPop = 75;
+  const centerPop = 100;
   const centerBox = w / 2;
   const xper = x - centerPop + centerBox;
   const yper = y - 150;
@@ -48,28 +50,40 @@ const EScheduler = props => {
     const duration = `${minutes / 60}h`;
     const { contractorId } = props.user;
     const newSchedule = {
-      contractorId,
-      startTime: start,
+      startTime: new Date(start),
       duration,
+      open: true,
     };
+    console.log(newSchedule);
     props.updateSchedule(id, newSchedule);
     props.history.push('/contractorCalendar');
   };
   return (
     <div className="schedulerCont" style={position}>
-      <div className="close" onClick={closeEdit}>
-        Close
+      <div className="closeIcon">
+        <FontAwesomeIcon icon={faTimesCircle} onClick={closeEdit} />
       </div>
-      <DateTimePicker className="start" value={start} onChange={schange} />
-      <DateTimePicker className="end" value={end} onChange={echange} />
-      <button className="submit" onClick={submit}>
-        Submit
+      <DateTimePicker
+        className="start"
+        value={start}
+        clearIcon={null}
+        onChange={schange}
+      />
+      <DateTimePicker
+        className="end"
+        value={end}
+        clearIcon={null}
+        onChange={echange}
+      />
+      <button className="save" onClick={submit}>
+        Save
       </button>
     </div>
   );
 };
 
 const mstp = state => {
+  console.log(state.schedule);
   return {
     user: state.user,
   };

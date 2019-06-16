@@ -14,6 +14,8 @@ export const UP_SCHED_COMP = 'UP_SCHED_COMP';
 export const GET_APP = 'GET_APP';
 export const CONFIRMING_APP = 'CONFIRMING_APP';
 export const CONFIRMED_APP = 'CONFIRMED_APP';
+export const GETTING_USER_SUCC = 'GETTING_USER_SUCC';
+export const GETTING_USER = 'GETTING_USER';
 export const REFS = 'REFS';
 
 // exports for fetching all users
@@ -346,6 +348,7 @@ export const deleteSchedule = id => {
 export const updateSchedule = (id, obj) => {
   const bearer = `Bearer ${localStorage.getItem('jwt')}`;
   const headers = { authorization: bearer };
+  console.log(id, obj);
   return dispatch => {
     dispatch({ type: UP_SCHED });
     axios
@@ -361,7 +364,7 @@ export const updateSchedule = (id, obj) => {
         console.log(res.data);
       })
       .catch(err => {
-        console.log(err);
+        console.log(err.response);
       });
   };
 };
@@ -380,6 +383,24 @@ export const confirmApp = (id, obj) => {
       .then(res => {
         dispatch({ type: CONFIRMED_APP, payload: res.data });
         console.log(res.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+};
+
+export const getUser = id => {
+  const bearer = `Bearer ${localStorage.getItem('jwt')}`;
+  const headers = { authorization: bearer };
+  return dispatch => {
+    dispatch({ type: GETTING_USER });
+    axios
+      .get(` https://fierce-plains-47590.herokuapp.com/api/users/${id}`, {
+        headers,
+      })
+      .then(res => {
+        dispatch({ type: GETTING_USER_SUCC, payload: res.data });
       })
       .catch(err => {
         console.log(err);
