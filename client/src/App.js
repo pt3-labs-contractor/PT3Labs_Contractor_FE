@@ -12,6 +12,8 @@ import Login from './components/login/Login';
 import Redirect from './components/login/Redirect';
 import Register from './components/register/Register';
 import Calendar from './components/calendar/Calendar';
+import ContCalendar from './components/calendar/Cal.js';
+import MainNavbar from './components/navbar/MainNavbar';
 import UserLandingPage from './components/landingpage/UserLandingPage';
 import NavBarUser from './components/navbar/NavBarUser';
 import NavBarContractor from './components/navbar/NavBarContractor';
@@ -51,7 +53,11 @@ function App(props) {
         />
         <Route
           path="/calendar"
-          render={props => <Calendar contractor={{}} />}
+          render={props => <Calendar {...props} contractor={{}} />}
+        />
+        <Route
+          path="/contractorCalendar"
+          render={props => <ContCalendar {...props} contractor={{}} />}
         />
         <Route path="/settings" component={Settings} />
         <Route path="/usersettings" component={UserSettings} />

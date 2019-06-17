@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import dateFns from 'date-fns';
 
+// import AvailabilityList from '../appointments/AvailabilityList';
+
 import { setDay, setMonth, fetchAvailabilityByDay } from '../../actions/index';
 
 import './Calendar.css';
@@ -102,9 +104,13 @@ function Calendar(props) {
 }
 
 const mapStateToProps = state => {
+  console.log(state);
   return {
     selectedDay: state.thisDay,
     selectedMonth: state.thisMonth,
+    schedules: state.schedule,
+    id: state.user.contractorId,
+    // contractor: state.thisContractor
   };
 };
 

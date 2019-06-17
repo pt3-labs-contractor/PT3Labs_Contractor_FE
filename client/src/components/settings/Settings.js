@@ -11,6 +11,7 @@ import { editUserSettings } from '../../actions/index';
 import TopNavbar from '../navbar/TopNavbar';
 
 function ContractorSetting(props) {
+  console.log(props);
   const [username, setUsername] = useState(props.User.username);
   const [phoneNumber, setPhoneNumber] = useState(props.User.phoneNumber);
   const [email, setEmail] = useState(props.User.email);

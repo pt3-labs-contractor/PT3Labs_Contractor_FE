@@ -1,4 +1,19 @@
 import {
+  SEND_SERV,
+  SEND_SERV_COMP,
+  SEND_SCHED,
+  SEND_SCHED_COMP,
+  GET_SCHED,
+  DEL_SCHED,
+  DEL_SCHED_COMP,
+  UP_SCHED,
+  UP_SCHED_COMP,
+  GET_APP,
+  CONFIRMING_APP,
+  CONFIRMED_APP,
+  GETTING_USER,
+  GETTING_USER_SUCC,
+  REFS,
   // fetching users
   LOADING,
   FETCHING_USERS_SUCCESS,
@@ -63,12 +78,14 @@ export default (state = initialState, action) => {
         error: null,
       };
     case FETCHING_USERS_SUCCESS:
+      console.log(action.payload.services);
       return {
         ...state,
         user: action.payload.user,
         contractors: action.payload.contractors,
         sortedContractors: action.payload.contractors,
         appointments: action.payload.appointments,
+        services: action.payload.services,
         loading: false,
         error: null,
       };
@@ -141,6 +158,66 @@ export default (state = initialState, action) => {
     // fetching current contractor appointments
     // case RET_CONTRACTOR_APP_SUCC:
     //   return {...state, accounts:{appointments: action.payload }}
+    // case CONTRACTOR_APP_FAIL:
+    //   return {...state, loading: false, error: action.error}
+    case SEND_SERV:
+      return {
+        ...state,
+        loading: true,
+      };
+    case SEND_SERV_COMP:
+      return { ...state, loading: false };
+    case SEND_SCHED:
+      return { ...state, loading: true };
+    case SEND_SCHED_COMP:
+      const newSchedual = [...state.schedule];
+      return {
+        ...state,
+        loading: false,
+        schedule: [...newSchedual, action.payload],
+      };
+    case GET_SCHED:
+      return { ...state, loading: true };
+    // case SET_SCHEDULE:
+    //   return { ...state, schedule: [action.payload] };
+    case DEL_SCHED:
+      return { ...state, loading: true };
+    case DEL_SCHED_COMP:
+      const newState = state.schedule.filter(sch => {
+        return sch.id !== action.payload;
+      });
+      return { ...state, loading: false, schedule: newState };
+    case UP_SCHED:
+      return { ...state, loading: true };
+    case UP_SCHED_COMP:
+      const updatedSched = state.schedule.filter(s => {
+        return s.id !== action.payload.id;
+      });
+      return {
+        ...state,
+        loading: false,
+        schedule: [...updatedSched, action.payload],
+      };
+    case CONFIRMING_APP:
+      return { ...state, loading: true, error: null };
+    case CONFIRMED_APP:
+      const newAppState = state.appointments.filter(a => {
+        return a.id !== action.payload.updated.id;
+      });
+      return {
+        ...state,
+        appointments: [...newAppState, action.payload.updated],
+        loading: false,
+      };
+    case GETTING_USER:
+      return { ...state, loading: true };
+    case GETTING_USER_SUCC:
+      return { ...state, queryUser: [action.payload.user] };
+    case REFS:
+      return {
+        ...state,
+        refs: action.payload,
+      };
 
     // fetching appointments for a contractor
     case RET_CONTRACTOR_APP_SUCC:
