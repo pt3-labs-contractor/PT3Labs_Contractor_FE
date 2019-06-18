@@ -1,10 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { fetchAccts } from '../../actions/index';
+import { fetchAccts, logoutUser } from '../../actions/index';
 import './TopNavbar.css';
 import { Link } from 'react-router-dom';
 
 function TopNavbar(props) {
+  const logout = () => {
+    localStorage.removeItem('jwt');
+    props.logoutUser();
+  };
+
+  const stringify = JSON.stringify(props.user);
+  useEffect(() => {
+    props.fetchAccts();
+  }, [stringify]);
   return (
     <div className="topnav">
       <nav className="topnav-style">
@@ -23,10 +32,6 @@ function TopNavbar(props) {
   );
 }
 
-const logout = () => {
-  localStorage.removeItem('jwt');
-};
-
 const mapStateToProps = state => {
   return {
     user: state.user,
@@ -35,5 +40,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { fetchAccts }
+  { fetchAccts, logoutUser }
 )(TopNavbar);

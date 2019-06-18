@@ -33,7 +33,7 @@
 }
 
 .cel {
-  height: 6vh;
+  height: 7vh;
   overflow: hidden;
 }
 
@@ -175,7 +175,7 @@
   align-items: center;
   padding-right: 3px;
   position: relative;
-  top: -21%;
+  top: -20%;
   height: 17px;
   width: 100%;
   background-color: none;
