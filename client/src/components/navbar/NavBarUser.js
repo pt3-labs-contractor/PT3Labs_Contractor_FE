@@ -34,7 +34,7 @@ function NavBarUser() {
         <i className="fas fa-user-cog" />
         <span className="side-listing"> Settings</span>
       </NavLink>
-      <NavLink to="/contractorschedule">Contractors</NavLink>
+      {/* <NavLink to="/contractorschedule">Contractors</NavLink> */}
     </div>
   );
 }

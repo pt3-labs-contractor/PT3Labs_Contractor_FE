@@ -84,7 +84,7 @@ AppointmentForm.defaultProps = {
   service: {
     id: null,
     contractorId: null,
-    name: 'Pick something motherlover',
+    name: 'Pick a service',
     price: '$--',
     createdAt: null,
   },

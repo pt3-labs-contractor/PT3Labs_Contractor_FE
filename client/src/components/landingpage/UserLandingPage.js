@@ -1,12 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-// import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Calendar from '../calendar/Calendar';
 import AppointmentList from '../appointments/AppointmentList';
 import ContractorList from '../contractors/ContractorList';
 import AvailabilityList from '../appointments/AvailabilityList';
 import AppointmentForm from '../appointments/AppointmentForm';
-// import ContractorCard from '../contractors/ContractorCard';
 import './UserLandingPage.css';
 
 import dateFns from 'date-fns';
@@ -23,8 +21,20 @@ function UserLandingPage(props) {
   const [time, setTime] = useState({});
   const [service, setService] = useState({});
   const [serviceSort, setServiceSort] = useState('Pick a service');
-  const calendar = useRef(null);
-  const mql = window.matchMedia('(max-width: 600px)');
+  const [currentTarget, setTarget] = useState(0);
+  const serviceTarget = useRef(null);
+  const calendarTarget = useRef(null);
+  const contractorTarget = useRef(null);
+  const availabilityTarget = useRef(null);
+  const appointmentTarget = useRef(null);
+  const targets = [
+    serviceTarget,
+    calendarTarget,
+    contractorTarget,
+    availabilityTarget,
+    appointmentTarget,
+  ];
+  const mql = window.matchMedia('(max-width: 600px)').matches;
   const serviceList = [
     'Electrical',
     'Plumbing',
@@ -44,7 +54,7 @@ function UserLandingPage(props) {
 
   useEffect(() => {
     if (serviceSort !== 'Pick a service' && mql) {
-      scroll(document.getElementsByClassName('contractor-list')[0]);
+      scroll(contractorTarget.current);
     }
   }, [props.selectedDay]);
 
@@ -59,12 +69,12 @@ function UserLandingPage(props) {
       return service.name === serviceSort;
     });
     setService(filter[0]);
-    mql && scroll(document.getElementsByClassName('availability-list')[0]);
+    mql && scroll(availabilityTarget.current);
   };
 
   const selectTime = item => {
     setTime(item);
-    mql && scroll(document.getElementsByClassName('appointment-list')[0]);
+    mql && scroll(appointmentTarget.current);
   };
 
   const scroll = element => {
@@ -73,6 +83,13 @@ function UserLandingPage(props) {
       top: y,
       behavior: 'smooth',
     });
+    setTarget(currentTarget + 1);
+  };
+
+  const scrollBack = () => {
+    console.log(targets[1].current);
+    scroll(targets[currentTarget - 1].current);
+    setTarget(currentTarget - 1);
   };
 
   const handleSort = event => {
@@ -80,7 +97,7 @@ function UserLandingPage(props) {
     setServiceSort(event.target.value);
     props.storeServiceName(event.target.value);
     clearAppointment();
-    mql && scroll(calendar.current);
+    mql && scroll(calendarTarget.current);
   };
 
   const clearAppointment = () => {
@@ -91,8 +108,8 @@ function UserLandingPage(props) {
 
   return (
     <div className="user container">
-      {mql.matches ? (
-        <div className="service-list">
+      {mql ? (
+        <div ref={serviceTarget} className="service-list">
           <h2>Pick a service</h2>
           {serviceList.map(service => (
             <button value={service.toLowerCase()} onClick={handleSort}>
@@ -112,31 +129,35 @@ function UserLandingPage(props) {
           </select>
         </form>
       )}
-      <div ref={calendar} className="user-calendar">
-        <Calendar user />
-        <ContractorList userLanding selectContractor={selectContractor} />
-        {/* {contractor.id && (
-          <AvailabilityList
-            setAppointment={selectTime}
-            // selectedDay={props.selectedDay}
-          />
-        )} */}
-        <AvailabilityList
-          setAppointment={selectTime}
-          // selectedDay={props.selectedDay}
-        />
-        {contractor.id && time.id && (
-          <AppointmentForm
-            user
-            contractor={contractor.id}
-            clearAppointment={clearAppointment}
-            appointment={time}
-            service={service}
-          />
-        )}
+      <div className="user-calendar">
+        <div className="calendar-target" ref={calendarTarget}>
+          <Calendar user />
+        </div>
+        <div className="contractor-target" ref={contractorTarget}>
+          <ContractorList userLanding selectContractor={selectContractor} />
+        </div>
+        <div ref={availabilityTarget}>
+          <AvailabilityList setAppointment={selectTime} />
+        </div>
+        <div ref={appointmentTarget}>
+          {contractor.id && time.id && (
+            <AppointmentForm
+              user
+              contractor={contractor.id}
+              clearAppointment={clearAppointment}
+              appointment={time}
+              service={service}
+            />
+          )}
+        </div>
       </div>
 
       <AppointmentList />
+      {mql && currentTarget > 0 ? (
+        <div onClick={scrollBack} id="back-button">
+          Back
+        </div>
+      ) : null}
     </div>
   );
 }
