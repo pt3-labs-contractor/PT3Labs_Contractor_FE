@@ -27,6 +27,9 @@ import {
   // fetching single contractor feedback
   // FETCH_CONTRACTOR_FEEDBACK_SUCCESS,
 
+  //POST feedback by user
+  POST_FEEDBACK_SUCCESS,
+
   // fetching current contractor appointments
   RET_CONTRACTOR_APP_SUCC,
 
@@ -134,6 +137,9 @@ export default (state = initialState, action) => {
     case FEEDBACK_SUCCESS:
       return { ...state, feedback: action.payload.feedback };
 
+    
+    case POST_FEEDBACK_SUCCESS: 
+      return {...state, feedback: action.payload.feedback }
     // fetching feedback on a specfic contractor
     // case FETCH_CONTRACTOR_FEEDBACK_SUCCESS:
     //   return {...state, feedback: action.payload}

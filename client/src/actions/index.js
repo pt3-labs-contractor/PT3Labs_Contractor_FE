@@ -29,6 +29,8 @@ export const FEEDBACK_SUCCESS = 'FEEDBACK_SUCCESS';
 export const FETCH_CONTRACTOR_FEEDBACK_SUCCESS =
   'FETCH_CONTRACTOR_FEEDBACK_SUCCESS';
 
+export const POST_FEEDBACK_SUCCESS = 'POST_FEEDBACK_SUCCESS';
+
 // exports for retrieving current contractor user appointments
 export const RET_CONTRACTOR_APP_SUCC = 'RET_CONTRACTOR_APP_SUCC';
 
@@ -195,7 +197,7 @@ export const getFeedback = () => dispatch => {
 
     .then(res => {
       dispatch({ type: FEEDBACK_SUCCESS, payload: res.data });
-      console.log(res);
+      // console.log(res);
     })
     .catch(err => dispatch({ type: FAILURE, payload: err }));
 };
@@ -213,30 +215,32 @@ export const getFeedback = () => dispatch => {
 //     .catch(err => dispatch({ type: FAILURE, payload: err }));
 // };
 
+// axios post feedback about a contractor
+export const postFeedback = (data) => dispatch => {
+  const headers = setHeaders();
+  // console.log(data)
+  axios.post(`https://fierce-plains-47590.herokuapp.com/api/feedback/${data.id}`, data, {headers})
+  .then(res => {
+    // console.log(res)
+    dispatch({ type: POST_FEEDBACK_SUCCESS, payload: res.data});
+  })
+  .catch(err => dispatch({type: FAILURE, payload: err}))
+}
+
 // axios put request to update users settings
 export const editUserSettings = data => dispatch => {
   dispatch({ type: LOADING });
   const headers = setHeaders();
 
   axios
-    .put('https://fierce-plains-47590.herokuapp.com/api/users', data, {
-      headers,
-    })
+    .put('https://fierce-plains-47590.herokuapp.com/api/users', data, {headers})
     .then(res => {
       dispatch({ type: EDIT_USER_SUCCESS, payload: res.data });
     })
     .catch(err => dispatch({ type: FAILURE, payload: err }));
 };
 
-// axios post feedback about a contractor
-// export const postFeedback = event => dispatch => {
-//   const headers = setHeaders();
-//   axios.post(`https://fierce-plains-47590.herokuapp.com/api/feedback/${id}`,headers, event)
-//   .then(res => {
-//     dispatch({ type: POST_FEEDBACK_SUCCESS, payload: res.data});
-//   })
-//   .catch(err => dispatch({type: FAILURE, payload: err}))
-// }
+
 
 // axios get appointments when current user is contractor
 // export const seeMyAppointments = (id) = dispatch => {

@@ -15,7 +15,7 @@ function ContractorSetting(props) {
   const [phoneNumber, setPhoneNumber] = useState(props.User.phoneNumber)
   const [email, setEmail] = useState(props.User.email)
   
-  console.log(props)
+  // console.log(props)
   useEffect(() => {
     setUsername(props.User.username)
     setPhoneNumber(props.User.phoneNumber)
