@@ -262,7 +262,7 @@ function ContCalendar(props) {
         )}
       />
       <DaysOfMonth />
-      {/* <ServiceForm /> */}
+      <ServiceForm />
       <Route
         exact
         path="/contractorCalendar/newSched"

@@ -17,6 +17,7 @@ export const CONFIRMED_APP = 'CONFIRMED_APP';
 export const GETTING_USER_SUCC = 'GETTING_USER_SUCC';
 export const GETTING_USER = 'GETTING_USER';
 export const REFS = 'REFS';
+export const LOGOUTUSER = 'LOGOUTUSER'
 
 // exports for fetching all users
 export const LOADING = 'LOADING';
@@ -420,6 +421,12 @@ export const getUser = id => {
       });
   };
 };
+
+export const logoutUser = () => {
+	return dispatch => {
+		dispatch({type: LOGOUTUSER, payload: ""})
+	}
+}
 
 export const setRefs = rfs => {
   return dispatch => {

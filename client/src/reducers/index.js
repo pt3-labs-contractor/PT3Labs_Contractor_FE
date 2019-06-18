@@ -13,6 +13,7 @@ import {
   CONFIRMED_APP,
   GETTING_USER,
   GETTING_USER_SUCC,
+  LOGOUTUSER,
   REFS,
   // fetching users
   LOADING,
@@ -226,6 +227,9 @@ export default (state = initialState, action) => {
     // edit user settigns
     case EDIT_USER_SUCCESS:
       return { ...state, user: action.payload };
+
+    case LOGOUTUSER:
+      return { ...state, user: { ...state.user, username: action.payload } };
 
     default:
       return state;
