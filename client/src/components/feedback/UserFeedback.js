@@ -72,6 +72,7 @@ function UserFeedback(props) {
               stop={3}
             />
             <input
+              className="customer-service-input"
               placeholder="Details"
               type="text"
               name="overallFeedback"
@@ -88,6 +89,7 @@ function UserFeedback(props) {
               stop={3}
             />
             <input
+              className="customer-service-input"
               placeholder="Details"
               type="text"
               name="consulation"
@@ -104,6 +106,7 @@ function UserFeedback(props) {
               stop={3}
             />
             <input
+              className="customer-service-input"
               placeholder="punctual"
               type="text"
               name="punctual"
@@ -120,6 +123,7 @@ function UserFeedback(props) {
               stop={3}
             />
             <input
+              className="customer-service-input"
               placeholder="Details"
               type="text"
               name="CS"
@@ -128,7 +132,8 @@ function UserFeedback(props) {
             />
           </div>
           <textarea className="form-textarea" placeholder="Leave a comment" />
-          <input type="submit" value="Submit" className="btn btn-primary" />
+          {/* <input type="submit" value="Submit" className="btn btn-primary" /> */}
+          <div className="button-lrg submit-btn">Submit</div>
         </form>
         <div>
           <h4>The Feedbacks You've given</h4>

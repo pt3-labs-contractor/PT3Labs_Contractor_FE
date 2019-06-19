@@ -45,7 +45,32 @@
   opacity: .9;
   color: white;
   border: 1px solid blue;
+  border-radius: 10px;
+  animation: bounce 2.0s infinite;  /*making the form bouncy */
+  box-shadow: 0px 0px 20px 5px #AAA; 
 }
+
+@keyframes bounce{
+  0%{
+    
+  }
+  50%{
+    transform: translate(0, 8px);
+  }
+
+}
+@keyframes shadow{
+  0%{
+    
+  }
+  50%{
+    opacity: 0.8;
+    width: 50%;
+  }
+}
+
+
+
 
 .feedback-container h2 {
   color: var(--primary-color);
@@ -53,12 +78,54 @@
 }
 .form-textarea {
   width: 100%;
-  height: 300px;
+  height: 200px;
 }
+
+.form-textarea:hover{
+  border-radius: 15px;
+  background-color:#2DD7BB;
+  border-bottom: 5px solid #2BB09A;
+  height: 250px;
+  /* width:770px;  */
+}
+
+.customer-service-input:hover{
+  border-radius: 15px;
+  background-color:#2DD7BB;
+  border-bottom: 5px solid #2BB09A;
+}
+
+.button-lrg {
+   
+    padding: 7px 35px;
+    border-radius: 60px;
+    display: inline-block;
+    background-color: #febd17;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px 0;
+    /* border-bottom: 5px solid rgb(194, 55, 236);  */
+    /* border-radius:5px;
+    padding:15px;
+    background-color: #2DD7BB;  
+    border: none;
+    border-bottom: 5px solid #CB64B2; 
+    transform: translateY(-120px); */
+} 
+
+/* .btn btn-primary:hover{
+border-bottom: 5px solid #CB64B2;  
+box-shadow: 15px 15px 15px 5px rgba(135, 15, 214, 0.219);
+} */
+
 
 .icon-text {
   font-size: 2rem;
 }
+
+
+
 @media (max-width:800px) {
   .appointment-heading h4 {
     font-size: 1.5rem;
