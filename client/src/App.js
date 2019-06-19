@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Route } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
@@ -26,12 +26,15 @@ import UserSettings from './components/settings/UserSettings';
 import ContractorSchedule from './components/contractors/ContractorSchedule';
 
 function App(props) {
+  const [win, setWin] = useState();
+  const string = JSON.stringify(win);
   useEffect(() => {
     props.fetchAccts();
     props.getFeedback();
+    setWin({ width: window.innerWidth, height: window.innerHeight });
     // console.log(props)
     // eslint-disable-next-line
-  }, []);
+  }, [string]);
 
   return (
     <div className="App">
@@ -57,7 +60,9 @@ function App(props) {
         />
         <Route
           path="/contractorCalendar"
-          render={props => <ContCalendar {...props} contractor={{}} />}
+          render={props => (
+            <ContCalendar {...props} contractor={{}} win={win} />
+          )}
         />
         <Route path="/settings" component={Settings} />
         <Route path="/usersettings" component={UserSettings} />

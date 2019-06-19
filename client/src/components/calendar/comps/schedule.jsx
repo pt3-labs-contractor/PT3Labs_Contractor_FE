@@ -32,37 +32,43 @@ const Schedule = props => {
 
   const newEnd = new Date(end);
 
-  // const theE = e => {
-  //   const pos = props.refs.find(r => {
-  //     return r.id.id === e.target.dataset.id;
-  // });
-  // console.log(props.setPostion);
-  // props.setPosition(x, y);
-  // };
-
   const setEditData = e => {
     const pos = props.refs.find(r => {
-      return r.id.id === e.target.dataset.id;
+      return r.id === e.target.dataset.id;
     });
     props.setPosition(pos);
     props.getSE(start, newEnd, id);
   };
-
   const refCallback = el => {
     if (el) {
-      // console.log(el);
       const loc = el.getBoundingClientRect();
-      const ref = { id: el.id, pos: loc };
+      const ref = { element: el, id: el.id, pos: loc };
       if (props.refs) {
-        const newSize = [...props.refs];
-        if (newSize.length > 0) {
-          const xs = newSize.map(s => {
-            return s.id;
-          });
-          if (!xs.includes(ref.id)) {
-            const modSize = [...newSize, ref];
-            props.setRefs(modSize);
-            // setSize([...newSize, loc]);
+        const find = props.refs.find(r => {
+          return r.element.id === el.id;
+        });
+        if (find) {
+          const locString = JSON.stringify(loc);
+          const posString = JSON.stringify(find.pos);
+          if (posString !== locString) {
+            const newRef = { ...find, pos: loc };
+            const remove = props.refs.filter(r => {
+              return r.element.id !== el.id;
+            });
+            const finalRefs = [...remove, newRef];
+            props.setRefs(finalRefs);
+          }
+        } else {
+          const newSize = [...props.refs];
+          if (newSize.length > 0) {
+            const xs = newSize.map(s => {
+              return s.id.id;
+            });
+            if (!xs.includes(ref.id)) {
+              const modSize = [...newSize, ref];
+              props.setRefs(modSize);
+              // setSize([...newSize, loc]);
+            }
           }
         }
       } else {
@@ -73,6 +79,32 @@ const Schedule = props => {
       // props.getSize(el.getBoundingClientRect());
     }
   };
+
+  // const refCallback = el => {
+  //   if (el) {
+  //     // console.log(el);
+  //     const loc = el.getBoundingClientRect();
+  //     const ref = { element: el, id: el.id, pos: loc };
+  //     if (props.refs) {
+  //       const newSize = [...props.refs];
+  //       if (newSize.length > 0) {
+  //         const xs = newSize.map(s => {
+  //           return s.id;
+  //         });
+  //         if (!xs.includes(ref.id)) {
+  //           const modSize = [...newSize, ref];
+  //           props.setRefs(modSize);
+  //           // setSize([...newSize, loc]);
+  //         }
+  //       }
+  //     } else {
+  //       // setSize([loc]);
+  //       props.setRefs([ref]);
+  //     }
+  //
+  //     // props.getSize(el.getBoundingClientRect());
+  //   }
+  // };
   const confirmed = apps.filter(a => {
     if (a.confirmed === true) {
       return a.id;

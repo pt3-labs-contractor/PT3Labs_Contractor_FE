@@ -26,6 +26,11 @@ function ContCalendar(props) {
   const [y, setY] = useState();
   const [w, setW] = useState();
   const [h, setH] = useState();
+  const [wHeight, setWHeight] = useState();
+  const [wWidth, setWWidth] = useState();
+  const [xper, setXper] = useState([]);
+  const [yper, setYper] = useState([]);
+  const starting = { height: window.screen.height, width: window.screen.width };
   const [targetCell, setTargetCell] = useState({ hidden: true, id: null });
   const [sevAppId, setSevAppId] = useState();
   const [appId, setAppId] = useState();
@@ -34,27 +39,60 @@ function ContCalendar(props) {
   const [start, setStart] = useState();
   const [end, setEnd] = useState();
   const [schedId, setSchedId] = useState();
+  const isClinet = typeof window === 'object';
   const stringify = JSON.stringify(props.schedules);
+  const { refs } = props;
+  const ref = React.createRef();
+  const [render, setRender] = useState();
   useEffect(() => {
+    console.log('ran');
     setId(props.id);
     props.getSchedules(props.id);
     startEndId(start, end, schedId);
-  }, [stringify, props.id, start, props.selectedDay]);
+    window.addEventListener('resize', windowResize);
+    return () => {
+      window.removeEventListener('resize', windowResize);
+    };
+  }, [stringify, props.id, start, props.selectedDay, window.innerWidth]);
+
+  const windowResize = () => {
+    if (
+      window.innerWidth !== props.win.width ||
+      window.innerHeight !== props.win.height
+    ) {
+      return true;
+    }
+  };
 
   const refCallback = el => {
     if (el) {
       const loc = el.getBoundingClientRect();
-      const ref = { id: el.id, pos: loc };
+      const ref = { element: el, id: el.id, pos: loc };
       if (props.refs) {
-        const newSize = [...props.refs];
-        if (newSize.length > 0) {
-          const xs = newSize.map(s => {
-            return s.id;
-          });
-          if (!xs.includes(ref.id)) {
-            const modSize = [...newSize, ref];
-            props.setRefs(modSize);
-            // setSize([...newSize, loc]);
+        const find = props.refs.find(r => {
+          return r.element.id === el.id;
+        });
+        if (find) {
+          const locString = JSON.stringify(loc);
+          const posString = JSON.stringify(find.pos);
+          if (posString !== locString) {
+            const newRef = { ...find, pos: loc };
+            const remove = props.refs.filter(r => {
+              return r.element.id !== el.id;
+            });
+            const finalRefs = [...remove, newRef];
+            props.setRefs(finalRefs);
+          }
+        } else {
+          const newSize = [...props.refs];
+          if (newSize.length > 0) {
+            const xs = newSize.map(s => {
+              return s.id;
+            });
+            if (!xs.includes(ref.id)) {
+              const modSize = [...newSize, ref];
+              props.setRefs(modSize);
+            }
           }
         }
       } else {
@@ -151,6 +189,7 @@ function ContCalendar(props) {
           key={temp}
           id={id}
           ref={refCallback}
+          data-ref={render}
           className={`spacer ${
             isSameDay
               ? ' selected day'
@@ -181,6 +220,7 @@ function ContCalendar(props) {
             {daySched.length > 0 ? (
               <SchduleList
                 {...props}
+                render={render}
                 temp={temp}
                 getSE={startEndId}
                 schs={daySched}
