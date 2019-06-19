@@ -219,13 +219,15 @@ export const getFeedback = () => dispatch => {
 export const postFeedback = (data) => dispatch => {
   const headers = setHeaders();
   // console.log(data)
-  axios.post(`https://fierce-plains-47590.herokuapp.com/api/feedback/${data.id}`, data, {headers})
+  axios.post(`https://fierce-plains-47590.herokuapp.com/api/feedback/${data.contractorId}`, data, {headers})
   .then(res => {
     // console.log(res)
     dispatch({ type: POST_FEEDBACK_SUCCESS, payload: res.data});
   })
   .catch(err => dispatch({type: FAILURE, payload: err}))
 }
+
+
 
 // axios put request to update users settings
 export const editUserSettings = data => dispatch => {

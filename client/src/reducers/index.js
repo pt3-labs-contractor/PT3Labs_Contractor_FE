@@ -139,10 +139,7 @@ export default (state = initialState, action) => {
 
     
     case POST_FEEDBACK_SUCCESS: 
-      return {...state, feedback: action.payload.feedback }
-    // fetching feedback on a specfic contractor
-    // case FETCH_CONTRACTOR_FEEDBACK_SUCCESS:
-    //   return {...state, feedback: action.payload}
+      return {...state, feedback: [...state.feedback, action.payload.feedback] }
 
     // fetching current contractor appointments
     // case RET_CONTRACTOR_APP_SUCC:
