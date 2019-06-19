@@ -2,6 +2,23 @@ import axios from 'axios';
 import dateFns from 'date-fns';
 import store from '../index';
 
+export const SEND_SERV = 'SEND_SERV';
+export const SEND_SERV_COMP = 'SEND_SERV_COMP';
+export const SEND_SCHED = 'SEND_SCHED';
+export const SEND_SCHED_COMP = 'SEND_SCHED_COMP';
+export const GET_SCHED = 'GET_SCHED';
+export const DEL_SCHED = 'DEL_SCHED';
+export const DEL_SCHED_COMP = 'DEL_SCHED_COMP';
+export const UP_SCHED = 'UP_SCHED';
+export const UP_SCHED_COMP = 'UP_SCHED_COMP';
+export const GET_APP = 'GET_APP';
+export const CONFIRMING_APP = 'CONFIRMING_APP';
+export const CONFIRMED_APP = 'CONFIRMED_APP';
+export const GETTING_USER_SUCC = 'GETTING_USER_SUCC';
+export const GETTING_USER = 'GETTING_USER';
+export const REFS = 'REFS';
+export const LOGOUTUSER = 'LOGOUTUSER'
+
 // exports for fetching all users
 export const LOADING = 'LOADING';
 export const FETCHING_USERS_SUCCESS = 'SUCCESS';
@@ -62,19 +79,29 @@ export const fetchAccts = () => dispatch => {
     .then(
       axios.spread((userRes, contRes, apmtRes) => {
         let { user } = userRes.data;
+        const services = [];
         if (user.contractorId) {
-          axios
-            .get(
+          Promise.all([
+            axios.get(
               `https://fierce-plains-47590.herokuapp.com/api/contractors/${
                 user.contractorId
               }`,
               { headers }
-            )
-            .then(res => {
-              user = Object.assign(user, res.data.contractor[0]);
+            ),
+            axios.get(
+              `https://fierce-plains-47590.herokuapp.com/api/services/contractor/${
+                user.contractorId
+              }`,
+              { headers }
+            ),
+          ]).then(([resOne, resTwo]) => {
+            user = Object.assign(user, resOne.data.contractor);
+            const serv = resTwo.data.services;
+            serv.forEach(s => {
+              services.push(s);
             });
+          });
         }
-
         const { appointments } = apmtRes.data;
         appointments.sort((a, b) => {
           return new Date(a.startTime) - new Date(b.startTime);
@@ -85,6 +112,7 @@ export const fetchAccts = () => dispatch => {
             user,
             contractors: contRes.data.contractors,
             appointments,
+            services,
           },
         });
       })
@@ -255,6 +283,162 @@ export const editUserSettings = data => dispatch => {
 //   })
 //   .catch(err => dispatch({ type: FAILURE, payload:err }))
 // }
+//
+export const postNewService = serv => {
+  return dispatch => {
+    dispatch({ type: SEND_SERV });
+    const bearer = `Bearer ${localStorage.getItem('jwt')}`;
+    const headers = { authorization: bearer };
+    axios
+      .post('https://fierce-plains-47590.herokuapp.com/api/services', serv, {
+        headers,
+      })
+      .then(res => {
+        console.log(res.data);
+        dispatch({ type: SEND_SERV_COMP });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+};
+
+export const postNewSchedule = sched => {
+  const bearer = `Bearer ${localStorage.getItem('jwt')}`;
+  const headers = { authorization: bearer };
+  return dispatch => {
+    dispatch({ type: SEND_SCHED });
+    axios
+      .post('https://fierce-plains-47590.herokuapp.com/api/schedules', sched, {
+        headers,
+      })
+      .then(res => {
+        console.log(res.data);
+        dispatch({ type: SEND_SCHED_COMP, payload: res.data });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+};
+
+export const getSchedules = id => {
+  const bearer = `Bearer ${localStorage.getItem('jwt')}`;
+  const headers = { authorization: bearer };
+  return dispatch => {
+    dispatch({ type: GET_SCHED });
+    axios
+      .get(
+        `https://fierce-plains-47590.herokuapp.com/api/schedules/contractor/${id}`,
+        {
+          headers,
+        }
+      )
+      .then(res => {
+        const scheds = res.data.schedule;
+        scheds.sort((a, b) => {
+          return new Date(a.startTime) - new Date(b.startTime);
+        });
+        dispatch({ type: SET_SCHEDULE, payload: res.data.schedule });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+};
+
+export const deleteSchedule = id => {
+  const bearer = `Bearer ${localStorage.getItem('jwt')}`;
+  const headers = { authorization: bearer };
+  return dispatch => {
+    dispatch({ type: DEL_SCHED });
+    axios
+      .delete(`https://fierce-plains-47590.herokuapp.com/api/schedules/${id}`, {
+        headers,
+      })
+      .then(res => {
+        dispatch({ type: DEL_SCHED_COMP, payload: id });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+};
+
+export const updateSchedule = (id, obj) => {
+  const bearer = `Bearer ${localStorage.getItem('jwt')}`;
+  const headers = { authorization: bearer };
+  console.log(id, obj);
+  return dispatch => {
+    dispatch({ type: UP_SCHED });
+    axios
+      .put(
+        `https://fierce-plains-47590.herokuapp.com/api/schedules/${id}`,
+        obj,
+        {
+          headers,
+        }
+      )
+      .then(res => {
+        dispatch({ type: UP_SCHED_COMP, payload: res.data });
+        console.log(res.data);
+      })
+      .catch(err => {
+        console.log(err.response);
+      });
+  };
+};
+
+export const confirmApp = (id, obj) => {
+  const bearer = `Bearer ${localStorage.getItem('jwt')}`;
+  const headers = { authorization: bearer };
+  return dispatch => {
+    dispatch({ type: CONFIRMING_APP });
+    axios
+      .put(
+        `https://fierce-plains-47590.herokuapp.com/api/appointments/${id}`,
+        obj,
+        { headers }
+      )
+      .then(res => {
+        dispatch({ type: CONFIRMED_APP, payload: res.data });
+        console.log(res.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+};
+
+export const getUser = id => {
+  const bearer = `Bearer ${localStorage.getItem('jwt')}`;
+  const headers = { authorization: bearer };
+  return dispatch => {
+    dispatch({ type: GETTING_USER });
+    axios
+      .get(` https://fierce-plains-47590.herokuapp.com/api/users/${id}`, {
+        headers,
+      })
+      .then(res => {
+        dispatch({ type: GETTING_USER_SUCC, payload: res.data });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+};
+
+export const logoutUser = () => {
+	return dispatch => {
+		dispatch({type: LOGOUTUSER, payload: ""})
+	}
+}
+
+export const setRefs = rfs => {
+  return dispatch => {
+    dispatch({ type: REFS, payload: rfs });
+  };
+};
 
 export const setDay = day => dispatch => {
   dispatch({ type: SET_DAY, payload: day });

@@ -40,11 +40,15 @@ img {
 }
 
 .btn:hover {
-  opacity: .8;
+  opacity: 0.8;
 }
 
 .main-body {
   margin-left: 210px;
+}
+
+.appointment-form {
+  margin-left: 50%;
 }
 
 @media (max-width: 800px) {

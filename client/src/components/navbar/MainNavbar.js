@@ -12,10 +12,10 @@ function Navbar() {
           </h1>
         </NavLink>
         <ul>
-          <li>
+          <li className="mainnav-link">
             <NavLink to="/register">Register</NavLink>
           </li>
-          <li>
+          <li className="mainnav-link">
             <NavLink to="/login">Login</NavLink>
           </li>
         </ul>

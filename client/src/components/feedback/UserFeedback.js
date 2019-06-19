@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import Rating from 'react-rating';
 import NavBarUser from '../navbar/NavBarUser';
 import './UserFeedback.css';
-import { postFeedback } from '../../actions/index';
+import { getFeedback, postFeedback } from '../../actions/index';
+import TopNavbar from '../navbar/TopNavbar';
 
 function UserFeedback(props) {
   const { id } = props.user
@@ -33,6 +34,7 @@ function UserFeedback(props) {
 
   return (
     <>
+      <TopNavbar />
       <NavBarUser />
       <div className="main-body feedback-body">
         <h2>User giving Feedback Page</h2>
@@ -56,9 +58,9 @@ function UserFeedback(props) {
           </div>
         </div>
 
-        <h2 className="feedback-container">Appointment Info</h2>
+        <h2>Appointment Info</h2>
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="feedback-container">
           <h4>Feedback Form</h4>
           <h4>Which Contractor?</h4>
           <div>
@@ -187,4 +189,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, {postFeedback})(UserFeedback);
+export default connect(mapStateToProps, {getFeedback, postFeedback})(UserFeedback);
