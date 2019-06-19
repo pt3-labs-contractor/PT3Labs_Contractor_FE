@@ -3,26 +3,33 @@ import { connect } from 'react-redux';
 import Rating from 'react-rating';
 import NavBarUser from '../navbar/NavBarUser';
 import './UserFeedback.css';
-import { getFeedback } from '../../actions/index';
+import { getFeedback, postFeedback } from '../../actions/index';
 import TopNavbar from '../navbar/TopNavbar';
 
 function UserFeedback(props) {
-  const [overall, setOverall] = useState('');
-  const [consultation, setConsultation] = useState('');
-  const [punctual, setPunctual] = useState('');
-  const [customerService, setCustormerService] = useState('');
+  const { id } = props.user
+  const currentStar = 0;
+  const [stars, setStars] = useState(currentStar);
+  const [message, setMessage] = useState('')
+  const [contractorId, setContractorId] = useState('');
+  // console.log(props)
 
-  // const { id } = props.match.params;
-  // useEffect(() => {
-  //     props.getUserWrittenFeedback(id)
-  // })
+
+
+  function handleChange(contrID) {
+    // e.preventDefault();
+    setContractorId(contrID)
+    console.log(contrID)
+  }
 
   function handleSubmit(e) {
     e.preventDefault();
-    // useEffect(() => {
-    //   props.postFeedback(event)
-    // })
-    console.log("I'm handling submitting");
+    console.log(contractorId)
+    
+    props.postFeedback({ contractorId, id, stars, message})
+    // console.log({stars, message, contractorId, id})
+
+    // console.log(props)
   }
 
   return (
@@ -57,9 +64,12 @@ function UserFeedback(props) {
           <h4>Feedback Form</h4>
           <h4>Which Contractor?</h4>
           <div>
-            <select>
+            <select value={contractorId} onChange={e => handleChange(e.target.value)}
+            >
               {props.contractor.map(contractor => (
-                <option value={contractor.id}>{contractor.name}</option>
+                <option value={contractor.id} onChange={e => handleChange(e.target.value)}
+                >
+                {contractor.name}</option>
               ))}
             </select>
           </div>
@@ -70,79 +80,99 @@ function UserFeedback(props) {
               emptySymbol={<span className="icon-text">&#9734;</span>}
               fullSymbol={<span className="icon-text">&#9733;</span>}
               stop={3}
+              value={stars}
+              onChange={e => setStars(e)}
             />
-            <input
+            {/* <input
               placeholder="Details"
               type="text"
               name="overallFeedback"
               value={overall}
               onChange={e => setOverall(e.target.value)}
-            />
+            /> */}
           </div>
-
           <div>
-            <h4>Consultation?</h4>
-            <Rating
+
+            {/* 
+              <div>
+              <h4>Consultation?</h4>
+              <Rating
               emptySymbol={<span className="icon-text">&#9734;</span>}
               fullSymbol={<span className="icon-text">&#9733;</span>}
               stop={3}
-            />
-            <input
+              value={consultationStars}
+              />
+              <input
               placeholder="Details"
               type="text"
               name="consulation"
               value={consultation}
               onChange={e => setConsultation(e.target.value)}
-            />
-          </div>
-
-          <div>
-            <h4>Punctual?</h4>
-            <Rating
+              />
+            </div> */}
+            {/* 
+              <div>
+              <h4>Punctual?</h4>
+              <Rating
               emptySymbol={<span className="icon-text">&#9734;</span>}
               fullSymbol={<span className="icon-text">&#9733;</span>}
               stop={3}
-            />
-            <input
+              value={punctualStars}
+              />
+              <input
               placeholder="punctual"
               type="text"
               name="punctual"
               value={punctual}
               onChange={e => setPunctual(e.target.value)}
-            />
-          </div>
+              />
+            </div> */}
 
-          <div>
+          {/* <div>
             <h4>Customer Service?</h4>
             <Rating
-              emptySymbol={<span className="icon-text">&#9734;</span>}
-              fullSymbol={<span className="icon-text">&#9733;</span>}
-              stop={3}
+            emptySymbol={<span className="icon-text">&#9734;</span>}
+            fullSymbol={<span className="icon-text">&#9733;</span>}
+            stop={3}
+            value={customerServiceStars}
             />
             <input
-              placeholder="Details"
-              type="text"
-              name="CS"
-              value={customerService}
-              onChange={e => setCustormerService(e.target.value)}
+            placeholder="Details"
+            type="text"
+            name="CS"
+            value={customerService}
+            onChange={e => setCustormerService(e.target.value)}
             />
-          </div>
-          <textarea className="form-textarea" placeholder="Leave a comment" />
+          </div> */}
+            </div>
+          <textarea 
+            className="form-textarea" 
+            placeholder="Leave a comment"
+            value={message}
+            onChange={e => setMessage(e.target.value)}
+            />
+
           <input type="submit" value="Submit" className="btn btn-primary" />
         </form>
         <div>
           <h4>The Feedbacks You've given</h4>
-          {/* <div>
+          <div>
             {props.loading ? <p>Loading...</p> : null}
             {props.error ? <p>{props.error}</p> : null}
             {props.feedback.map(feedback => (
               <div>
                 <h2>{feedback.contractorName}</h2>
-                <p>{feedback.stars}</p>
+                <Rating
+                  emptySymbol={<span className="icon-text">&#9734;</span>}
+                  fullSymbol={<span className="icon-text">&#9733;</span>}
+                  readonly
+                  placeholderRating={feedback.stars}
+                  stop={3}
+                />
                 <p>{feedback.message}</p>
               </div>
             ))}
-          </div> */}
+          </div>
         </div>
       </div>
     </>
@@ -159,7 +189,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  { getFeedback }
-)(UserFeedback);
+export default connect(mapStateToProps, {getFeedback, postFeedback})(UserFeedback);
