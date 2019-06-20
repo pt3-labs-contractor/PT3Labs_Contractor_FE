@@ -10,65 +10,30 @@ function ContractorFeedback(props) {
     <>
       <TopNavbar />
       <NavBarContractor />
-      <div className="main-body feedback-body">
-        <h2>Contractor OWN Feedback Page</h2>
-        {/* {props.loading ? <p>Loading...</p> : null}
-        {props.error ? <p>{props.error}</p> : null}
-        {props.feedback.map(contractor => (
-          <div>
-            Username: {props.feedback.users.username}
-            Rating:{' '}
-            <Rating
-              emptySymbol={<span className="icon-text">&#9734;</span>}
-              fullSymbol={<span className="icon-text">&#9733;</span>}
-              readonly
-              placeholderRating={props.feedback.stars}
-              stop={3}
-            />
-            Message: {props.feedback.message}
-          </div>
-        ))} */}
-        <form className="contractor-feedback-container">
-          <h2>Feedback Form</h2>
-          <div className="feedback-card">
-            <div className="feedback-header">
+      <div className="main-body">
+        <div className="feedback-body-contractor">
+          <h2 className="main-header-title">Reviews</h2>
+          {props.Feedback.map(feedback => (
+            <div className="contractor-feedback-container">
+              By: {feedback.username}
+              {'\n'}
               <div>
-                <h4>Client: Cindy</h4>
-                <h4>Overall Rating</h4>
+                Rating:{' '}
                 <Rating
                   emptySymbol={<span className="icon-text">&#9734;</span>}
                   fullSymbol={<span className="icon-text">&#9733;</span>}
+                  readonly
+                  placeholderRating={feedback.stars}
                   stop={3}
                 />
-              </div>
-              <div>
-                <i className="fas fa-pencil-alt" />
-                <i className="far fa-trash-alt" />
+                {'\n'}
+                <div className="contractor-feedback-context">
+                  Message: {feedback.message}
+                </div>
               </div>
             </div>
-          </div>
-          <div className="contractor-feedback-context">
-            <p>Client reviews of the contractor:</p>
-          </div>
-          <div>date:</div>
-        </form>
-
-        {props.Feedback.map(feedback => (
-          <div>
-            By: {feedback.username}
-            {'\n'}
-            Rating:{' '}
-            <Rating
-              emptySymbol={<span className="icon-text">&#9734;</span>}
-              fullSymbol={<span className="icon-text">&#9733;</span>}
-              readonly
-              placeholderRating={feedback.stars}
-              stop={3}
-            />
-            {'\n'}
-            Message: {feedback.message}
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </>
   );
