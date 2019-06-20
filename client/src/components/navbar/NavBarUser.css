@@ -1,3 +1,6 @@
+header {
+  position: relative
+}
 .sideNav {
   height: 100%;
   width: 200px;
@@ -35,33 +38,6 @@
   color: #8c20f8;
 }
 
-.menu-hack {
-  display: flex;
-  flex-direction: row;
-  border: 1px solid red;
-}
-/* #mycheckbox {
-  display: none;
-} */
-
-.menu-toggler {
-  position: absolute;
-  border-radius: 100%;
-  display: flex;
-  background-color: var(--dark-color);
-  color: white;
-  top: 2rem;
-  left: 2rem;
-  width: 5rem;
-  height: 5rem;
-  cursor: pointer;
-  z-index: 3;
-}
-.menu-toggler > i {
-  font-size: 1.5rem;
-  margin: auto;
-}
-
 @media (max-width: 800px) {
   .side-listing {
     display: none;
@@ -81,5 +57,6 @@
   }
 }
 @media (max-width: 500px) {
-
+  
 }
+
