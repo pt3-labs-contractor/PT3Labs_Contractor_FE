@@ -22,7 +22,7 @@ function LandingPage() {
               </NavLink>
             </div>
             <div className="arrow">
-              <i className="far fa-arrow-alt-circle-down arrow-pulse" />
+              <i className="far fa-arrow-alt-circle-down arrow-bounce" />
             </div>
           </div>
         </div>

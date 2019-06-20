@@ -11,12 +11,12 @@ function NavBarContractor() {
         <span className="side-listing"> Home</span>
       </NavLink>
       <NavLink
-        to="/contractorschedule"
+        to="/contractorcalendar"
         className="side-link"
         activeClassName="current"
       >
         <i className="far fa-calendar-alt" />
-        <span className="side-listing"> My Schedule</span>
+        <span className="side-listing"> My Calendar</span>
       </NavLink>
       <NavLink
         to="/contractorfeedback"
