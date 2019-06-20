@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import Schedule from './schedule.jsx';
 import { setRefs } from '../../../actions/index.js';
@@ -53,8 +53,8 @@ const ScheduleList = props => {
             key={s.id}
             id={s.id}
             className="schedCont"
-            ref={refCallback}
             data-ref={props.render}
+            ref={refCallback}
           >
             <Schedule
               {...props}
@@ -79,7 +79,7 @@ const ScheduleList = props => {
 
 const mstp = state => {
   return {
-    scheds: state.schedule,
+    // scheds: state.schedule,
     refs: state.refs,
   };
 };

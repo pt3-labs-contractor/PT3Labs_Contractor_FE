@@ -140,7 +140,7 @@ const Schedule = props => {
           </Link>
           {apps.map(a => {
             return (
-              <div className="appContRef" id={a.id} ref={refCallback}>
+              <div className="appContRef" id={a.id}>
                 <Appointment
                   id={a.id}
                   sevId={a.serviceId}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import dateFns from 'date-fns';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -55,7 +55,7 @@ const PopBoxSched = props => {
     backgroundColor: 'white',
   };
 
-  const pending = props.appointments.filter(a => {
+  const pending = appointments.filter(a => {
     const check = dateFns.isEqual(new Date(a.startTime), new Date(props.start));
     const { confirmed } = a;
     if (check === true && confirmed === false) {

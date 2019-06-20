@@ -11,14 +11,14 @@ import {
 import './appointConf.css';
 
 const AppInfo = props => {
-  const [sevId, setSevId] = useState();
+  // const [sevId, setSevId] = useState();
 
   const theAppoint = props.appointments.find(a => {
     return a.id === props.appId;
   });
 
   useEffect(() => {
-    setSevId(props.sevId);
+    // setSevId(props.sevId);
     props.getUser(theAppoint.userId);
   }, [props.sevId, theAppoint.id]);
 
