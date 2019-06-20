@@ -39,15 +39,12 @@ export const SET_SERVICES = 'SET_SERVICES';
 export const FETCH_SINGLE_CONTRACTOR_SUCCESS =
   'FETCH_SINGLE_CONTRACTOR_SUCCESS';
 
-// exports for retreiving feedback written by current user
+
+//exports for  feedback
 export const FEEDBACK_SUCCESS = 'FEEDBACK_SUCCESS';
-
-// exports for retrieving single contractor feedback
-export const FETCH_CONTRACTOR_FEEDBACK_SUCCESS =
-  'FETCH_CONTRACTOR_FEEDBACK_SUCCESS';
-
+export const FETCH_CONTRACTOR_FEEDBACK_SUCCESS = 'FETCH_CONTRACTOR_FEEDBACK_SUCCESS';
 export const POST_FEEDBACK_SUCCESS = 'POST_FEEDBACK_SUCCESS';
-
+export const DELETE_FEEDBACK_SUCCESS = 'DELETE_FEEDBACK_SUCCESS';
 // exports for retrieving current contractor user appointments
 export const RET_CONTRACTOR_APP_SUCC = 'RET_CONTRACTOR_APP_SUCC';
 
@@ -230,21 +227,9 @@ export const getFeedback = () => dispatch => {
     .catch(err => dispatch({ type: FAILURE, payload: err }));
 };
 
-// axios get feedback targeting a contractor
-// export const getContractorFeedback = id => dispatch => {
-//   dispatch({ type: LOADING });
-//   const headers = setHeaders();
-
-//   axios
-//     .get(`https://fierce-plains-47590.herokuapp.com/api/feedback/${id}`,{headers})
-//     .then(res => {
-//       dispatch({ type: FETCH_CONTRACTOR_FEEDBACK_SUCCESS, payload: res.data });
-//     })
-//     .catch(err => dispatch({ type: FAILURE, payload: err }));
-// };
-
 // axios post feedback about a contractor
 export const postFeedback = (data) => dispatch => {
+  dispatch({ type: LOADING });
   const headers = setHeaders();
   // console.log(data)
   axios.post(`https://fierce-plains-47590.herokuapp.com/api/feedback/${data.contractorId}`, data, {headers})
@@ -253,6 +238,18 @@ export const postFeedback = (data) => dispatch => {
     dispatch({ type: POST_FEEDBACK_SUCCESS, payload: res.data});
   })
   .catch(err => dispatch({type: FAILURE, payload: err}))
+}
+
+//axios delete feedback about a contractor
+export const deleteFeedback = (id) => dispatch => {
+  dispatch({ type: LOADING });
+  const headers = setHeaders();
+
+  axios.delete(`https://fierce-plains-47590.herokuapp.com/api/feedback/${id}`, {headers})
+  .then(res => {
+    dispatch({ type: DELETE_FEEDBACK_SUCCESS, payload: res.data})
+  })
+  .catch(err=>dispatch({type:FAILURE, payload:err}))
 }
 
 
