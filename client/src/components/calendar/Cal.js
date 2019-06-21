@@ -41,26 +41,28 @@ function ContCalendar(props) {
   const [schedId, setSchedId] = useState();
   const stringify = JSON.stringify(props.schedules);
   const { refs } = props;
-  console.log(refs);
-  let refArray = [];
+  const [win, setWindow] = useState();
+  // console.log(refs);
+  let [refArray, setRefArray] = useState([]);
   // const ref = React.createRef();
   const [render, setRender] = useState();
   useEffect(() => {
-    setId(props.id);
+    console.log('ran');
+    // setId(props.id);
     props.getSchedules(props.id);
     startEndId(start, end, schedId);
     window.addEventListener('resize', windowResize);
     return () => {
       window.removeEventListener('resize', windowResize);
     };
-  }, [stringify, props.id, start, props.selectedDay]);
+  }, [stringify, start, props.selectedDay, props.id, win, props.selectedMonth]);
 
   const windowResize = () => {
     if (
       window.innerWidth !== props.win.width ||
       window.innerHeight !== props.win.height
     ) {
-      // setWWidth(window.innerWidth);
+      setWindow({ w: window.innerWidth, h: window.innerHeight });
     }
   };
 
@@ -77,30 +79,38 @@ function ContCalendar(props) {
           const posString = JSON.stringify(find.pos);
           if (posString !== locString) {
             const newRef = { ...find, pos: loc };
-            const remove = refs.filter(r => {
+            const remove = refArray.filter(r => {
               return r.element.id !== el.id;
             });
             const finalRefs = [...remove, newRef];
+            // console.log(finalRefs);
             refArray = finalRefs;
             if (el.parentElement.lastChild === el) {
+              console.log('ran');
               props.setRefs(refArray);
             }
             // props.setRefs(finalRefs);
           }
         } else {
-          const newSize = [...refs];
+          const newSize = [...refArray];
           if (newSize.length > 0) {
             const xs = newSize.map(s => {
               return s.id;
             });
             if (!xs.includes(ref.id)) {
               const modSize = [...newSize, ref];
-              // props.setRefs(modSize);
               refArray = modSize;
-              if (el.parentElement.lastChild === el) {
+              let eOm = dateFns.endOfMonth(selectedMonth);
+              eOm = dateFns.startOfDay(eOm);
+              eOm = String(eOm);
+              eOm = eOm.split(' ').join('');
+              if (ref.id === eOm) {
+                console.log(refArray);
                 props.setRefs(refArray);
               }
             }
+          } else {
+            refArray = [ref];
           }
         }
       } else {
@@ -115,6 +125,7 @@ function ContCalendar(props) {
       // props.getSize(el.getBoundingClientRect());
     }
   };
+  console.log(props.refs);
 
   const startEndId = (start, end, id) => {
     setStart(start);
@@ -146,14 +157,24 @@ function ContCalendar(props) {
     return (
       <div className="calendar-nav">
         {!dateFns.isThisMonth(selectedMonth) ? (
-          <div onClick={() => setMonth(dateFns.subMonths(selectedMonth, 1))}>
+          <div
+            onClick={() => {
+              setMonth(dateFns.subMonths(selectedMonth, 1));
+              setRefArray([]);
+            }}
+          >
             &lt;
           </div>
         ) : null}
         <div className="nav-month">
           {dateFns.format(selectedMonth, 'MMMM YYYY')}
         </div>
-        <div onClick={() => setMonth(dateFns.addMonths(selectedMonth, 1))}>
+        <div
+          onClick={() => {
+            setMonth(dateFns.addMonths(selectedMonth, 1));
+            setRefArray([]);
+          }}
+        >
           &gt;
         </div>
       </div>

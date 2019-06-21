@@ -42,7 +42,7 @@ const Appointment = props => {
             onClick={setServId}
           >
             <li
-              className={`appSlot ${
+              className={`timeSlot ${
                 props.confirmed ? 'confirmedSlot' : 'pendingSlot'
               }`}
               data-refid={id}
