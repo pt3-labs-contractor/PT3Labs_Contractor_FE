@@ -132,7 +132,7 @@ function UserFeedback(props) {
             />
           </div>
           <textarea className="form-textarea" placeholder="Leave a comment" />
-          {/* <input type="submit" value="Submit" className="btn btn-primary" /> */}
+          <input type="submit" value="Submit" className="btn btn-primary" />
           <div className="button-lrg submit-btn">Submit</div>
         </form>
         <div>
