@@ -3,7 +3,10 @@ import { connect } from 'react-redux';
 import Rating from 'react-rating';
 import NavBarUser from '../navbar/NavBarUser';
 import './UserFeedback.css';
-import { getFeedback, postFeedback } from '../../actions/index';
+import { getFeedback } from '../../actions/index';
+import { postFeedback } from '../../actions/index';
+import { deleteFeedback} from '../../actions/index';
+
 import TopNavbar from '../navbar/TopNavbar';
 
 function UserFeedback(props) {
@@ -15,16 +18,21 @@ function UserFeedback(props) {
   // console.log(props)
 
 
-
+  function deleteFeedback(feedback) {
+    // feedback.preventDefault();
+    // e.preventDefault();
+    // console.log(feedback)
+    props.deleteFeedback(feedback.id)
+  }
   function handleChange(contrID) {
     // e.preventDefault();
     setContractorId(contrID)
-    console.log(contrID)
+    // console.log(contrID)
   }
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(contractorId)
+    // console.log(contractorId)
     
     props.postFeedback({ contractorId, id, stars, message})
     // console.log({stars, message, contractorId, id})
@@ -170,6 +178,7 @@ function UserFeedback(props) {
                   stop={3}
                 />
                 <p>{feedback.message}</p>
+                <button onClick={e => deleteFeedback(feedback)}>Delete Feedback</button>
               </div>
             ))}
           </div>
@@ -189,4 +198,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, {getFeedback, postFeedback})(UserFeedback);
+export default connect(mapStateToProps, {getFeedback, postFeedback, deleteFeedback})(UserFeedback);

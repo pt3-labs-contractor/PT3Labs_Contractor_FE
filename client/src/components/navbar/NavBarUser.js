@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import './NavBarUser.css';
 
 function NavBarUser(props) {
-  console.log(props);
+  // console.log(props);
   return (
     <>
       <div className="sideNav">

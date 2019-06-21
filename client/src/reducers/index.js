@@ -46,6 +46,9 @@ import {
   //POST feedback by user
   POST_FEEDBACK_SUCCESS,
 
+  //DELETE feedback by user
+  DELETE_FEEDBACK_SUCCESS,
+
   // fetching current contractor appointments
   RET_CONTRACTOR_APP_SUCC,
 
@@ -82,7 +85,7 @@ export default (state = initialState, action) => {
         error: null,
       };
     case FETCHING_USERS_SUCCESS:
-      console.log(action.payload.services);
+      // console.log(action.payload.services);
       return {
         ...state,
         user: action.payload.user,
@@ -159,6 +162,8 @@ export default (state = initialState, action) => {
     case POST_FEEDBACK_SUCCESS: 
       return {...state, feedback: [...state.feedback, action.payload.feedback] }
 
+    case DELETE_FEEDBACK_SUCCESS:
+      return {...state, feedback: action.payload.feedback}
     // fetching current contractor appointments
     // case RET_CONTRACTOR_APP_SUCC:
     //   return {...state, accounts:{appointments: action.payload }}
