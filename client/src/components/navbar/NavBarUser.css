@@ -1,6 +1,6 @@
 .sideNav {
   height: 100%;
-  width: 15%;
+  width: 200px;
   position: fixed;
   top: 0px;
   left: 0px;
@@ -8,6 +8,7 @@
   text-decoration: none;
   padding-top: 4rem;
   font-size: 20px;
+  z-index: 1;
 }
 
 .side-link {
@@ -33,8 +34,7 @@
 .sideNav a:hover {
   color: #8c20f8;
 }
-
-@media (max-width: 600px) {
+@media (max-width: 800px) {
   .side-listing {
     display: none;
   }
@@ -46,4 +46,12 @@
   .sideNav a {
     text-align: center;
   }
+  .sideNav a:hover .side-listing{
+    display: inline-block;
+    color: var(--primary-color);
+    font-size: 16px;
+  }
+}
+@media (max-width: 500px) {
+
 }

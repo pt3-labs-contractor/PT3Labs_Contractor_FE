@@ -149,11 +149,22 @@ function Register(props) {
               />
             </>
           )}
-          <input
+          <button
+            type="submit"
+            // value="Create Account"
+            className="btn btn-primary"
+          >
+            Create Account
+          </button>
+
+          {/* <button
             type="submit"
             value="Create Account"
             className="btn btn-primary"
-          />
+            onClick={handleSubmit}
+
+          /> */}
+
           <p>
             Already have an account?{' '}
             <NavLink to="/login" className="form-links">

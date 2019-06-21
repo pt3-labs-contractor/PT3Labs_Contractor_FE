@@ -5,6 +5,8 @@ import AppointmentList from '../appointments/AppointmentList';
 import ContractorList from '../contractors/ContractorList';
 import AvailabilityList from '../appointments/AvailabilityList';
 import AppointmentForm from '../appointments/AppointmentForm';
+// import ContractorCard from '../contractors/ContractorCard';
+import TopNavbar from '../navbar/TopNavbar';
 import './UserLandingPage.css';
 
 import dateFns from 'date-fns';
@@ -107,58 +109,61 @@ function UserLandingPage(props) {
   };
 
   return (
-    <div className="user container">
-      {mql ? (
-        <div ref={serviceTarget} className="service-list">
-          <h2>Pick a service</h2>
-          {serviceList.map(service => (
-            <button value={service.toLowerCase()} onClick={handleSort}>
-              {service}
-            </button>
-          ))}
-        </div>
-      ) : (
-        <form>
-          <select value={serviceSort} onChange={handleSort}>
-            <option value="">Pick a service</option>
+    <>
+      <TopNavbar />
+      <div className="user container">
+        {mql ? (
+          <div ref={serviceTarget} className="service-list">
+            <h2>Pick a service</h2>
             {serviceList.map(service => (
-              <option key={service} value={service.toLowerCase()}>
+              <button value={service.toLowerCase()} onClick={handleSort}>
                 {service}
-              </option>
+              </button>
             ))}
-          </select>
-        </form>
-      )}
-      <div className="user-calendar">
-        <div className="calendar-target" ref={calendarTarget}>
-          <Calendar user />
+          </div>
+        ) : (
+          <form>
+            <select value={serviceSort} onChange={handleSort}>
+              <option value="">Pick a service</option>
+              {serviceList.map(service => (
+                <option key={service} value={service.toLowerCase()}>
+                  {service}
+                </option>
+              ))}
+            </select>
+          </form>
+        )}
+        <div className="user-calendar">
+          <div className="calendar-target" ref={calendarTarget}>
+            <Calendar user />
+          </div>
+          <div className="contractor-target" ref={contractorTarget}>
+            <ContractorList userLanding selectContractor={selectContractor} />
+          </div>
+          <div ref={availabilityTarget}>
+            <AvailabilityList setAppointment={selectTime} />
+          </div>
+          <div ref={appointmentTarget}>
+            {contractor.id && time.id && (
+              <AppointmentForm
+                user
+                contractor={contractor.id}
+                clearAppointment={clearAppointment}
+                appointment={time}
+                service={service}
+              />
+            )}
+          </div>
         </div>
-        <div className="contractor-target" ref={contractorTarget}>
-          <ContractorList userLanding selectContractor={selectContractor} />
-        </div>
-        <div ref={availabilityTarget}>
-          <AvailabilityList setAppointment={selectTime} />
-        </div>
-        <div ref={appointmentTarget}>
-          {contractor.id && time.id && (
-            <AppointmentForm
-              user
-              contractor={contractor.id}
-              clearAppointment={clearAppointment}
-              appointment={time}
-              service={service}
-            />
-          )}
-        </div>
-      </div>
 
-      <AppointmentList />
-      {mql && currentTarget > 0 ? (
-        <div onClick={scrollBack} id="back-button">
-          Back
-        </div>
-      ) : null}
-    </div>
+        {mql && currentTarget > 0 ? (
+          <div onClick={scrollBack} id="back-button">
+            Back
+          </div>
+        ) : null}
+        <AppointmentList />
+      </div>
+    </>
   );
 }
 

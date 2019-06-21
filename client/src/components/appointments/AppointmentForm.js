@@ -14,13 +14,31 @@ function AppointmentForm(props) {
     if (check) {
       const bearer = `Bearer ${localStorage.getItem('jwt')}`;
       const headers = { authorization: bearer };
+      let hours;
+      let minutes;
+      let dur;
+      if (props.appointment.duration.hours) {
+        hours = props.appointment.duration.hours;
+      }
+      if (props.appointment.duration.minutes) {
+        minutes = Number(props.appointment.duration.minutes / 60) * 100;
+        minutes = minutes.toFixed(0);
+      }
+      if (hours && minutes) {
+        dur = `${hours}.${minutes}`;
+      } else if (hours) {
+        dur = `${hours}`;
+      } else {
+        dur = `${minutes}`;
+      }
       const appointment = {
         contractorId: props.contractor,
         serviceId: props.service.id,
         scheduleId: props.appointment.id,
         startTime,
-        duration: `${props.appointment.duration.hours}h`,
+        duration: `${dur}h`,
       };
+      console.log(appointment);
       axios
         .post(
           'https://fierce-plains-47590.herokuapp.com/api/appointments',

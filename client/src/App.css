@@ -40,9 +40,26 @@ img {
 }
 
 .btn:hover {
-  background-color: darken();
+  opacity: 0.8;
 }
 
 .main-body {
   margin-left: 210px;
+}
+
+.appointment-form {
+  margin-left: 50%;
+}
+
+@media (max-width: 800px) {
+  .main-body {
+    margin-left: 5rem;
+    margin-right: 1rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .main-body {
+    margin-left: 4rem;
+  }
 }

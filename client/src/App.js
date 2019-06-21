@@ -4,7 +4,7 @@ import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import './App.css';
 
-import { fetchAccts } from './actions/index';
+import { fetchAccts, getFeedback } from './actions/index';
 import Homepage from './components/homepage/Homepage';
 import ContractorList from './components/contractors/ContractorList';
 import Contractor from './components/contractors/Contractor';
@@ -12,6 +12,8 @@ import Login from './components/login/Login';
 import Redirect from './components/login/Redirect';
 import Register from './components/register/Register';
 import Calendar from './components/calendar/Calendar';
+import ContCalendar from './components/calendar/Cal.js';
+import MainNavbar from './components/navbar/MainNavbar';
 import UserLandingPage from './components/landingpage/UserLandingPage';
 import NavBarUser from './components/navbar/NavBarUser';
 import NavBarContractor from './components/navbar/NavBarContractor';
@@ -26,6 +28,8 @@ import ContractorSchedule from './components/contractors/ContractorSchedule';
 function App(props) {
   useEffect(() => {
     props.fetchAccts();
+    props.getFeedback();
+    // console.log(props)
     // eslint-disable-next-line
   }, []);
 
@@ -49,7 +53,11 @@ function App(props) {
         />
         <Route
           path="/calendar"
-          render={props => <Calendar contractor={{}} />}
+          render={props => <Calendar {...props} contractor={{}} />}
+        />
+        <Route
+          path="/contractorCalendar"
+          render={props => <ContCalendar {...props} contractor={{}} />}
         />
         <Route path="/settings" component={Settings} />
         <Route path="/usersettings" component={UserSettings} />
@@ -66,12 +74,13 @@ function App(props) {
 const mapStateToProps = state => {
   return {
     user: state.user,
+    feedback: state.feedback,
   };
 };
 
 export default withRouter(
   connect(
     mapStateToProps,
-    { fetchAccts }
+    { fetchAccts, getFeedback }
   )(App)
 );

@@ -1,0 +1,72 @@
+.infoContApp {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  height: 175px;
+  width: 200px;
+  box-shadow: 0 3px 20px #555555;
+  border-radius: 5px;
+  font-size: 0.8rem;
+}
+.closeIconEditApp {
+  width: 100%;
+  text-align: right;
+  margin-top: 5px;
+  margin-right: 5px;
+  height: min-content;
+  cursor: pointer;
+  margin-bottom: 0px;
+  height: min-content;
+  padding-bottom: 0px;
+  width: min-content;
+}
+
+.cont {
+  width: 100%;
+  padding-left: 15px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-top: 15px;
+  border-top: 1px solid #e4e4e4;
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+.deny {
+  text-align: center;
+  font-size: 0.8rem;
+  border: none;
+  border-left: 1px solid #e4e4e4;
+  width: 50%;
+  background-color: white;
+  height: 80%;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.deny:hover {
+  background-color: red;
+  color: white;
+  border-radius: 5px;
+}
+
+.confirm {
+  text-align: center;
+  font-size: 0.8rem;
+  border: none;
+  width: 50%;
+  background-color: white;
+  height: 80%;
+  cursor: pointer;
+}
+
+.confirm:hover {
+  background-color: green;
+  color: white;
+  border-radius: 5px;
+}
