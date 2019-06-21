@@ -28,7 +28,11 @@ function ContractorFeedback(props) {
                 />
                 {'\n'}
                 <div className="contractor-feedback-context">
-                  Message: {feedback.message}
+                  <p>
+                    <span className="quotes">"</span>
+                    {feedback.message}
+                    <span className="quotes">"</span>
+                  </p>
                 </div>
               </div>
             </div>

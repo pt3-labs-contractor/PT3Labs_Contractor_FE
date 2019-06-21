@@ -3,6 +3,7 @@
   flex-direction: column;
   align-items: center;
   margin-top: 2rem;
+  letter-spacing: 1.2px;
 }
 
 .feedback-body h2 {
@@ -13,7 +14,7 @@
   margin: 1rem;
   border-bottom: 2px solid var(--secondary-color);
   color: black;
-  max-width: 800px;
+  width: 80%;
 }
 
 .feedback-header {
@@ -27,3 +28,21 @@
   height: auto;
   margin-top: 2rem;
 }
+
+.quotes {
+  font-style: bold;
+  font-weight: 300;
+  font-size: 1.5rem;
+}
+
+/* @media (max-width: 1000px) {
+  .contractor-feedback-container {
+    width: 600px;
+  }
+}
+
+@media (max-width: 800px) {
+  .contractor-feedback-container {
+    width: 80%
+  }
+} */
