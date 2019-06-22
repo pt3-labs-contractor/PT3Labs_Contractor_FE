@@ -13,7 +13,7 @@ body {
 
 p {
   line-height: 1.25;
-  letter-spacing: 1.2px;
+  letter-spacing: 1.25px;
 }
 
 a {
@@ -52,7 +52,7 @@ img {
 }
 
 .main-body {
-  margin-left: 210px;
+  margin-left: 200px;
 }
 
 .appointment-form {
