@@ -21,9 +21,11 @@ function ContractorFeedback(props) {
                 Rating:{' '}
                 <Rating
                   emptySymbol={<span className="icon-text">&#9734;</span>}
-                  fullSymbol={<span className="icon-text">&#9733;</span>}
+                  fullSymbol={
+                    <span className="icon-text fullstar">&#9733;</span>
+                  }
                   readonly
-                  placeholderRating={feedback.stars}
+                  initialRating={feedback.stars}
                   stop={3}
                 />
                 {'\n'}
