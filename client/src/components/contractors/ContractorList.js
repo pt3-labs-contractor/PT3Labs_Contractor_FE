@@ -6,6 +6,8 @@ import './ContractorList.css';
 import ContractorCard from './ContractorCard';
 // import NavBarUser from './components/navbar/NavBarUser';
 
+import { setPosition } from '../../actions/index';
+
 function ContractorList(props) {
   const [pageNum, setPageNum] = useState(0);
   const [contractorList, setContractors] = useState([]);
@@ -37,12 +39,12 @@ function ContractorList(props) {
 
   const selectElement = id => {
     setSelect(id);
-    const testPromise = new Promise((resolve, reject) => {
+    new Promise((resolve, reject) => {
       testRef.current[id] = React.createRef();
       resolve(testRef.current[id]);
-    });
-    testPromise.then(value => {
-      console.log(value.current.getBoundingClientRect());
+    }).then(element => {
+      // console.log(element.current.getBoundingClientRect());
+      props.setPosition(element.current);
     });
   };
 
@@ -102,7 +104,11 @@ const mapStateToProps = state => {
     user: state.user,
     loading: state.loading,
     error: state.error,
+    position: state.positionContractor,
   };
 };
 
-export default connect(mapStateToProps)(ContractorList);
+export default connect(
+  mapStateToProps,
+  { setPosition }
+)(ContractorList);

@@ -23,6 +23,9 @@ import {
   SET_DAY,
   SET_MONTH,
 
+  // Window position of specific contractor in list
+  SET_CONTRACTOR_POSITION,
+
   // fetching schedule
   SET_SCHEDULE,
   LOAD_SCHEDULE,
@@ -64,6 +67,7 @@ const initialState = {
   schedule: [],
   errorSchedule: null,
   serviceFilter: '',
+  positionContractor: {},
 };
 
 export default (state = initialState, action) => {
@@ -114,6 +118,8 @@ export default (state = initialState, action) => {
       return { ...state, sortedContractors: action.payload };
     case SET_SERVICE_SORT:
       return { ...state, serviceFilter: action.payload };
+    case SET_CONTRACTOR_POSITION:
+      return { ...state, positionContractor: action.payload };
     case LOAD_SCHEDULE:
       return {
         ...state,
