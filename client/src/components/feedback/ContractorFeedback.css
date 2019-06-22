@@ -35,6 +35,10 @@
   font-size: 1.5rem;
 }
 
+.fullstar {
+  color: var(--primary-color);
+}
+
 /* @media (max-width: 1000px) {
   .contractor-feedback-container {
     width: 600px;
