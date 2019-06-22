@@ -123,7 +123,7 @@ export const fetchAccts = () => dispatch => {
 };
 
 export const fetchSchedule = id => dispatch => {
-  dispatch({ type: LOADING });
+  // dispatch({ type: LOADING });
   const headers = setHeaders();
   axios
     .get(

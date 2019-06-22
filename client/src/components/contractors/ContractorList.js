@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import './ContractorList.css';
@@ -6,11 +6,12 @@ import './ContractorList.css';
 import ContractorCard from './ContractorCard';
 // import NavBarUser from './components/navbar/NavBarUser';
 
-
 function ContractorList(props) {
   const [pageNum, setPageNum] = useState(0);
   const [contractorList, setContractors] = useState([]);
   const [list, setList] = useState([]);
+  const [select, setSelect] = useState({});
+  const testRef = useRef({});
 
   useEffect(() => {
     const { contractors } = props;
@@ -34,6 +35,17 @@ function ContractorList(props) {
     setList(contractorList[pageNum] || []);
   }, [pageNum, contractorList]);
 
+  const selectElement = id => {
+    setSelect(id);
+    const testPromise = new Promise((resolve, reject) => {
+      testRef.current[id] = React.createRef();
+      resolve(testRef.current[id]);
+    });
+    testPromise.then(value => {
+      console.log(value.current.getBoundingClientRect());
+    });
+  };
+
   const pageChange = dir => {
     setPageNum(pageNum + dir);
   };
@@ -41,10 +53,15 @@ function ContractorList(props) {
   return (
     <div className="contractor-list container">
       <h3>Contractors:</h3>
-      <button onClick={() => pageChange(-1)} disabled={pageNum <= 0}>
+      <button
+        className="btn"
+        onClick={() => pageChange(-1)}
+        disabled={pageNum <= 0}
+      >
         Page down
       </button>
       <button
+        className="btn"
         onClick={() => pageChange(1)}
         disabled={pageNum >= contractorList.length - 1}
       >
@@ -55,7 +72,17 @@ function ContractorList(props) {
       {list.map(contractor =>
         props.userLanding ? (
           <div key={contractor.id}>
-            <div onClick={() => props.selectContractor(contractor)}>
+            <div
+              ref={testRef.current[contractor.id]}
+              className={
+                'contractor-card-container' +
+                `${select === contractor.id ? ' selected' : ''}`
+              }
+              onClick={() => {
+                props.selectContractor(contractor);
+                selectElement(contractor.id);
+              }}
+            >
               <ContractorCard contractor={contractor} />
             </div>
           </div>

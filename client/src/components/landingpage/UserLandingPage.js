@@ -61,6 +61,7 @@ function UserLandingPage(props) {
   }, [props.selectedDay]);
 
   useEffect(() => {
+    setTime({});
     contractor.id && props.fetchSchedule(contractor.id);
     // eslint-disable-next-line
   }, [contractor]);
@@ -140,7 +141,7 @@ function UserLandingPage(props) {
           <div className="contractor-target" ref={contractorTarget}>
             <ContractorList userLanding selectContractor={selectContractor} />
           </div>
-          <div ref={availabilityTarget}>
+          <div className="availability-target" ref={availabilityTarget}>
             <AvailabilityList setAppointment={selectTime} />
           </div>
           <div ref={appointmentTarget}>

@@ -20,7 +20,7 @@ function Calendar(props) {
           </div>
         ) : null}
         <div className="nav-month">
-          {dateFns.format(selectedMonth, 'MMMM YYYY')}
+          {dateFns.format(selectedMonth, 'MMMM YYYY').toUpperCase()}
         </div>
         <div onClick={() => setMonth(dateFns.addMonths(selectedMonth, 1))}>
           &gt;
@@ -37,7 +37,7 @@ function Calendar(props) {
     for (let i = 0; i < 7; i++) {
       days.push(
         <div className="day-cell" key={i}>
-          {dateFns.format(dateFns.addDays(start, i), 'dddd')}
+          {dateFns.format(dateFns.addDays(start, i), 'ddd')}
         </div>
       );
     }

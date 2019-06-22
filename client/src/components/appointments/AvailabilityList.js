@@ -32,19 +32,23 @@ function AvailabilityList(props) {
         end = dateFns.addMilliseconds(end, item.duration.milliseconds);
       }
       return (
-        <div key={item.id} onClick={() => props.setAppointment(item)}>
+        <button key={item.id} onClick={() => props.setAppointment(item)}>
           {`${dateFns.format(start, 'HH:mm')} - ${dateFns.format(
             end,
             'HH:mm'
           )}`}
-        </div>
+        </button>
       );
     });
     return <>{times}</>;
   };
 
   return (
-    <div className="availability-list">
+    <div
+      className={`availability-list ${
+        availability.length > 0 ? 'display' : ''
+      }`}
+    >
       <RenderTimes />
     </div>
   );

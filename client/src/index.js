@@ -12,7 +12,7 @@ import App from './App';
 
 import reducer from './reducers';
 
-const store = createStore(reducer, applyMiddleware(thunk, logger));
+const store = createStore(reducer, applyMiddleware(thunk));
 
 export default store;
 
