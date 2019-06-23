@@ -41,6 +41,7 @@
   border: 1px solid black;
   padding: 1rem;
   background-color: var(--dark-color);
+  opacity: .9;
 }
 
 .price {
@@ -98,6 +99,10 @@
   .wrapper {
     flex-direction: column;
     align-items: center;
+  }
+  .main-header p {
+    margin: 0 2rem;
+    font-size: 1rem;
   }
 }
 

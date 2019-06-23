@@ -1,62 +1,91 @@
-.feedback-body {
+.feedback-body-user {
+  display: flex;
+  flex-direction: column;
   margin-top: 2rem;
-  max-width: 800px;
-}
-.appointment-info {
-  background-color: var(--dark-color);
-  opacity: .9;
-  color: white;
+  letter-spacing: 1.2px;
 }
 
-.appointment-heading {
-  background-color: var(--dark-color);
-  margin-left: 1rem;
-  padding: 1rem 0;
+.main-header-title {
+  text-align: center;
 }
 
-.appointment-heading h4 {
-  color: var(--primary-color);
-  background-color: var(--dark-color);
-  font-size: 2rem;
+.feedback-form-header {
+  text-align: center;
 }
 
-.appointment-body {
+.form-boxes {
   display: flex;
-  padding: 19px;
-  background-color: lightgrey;
 }
 
-.appointment-item {
+.form-box {
+  justify-content: space-evenly;
+  width: 50%;
+}
+
+.box-2 {
+  margin-top: 1rem;
+}
+.legend {
   display: flex;
-  margin: 0 auto;
-  padding: 1rem;
+  flex-direction: column-reverse;
 }
-
-.appointment-item h4{
-  font-size: 1.5rem;
-}
-
-.feedback-container {
+.feedback-form-container {
   padding: 1rem 2rem;
-  margin-top: 2rem;
-  margin-bottom: 3rem;
-  background-color: var(--dark-color);
-  opacity: .9;
-  color: white;
-  border: 1px solid blue;
+  background-color: #f2f2f2;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  margin: 1rem auto;
+  width: 80%;
 }
 
-.feedback-container h2 {
+.feedback-form-container h2 {
   color: var(--primary-color);
   font-size: 2rem;
+}
+.user-feedback-container {
+  padding: 1rem 2rem;
+  border-bottom: 2px solid var(--secondary-color);
+  color: black;
+  width: 80%;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.feedback-user-header {
+  text-align: center;
+  font-size: 1.5rem;
+  margin: 1rem 0;
+}
+
+.select {
+  padding: 5px 3px;
+  width: 13rem;
+  margin: 1rem 0;
 }
 .form-textarea {
   width: 100%;
-  height: 300px;
+  height: 200px;
+  margin-top: 1rem;
+}
+
+.posted-user {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
 }
 
 .icon-text {
   font-size: 2rem;
+}
+@media (max-width:1000px) {
+  .feedback-form-container {
+    width: 95%;
+  }
+  .user-feedback-container {
+    width: 95%;
+  }
 }
 @media (max-width:800px) {
   .appointment-heading h4 {
@@ -67,6 +96,17 @@
   }
   .feedback-container h2 {
     font-size: 1.5rem;
+  }
+  .feedback-container {
+    width: 95%;
+  }
+  .form-boxes {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .form-box {
+    width: auto;
   }
 }
 
