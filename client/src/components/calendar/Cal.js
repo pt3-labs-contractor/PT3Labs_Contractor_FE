@@ -26,16 +26,11 @@ function ContCalendar(props) {
   const [y, setY] = useState();
   const [w, setW] = useState();
   const [h, setH] = useState();
-  // const [wHeight, setWHeight] = useState();
-  const [wWidth, setWWidth] = useState();
-  // const [xper, setXper] = useState([]);
-  // const [yper, setYper] = useState([]);
-  // const starting = { height: window.screen.height, width: window.screen.width };
   const [targetCell, setTargetCell] = useState({ hidden: true, id: null });
   const [sevAppId, setSevAppId] = useState();
   const [appId, setAppId] = useState();
   const { selectedDay, selectedMonth, setMonth } = props;
-  const [id, setId] = useState('');
+  // const [id, setId] = useState('');
   const [start, setStart] = useState();
   const [end, setEnd] = useState();
   const [schedId, setSchedId] = useState();
@@ -105,7 +100,6 @@ function ContCalendar(props) {
               eOm = String(eOm);
               eOm = eOm.split(' ').join('');
               if (ref.id === eOm) {
-                console.log(refArray);
                 props.setRefs(refArray);
               }
             }
@@ -233,7 +227,11 @@ function ContCalendar(props) {
           onClick={() => handleSelect(temp)}
         >
           {dateFns.format(day, 'D')}
-          <div className="add" data-day={id} onClick={setPos}>
+          <div
+            className={`add ${!isSameDay ? 'disabled' : null}`}
+            data-day={id}
+            onClick={setPos}
+          >
             +
           </div>
           <div

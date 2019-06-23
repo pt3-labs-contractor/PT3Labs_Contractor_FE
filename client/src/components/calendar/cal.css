@@ -275,3 +275,7 @@
   margin-right: 2px;
   margin-top: -5px;
 }
+
+.disabled {
+  pointer-events: none;
+}
