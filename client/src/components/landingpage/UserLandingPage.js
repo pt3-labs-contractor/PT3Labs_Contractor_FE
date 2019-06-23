@@ -144,11 +144,11 @@ function UserLandingPage(props) {
           <div className="availability-target" ref={availabilityTarget}>
             <AvailabilityList setAppointment={selectTime} />
           </div>
-          <div ref={appointmentTarget}>
+          <div className="appointment-form-target" ref={appointmentTarget}>
             {contractor.id && time.id && (
               <AppointmentForm
                 user
-                contractor={contractor.id}
+                contractor={contractor}
                 clearAppointment={clearAppointment}
                 appointment={time}
                 service={service}

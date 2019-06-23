@@ -13,7 +13,7 @@ function ContractorList(props) {
   const [contractorList, setContractors] = useState([]);
   const [list, setList] = useState([]);
   const [select, setSelect] = useState({});
-  const testRef = useRef({});
+  const contractorRef = useRef({});
 
   useEffect(() => {
     const { contractors } = props;
@@ -38,14 +38,16 @@ function ContractorList(props) {
   }, [pageNum, contractorList]);
 
   const selectElement = id => {
-    setSelect(id);
-    new Promise((resolve, reject) => {
-      testRef.current[id] = React.createRef();
-      resolve(testRef.current[id]);
-    }).then(element => {
-      // console.log(element.current.getBoundingClientRect());
-      props.setPosition(element.current);
-    });
+    if (select !== id) {
+      setSelect(id);
+      new Promise((resolve, reject) => {
+        contractorRef.current[id] = React.createRef();
+        resolve(contractorRef.current[id]);
+      }).then(element => {
+        // console.log(element.current.getBoundingClientRect());
+        props.setPosition(element.current.getBoundingClientRect());
+      });
+    }
   };
 
   const pageChange = dir => {
@@ -54,28 +56,30 @@ function ContractorList(props) {
 
   return (
     <div className="contractor-list container">
-      <h3>Contractors:</h3>
-      <button
-        className="btn"
-        onClick={() => pageChange(-1)}
-        disabled={pageNum <= 0}
-      >
-        Page down
-      </button>
-      <button
-        className="btn"
-        onClick={() => pageChange(1)}
-        disabled={pageNum >= contractorList.length - 1}
-      >
-        Page up
-      </button>
+      <div className="list-header">
+        <h3>Contractors:</h3>
+        <button
+          className="btn"
+          onClick={() => pageChange(-1)}
+          disabled={pageNum <= 0}
+        >
+          Page down
+        </button>
+        <button
+          className="btn"
+          onClick={() => pageChange(1)}
+          disabled={pageNum >= contractorList.length - 1}
+        >
+          Page up
+        </button>
+      </div>
       {props.loading ? <p>Loading...</p> : null}
       {props.error ? <p>{props.error}</p> : null}
       {list.map(contractor =>
         props.userLanding ? (
           <div key={contractor.id}>
             <div
-              ref={testRef.current[contractor.id]}
+              ref={contractorRef.current[contractor.id]}
               className={
                 'contractor-card-container' +
                 `${select === contractor.id ? ' selected' : ''}`
@@ -104,7 +108,6 @@ const mapStateToProps = state => {
     user: state.user,
     loading: state.loading,
     error: state.error,
-    position: state.positionContractor,
   };
 };
 

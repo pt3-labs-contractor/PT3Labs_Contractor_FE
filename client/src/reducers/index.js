@@ -115,7 +115,12 @@ export default (state = initialState, action) => {
         loading: false,
       };
     case SET_SORTED_CONTRACTORS:
-      return { ...state, sortedContractors: action.payload };
+      return {
+        ...state,
+        sortedContractors: action.payload,
+        thisContractor: {},
+        schedule: [],
+      };
     case SET_SERVICE_SORT:
       return { ...state, serviceFilter: action.payload };
     case SET_CONTRACTOR_POSITION:

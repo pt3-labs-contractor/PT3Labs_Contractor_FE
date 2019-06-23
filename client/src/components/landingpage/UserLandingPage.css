@@ -2,7 +2,17 @@
   margin-top: 20px;
   margin-left: 200px;
   /* padding-left: 10px; */
-  width: 85%;
+  width: 81%;
+  max-width: 1000px;
+  position: relative;
+}
+
+.user form select {
+  background-color: lightgrey;
+}
+
+.user form select option {
+  border-bottom: 5px solid var(--primary-color);
 }
 
 .user-calendar {
@@ -14,12 +24,13 @@
 .user-calendar .calendar-target {
   width: 50%;
   margin-top: 0;
+  box-shadow: var(--shadow);
 }
 
 .user-calendar .calendar-target .calendar {
   margin-left: 0px;
   width: 100%;
-  height: 66.4vh;
+  height: 67vh;
 }
 
 .user-calendar .contractor-target {
@@ -27,6 +38,7 @@
   margin-right: 0;
   margin-left: 0;
   padding: 0;
+  box-shadow: var(--shadow);
 }
 
 .user-calendar .contractor-target .contractor-list {
@@ -34,14 +46,30 @@
   margin: 0;
   /* height: 66.4vh; */
   max-height: 95%;
-  min-height: 66.4vh;
+  min-height: 67vh;
   font-size: 12px;
   color: var(--light-color);
   background-color: var(--dark-color);
 }
 
+.contractor-target .contractor-list .btn {
+  width: 40%;
+  text-align: center;
+  margin-top: 10px;
+  padding: 0;
+}
+
+.contractor-target .contractor-list .list-header {
+  height: 80px;
+}
+
 .user-calendar .contractor-target .contractor-list .contractor-card-container {
   border-bottom: 1px solid var(--primary-color);
+}
+
+.contractor-target .contractor-list .contractor-card-container h3 {
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .user-calendar
@@ -58,10 +86,11 @@
   align-items: center;
   padding: 15px 5px;
   width: 0;
-  transition: width 0.2s ease;
+  transition: all 0.5s ease;
+  /* transition: top 5s linear; */
   overflow: hidden;
   word-wrap: none;
-  height: 100px;
+  /* box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5); */
 }
 
 .availability-target .availability-list button {
@@ -69,14 +98,22 @@
 }
 
 .availability-target .availability-list.display {
-  width: 100%;
+  width: 10%;
   background-color: lightgrey;
+  box-shadow: var(--shadow);
   /* transition: all 10s linear; */
 }
 
 .user-calendar > div:not(.calendar) {
   /* margin-top: 15px; */
   /* padding-left: 5px; */
+}
+
+.appointment-form-target {
+  position: absolute;
+  right: 1%;
+  width: 33%;
+  box-shadow: var(--shadow);
 }
 
 @media (max-width: 600px) {
@@ -167,4 +204,16 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+@keyframes test {
+  0% {
+    width: 100%;
+  }
+  50% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
 }

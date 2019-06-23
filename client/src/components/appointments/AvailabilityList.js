@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import dateFns from 'date-fns';
+import { isAbsolute } from 'path';
 
 function AvailabilityList(props) {
   const [availability, setAvailability] = useState([]);
-  const { selectedDay, schedule } = props;
+  const [pos, setPos] = useState({});
+  const { selectedDay, schedule, position } = props;
 
   useEffect(() => {
     const date = schedule.filter(item => {
@@ -13,6 +15,17 @@ function AvailabilityList(props) {
     setAvailability(date);
     // eslint-disable-next-line
   }, [selectedDay, schedule]);
+
+  useEffect(() => {
+    const { top, right, height } = position;
+    console.log(top);
+    setPos({
+      position: 'fixed',
+      top,
+      left: right,
+      minHeight: height,
+    });
+  }, [props.position]);
 
   const RenderTimes = () => {
     const times = availability.map(item => {
@@ -45,6 +58,7 @@ function AvailabilityList(props) {
 
   return (
     <div
+      style={pos}
       className={`availability-list ${
         availability.length > 0 ? 'display' : ''
       }`}
@@ -58,6 +72,7 @@ const mapStateToProps = state => {
   return {
     schedule: state.schedule,
     selectedDay: state.thisDay,
+    position: state.positionContractor,
   };
 };
 
