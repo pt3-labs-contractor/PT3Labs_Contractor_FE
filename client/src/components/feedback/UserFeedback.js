@@ -6,6 +6,7 @@ import './UserFeedback.css';
 import { getFeedback, postFeedback, deleteFeedback } from '../../actions/index';
 
 import TopNavbar from '../navbar/TopNavbar';
+import dateFns from 'date-fns';
 
 function UserFeedback(props) {
   const { id } = props.user;
@@ -134,8 +135,74 @@ function UserFeedback(props) {
               name="punctual"
               value={punctual}
               onChange={e => setPunctual(e.target.value)}
+      <div className="main-body">
+        <div className="feedback-body-user">
+          <h2 className="main-header-title">Feedback</h2>
+
+          <div>
+            <form onSubmit={handleSubmit} className="feedback-form-container">
+              <h3 className="feedback-form-header">
+                Tell us about your experience
+              </h3>
+              <div className="form-boxes">
+                <div className="form-box box-1">
+                  <ul className="legend">
+                    <li>
+                      {<span className="icon-text fullstar">&#9733;</span>}=
+                      Needs Improvement
+                    </li>
+                    <li>
+                      {<span className="icon-text fullstar">&#9733;</span>}
+                      {<span className="icon-text fullstar">&#9733;</span>}=
+                      Fair Service
+                    </li>
+                    <li>
+                      {<span className="icon-text fullstar">&#9733;</span>}
+                      {<span className="icon-text fullstar">&#9733;</span>}
+                      {<span className="icon-text fullstar">&#9733;</span>}=
+                      Great Service
+                    </li>
+                    <li />
+                  </ul>
+                </div>
+                <div className="form-box box-2">
+                  <p>Who was your Contractor?</p>
+                  <div>
+                    <select
+                      className="select"
+                      value={contractorId}
+                      onChange={e => handleChange(e.target.value)}
+                    >
+                      {props.contractor.map(contractor => (
+                        <option
+                          value={contractor.id}
+                          onChange={e => handleChange(e.target.value)}
+                        >
+                          {contractor.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <p>Overall Rating</p>
+                    <Rating
+                      emptySymbol={<span className="icon-text">&#9734;</span>}
+                      fullSymbol={
+                        <span className="icon-text fullstar">&#9733;</span>
+                      }
+                      stop={3}
+                      initialRating={stars}
+                      onChange={e => setStars(e)}
+                    />
+                  </div>
+                </div>
+              </div>
+              <textarea
+                className="form-textarea"
+                placeholder="Leave a comment"
+                value={message}
+                onChange={e => setMessage(e.target.value)}
               />
-            </div> */}
 
             {/* <div>
             <h4>Customer Service?</h4>
@@ -160,15 +227,18 @@ function UserFeedback(props) {
             value={message}
             onChange={e => setMessage(e.target.value)}
           />
+              <input type="submit" value="Submit" className="btn btn-primary" />
+            </form>
+          </div>
+        </div>
 
-          <input type="submit" value="Submit" className="btn btn-primary" />
-        </form>
         <div>
-          <h4>The Feedbacks You've given</h4>
+          <h4 className="feedback-user-header">Your Feedback History</h4>
           <div>
             {props.loading ? <p>Loading...</p> : null}
             {props.error ? <p>{props.error}</p> : null}
             {props.feedback.map(feedback => (
+<<<<<<< HEAD
               <div>
                 <h2>{feedback.contractorName}</h2>
                 <Rating
@@ -182,6 +252,43 @@ function UserFeedback(props) {
                 <button onClick={e => deleteFeedback(feedback)}>
                   Delete Feedback
                 </button>
+=======
+              <div key={feedback.id} className="user-feedback-container">
+                <p>Contractor: {feedback.contractorName}</p>
+                <div>
+                  Rating:{' '}
+                  <Rating
+                    emptySymbol={<span className="icon-text">&#9734;</span>}
+                    fullSymbol={
+                      <span className="icon-text fullstar">&#9733;</span>
+                    }
+                    readonly
+                    initialRating={feedback.stars}
+                    stop={3}
+                  />
+                  {'\n'}
+                  <div className="feedback-context">
+                    <p>
+                      <span className="quotes">"</span>
+                      {feedback.message}
+                      <span className="quotes">"</span>
+                    </p>
+                  </div>
+                  <div className="posted-user">
+                    <div>
+                      <button
+                        className="btn delete-btn"
+                        onClick={e => deleteFeedback(feedback)}
+                      >
+                        Delete Feedback
+                      </button>
+                    </div>
+                    <div>
+                      Posted:{' '}
+                      {dateFns.format(feedback.createdAt, 'MMM DD YYYY')}
+                    </div>
+                  </div>
+                </div>
               </div>
             ))}
           </div>

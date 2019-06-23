@@ -44,7 +44,7 @@ function App(props) {
           path="/app"
           component={props.user.contractorId ? NavBarContractor : NavBarUser}
         />
-        <Route exact path="/app" component={UserLandingPage} />
+        <Route path="/app" component={UserLandingPage} />
         <Route exact path="/app/contractors" component={ContractorList} />
         <Route path="/app/contractors/:id" component={Contractor} />
         <Route path="/login" component={Login} />

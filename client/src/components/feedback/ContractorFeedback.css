@@ -9,7 +9,7 @@
 .feedback-body h2 {
   text-align: center;
 }
-.contractor-feedback-container {
+.feedback-container {
   padding: 1rem 2rem;
   margin: 1rem;
   border-bottom: 2px solid var(--secondary-color);
@@ -23,26 +23,37 @@
   justify-content: space-between;
 }
 
-.contractor-feedback-context {
+.feedback-context {
   width: 100%;
   height: auto;
-  margin-top: 2rem;
+  margin-top: 1rem;
+  color: grey;
 }
 
 .quotes {
   font-style: bold;
   font-weight: 300;
   font-size: 1.5rem;
+  color: black;
 }
 
-/* @media (max-width: 1000px) {
-  .contractor-feedback-container {
+.fullstar {
+  color: var(--primary-color);
+}
+
+.posted {
+  margin-top: 1.5rem;
+  text-align: right;
+}
+
+@media (max-width: 1000px) {
+  .feedback-container {
     width: 600px;
   }
 }
 
 @media (max-width: 800px) {
-  .contractor-feedback-container {
-    width: 80%
+  .feedback-container {
+    width: 100%;
   }
-} */
+}
