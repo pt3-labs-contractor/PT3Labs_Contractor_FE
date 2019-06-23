@@ -4,8 +4,10 @@ import Rating from 'react-rating';
 import NavBarContractor from '../navbar/NavBarContractor';
 import './ContractorFeedback.css';
 import TopNavbar from '../navbar/TopNavbar';
+import dateFns from 'date-fns';
 
 function ContractorFeedback(props) {
+  console.log(props);
   return (
     <>
       <TopNavbar />
@@ -13,9 +15,9 @@ function ContractorFeedback(props) {
       <div className="main-body">
         <div className="feedback-body-contractor">
           <h2 className="main-header-title">Reviews</h2>
-          {props.Feedback.map(feedback => (
-            <div className="contractor-feedback-container">
-              By: {feedback.username}
+          {props.feedback.map(feedback => (
+            <div key={feedback.id} className="feedback-container">
+              Client: {feedback.username}
               {'\n'}
               <div>
                 Rating:{' '}
@@ -29,12 +31,15 @@ function ContractorFeedback(props) {
                   stop={3}
                 />
                 {'\n'}
-                <div className="contractor-feedback-context">
+                <div className="feedback-context">
                   <p>
                     <span className="quotes">"</span>
                     {feedback.message}
                     <span className="quotes">"</span>
                   </p>
+                </div>
+                <div className="posted">
+                  Posted: {dateFns.format(feedback.createdAt, 'MMM DD YYYY')}
                 </div>
               </div>
             </div>
@@ -47,7 +52,7 @@ function ContractorFeedback(props) {
 
 const mapStateToProps = state => {
   return {
-    Feedback: state.feedback,
+    feedback: state.feedback,
     loading: state.loading,
     error: state.error,
   };

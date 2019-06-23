@@ -18,6 +18,10 @@
   color: white;
 }
 
+.logout:hover {
+  opacity: .6;
+}
+
 @media (max-width: 800px) {
   .topnav {
     margin-left: 60px;

@@ -20,6 +20,10 @@ a {
   text-decoration: none;
 }
 
+a:hover{
+  opacity: .75;
+}
+
 .navbar a {
   text-decoration: none;
   color: var(--light-color);
@@ -49,6 +53,10 @@ img {
 
 .btn:hover {
   opacity: 0.8;
+}
+
+.delete-btn {
+  background-color: var(--danger-color)
 }
 
 .main-body {

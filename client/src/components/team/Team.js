@@ -74,7 +74,7 @@ export default function Team() {
                 className="card-img"
               />
               <img
-                src="images/profile1.png"
+                src="images/ed1.jpg"
                 alt="profile1 img"
                 className="profile-img"
               />
@@ -158,7 +158,7 @@ export default function Team() {
                 className="card-img"
               />
               <img
-                src="images/profile1.png"
+                src="images/daniel1.jpg"
                 alt="profile1 img"
                 className="profile-img"
               />

@@ -1,0 +1,33 @@
+.appointment-info {
+  background-color: var(--dark-color);
+  opacity: .9;
+  color: white;
+}
+
+.appointment-heading {
+  background-color: var(--dark-color);
+  margin-left: 1rem;
+  padding: 1rem 0;
+}
+
+.appointment-heading h4 {
+  color: var(--primary-color);
+  background-color: var(--dark-color);
+  font-size: 2rem;
+}
+
+.appointment-body {
+  display: flex;
+  padding: 19px;
+  background-color: lightgrey;
+}
+
+.appointment-item {
+  display: flex;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.appointment-item h4{
+  font-size: 1.5rem;
+}

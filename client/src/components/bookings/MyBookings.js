@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import NavBarUser from '../navbar/NavBarUser';
 import TopNavbar from '../navbar/TopNavbar';
+import './MyBookings.css';
 
 function MyBookings(props) {
   const sendText = () => {
