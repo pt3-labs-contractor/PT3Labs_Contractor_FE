@@ -107,59 +107,6 @@ const Schedule = props => {
       // props.getSize(el.getBoundingClientRect());
     }
   };
-  // const refCallback = el => {
-  //   if (el) {
-  //     const loc = el.getBoundingClientRect();
-  //     const ref = { element: el, id: el.id, pos: loc };
-  //     if (refs) {
-  //       const find = refs.find(r => {
-  //         return r.element.id === el.id;
-  //       });
-  //       if (find) {
-  //         const locString = JSON.stringify(loc);
-  //         const posString = JSON.stringify(find.pos);
-  //         if (posString !== locString) {
-  //           const newRef = { ...find, pos: loc };
-  //           const remove = refArray.filter(r => {
-  //             return r.element.id !== el.id;
-  //           });
-  //           const finalRefs = [...remove, newRef];
-  //           // console.log(finalRefs);
-  //           refArray = finalRefs;
-  //           if (el.parentElement.lastChild === el) {
-  //             props.setRefs(refArray);
-  //           }
-  //           // props.setRefs(finalRefs);
-  //         }
-  //       } else {
-  //         const newSize = [...refs];
-  //         if (newSize.length > 0) {
-  //           const xs = newSize.map(s => {
-  //             return s.id;
-  //           });
-  //           if (!xs.includes(ref.id)) {
-  //             const modSize = [...newSize, ref];
-  //             // props.setRefs(modSize);
-  //             refArray = modSize;
-  //             if (el.parentElement.lastChild === el) {
-  //               console.log('ran');
-  //               props.setRefs(refArray);
-  //             }
-  //           }
-  //         }
-  //       }
-  //     } else {
-  //       // setSize([loc]);
-  //       // props.setRefs([ref]);
-  //       refArray.push(ref);
-  //       if (el.parentElement.lastChild === el) {
-  //         props.setRefs(refArray);
-  //       }
-  //     }
-  //
-  //     // props.getSize(el.getBoundingClientRect());
-  //   }
-  // };
 
   const confirmed = apps.filter(a => {
     if (a.confirmed === true) {
@@ -206,6 +153,7 @@ const Schedule = props => {
                   setServIdUp={props.setServIdUp}
                   setPosition={props.setPosition}
                   confirmed={a.confirmed}
+                  temp={props.temp}
                 />
               </div>
             );

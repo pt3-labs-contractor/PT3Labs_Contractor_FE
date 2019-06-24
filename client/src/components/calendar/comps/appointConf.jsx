@@ -62,7 +62,6 @@ const AppInfo = props => {
     if (minutes) {
       dur = `${minutes / 60}h`;
     }
-    console.log(dur);
     const returnObj = {
       startTime,
       duration: dur,
@@ -74,12 +73,43 @@ const AppInfo = props => {
       duration: dur,
       open: false,
     };
-    console.log(returnObj, scheduleLock);
     props.confirmApp(id, returnObj);
     props.updateSchedule(scheduleId, scheduleLock);
     // props.deleteSchedule(scheduleI;
     returnToCal();
   };
+
+  // const pending = e => {
+  //   e.preventDefault();
+  //   const { id, startTime, duration, scheduleId } = theAppoint;
+  //   let dur;
+  //   const { hours } = duration;
+  //   const { minutes } = duration;
+  //   if (hours && minutes) {
+  //     dur = `${(hours * 60 + minutes) / 60}h`;
+  //   }
+  //   if (hours) {
+  //     dur = `${hours}h`;
+  //   }
+  //   if (minutes) {
+  //     dur = `${minutes / 60}h`;
+  //   }
+  //   const returnObj = {
+  //     startTime,
+  //     duration: dur,
+  //     confirmed: null,
+  //   };
+  //
+  //   const scheduleUnLock = {
+  //     startTime,
+  //     duration: dur,
+  //     open: true,
+  //   };
+  //   props.confirmApp(id, returnObj);
+  //   props.updateSchedule(scheduleId, scheduleUnLock);
+  //   // props.deleteSchedule(scheduleI;
+  //   returnToCal();
+  // };
 
   const unConfirm = e => {
     e.preventDefault();

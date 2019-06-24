@@ -1,7 +1,7 @@
 .cal {
   padding-top: 100px;
   width: 90%;
-  /* max-width: 800px; */
+  max-width: 1000px;
   margin: 0 auto;
   /* margin: 0 20px; */
   /* max-height: 70vh; */
@@ -33,7 +33,7 @@
 }
 
 .cel {
-  height: 6.5vh;
+  height: 57px;
   overflow: hidden;
 }
 
@@ -84,6 +84,7 @@
   margin-top: 0px;
   margin-bottom: 5px;
   padding: 2px;
+  padding-right: 20px;
   border-radius: 5px;
   color: black;
   width: 100%;
@@ -278,4 +279,59 @@
 
 .disabled {
   pointer-events: none;
+}
+
+.date {
+  margin-bottom: 5px;
+}
+
+.today {
+  background-color: #555555;
+  color: white;
+  border-radius: 50%;
+}
+
+.pend {
+  opacity: 1;
+  animation: fade 3s infinite;
+}
+
+@keyframes fade {
+  0%,
+  100% {
+    background-color: rgba(173, 140, 233, 0);
+  }
+  50% {
+    background-color: rgba(173, 140, 233, 0.4);
+  }
+}
+
+.open {
+  opacity: 1;
+  animation: open 3s infinite;
+}
+
+@keyframes open {
+  0%,
+  100% {
+    background-color: rgba(73, 182, 117, 0);
+  }
+  50% {
+    background-color: rgba(73, 182, 117, 0.3);
+  }
+}
+
+.closed {
+  opacity: 1;
+  animation: closed 3s infinite;
+}
+
+@keyframes closed {
+  0%,
+  100% {
+    background-color: rgba(1, 1, 1, 0);
+  }
+  50% {
+    background-color: rgba(1, 1, 1, 0.5);
+  }
 }

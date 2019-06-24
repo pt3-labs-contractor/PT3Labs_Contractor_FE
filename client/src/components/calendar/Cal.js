@@ -43,6 +43,8 @@ function ContCalendar(props) {
   let [refArray, setRefArray] = useState([]);
   // const ref = React.createRef();
   const [render, setRender] = useState();
+  const [filter, setFilter] = useState();
+  const [fullFilter, setFullFilter] = useState();
   useEffect(() => {
     console.log('ran');
     // setId(props.id);
@@ -94,16 +96,18 @@ function ContCalendar(props) {
             const xs = newSize.map(s => {
               return s.id;
             });
+            let eOm = dateFns.endOfMonth(selectedMonth);
+            eOm = dateFns.startOfDay(eOm);
+            eOm = String(eOm);
+            eOm = eOm.split(' ').join('');
             if (!xs.includes(ref.id)) {
               const modSize = [...newSize, ref];
               refArray = modSize;
-              let eOm = dateFns.endOfMonth(selectedMonth);
-              eOm = dateFns.startOfDay(eOm);
-              eOm = String(eOm);
-              eOm = eOm.split(' ').join('');
               if (ref.id === eOm) {
                 props.setRefs(refArray);
               }
+            } else if (ref.id === eOm) {
+              props.setRefs(refArray);
             }
           } else {
             refArray = [ref];
@@ -121,7 +125,6 @@ function ContCalendar(props) {
       // props.getSize(el.getBoundingClientRect());
     }
   };
-  console.log(props.refs);
 
   const startEndId = (start, end, id) => {
     setStart(start);
@@ -192,6 +195,28 @@ function ContCalendar(props) {
     return <div className="day-container">{days}</div>;
   }
 
+  const handleFilterClick = e => {
+    setFullFilter(null);
+    if (e.target.className === 'pendingApp') {
+      setFilter(props.appointments);
+    } else if (
+      e.target.className === 'openDays' ||
+      e.target.className === 'closedDays'
+    ) {
+      setFilter(props.schedules);
+    }
+  };
+
+  const handleFullClick = e => {
+    setFilter(null);
+    setFullFilter(props.schedules);
+  };
+
+  const handleAllDays = e => {
+    setFilter(null);
+    setFullFilter(null);
+  };
+
   function DaysOfMonth() {
     const startMonth = dateFns.startOfMonth(selectedMonth);
     const endMonth = dateFns.endOfMonth(selectedMonth);
@@ -213,6 +238,74 @@ function ContCalendar(props) {
       const dayApp = props.appointments.filter(a => {
         return dateFns.isSameDay(a.startTime, temp);
       });
+      let aIds = [];
+      if (filter) {
+        if (filter[0].scheduleId) {
+          aIds = filter.map(a => {
+            return a.id;
+          });
+        }
+        if (filter[0].id) {
+          aIds = filter.map(a => {
+            return a.id;
+          });
+        }
+      }
+      let fFilterIds = [];
+      if (fullFilter) {
+        if (fullFilter[0].id) {
+          fFilterIds = fullFilter.map(a => {
+            return a.id;
+          });
+        }
+      }
+
+      const theSSched = daySched.filter(a => {
+        return fFilterIds.includes(a.id);
+      });
+
+      const theApp = dayApp.filter(a => {
+        return aIds.includes(a.id);
+      });
+
+      const theSched = daySched.filter(a => {
+        return aIds.includes(a.id);
+      });
+
+      let pending = [];
+      let open = [];
+      let closed = [];
+      if (theApp) {
+        pending = theApp.filter(a => {
+          return a.confirmed !== true;
+        });
+      }
+      if (theSched) {
+        const theOpen = theSched.filter(s => {
+          return s.open === true;
+        });
+        const pendingApp = daySched.map(s => {
+          return dayApp.filter(a => {
+            return dateFns.isSameHour(a.startTime, s.startTime);
+          });
+        });
+        const zeroLengthApp = pendingApp.filter(a => {
+          return a.length !== 0;
+        });
+        if (zeroLengthApp.length < daySched.length) {
+          open = theOpen;
+        }
+      }
+      if (theSSched) {
+        const theOpen = theSSched.filter(s => {
+          return s.open === false;
+        });
+
+        if (theOpen.length === daySched.length) {
+          closed = theOpen;
+        }
+      }
+
       days.push(
         <div
           key={temp}
@@ -222,13 +315,21 @@ function ContCalendar(props) {
           className={`spacer ${
             isSameDay
               ? ' selected day'
+              : pending.length > 0
+              ? 'pend'
+              : open.length > 0
+              ? 'open'
+              : closed.length > 0
+              ? 'closed'
               : !dateFns.isSameMonth(temp, selectedMonth)
               ? 'disable'
               : ''
           }`}
           onClick={() => handleSelect(temp)}
         >
-          {dateFns.format(day, 'D')}
+          <div className={`date ${dateFns.isToday(day) ? 'today' : null}`}>
+            {dateFns.format(day, 'D')}
+          </div>
           <div
             className={`add ${!isSameDay ? 'disabled' : null}`}
             data-day={id}
@@ -265,7 +366,7 @@ function ContCalendar(props) {
               />
             ) : null}
           </div>
-          {daySched.length > 1 || (daySched.length > 0 && dayApp.length > 0) ? (
+          {daySched.length > 2 || (daySched.length > 1 && dayApp.length > 0) ? (
             <>
               <div
                 className={`downCont ${
@@ -294,6 +395,7 @@ function ContCalendar(props) {
         </div>
       );
       day = dateFns.addDays(day, 1);
+      // console.log(state.appointments);
     }
 
     return <div className="cell-container">{days}</div>;
@@ -319,6 +421,20 @@ function ContCalendar(props) {
       <TopNavbar />
       <NavBarContractor />
       <div className="main-body">
+        <div className="filterButtons">
+          <button className="pendingApp" onClick={handleFilterClick}>
+            Pending Appointments
+          </button>
+          <button className="openDays" onClick={handleFilterClick}>
+            Open Days
+          </button>
+          <button className="closedDays" onClick={handleFullClick}>
+            Fully Booked Days
+          </button>
+          <button className="wholeCal" onClick={handleAllDays}>
+            All Days
+          </button>
+        </div>
         <div className="cal">
           <CalendarNav />
           <DaysOfWeek />
@@ -339,7 +455,7 @@ function ContCalendar(props) {
             )}
           />
           <DaysOfMonth />
-          <ServiceForm />
+          {/* <ServiceForm /> */}
           <Route
             exact
             path="/contractorCalendar/newSched"
