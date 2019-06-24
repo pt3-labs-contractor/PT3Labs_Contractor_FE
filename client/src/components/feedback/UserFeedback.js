@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import Rating from 'react-rating';
 import NavBarUser from '../navbar/NavBarUser';
@@ -12,9 +12,14 @@ function UserFeedback(props) {
   const { id } = props.user;
   const currentStar = 0;
   const [stars, setStars] = useState(currentStar);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState([]);
   const [contractorId, setContractorId] = useState('');
-  // console.log(props)
+  console.log(props);
+
+  const stringify = JSON.stringify(props.feedback);
+  useEffect(() => {
+    props.getFeedback();
+  }, [stringify]);
 
   function deleteFeedback(feedback) {
     // feedback.preventDefault();
@@ -45,7 +50,6 @@ function UserFeedback(props) {
       <div className="main-body">
         <div className="feedback-body-user">
           <h2 className="main-header-title">Feedback</h2>
-
           <div>
             <form onSubmit={handleSubmit} className="feedback-form-container">
               <h3 className="feedback-form-header">
