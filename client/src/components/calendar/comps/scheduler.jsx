@@ -51,6 +51,7 @@ const Scheduler = props => {
     };
     props.postNewSchedule(newSchedule);
     console.log(newSchedule);
+    console.log(props.user);
     close();
   };
   const close = () => {

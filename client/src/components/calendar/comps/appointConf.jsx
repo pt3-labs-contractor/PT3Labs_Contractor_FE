@@ -11,14 +11,18 @@ import {
 import './appointConf.css';
 
 const AppInfo = props => {
-  const [sevId, setSevId] = useState();
+  // const [sevId, setSevId] = useState();
 
   const theAppoint = props.appointments.find(a => {
     return a.id === props.appId;
   });
 
+  const allConfirmCheck = props.appointments.filter(a => {
+    return a.startTime === theAppoint.startTime;
+  });
+
   useEffect(() => {
-    setSevId(props.sevId);
+    // setSevId(props.sevId);
     props.getUser(theAppoint.userId);
   }, [props.sevId, theAppoint.id]);
 
@@ -62,7 +66,6 @@ const AppInfo = props => {
     if (minutes) {
       dur = `${minutes / 60}h`;
     }
-    console.log(dur);
     const returnObj = {
       startTime,
       duration: dur,
@@ -74,12 +77,43 @@ const AppInfo = props => {
       duration: dur,
       open: false,
     };
-    console.log(returnObj, scheduleLock);
     props.confirmApp(id, returnObj);
     props.updateSchedule(scheduleId, scheduleLock);
     // props.deleteSchedule(scheduleI;
     returnToCal();
   };
+
+  // const pending = e => {
+  //   e.preventDefault();
+  //   const { id, startTime, duration, scheduleId } = theAppoint;
+  //   let dur;
+  //   const { hours } = duration;
+  //   const { minutes } = duration;
+  //   if (hours && minutes) {
+  //     dur = `${(hours * 60 + minutes) / 60}h`;
+  //   }
+  //   if (hours) {
+  //     dur = `${hours}h`;
+  //   }
+  //   if (minutes) {
+  //     dur = `${minutes / 60}h`;
+  //   }
+  //   const returnObj = {
+  //     startTime,
+  //     duration: dur,
+  //     confirmed: null,
+  //   };
+  //
+  //   const scheduleUnLock = {
+  //     startTime,
+  //     duration: dur,
+  //     open: true,
+  //   };
+  //   props.confirmApp(id, returnObj);
+  //   props.updateSchedule(scheduleId, scheduleUnLock);
+  //   // props.deleteSchedule(scheduleI;
+  //   returnToCal();
+  // };
 
   const unConfirm = e => {
     e.preventDefault();
@@ -102,13 +136,28 @@ const AppInfo = props => {
       confirmed: false,
     };
 
-    const scheduleUnLock = {
-      startTime,
-      duration: dur,
-      open: true,
-    };
-    props.confirmApp(id, returnObj);
-    props.updateSchedule(scheduleId, scheduleUnLock);
+    const check = allConfirmCheck.filter(a => {
+      return a.confirmed;
+    });
+
+    const ids = check.map(a => {
+      return a.id;
+    });
+
+    let scheduleUnLock;
+
+    if (ids.length === 1 && ids.includes(id)) {
+      scheduleUnLock = {
+        startTime,
+        duration: dur,
+        open: true,
+      };
+
+      props.confirmApp(id, returnObj);
+      props.updateSchedule(scheduleId, scheduleUnLock);
+    } else {
+      props.confirmApp(id, returnObj);
+    }
     // props.deleteSchedule(scheduleI;
     returnToCal();
   };

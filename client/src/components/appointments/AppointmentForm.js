@@ -39,7 +39,6 @@ function AppointmentForm(props) {
         startTime,
         duration: `${dur}h`,
       };
-      console.log(appointment);
       axios
         .post(
           'https://fierce-plains-47590.herokuapp.com/api/appointments',
