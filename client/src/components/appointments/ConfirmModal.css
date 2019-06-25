@@ -6,7 +6,7 @@
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.25);
   display: none;
-  z-index: 3;
+  z-index: 15;
 }
 
 .modal.active {
@@ -24,4 +24,13 @@
   justify-content: center;
   align-items: center;
   color: #000;
+}
+
+.modal-btn-container {
+  display: flex;
+}
+
+.modal-btn-container button {
+  width: 50px;
+  margin: 10px 10px;
 }

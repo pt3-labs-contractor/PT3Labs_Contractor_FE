@@ -48,6 +48,20 @@ function UserLandingPage(props) {
   ];
 
   useEffect(() => {
+    if (mql) {
+      const container = document.querySelector('.user.container');
+      container.addEventListener('touchmove', e => {
+        e.preventDefault();
+      });
+      container.addEventListener('wheel', e => {
+        e.preventDefault();
+      });
+      scroll(serviceTarget.current);
+      setTarget(0);
+    }
+  }, []);
+
+  useEffect(() => {
     const dateString = dateFns.format(props.selectedDay, 'YYYY-MM-DD');
     props.fetchAvailabilityByDay(dateString);
     clearAppointment();
@@ -162,7 +176,7 @@ function UserLandingPage(props) {
             Back
           </div>
         ) : null}
-        <AppointmentList />
+        {!mql && <AppointmentList />}
       </div>
     </>
   );

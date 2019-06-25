@@ -58,27 +58,34 @@ function ContractorList(props) {
     <div className="contractor-list container">
       <div className="list-header">
         <h3>Contractors:</h3>
-        <button
-          className="btn"
-          onClick={() => pageChange(-1)}
-          disabled={pageNum <= 0}
-        >
-          Page down
-        </button>
-        <button
-          className="btn"
-          onClick={() => pageChange(1)}
-          disabled={pageNum >= contractorList.length - 1}
-        >
-          Page up
-        </button>
+        <div className="btn-container">
+          <button
+            className="btn"
+            onClick={() => pageChange(-1)}
+            disabled={pageNum <= 0}
+          >
+            Page
+            <br />
+            down
+          </button>
+          <button
+            className="btn"
+            onClick={() => pageChange(1)}
+            disabled={pageNum >= contractorList.length - 1}
+          >
+            Page
+            <br />
+            up
+          </button>
+        </div>
       </div>
-      {props.loading ? <p>Loading...</p> : null}
-      {props.error ? <p>{props.error}</p> : null}
-      {list.map(contractor =>
-        props.userLanding ? (
-          <div key={contractor.id}>
+      <div className="contractor-list-container">
+        {props.loading ? <p>Loading...</p> : null}
+        {props.error ? <p>{props.error}</p> : null}
+        {list.map(contractor =>
+          props.userLanding ? (
             <div
+              key={contractor.id}
               ref={contractorRef.current[contractor.id]}
               className={
                 'contractor-card-container' +
@@ -91,13 +98,13 @@ function ContractorList(props) {
             >
               <ContractorCard contractor={contractor} />
             </div>
-          </div>
-        ) : (
-          <Link to={`/app/contractors/${contractor.id}`} key={contractor.id}>
-            <ContractorCard contractor={contractor} />
-          </Link>
-        )
-      )}
+          ) : (
+            <Link to={`/app/contractors/${contractor.id}`} key={contractor.id}>
+              <ContractorCard contractor={contractor} />
+            </Link>
+          )
+        )}
+      </div>
     </div>
   );
 }
