@@ -7,6 +7,7 @@ import { getFeedback, postFeedback, deleteFeedback } from '../../actions/index';
 
 import TopNavbar from '../navbar/TopNavbar';
 import dateFns from 'date-fns';
+import Pagination from './Pagination';
 
 function UserFeedback(props) {
   const { id } = props.user;
@@ -14,12 +15,6 @@ function UserFeedback(props) {
   const [stars, setStars] = useState(currentStar);
   const [message, setMessage] = useState([]);
   const [contractorId, setContractorId] = useState('');
-  console.log(props);
-
-  const stringify = JSON.stringify(props.feedback);
-  useEffect(() => {
-    props.getFeedback();
-  }, [stringify]);
 
   function deleteFeedback(feedback) {
     // feedback.preventDefault();
@@ -42,6 +37,10 @@ function UserFeedback(props) {
 
     // console.log(props)
   }
+
+  useEffect(() => {
+    props.getFeedback();
+  }, []);
 
   return (
     <>
@@ -86,6 +85,7 @@ function UserFeedback(props) {
                     >
                       {props.contractor.map(contractor => (
                         <option
+                          key={contractor.id}
                           value={contractor.id}
                           onChange={e => handleChange(e.target.value)}
                         >

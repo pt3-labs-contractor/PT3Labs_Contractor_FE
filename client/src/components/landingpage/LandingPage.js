@@ -14,7 +14,7 @@ function LandingPage() {
               aim to eliminate the stress of finding and booking a contractor.
             </p>
             <div className="button">
-              <NavLink to="/signup" className="btn btn-primary">
+              <NavLink to="/register" className="btn btn-primary">
                 Sign Up
               </NavLink>
               <NavLink to="/login" className="btn btn-light">
