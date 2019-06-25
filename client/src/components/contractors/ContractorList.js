@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import './ContractorList.css';
@@ -6,11 +6,14 @@ import './ContractorList.css';
 import ContractorCard from './ContractorCard';
 // import NavBarUser from './components/navbar/NavBarUser';
 
+import { setPosition } from '../../actions/index';
 
 function ContractorList(props) {
   const [pageNum, setPageNum] = useState(0);
   const [contractorList, setContractors] = useState([]);
   const [list, setList] = useState([]);
+  const [select, setSelect] = useState({});
+  const contractorRef = useRef({});
 
   useEffect(() => {
     const { contractors } = props;
@@ -34,37 +37,74 @@ function ContractorList(props) {
     setList(contractorList[pageNum] || []);
   }, [pageNum, contractorList]);
 
+  const selectElement = id => {
+    if (select !== id) {
+      setSelect(id);
+      new Promise((resolve, reject) => {
+        contractorRef.current[id] = React.createRef();
+        resolve(contractorRef.current[id]);
+      }).then(element => {
+        // console.log(element.current.getBoundingClientRect());
+        props.setPosition(element.current.getBoundingClientRect());
+      });
+    }
+  };
+
   const pageChange = dir => {
     setPageNum(pageNum + dir);
   };
 
   return (
     <div className="contractor-list container">
-      <h3>Contractors:</h3>
-      <button onClick={() => pageChange(-1)} disabled={pageNum <= 0}>
-        Page down
-      </button>
-      <button
-        onClick={() => pageChange(1)}
-        disabled={pageNum >= contractorList.length - 1}
-      >
-        Page up
-      </button>
-      {props.loading ? <p>Loading...</p> : null}
-      {props.error ? <p>{props.error}</p> : null}
-      {list.map(contractor =>
-        props.userLanding ? (
-          <div key={contractor.id}>
-            <div onClick={() => props.selectContractor(contractor)}>
+      <div className="list-header">
+        <h3>Contractors:</h3>
+        <div className="btn-container">
+          <button
+            className="btn"
+            onClick={() => pageChange(-1)}
+            disabled={pageNum <= 0}
+          >
+            Page
+            <br />
+            down
+          </button>
+          <button
+            className="btn"
+            onClick={() => pageChange(1)}
+            disabled={pageNum >= contractorList.length - 1}
+          >
+            Page
+            <br />
+            up
+          </button>
+        </div>
+      </div>
+      <div className="contractor-list-container">
+        {props.loading ? <p>Loading...</p> : null}
+        {props.error ? <p>{props.error}</p> : null}
+        {list.map(contractor =>
+          props.userLanding ? (
+            <div
+              key={contractor.id}
+              ref={contractorRef.current[contractor.id]}
+              className={
+                'contractor-card-container' +
+                `${select === contractor.id ? ' selected' : ''}`
+              }
+              onClick={() => {
+                props.selectContractor(contractor);
+                selectElement(contractor.id);
+              }}
+            >
               <ContractorCard contractor={contractor} />
             </div>
-          </div>
-        ) : (
-          <Link to={`/app/contractors/${contractor.id}`} key={contractor.id}>
-            <ContractorCard contractor={contractor} />
-          </Link>
-        )
-      )}
+          ) : (
+            <Link to={`/app/contractors/${contractor.id}`} key={contractor.id}>
+              <ContractorCard full contractor={contractor} />
+            </Link>
+          )
+        )}
+      </div>
     </div>
   );
 }
@@ -78,4 +118,7 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(ContractorList);
+export default connect(
+  mapStateToProps,
+  { setPosition }
+)(ContractorList);

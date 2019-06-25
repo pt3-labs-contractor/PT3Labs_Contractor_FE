@@ -17,7 +17,7 @@ export const CONFIRMED_APP = 'CONFIRMED_APP';
 export const GETTING_USER_SUCC = 'GETTING_USER_SUCC';
 export const GETTING_USER = 'GETTING_USER';
 export const REFS = 'REFS';
-export const LOGOUTUSER = 'LOGOUTUSER'
+export const LOGOUTUSER = 'LOGOUTUSER';
 
 // exports for fetching all users
 export const LOADING = 'LOADING';
@@ -32,6 +32,8 @@ export const SET_SCHEDULE = 'SET_SCHEDULE';
 export const SET_SORTED_CONTRACTORS = 'SET_SORTED_CONTRACTORS';
 export const SET_SERVICE_SORT = 'SET_SERVICE_SORT';
 
+export const SET_CONTRACTOR_POSITION = 'SET_CONTRACTOR_POSITION';
+
 // export for services
 export const SET_SERVICES = 'SET_SERVICES';
 
@@ -39,10 +41,10 @@ export const SET_SERVICES = 'SET_SERVICES';
 export const FETCH_SINGLE_CONTRACTOR_SUCCESS =
   'FETCH_SINGLE_CONTRACTOR_SUCCESS';
 
-
-//exports for  feedback
+// exports for  feedback
 export const FEEDBACK_SUCCESS = 'FEEDBACK_SUCCESS';
-export const FETCH_CONTRACTOR_FEEDBACK_SUCCESS = 'FETCH_CONTRACTOR_FEEDBACK_SUCCESS';
+export const FETCH_CONTRACTOR_FEEDBACK_SUCCESS =
+  'FETCH_CONTRACTOR_FEEDBACK_SUCCESS';
 export const POST_FEEDBACK_SUCCESS = 'POST_FEEDBACK_SUCCESS';
 export const DELETE_FEEDBACK_SUCCESS = 'DELETE_FEEDBACK_SUCCESS';
 // exports for retrieving current contractor user appointments
@@ -123,7 +125,7 @@ export const fetchAccts = () => dispatch => {
 };
 
 export const fetchSchedule = id => dispatch => {
-  dispatch({ type: LOADING });
+  // dispatch({ type: LOADING });
   const headers = setHeaders();
   axios
     .get(
@@ -200,7 +202,7 @@ export const selectSingleContractorSetting = id => dispatch => {
   const headers = setHeaders();
 
   axios
-    .get(`https://fierce-plains-47590.herokuapp.com/api/users/${id}`, {
+    .get(`https://fierce-plains-47590.herokuapp.com/api/contractors/${id}`, {
       headers,
     })
     .then(res => {
@@ -228,31 +230,39 @@ export const getFeedback = () => dispatch => {
 };
 
 // axios post feedback about a contractor
-export const postFeedback = (data) => dispatch => {
+export const postFeedback = data => dispatch => {
   dispatch({ type: LOADING });
   const headers = setHeaders();
   // console.log(data)
-  axios.post(`https://fierce-plains-47590.herokuapp.com/api/feedback/${data.contractorId}`, data, {headers})
-  .then(res => {
-    // console.log(res)
-    dispatch({ type: POST_FEEDBACK_SUCCESS, payload: res.data});
-  })
-  .catch(err => dispatch({type: FAILURE, payload: err}))
-}
+  axios
+    .post(
+      `https://fierce-plains-47590.herokuapp.com/api/feedback/${
+        data.contractorId
+      }`,
+      data,
+      { headers }
+    )
+    .then(res => {
+      // console.log(res)
+      dispatch({ type: POST_FEEDBACK_SUCCESS, payload: res.data });
+    })
+    .catch(err => dispatch({ type: FAILURE, payload: err }));
+};
 
-//axios delete feedback about a contractor
-export const deleteFeedback = (id) => dispatch => {
+// axios delete feedback about a contractor
+export const deleteFeedback = id => dispatch => {
   dispatch({ type: LOADING });
   const headers = setHeaders();
 
-  axios.delete(`https://fierce-plains-47590.herokuapp.com/api/feedback/${id}`, {headers})
-  .then(res => {
-    dispatch({ type: DELETE_FEEDBACK_SUCCESS, payload: res.data})
-  })
-  .catch(err=>dispatch({type:FAILURE, payload:err}))
-}
-
-
+  axios
+    .delete(`https://fierce-plains-47590.herokuapp.com/api/feedback/${id}`, {
+      headers,
+    })
+    .then(res => {
+      dispatch({ type: DELETE_FEEDBACK_SUCCESS, payload: res.data });
+    })
+    .catch(err => dispatch({ type: FAILURE, payload: err }));
+};
 
 // axios put request to update users settings
 export const editUserSettings = data => dispatch => {
@@ -260,14 +270,14 @@ export const editUserSettings = data => dispatch => {
   const headers = setHeaders();
 
   axios
-    .put('https://fierce-plains-47590.herokuapp.com/api/users', data, {headers})
+    .put('https://fierce-plains-47590.herokuapp.com/api/users', data, {
+      headers,
+    })
     .then(res => {
       dispatch({ type: EDIT_USER_SUCCESS, payload: res.data });
     })
     .catch(err => dispatch({ type: FAILURE, payload: err }));
 };
-
-
 
 // axios get appointments when current user is contractor
 // export const seeMyAppointments = (id) = dispatch => {
@@ -280,7 +290,7 @@ export const editUserSettings = data => dispatch => {
 //   })
 //   .catch(err => dispatch({ type: FAILURE, payload:err }))
 // }
-//
+
 export const postNewService = serv => {
   return dispatch => {
     dispatch({ type: SEND_SERV });
@@ -426,10 +436,10 @@ export const getUser = id => {
 };
 
 export const logoutUser = () => {
-	return dispatch => {
-		dispatch({type: LOGOUTUSER, payload: ""})
-	}
-}
+  return dispatch => {
+    dispatch({ type: LOGOUTUSER, payload: '' });
+  };
+};
 
 export const setRefs = rfs => {
   return dispatch => {
@@ -443,6 +453,10 @@ export const setDay = day => dispatch => {
 
 export const setMonth = day => dispatch => {
   dispatch({ type: SET_MONTH, payload: day });
+};
+
+export const setPosition = element => dispatch => {
+  dispatch({ type: SET_CONTRACTOR_POSITION, payload: element });
 };
 
 function setHeaders() {

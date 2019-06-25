@@ -3,13 +3,13 @@ import { connect } from 'react-redux';
 import dateFns from 'date-fns';
 import axios from 'axios';
 import PropTypes from 'prop-types';
+import './AppointmentForm.css';
 
 import ConfirmModal from './ConfirmModal';
 
 function AppointmentForm(props) {
   const [confirm, setConfirm] = useState(false);
   const { startTime } = props.appointment;
-  console.log(props.appointment);
 
   function postAppointment(check) {
     if (check) {
@@ -33,7 +33,7 @@ function AppointmentForm(props) {
         dur = `${minutes}`;
       }
       const appointment = {
-        contractorId: props.contractor,
+        contractorId: props.contractor.id,
         serviceId: props.service.id,
         scheduleId: props.appointment.id,
         startTime,
@@ -64,16 +64,20 @@ function AppointmentForm(props) {
           : 'Select date and time.'} */}
       </p>
       <p>
-        {`${props.service.name}: ${props.service.price}`}
+        {`${props.service.name.toUpperCase()}: ${props.service.price}`}
         {/* {props.service.name
           ? `${props.service.name}: ${props.service.price}`
           : null} */}
       </p>
       {dateFns.isValid(new Date(startTime)) &&
-      !props.service.name.includes('something') ? (
-        <button onClick={() => setConfirm(true)}>Set Appointment</button>
+      !props.service.name.includes('service') ? (
+        <button className="set-btn" onClick={() => setConfirm(true)}>
+          Set Appointment
+        </button>
       ) : null}
-      <button onClick={props.clearAppointment}>X</button>
+      <button className="close-btn" onClick={props.clearAppointment}>
+        X
+      </button>
       <ConfirmModal confirm={confirm} postAppointment={postAppointment} />
     </div>
   );
@@ -102,7 +106,7 @@ AppointmentForm.defaultProps = {
   service: {
     id: null,
     contractorId: null,
-    name: 'Pick something motherlover',
+    name: 'Pick a service',
     price: '$--',
     createdAt: null,
   },

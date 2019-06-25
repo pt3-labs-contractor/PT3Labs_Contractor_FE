@@ -1,13 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import Rating from 'react-rating';
 import NavBarContractor from '../navbar/NavBarContractor';
 import './ContractorFeedback.css';
 import TopNavbar from '../navbar/TopNavbar';
 import dateFns from 'date-fns';
+import { getFeedback } from '../../actions/index';
 
 function ContractorFeedback(props) {
   console.log(props);
+
+  useEffect(() => {
+    props.getFeedback();
+  }, []);
+
   return (
     <>
       <TopNavbar />
@@ -58,4 +64,7 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(ContractorFeedback);
+export default connect(
+  mapStateToProps,
+  { getFeedback }
+)(ContractorFeedback);

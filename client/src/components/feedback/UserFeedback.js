@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import Rating from 'react-rating';
 import NavBarUser from '../navbar/NavBarUser';
@@ -7,14 +7,14 @@ import { getFeedback, postFeedback, deleteFeedback } from '../../actions/index';
 
 import TopNavbar from '../navbar/TopNavbar';
 import dateFns from 'date-fns';
+import Pagination from './Pagination';
 
 function UserFeedback(props) {
   const { id } = props.user;
   const currentStar = 0;
   const [stars, setStars] = useState(currentStar);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState([]);
   const [contractorId, setContractorId] = useState('');
-  // console.log(props)
 
   function deleteFeedback(feedback) {
     // feedback.preventDefault();
@@ -38,6 +38,10 @@ function UserFeedback(props) {
     // console.log(props)
   }
 
+  useEffect(() => {
+    props.getFeedback();
+  }, []);
+
   return (
     <>
       <TopNavbar />
@@ -45,7 +49,6 @@ function UserFeedback(props) {
       <div className="main-body">
         <div className="feedback-body-user">
           <h2 className="main-header-title">Feedback</h2>
-
           <div>
             <form onSubmit={handleSubmit} className="feedback-form-container">
               <h3 className="feedback-form-header">
@@ -82,6 +85,7 @@ function UserFeedback(props) {
                     >
                       {props.contractor.map(contractor => (
                         <option
+                          key={contractor.id}
                           value={contractor.id}
                           onChange={e => handleChange(e.target.value)}
                         >
