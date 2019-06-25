@@ -88,6 +88,7 @@
 .contractor-target .contractor-list .contractor-card-container h3 {
   white-space: nowrap;
   overflow: hidden;
+  margin-right: 10px;
 }
 
 .user-calendar

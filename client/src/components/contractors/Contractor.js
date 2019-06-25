@@ -16,7 +16,7 @@ import {
 } from '../../actions/index';
 
 function Contractor(props) {
-  const [service, setService] = useState({});
+  const [service, setService] = useState({ name: 'Pick a service' });
   const [appointment, setAppointment] = useState({});
   const { id } = props.match.params;
 
@@ -42,7 +42,7 @@ function Contractor(props) {
     <>
       {/* <NavBarContractor /> */}
       <div className="contractor-container">
-        <ContractorCard contractor={props.contractor} />
+        <ContractorCard full contractor={props.contractor} />
         <div className="services-container">
           {props.services.map(service => (
             <div key={service.id} onClick={() => setService(service)}>

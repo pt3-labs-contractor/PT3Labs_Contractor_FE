@@ -100,7 +100,7 @@ function ContractorList(props) {
             </div>
           ) : (
             <Link to={`/app/contractors/${contractor.id}`} key={contractor.id}>
-              <ContractorCard contractor={contractor} />
+              <ContractorCard full contractor={contractor} />
             </Link>
           )
         )}

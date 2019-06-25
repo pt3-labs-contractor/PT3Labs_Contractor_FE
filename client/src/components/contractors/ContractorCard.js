@@ -6,25 +6,35 @@ function ContractorCard(props) {
   const {
     name,
     phoneNumber,
-    // streetAddress,
-    // city,
-    // stateAbbr,
-    // zipCode,
+    streetAddress,
+    city,
+    stateAbbr,
+    zipCode,
   } = props.contractor;
 
   useEffect(() => {
-    const filtered = props.contractor.services.filter(service => {
-      return service.name === props.service;
-    });
-    setService(filtered[0]);
+    if (props.contractor.id) {
+      const filtered = props.contractor.services.filter(service => {
+        return service.name === props.service;
+      });
+      setService(filtered[0]);
+    }
   }, [props.service]);
-
+  console.log('service', service);
   return (
     <div>
       <h3>{name}</h3>
       <address>
         <p>{phoneNumber}</p>
-        {service ? (
+        {props.full ? (
+          <>
+            <p>{streetAddress}</p>
+            <p>
+              {city} {stateAbbr}
+            </p>
+            <p>{zipCode}</p>
+          </>
+        ) : service ? (
           <>
             <p>
               {service.name}: {service.price}

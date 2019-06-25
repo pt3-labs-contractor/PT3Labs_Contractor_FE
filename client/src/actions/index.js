@@ -202,7 +202,7 @@ export const selectSingleContractorSetting = id => dispatch => {
   const headers = setHeaders();
 
   axios
-    .get(`https://fierce-plains-47590.herokuapp.com/api/users/${id}`, {
+    .get(`https://fierce-plains-47590.herokuapp.com/api/contractors/${id}`, {
       headers,
     })
     .then(res => {

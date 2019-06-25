@@ -39,7 +39,7 @@ function NavBarUser(props) {
           <span className="side-listing"> Settings</span>
         </NavLink>
         <NavLink
-          to="/contractorschedule"
+          to="/app/contractors"
           className="side-link"
           activeClassName="current"
         >
