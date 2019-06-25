@@ -3,7 +3,6 @@ import { NavLink } from 'react-router-dom';
 import './NavBarUser.css';
 
 function NavBarUser(props) {
-  // console.log(props);
   return (
     <>
       <div className="sideNav">
@@ -40,7 +39,7 @@ function NavBarUser(props) {
           <span className="side-listing"> Settings</span>
         </NavLink>
         <NavLink
-          to="/contractorschedule"
+          to="/app/contractors"
           className="side-link"
           activeClassName="current"
         >
