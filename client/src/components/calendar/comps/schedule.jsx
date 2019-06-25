@@ -30,6 +30,10 @@ const Schedule = props => {
     return app.scheduleId === id;
   });
 
+  const cancApps = apps.filter(a => {
+    return a.confirmed === false;
+  });
+
   const newEnd = new Date(end);
 
   const setEditData = e => {
@@ -132,7 +136,9 @@ const Schedule = props => {
               className={`timeSlot ${
                 confirmed.length > 0
                   ? 'confirmedDot'
-                  : confirmed.length === 0 && apps.length > 0
+                  : confirmed.length === 0 &&
+                    apps.length > 0 &&
+                    apps.length !== cancApps.length
                   ? 'pendingDot'
                   : 'openDot'
               }`}

@@ -17,6 +17,10 @@ const AppInfo = props => {
     return a.id === props.appId;
   });
 
+  const allConfirmCheck = props.appointments.filter(a => {
+    return a.startTime === theAppoint.startTime;
+  });
+
   useEffect(() => {
     // setSevId(props.sevId);
     props.getUser(theAppoint.userId);
@@ -132,13 +136,28 @@ const AppInfo = props => {
       confirmed: false,
     };
 
-    const scheduleUnLock = {
-      startTime,
-      duration: dur,
-      open: true,
-    };
-    props.confirmApp(id, returnObj);
-    props.updateSchedule(scheduleId, scheduleUnLock);
+    const check = allConfirmCheck.filter(a => {
+      return a.confirmed;
+    });
+
+    const ids = check.map(a => {
+      return a.id;
+    });
+
+    let scheduleUnLock;
+
+    if (ids.length === 1 && ids.includes(id)) {
+      scheduleUnLock = {
+        startTime,
+        duration: dur,
+        open: true,
+      };
+
+      props.confirmApp(id, returnObj);
+      props.updateSchedule(scheduleId, scheduleUnLock);
+    } else {
+      props.confirmApp(id, returnObj);
+    }
     // props.deleteSchedule(scheduleI;
     returnToCal();
   };

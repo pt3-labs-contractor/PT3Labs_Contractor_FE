@@ -13,7 +13,7 @@ import SchduleList from './comps/scheduleList.jsx';
 import EScheduler from './forms/editForm.jsx';
 import PopBoxSched from './popups/popBox.jsx';
 import AppInfo from './comps/appointConf.jsx';
-import './cal.css';
+import './cal.scss';
 
 import { setDay, setMonth, getSchedules, setRefs } from '../../actions/index';
 
@@ -24,6 +24,8 @@ import TopNavbar from '../navbar/TopNavbar.js';
 import NavBarContractor from '../navbar/NavBarContractor.js';
 
 function ContCalendar(props) {
+  const [ahead, setAhead] = useState();
+  const [behind, setBehind] = useState();
   const [x, setX] = useState();
   const [y, setY] = useState();
   const [w, setW] = useState();
@@ -49,12 +51,39 @@ function ContCalendar(props) {
     console.log('ran');
     // setId(props.id);
     props.getSchedules(props.id);
+    monthPendingCheck();
     startEndId(start, end, schedId);
     window.addEventListener('resize', windowResize);
     return () => {
       window.removeEventListener('resize', windowResize);
     };
   }, [stringify, start, props.selectedDay, props.id, win, props.selectedMonth]);
+
+  const monthPendingCheck = () => {
+    const diffMonth = props.appointments.filter(a => {
+      const isSameMonth = dateFns.isSameMonth(a.startTime, props.selectedMonth);
+      if (!isSameMonth) {
+        return a;
+      }
+    });
+    const before = diffMonth.filter(a => {
+      return dateFns.isBefore(a.startTime, props.selectedMonth);
+    });
+    const after = diffMonth.filter(a => {
+      return dateFns.isAfter(a.startTime, props.selectedMonth);
+    });
+
+    if (before.length > 0) {
+      setBehind(true);
+    } else {
+      setBehind(null);
+    }
+    if (after.length > 0) {
+      setAhead(true);
+    } else {
+      setAhead(null);
+    }
+  };
 
   const windowResize = () => {
     if (
@@ -157,6 +186,7 @@ function ContCalendar(props) {
       <div className="calendar-nav">
         {!dateFns.isThisMonth(selectedMonth) ? (
           <div
+            className={`nav ${behind ? 'pend' : null}`}
             onClick={() => {
               setMonth(dateFns.subMonths(selectedMonth, 1));
               setRefArray([]);
@@ -169,6 +199,7 @@ function ContCalendar(props) {
           {dateFns.format(selectedMonth, 'MMMM YYYY')}
         </div>
         <div
+          className={`nav ${ahead ? 'pend' : null}`}
           onClick={() => {
             setMonth(dateFns.addMonths(selectedMonth, 1));
             setRefArray([]);
@@ -197,11 +228,11 @@ function ContCalendar(props) {
 
   const handleFilterClick = e => {
     setFullFilter(null);
-    if (e.target.className === 'pendingApp') {
+    if (e.target.className.includes('pendingApp')) {
       setFilter(props.appointments);
     } else if (
-      e.target.className === 'openDays' ||
-      e.target.className === 'closedDays'
+      e.target.className.includes('openDays') ||
+      e.target.className.includes('closedDays')
     ) {
       setFilter(props.schedules);
     }
@@ -277,24 +308,28 @@ function ContCalendar(props) {
       let closed = [];
       if (theApp) {
         pending = theApp.filter(a => {
-          return a.confirmed !== true;
+          return a.confirmed === null;
         });
       }
       if (theSched) {
         const theOpen = theSched.filter(s => {
           return s.open === true;
         });
-        const pendingApp = daySched.map(s => {
-          return dayApp.filter(a => {
+        const pending = dayApp.filter(a => {
+          return a.confirmed === null;
+        });
+
+        const pendingApp = theOpen.map(s => {
+          return pending.filter(a => {
             return dateFns.isSameHour(a.startTime, s.startTime);
           });
         });
-        const zeroLengthApp = pendingApp.filter(a => {
-          return a.length !== 0;
+
+        pendingApp.forEach(arr => {
+          if (arr.length === 0) {
+            open = theOpen;
+          }
         });
-        if (zeroLengthApp.length < daySched.length) {
-          open = theOpen;
-        }
       }
       if (theSSched) {
         const theOpen = theSSched.filter(s => {
@@ -366,7 +401,8 @@ function ContCalendar(props) {
               />
             ) : null}
           </div>
-          {daySched.length > 2 || (daySched.length > 1 && dayApp.length > 0) ? (
+          {daySched.length > 1 ||
+          (daySched.length >= 1 && dayApp.length > 0) ? (
             <>
               <div
                 className={`downCont ${
@@ -398,7 +434,7 @@ function ContCalendar(props) {
       // console.log(state.appointments);
     }
 
-    return <div className="cell-container">{days}</div>;
+    return <div className="cel-container">{days}</div>;
   }
 
   function handleSelect(day) {
@@ -422,16 +458,16 @@ function ContCalendar(props) {
       <NavBarContractor />
       <div className="main-body">
         <div className="filterButtons">
-          <button className="pendingApp" onClick={handleFilterClick}>
+          <button className="fbutt pendingApp" onClick={handleFilterClick}>
             Pending Appointments
           </button>
-          <button className="openDays" onClick={handleFilterClick}>
+          <button className="fbutt openDays" onClick={handleFilterClick}>
             Open Days
           </button>
-          <button className="closedDays" onClick={handleFullClick}>
+          <button className="fbutt closedDays" onClick={handleFullClick}>
             Fully Booked Days
           </button>
-          <button className="wholeCal" onClick={handleAllDays}>
+          <button className="fbutt wholeCal" onClick={handleAllDays}>
             All Days
           </button>
         </div>

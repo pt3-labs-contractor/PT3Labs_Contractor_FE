@@ -47,7 +47,13 @@ const Appointment = props => {
           >
             <li
               className={`timeSlot ${
-                props.confirmed ? 'confirmedSlot' : 'pendingSlot'
+                props.confirmed === true
+                  ? 'confirmedSlot'
+                  : props.confirmed === null
+                  ? 'pendingSlot'
+                  : props.confirmed === false
+                  ? 'deniedSlot'
+                  : null
               }`}
               data-refid={id}
               data-sevid={props.sevId}

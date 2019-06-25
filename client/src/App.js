@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Route } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
-import './App.css';
+import './App.scss';
 
 import { fetchAccts, getFeedback } from './actions/index';
 import Homepage from './components/homepage/Homepage';
