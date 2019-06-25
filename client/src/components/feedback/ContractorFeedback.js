@@ -1,74 +1,57 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import Rating from 'react-rating';
 import NavBarContractor from '../navbar/NavBarContractor';
 import './ContractorFeedback.css';
 import TopNavbar from '../navbar/TopNavbar';
+import dateFns from 'date-fns';
+import { getFeedback } from '../../actions/index';
 
 function ContractorFeedback(props) {
+  console.log(props);
+
+  const stringify = JSON.stringify(props.feedback);
+  useEffect(() => {
+    props.getFeedback();
+  }, [stringify]);
+
   return (
     <>
       <TopNavbar />
       <NavBarContractor />
-      <div className="main-body feedback-body">
-        <h2>Contractor OWN Feedback Page</h2>
-        {/* {props.loading ? <p>Loading...</p> : null}
-        {props.error ? <p>{props.error}</p> : null}
-        {props.feedback.map(contractor => (
-          <div>
-            Username: {props.feedback.users.username}
-            Rating:{' '}
-            <Rating
-              emptySymbol={<span className="icon-text">&#9734;</span>}
-              fullSymbol={<span className="icon-text">&#9733;</span>}
-              readonly
-              placeholderRating={props.feedback.stars}
-              stop={3}
-            />
-            Message: {props.feedback.message}
-          </div>
-        ))} */}
-        <form className="contractor-feedback-container">
-          <h2>Feedback Form</h2>
-          <div className="feedback-card">
-            <div className="feedback-header">
+      <div className="main-body">
+        <div className="feedback-body-contractor">
+          <h2 className="main-header-title">Reviews</h2>
+          {props.feedback.map(feedback => (
+            <div key={feedback.id} className="feedback-container">
+              Client: {feedback.username}
+              {'\n'}
               <div>
-                <h4>Client: Cindy</h4>
-                <h4>Overall Rating</h4>
+                Rating:{' '}
                 <Rating
                   emptySymbol={<span className="icon-text">&#9734;</span>}
-                  fullSymbol={<span className="icon-text">&#9733;</span>}
+                  fullSymbol={
+                    <span className="icon-text fullstar">&#9733;</span>
+                  }
+                  readonly
+                  initialRating={feedback.stars}
                   stop={3}
                 />
-              </div>
-              <div>
-                <i className="fas fa-pencil-alt" />
-                <i className="far fa-trash-alt" />
+                {'\n'}
+                <div className="feedback-context">
+                  <p>
+                    <span className="quotes">"</span>
+                    {feedback.message}
+                    <span className="quotes">"</span>
+                  </p>
+                </div>
+                <div className="posted">
+                  Posted: {dateFns.format(feedback.createdAt, 'MMM DD YYYY')}
+                </div>
               </div>
             </div>
-          </div>
-          <div className="contractor-feedback-context">
-            <p>Client reviews of the contractor:</p>
-          </div>
-          <div>date:</div>
-        </form>
-
-        {props.Feedback.map(feedback => (
-          <div>
-            By: {feedback.username}
-            {'\n'}
-            Rating:{' '}
-            <Rating
-              emptySymbol={<span className="icon-text">&#9734;</span>}
-              fullSymbol={<span className="icon-text">&#9733;</span>}
-              readonly
-              placeholderRating={feedback.stars}
-              stop={3}
-            />
-            {'\n'}
-            Message: {feedback.message}
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </>
   );
@@ -76,10 +59,13 @@ function ContractorFeedback(props) {
 
 const mapStateToProps = state => {
   return {
-    Feedback: state.feedback,
+    feedback: state.feedback,
     loading: state.loading,
     error: state.error,
   };
 };
 
-export default connect(mapStateToProps)(ContractorFeedback);
+export default connect(
+  mapStateToProps,
+  { getFeedback }
+)(ContractorFeedback);

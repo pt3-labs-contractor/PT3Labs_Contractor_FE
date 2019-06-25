@@ -1,11 +1,20 @@
-.contractor-feedback-container {
-  padding: 1rem 2rem;
+.feedback-body-contractor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin-top: 2rem;
-  margin-bottom: 3rem;
-  background-color: var(--dark-color);
-  color: white;
-  border: 1px solid var(--dark-color);
-  max-width: 400px;
+  letter-spacing: 1.2px;
+}
+
+.feedback-body h2 {
+  text-align: center;
+}
+.feedback-container {
+  padding: 1rem 2rem;
+  margin: 1rem;
+  border-bottom: 2px solid var(--secondary-color);
+  color: black;
+  width: 80%;
 }
 
 .feedback-header {
@@ -14,9 +23,37 @@
   justify-content: space-between;
 }
 
-.contractor-feedback-context {
+.feedback-context {
   width: 100%;
-  height: 200px;
-  border: 1px solid blue;
-  margin-top: 2rem;
+  height: auto;
+  margin-top: 1rem;
+  color: grey;
+}
+
+.quotes {
+  font-style: bold;
+  font-weight: 300;
+  font-size: 1.5rem;
+  color: black;
+}
+
+.fullstar {
+  color: var(--primary-color);
+}
+
+.posted {
+  margin-top: 1.5rem;
+  text-align: right;
+}
+
+@media (max-width: 1000px) {
+  .feedback-container {
+    width: 600px;
+  }
+}
+
+@media (max-width: 800px) {
+  .feedback-container {
+    width: 100%;
+  }
 }

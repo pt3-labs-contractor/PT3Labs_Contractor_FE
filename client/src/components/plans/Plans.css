@@ -1,3 +1,22 @@
+.main-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.main-header-title {
+  font-size: 3rem;
+  font-weight: 100;
+}
+
+.main-header p {
+  margin: 1rem 8rem 0;
+  font-size: 1.2rem;
+  letter-spacing: 1.25px;
+  color: grey;
+}
 .wrapper {
   margin: 5% auto;
   display: flex;
@@ -7,18 +26,22 @@
 .single-price {
   width: 300px;
   height: 400px;
-  background-color: var(--dark-color);
+  /* background-color: var(--dark-color); */
   margin-top: 2%;
   box-shadow: 1px 1px 20px rgba(0,0,0,0.5);
   text-align: center;
-  transition: 0.9s;
+  transition: 0.7s;
+  color: black;
 }
 
 .single-price h2 {
   font-size: 1.5rem;
   color: var(--primary-color);
-  margin-top: 2rem;
   text-transform: uppercase;
+  border: 1px solid black;
+  padding: 1rem;
+  background-color: var(--dark-color);
+  opacity: .9;
 }
 
 .price {
@@ -28,7 +51,7 @@
 
 .price h2 {
   font-size: 38px;
-  color: #FFF;
+  color: black;
 }
 
 .deals {
@@ -39,17 +62,16 @@
   font-size: 14px;
   font-weight: normal;
   text-align: center;
-  color: #FFF;
+  color: black;
   line-height: 1.5;
 }
 
 .single-price:hover {
-  background: var(--secondary-color);
+  background: lightgray;
   color: #FFF;
   box-shadow: 0 0 15px rgba(0,0,0,1);
-  transform: scale(1.1);
+  transform: scale(1.05);
   z-index: 1;
-  border-radius: 25px;
 }
 
 .single-price:hover .price {
@@ -59,29 +81,34 @@
 .single-price a {
   text-decoration: none;
   background: var(--primary-color);
-  color: #FFF;
+  color: var(--secondary-color);
+  border: 1px solid var(--secondary-color);
   padding: .5rem 2.5rem;
   display: inline-block;
-  margin: 10px auto;
+  margin: 1rem auto;
   text-transform: uppercase;
   font-weight: bold;
 }
 
 .single-price:hover a {
-  background: rgba(0,0,0,.4);
+  background: var(--secondary-color);
   color: #FFF;
 }
 
 @media (max-width: 800px) {
   .wrapper {
     flex-direction: column;
+    align-items: center;
+  }
+  .main-header p {
+    margin: 0 2rem;
+    font-size: 1rem;
   }
 }
 
 @media (max-width: 400px) {
   .single-price {
     width: auto;
-    min-width: 150px;
   }
   .single-price a {
     padding: .5rem 1.5rem;

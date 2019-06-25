@@ -20,6 +20,8 @@ import { setDay, setMonth, getSchedules, setRefs } from '../../actions/index';
 import AvailabilityList from '../appointments/AvailabilityList';
 
 import './Calendar.css';
+import TopNavbar from '../navbar/TopNavbar.js';
+import NavBarContractor from '../navbar/NavBarContractor.js';
 
 function ContCalendar(props) {
   const [x, setX] = useState();
@@ -242,64 +244,70 @@ function ContCalendar(props) {
   };
 
   return (
-    <div className="cal">
-      <CalendarNav />
-      <DaysOfWeek />
-      <Route
-        exact
-        path="/contractorCalendar/sched/:id"
-        render={props => (
-          <PopBoxSched
-            {...props}
-            x={x}
-            y={y}
-            w={w}
-            h={h}
-            start={start}
-            end={end}
-            id={schedId}
+    <>
+      <TopNavbar />
+      <NavBarContractor />
+      <div className="main-body">
+        <div className="cal">
+          <CalendarNav />
+          <DaysOfWeek />
+          <Route
+            exact
+            path="/contractorCalendar/sched/:id"
+            render={props => (
+              <PopBoxSched
+                {...props}
+                x={x}
+                y={y}
+                w={w}
+                h={h}
+                start={start}
+                end={end}
+                id={schedId}
+              />
+            )}
           />
-        )}
-      />
-      <DaysOfMonth />
-      {/* <ServiceForm /> */}
-      <Route
-        exact
-        path="/contractorCalendar/newSched"
-        render={props => <Scheduler {...props} x={x} y={y} h={h} w={w} />}
-      />
-      <Route
-        exact
-        path="/contractorCalendar/sched/edit/:id"
-        render={props => (
-          <EScheduler
-            {...props}
-            x={x}
-            y={y}
-            w={w}
-            h={h}
-            start={start}
-            end={end}
-            id={schedId}
+          <DaysOfMonth />
+          <ServiceForm />
+          <Route
+            exact
+            path="/contractorCalendar/newSched"
+            render={props => <Scheduler {...props} x={x} y={y} h={h} w={w} />}
           />
-        )}
-      />
-      <Route
-        exact
-        path="/contractorCalendar/app/:id"
-        render={props => (
-          <AppInfo
-            {...props}
-            sevId={sevAppId}
-            appId={appId}
-            x={x}
-            y={y}
-            w={w}
-            h={h}
+          <Route
+            exact
+            path="/contractorCalendar/sched/edit/:id"
+            render={props => (
+              <EScheduler
+                {...props}
+                x={x}
+                y={y}
+                w={w}
+                h={h}
+                start={start}
+                end={end}
+                id={schedId}
+              />
+            )}
           />
-        )}
-      />
-    </div>
+          <Route
+            exact
+            path="/contractorCalendar/app/:id"
+            render={props => (
+              <AppInfo
+                {...props}
+                sevId={sevAppId}
+                appId={appId}
+                x={x}
+                y={y}
+                w={w}
+                h={h}
+              />
+            )}
+          />
+        </div>
+      </div>
+    </>
   );
 }
 

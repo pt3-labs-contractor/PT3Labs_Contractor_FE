@@ -8,13 +8,18 @@
   align-items: center;
   font-size: 1rem;
   color: white;
-  background-color: lightgrey;
+  background-color: #656475;
   padding: 0 2rem;
-  border-bottom: 1px solid var(--primary-color);
+  border-bottom: 2px solid var(--primary-color);
   top: 0
 }
 .topnav-link a {
   text-decoration: none;
+  color: white;
+}
+
+.logout:hover {
+  opacity: .6;
 }
 
 @media (max-width: 800px) {

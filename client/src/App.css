@@ -3,6 +3,9 @@
   margin: 0;
   padding: 0;
 }
+html {
+  font-family: 'Roboto', sans-serif;
+}
 
 body {
   font-size: 1rem;
@@ -10,6 +13,15 @@ body {
 
 p {
   line-height: 1.25;
+  letter-spacing: 1.25px;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:hover{
+  opacity: .75;
 }
 
 .navbar a {
@@ -43,8 +55,12 @@ img {
   opacity: 0.8;
 }
 
+.delete-btn {
+  background-color: var(--danger-color)
+}
+
 .main-body {
-  margin-left: 210px;
+  margin-left: 200px;
 }
 
 @media (max-width: 800px) {

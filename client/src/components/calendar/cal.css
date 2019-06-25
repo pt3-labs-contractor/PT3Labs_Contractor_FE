@@ -1,7 +1,7 @@
 .cal {
   padding-top: 100px;
-  width: 65%;
-  max-width: 800px;
+  width: 90%;
+  /* max-width: 800px; */
   margin: 0 auto;
   /* margin: 0 20px; */
   /* max-height: 70vh; */
@@ -33,7 +33,7 @@
 }
 
 .cel {
-  height: 6vh;
+  height: 7vh;
   overflow: hidden;
 }
 
@@ -175,7 +175,7 @@
   align-items: center;
   padding-right: 3px;
   position: relative;
-  top: -21%;
+  top: -20%;
   height: 17px;
   width: 100%;
   background-color: none;
