@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 // import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-// import { IoIosTrash } from 'react-icons/io'
-// import { IoMdCreate } from 'react-icons/io'
+import { IoIosTrash } from 'react-icons/io'
+import { IoMdCreate } from 'react-icons/io'
 import './Settings.css';
 
 import NavBarContractor from '../navbar/NavBarContractor';
@@ -11,17 +11,26 @@ import { editUserSettings } from '../../actions/index';
 import TopNavbar from '../navbar/TopNavbar';
 
 function ContractorSetting(props) {
+  // console.log(props.User)
   const [username, setUsername] = useState(props.User.username)
   const [phoneNumber, setPhoneNumber] = useState(props.User.phoneNumber)
   const [email, setEmail] = useState(props.User.email)
+  const [services, setServices] = useState(props.User.services)
   
-  // console.log(props)
   useEffect(() => {
     setUsername(props.User.username);
     setPhoneNumber(props.User.phoneNumber);
     setEmail(props.User.email);
-  }, [props.User.username, props.User.phoneNumber, props.User.email]);
+    setServices(props.User.services)
+  }, [
+    props.User.username, 
+    props.User.phoneNumber, 
+    props.User.email, 
+    props.User.services
+  ]);
 
+
+  
   function handleUpdate(e) {
     e.preventDefault();
     props.editUserSettings({ email, username, phoneNumber });
@@ -67,22 +76,34 @@ function ContractorSetting(props) {
           Add Service <input placeholder="Service" />
           <input placeholder="Price" />
         </form> */}
-        {/* <ul>
-          LIST OF SERVICES */}
-        {/* <li>Service1<button><IoMdCreate/></button> <button><IoIosTrash/></button></li>
+  
+          LIST OF SERVICES 
+          {/* <li>{props.User.services.name}
+              <button><IoMdCreate/></button> 
+              <button><IoIosTrash/></button>
+          </li> */}
+          {/* 
           <li>Service2<button><IoMdCreate/></button> <button><IoIosTrash/></button></li>
           <li>Service3<button><IoMdCreate/></button> <button><IoIosTrash/></button></li>
-          <li>Service4<button><IoMdCreate/></button> <button><IoIosTrash/></button></li> */}
-        {/* </ul> */}
+           <li>Service4<button><IoMdCreate/></button> <button><IoIosTrash/></button></li>  */}
+        <div>
+          {services ? services.map(service => (
+            <div>
+              <p>{service.name}</p>
+              <p>{service.price}</p>
+            </div>
+          )): null}
+        </div>
+
       </div>
     </>
   );
 }
 
 const mapStateToProps = state => {
-  // console.log(state)
   return {
     User: state.user,
+    services: state.services,
     loading: state.loading,
     error: state.error,
   };
