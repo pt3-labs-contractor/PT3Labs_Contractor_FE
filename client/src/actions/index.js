@@ -1,6 +1,5 @@
 import axios from 'axios';
 import dateFns from 'date-fns';
-import store from '../index';
 
 export const SEND_SERV = 'SEND_SERV';
 export const SEND_SERV_COMP = 'SEND_SERV_COMP';
@@ -58,6 +57,12 @@ export const FAIL_SCHEDULE = 'FAIL_SCHEDULE';
 export const LOAD_SCHEDULE = 'LOAD_SCHEDULE';
 // ---------------------------------------------------------------
 
+function setHeaders() {
+  const bearer = `Bearer ${localStorage.getItem('jwt')}`;
+  const headers = { authorization: bearer };
+  return headers;
+}
+
 // axios get all accounts
 export const fetchAccts = () => dispatch => {
   // dispatch({ type: LOADING_USERS });
@@ -78,42 +83,40 @@ export const fetchAccts = () => dispatch => {
     .then(
       axios.spread((userRes, contRes, apmtRes) => {
         let { user } = userRes.data;
-        const services = [];
-        if (user.contractorId) {
-          Promise.all([
-            axios.get(
-              `https://fierce-plains-47590.herokuapp.com/api/contractors/${
-                user.contractorId
-              }`,
-              { headers }
-            ),
-            axios.get(
-              `https://fierce-plains-47590.herokuapp.com/api/services/contractor/${
-                user.contractorId
-              }`,
-              { headers }
-            ),
-          ]).then(([resOne, resTwo]) => {
-            user = Object.assign(user, resOne.data.contractor);
-            const serv = resTwo.data.services;
-            serv.forEach(s => {
-              services.push(s);
-            });
-          });
-        }
         const { appointments } = apmtRes.data;
         appointments.sort((a, b) => {
           return new Date(a.startTime) - new Date(b.startTime);
         });
-        dispatch({
-          type: FETCHING_USERS_SUCCESS,
-          payload: {
-            user,
-            contractors: contRes.data.contractors,
-            appointments,
-            services,
-          },
-        });
+        if (user.contractorId) {
+          axios
+            .get(
+              `https://fierce-plains-47590.herokuapp.com/api/contractors/${
+                user.contractorId
+              }`,
+              { headers }
+            )
+            .then(res => {
+              user = { ...res.data.contractor, ...user };
+              dispatch({
+                type: FETCHING_USERS_SUCCESS,
+                payload: {
+                  user,
+                  contractors: contRes.data.contractors,
+                  appointments,
+                  services: res.data.contractor.services,
+                },
+              });
+            });
+        } else {
+          dispatch({
+            type: FETCHING_USERS_SUCCESS,
+            payload: {
+              user,
+              contractors: contRes.data.contractors,
+              appointments,
+            },
+          });
+        }
       })
     )
     .catch(() => {
@@ -157,24 +160,33 @@ export const fetchServices = id => dispatch => {
     });
 };
 
-export const fetchAvailabilityByDay = date => dispatch => {
+function serviceSort(query, state) {
+  const list = state.filter(contractor => {
+    return contractor.services.some(service => service.name.includes(query));
+  });
+  return list;
+}
+
+export const fetchAvailabilityByDay = (
+  date,
+  serviceFilter,
+  contractors
+) => dispatch => {
   // dispatch({ type: LOADING });
   const headers = setHeaders();
-  const state = store.getState();
-
   axios
     .get(
       `https://fierce-plains-47590.herokuapp.com/api/schedules/date/${date}`,
       { headers }
     )
     .then(res => {
-      const contractors = serviceSort(state.serviceFilter, state.contractors);
+      const sortedContractors = serviceSort(serviceFilter, contractors);
       const filter = res.data.appointments
         .filter(item =>
           dateFns.isSameDay(dateFns.addDays(new Date(date), 1), item.startTime)
         )
         .map(item => item.contractorId);
-      const list = contractors.filter(contractor =>
+      const list = sortedContractors.filter(contractor =>
         filter.includes(contractor.id)
       );
       dispatch({ type: SET_SORTED_CONTRACTORS, payload: list });
@@ -185,7 +197,7 @@ export const fetchAvailabilityByDay = date => dispatch => {
 };
 
 export const sortContractorsByService = query => dispatch => {
-  const state = store.getState();
+  const state = {};
   const list = state.contractors.filter(contractor => {
     return contractor.services.some(service => service.name.includes(query));
   });
@@ -363,7 +375,7 @@ export const deleteSchedule = id => {
       .delete(`https://fierce-plains-47590.herokuapp.com/api/schedules/${id}`, {
         headers,
       })
-      .then(res => {
+      .then(() => {
         dispatch({ type: DEL_SCHED_COMP, payload: id });
       })
       .catch(err => {
@@ -458,19 +470,6 @@ export const setMonth = day => dispatch => {
 export const setPosition = element => dispatch => {
   dispatch({ type: SET_CONTRACTOR_POSITION, payload: element });
 };
-
-function setHeaders() {
-  const bearer = `Bearer ${localStorage.getItem('jwt')}`;
-  const headers = { authorization: bearer };
-  return headers;
-}
-
-function serviceSort(query, state) {
-  const list = state.filter(contractor => {
-    return contractor.services.some(service => service.name.includes(query));
-  });
-  return list;
-}
 
 // export const selectContractor = (id, list) => dispatch => {
 //   const selected = list.filter(item => item.id === id);

@@ -63,7 +63,11 @@ function UserLandingPage(props) {
 
   useEffect(() => {
     const dateString = dateFns.format(props.selectedDay, 'YYYY-MM-DD');
-    props.fetchAvailabilityByDay(dateString);
+    props.fetchAvailabilityByDay(
+      dateString,
+      props.serviceFilter,
+      props.contractors
+    );
     clearAppointment();
     // eslint-disable-next-line
   }, [props.selectedDay, serviceSort]);
@@ -184,6 +188,8 @@ function UserLandingPage(props) {
 
 const mapStateToProps = state => {
   return {
+    contractors: state.contractors,
+    serviceFilter: state.serviceFilter,
     sorted: state.sortedContractors,
     selectedDay: state.thisDay,
   };
