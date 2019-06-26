@@ -2,10 +2,11 @@
   --primary-color: #febd17;
   --secondary-color: #8c20f8;
   --dark-color: #343a40;
-  --light-color: #f4f4f4;
+  --light-color: #f2f2f2;
   --danger-color: #dc3545;
   --success-color: #28a745;
   --max-width: 1100px;
+  --shadow: 3px 3px 6px rgba(0, 0, 0, 0.25);
 }
 
 .bg-primary {

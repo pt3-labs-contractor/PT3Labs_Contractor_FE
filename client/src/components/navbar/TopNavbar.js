@@ -24,7 +24,9 @@ function TopNavbar(props) {
         </div>
         <div className="topnav-link">
           <Link to="/">
-            <p onClick={logout}>Log Out</p>
+            <p className="logout" onClick={logout}>
+              Log Out
+            </p>
           </Link>
         </div>
       </nav>

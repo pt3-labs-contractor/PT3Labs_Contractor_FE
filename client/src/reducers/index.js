@@ -24,6 +24,9 @@ import {
   SET_DAY,
   SET_MONTH,
 
+  // Window position of specific contractor in list
+  SET_CONTRACTOR_POSITION,
+
   // fetching schedule
   SET_SCHEDULE,
   LOAD_SCHEDULE,
@@ -42,6 +45,12 @@ import {
 
   // fetching single contractor feedback
   // FETCH_CONTRACTOR_FEEDBACK_SUCCESS,
+
+  //POST feedback by user
+  POST_FEEDBACK_SUCCESS,
+
+  //DELETE feedback by user
+  DELETE_FEEDBACK_SUCCESS,
 
   // fetching current contractor appointments
   RET_CONTRACTOR_APP_SUCC,
@@ -65,6 +74,7 @@ const initialState = {
   schedule: [],
   errorSchedule: null,
   serviceFilter: '',
+  positionContractor: {},
 };
 
 export default (state = initialState, action) => {
@@ -79,7 +89,7 @@ export default (state = initialState, action) => {
         error: null,
       };
     case FETCHING_USERS_SUCCESS:
-      console.log(action.payload.services);
+      // console.log(action.payload.services);
       return {
         ...state,
         user: action.payload.user,
@@ -108,13 +118,20 @@ export default (state = initialState, action) => {
       return {
         ...state,
         schedule: action.payload,
-        errorSchedule: null,
-        loadSchedule: false,
+        error: null,
+        loading: false,
       };
     case SET_SORTED_CONTRACTORS:
-      return { ...state, sortedContractors: action.payload };
+      return {
+        ...state,
+        sortedContractors: action.payload,
+        thisContractor: {},
+        schedule: [],
+      };
     case SET_SERVICE_SORT:
       return { ...state, serviceFilter: action.payload };
+    case SET_CONTRACTOR_POSITION:
+      return { ...state, positionContractor: action.payload };
     case LOAD_SCHEDULE:
       return {
         ...state,
@@ -152,10 +169,12 @@ export default (state = initialState, action) => {
     case FEEDBACK_SUCCESS:
       return { ...state, feedback: action.payload.feedback };
 
-    // fetching feedback on a specfic contractor
-    // case FETCH_CONTRACTOR_FEEDBACK_SUCCESS:
-    //   return {...state, feedback: action.payload}
+    
+    case POST_FEEDBACK_SUCCESS: 
+      return {...state, feedback: [...state.feedback, action.payload.feedback] }
 
+    case DELETE_FEEDBACK_SUCCESS:
+      return {...state, feedback: action.payload.feedback}
     // fetching current contractor appointments
     // case RET_CONTRACTOR_APP_SUCC:
     //   return {...state, accounts:{appointments: action.payload }}

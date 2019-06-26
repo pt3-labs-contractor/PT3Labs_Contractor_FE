@@ -2,8 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import './NavBarUser.css';
 
-const NavBarUser = props => {
-  console.log(props);
+function NavBarUser(props) {
   return (
     <>
       <div className="sideNav">
@@ -40,7 +39,7 @@ const NavBarUser = props => {
           <span className="side-listing"> Settings</span>
         </NavLink>
         <NavLink
-          to="/contractorschedule"
+          to="/app/contractors"
           className="side-link"
           activeClassName="current"
         >
@@ -50,6 +49,6 @@ const NavBarUser = props => {
       </div>
     </>
   );
-};
+}
 
 export default NavBarUser;

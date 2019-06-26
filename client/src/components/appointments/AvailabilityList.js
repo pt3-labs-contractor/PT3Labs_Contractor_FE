@@ -4,7 +4,9 @@ import dateFns from 'date-fns';
 
 function AvailabilityList(props) {
   const [availability, setAvailability] = useState([]);
-  const { selectedDay, schedule } = props;
+  const [pos, setPos] = useState({});
+  const { selectedDay, schedule, position } = props;
+  const mql = window.matchMedia('(max-width: 600px)').matches;
 
   useEffect(() => {
     const date = schedule.filter(item => {
@@ -13,6 +15,18 @@ function AvailabilityList(props) {
     setAvailability(date);
     // eslint-disable-next-line
   }, [selectedDay, schedule]);
+
+  useEffect(() => {
+    if (!mql) {
+      const { top, right, height } = position;
+      setPos({
+        position: 'fixed',
+        top,
+        left: right,
+        minHeight: height,
+      });
+    }
+  }, [props.position]);
 
   const RenderTimes = () => {
     const times = availability.map(item => {
@@ -32,19 +46,24 @@ function AvailabilityList(props) {
         end = dateFns.addMilliseconds(end, item.duration.milliseconds);
       }
       return (
-        <div key={item.id} onClick={() => props.setAppointment(item)}>
+        <button key={item.id} onClick={() => props.setAppointment(item)}>
           {`${dateFns.format(start, 'HH:mm')} - ${dateFns.format(
             end,
             'HH:mm'
           )}`}
-        </div>
+        </button>
       );
     });
     return <>{times}</>;
   };
 
   return (
-    <div className="availability-list">
+    <div
+      style={pos}
+      className={`availability-list ${
+        availability.length > 0 ? 'display' : ''
+      }`}
+    >
       <RenderTimes />
     </div>
   );
@@ -54,6 +73,7 @@ const mapStateToProps = state => {
   return {
     schedule: state.schedule,
     selectedDay: state.thisDay,
+    position: state.positionContractor,
   };
 };
 
