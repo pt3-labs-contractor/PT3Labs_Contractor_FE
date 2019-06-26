@@ -1,45 +1,95 @@
 .cal {
-  padding-top: 100px;
+  padding-top: 10px;
   width: 90%;
-  /* max-width: 800px; */
+  max-width: 1000px;
   margin: 0 auto;
   /* margin: 0 20px; */
   /* max-height: 70vh; */
+	.calendar-nav {
+		display: flex;
+		justify-content: center;
+	}
+	.nav-month {
+		padding: 0 20px;
+	}
+	.day-container {
+		display: grid;
+		grid-template-columns: repeat(7, 1fr);
+
+		.day-cell {
+			border: 1px solid #000;
+		}
+	}
 }
 
-.calendar-nav {
-  display: flex;
-  justify-content: center;
+.filterButtons {
+	display: flex;
+	flex-wrap:  wrap;
+	justify-content: space-between;
+	max-width: 600px;
+	width: 90%;
+	margin: 0 auto;
+	margin-top: 100px;
+
+	.fbutt {
+		border: none;
+		outline: none;
+		background-color: white;
+		border-radius: 5px;
+		padding: 15px;
+		padding-top: 7px;
+		padding-bottom: 7px;
+		background: red;
+		text-decoration: none;
+
+		&:hover {
+			cursor: pointer;
+			transform: scale(1.2);
+		}
+	}
+	
+	.pendingApp {
+    background-color: rgba(173, 140, 233, 0.4);
+	}
+
+	.openDays {
+    background-color: rgba(73, 182, 117, 0.3);
+	}
+
+	.closedDays {
+    background-color: rgba(1, 1, 1, 0.5);
+	}
+
+	.wholeCal {
+		background-color: white;
+		border: 2px solid black;
+	}
 }
 
-.nav-month {
-  padding: 0 20px;
+.nav {
+	border-radius: 50%;
+	padding-left: 15px;
+	padding-right: 15px;
+	transform: scale(.7);
+	&:hover {
+		cursor: pointer;
+	}
 }
 
-.day-container {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-}
-
-.dayCont {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-}
 
 .cel-container {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  grid-auto-rows: 10.5vh;
+  grid-auto-rows: 85px;
 }
 
+
+
 .cel {
-  height: 7vh;
+  height: 58px;
   overflow: hidden;
 }
 
-.day-cell {
-  border: 1px solid #000;
-}
 
 .day-cell {
   text-align: center;
@@ -52,15 +102,20 @@
 
 .cel.selected {
   background-color: #e4e4e4;
+	border-radius: 8px;
+	border-bottom: 4px solid black;
   padding-bottom: 0px;
   margin-bottom: 0px;
+	transition-property: all;
+	transition-duration: 5s;
+	transition-timing-function: cubic-bezier(0, 1, 0.5, 1)
 }
 
 .spacer.disable {
   opacity: 0.25;
 }
 .btn:hover {
-  background-color: darken();
+  background-color: darken(white, 30%);
 }
 .delete:hover {
   cursor: pointer;
@@ -84,6 +139,7 @@
   margin-top: 0px;
   margin-bottom: 5px;
   padding: 2px;
+  padding-right: 20px;
   border-radius: 5px;
   color: black;
   width: 100%;
@@ -243,7 +299,6 @@
   justify-content: flex-end;
   list-style: none;
   margin-left: 5px;
-  height: 0px;
 }
 
 .confirmedSlot::before {
@@ -275,4 +330,83 @@
   margin-left: -1px;
   margin-right: 2px;
   margin-top: -5px;
+}
+
+.deniedSlot {
+  display: flex;
+  justify-content: flex-end;
+  list-style: none;
+  margin-left: 5px;
+}
+
+.deniedSlot::before {
+  display: inline-block;
+  content: '\2022';
+  color: red;
+  font-weight: bold;
+  font-size: 1rem;
+  height: 0px;
+  margin-left: -1px;
+  margin-right: 2px;
+  margin-top: -5px;
+}
+
+.disabled {
+  pointer-events: none;
+}
+
+.date {
+  margin-bottom: 5px;
+}
+
+.today {
+  background-color: #555555;
+  color: white;
+  border-radius: 50%;
+}
+
+.pend {
+  opacity: 1;
+  animation: fade 3s infinite;
+}
+
+@keyframes fade {
+  0%,
+  100% {
+    background-color: rgba(173, 140, 233, 0);
+  }
+  50% {
+    background-color: rgba(173, 140, 233, 0.4);
+  }
+}
+
+
+.open {
+  opacity: 1;
+  animation: open 3s infinite;
+}
+
+@keyframes open {
+  0%,
+  100% {
+    background-color: rgba(73, 182, 117, 0);
+  }
+  50% {
+    background-color: rgba(73, 182, 117, 0.3);
+  }
+}
+
+.closed {
+  opacity: 1;
+  animation: closed 3s infinite;
+}
+
+@keyframes closed {
+  0%,
+  100% {
+    background-color: rgba(1, 1, 1, 0);
+  }
+  50% {
+    background-color: rgba(1, 1, 1, 0.5);
+  }
 }

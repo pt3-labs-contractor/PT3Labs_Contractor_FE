@@ -1,28 +1,272 @@
 .user.container {
-  margin-top: 75px;
-  margin-left: 15%;
-  padding-left: 10px;
-  width: 85%;
+  margin-top: 20px;
+  margin-left: 200px;
+  /* padding-left: 10px; */
+  width: 81%;
+  max-width: 1000px;
+  position: relative;
+}
+
+.user form select {
+  background-color: lightgrey;
+  margin-left: 30px;
+}
+
+.user form select option {
+  border-bottom: 5px solid var(--primary-color);
 }
 
 .user-calendar {
   display: flex;
   justify-content: flex-start;
+  padding-top: 18px;
+  max-height: 600px;
+  min-height: 400px;
 }
 
-.user-calendar .calendar {
-  margin-left: 0px;
+.user-calendar .calendar-target {
+  width: 50%;
+  margin-top: 0;
+  box-shadow: var(--shadow);
 }
 
-.user-calendar .contractor-list {
-  margin-right: 0px;
+.user-calendar .calendar-target .calendar {
   margin-left: 0px;
+  width: 100%;
+  height: 100%;
+  min-height: 395px;
+}
+
+.user-calendar .contractor-target {
   width: 15%;
-  max-height: 73vh;
+  max-height: 495px;
+  margin-right: 0;
+  margin-left: 0;
+  padding: 0;
+  box-shadow: var(--shadow);
+}
+
+.user-calendar .contractor-target .contractor-list {
+  padding: 0px;
+  margin: 0;
+  height: 100%;
+  /* max-height: 95%; */
+  min-height: 395px;
   font-size: 12px;
+  color: var(--light-color);
+  background-color: var(--dark-color);
+}
+
+.user-calendar .contractor-target .contractor-list .contractor-list-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: 83.5%;
+}
+
+.contractor-target .contractor-list .btn-container {
+  display: flex;
+}
+
+.contractor-target .contractor-list .btn {
+  width: 40%;
+  height: 37px;
+  text-align: center;
+  margin-top: 10px;
+  padding: 0;
+}
+
+.contractor-target .contractor-list .list-header {
+  height: 80px;
+}
+
+.user-calendar .contractor-target .contractor-list .contractor-card-container {
+  border-bottom: 1px solid var(--primary-color);
+  height: 20%;
+}
+
+.contractor-target .contractor-list .contractor-card-container h3 {
+  white-space: nowrap;
+  overflow: hidden;
+  margin-right: 10px;
+}
+
+.user-calendar
+  .contractor-target
+  .contractor-list
+  .contractor-card-container.selected {
+  background-color: var(--primary-color);
+  color: #000;
+}
+
+.availability-target .availability-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px 5px;
+  width: 0;
+  transition: all 0.5s ease;
+  overflow: hidden;
+  word-wrap: none;
+}
+
+.availability-target .availability-list button {
+  margin: 10px 0;
+}
+
+.availability-target .availability-list.display {
+  width: 10%;
+  background-color: lightgrey;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--primary-color);
+  border-radius: 0px 5px 5px 0px;
+  /* transition: all 10s linear; */
 }
 
 .user-calendar > div:not(.calendar) {
-  margin-top: 15px;
-  padding-left: 5px;
+  /* margin-top: 15px; */
+  /* padding-left: 5px; */
+}
+
+.appointment-form-target {
+  position: absolute;
+  right: 1%;
+  width: 33%;
+  box-shadow: var(--shadow);
+}
+
+.user .appointment-list .appointments-container {
+  display: flex;
+}
+
+.user .appointment-list .appointments-container .appointment-card {
+  margin: 5px 10px;
+}
+
+@media (max-width: 600px) {
+  .user.container {
+    margin-left: 12%;
+    margin-top: 0px;
+    width: 88%;
+    /* overflow: hidden; */
+  }
+
+  .service-list {
+    height: 100vh;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    /* padding: 3vh 0; */
+    font-size: 2.4rem;
+  }
+
+  .service-list h2 {
+    background-color: var(--primary-color);
+    font-size: 6vh;
+  }
+
+  .service-list button {
+    background: none;
+    border: none;
+    height: 10vh;
+    font-size: 5vh;
+  }
+
+  .service-list h2,
+  .service-list button {
+    line-height: 2;
+    border-bottom: 1px solid #000;
+  }
+
+  .user-calendar {
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    max-height: none;
+  }
+
+  .user-calendar .calendar-target {
+    width: 100%;
+  }
+
+  .user-calendar .calendar-target .calendar {
+    width: 100%;
+    height: 100vh;
+  }
+
+  .user-calendar .contractor-target {
+    width: 100%;
+    height: 100vh;
+    max-height: none;
+    text-align: center;
+    /* margin: 0 auto; */
+    /* padding-top: 40px; */
+  }
+
+  .user-calendar .contractor-list {
+    width: 100%;
+    text-align: center;
+  }
+
+  .user-calendar .availability-target {
+    width: 100%;
+    height: 100vh;
+  }
+
+  .user-calendar .availability-target .availability-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* padding: 50vh 0; */
+    width: 100%;
+    /* height: 100vh; */
+  }
+
+  .user-calendar .appointment-form-target {
+    position: relative;
+    width: 101%;
+    height: 100vh;
+  }
+
+  .user-calendar .appointment-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 50vh 0;
+  }
+
+  .user-calendar .appointment-form .close-btn {
+    display: none;
+  }
+
+  .user.container .appointment-list {
+    text-align: center;
+    padding: 50.5vh 0;
+  }
+}
+
+#back-button {
+  position: fixed;
+  z-index: 3;
+  bottom: 20px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #a5a0a0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@keyframes test {
+  0% {
+    width: 100%;
+  }
+  50% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
 }

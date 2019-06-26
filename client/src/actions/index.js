@@ -32,6 +32,8 @@ export const SET_SCHEDULE = 'SET_SCHEDULE';
 export const SET_SORTED_CONTRACTORS = 'SET_SORTED_CONTRACTORS';
 export const SET_SERVICE_SORT = 'SET_SERVICE_SORT';
 
+export const SET_CONTRACTOR_POSITION = 'SET_CONTRACTOR_POSITION';
+
 // export for services
 export const SET_SERVICES = 'SET_SERVICES';
 
@@ -123,7 +125,7 @@ export const fetchAccts = () => dispatch => {
 };
 
 export const fetchSchedule = id => dispatch => {
-  dispatch({ type: LOADING });
+  // dispatch({ type: LOADING });
   const headers = setHeaders();
   axios
     .get(
@@ -200,7 +202,7 @@ export const selectSingleContractorSetting = id => dispatch => {
   const headers = setHeaders();
 
   axios
-    .get(`https://fierce-plains-47590.herokuapp.com/api/users/${id}`, {
+    .get(`https://fierce-plains-47590.herokuapp.com/api/contractors/${id}`, {
       headers,
     })
     .then(res => {
@@ -451,6 +453,10 @@ export const setDay = day => dispatch => {
 
 export const setMonth = day => dispatch => {
   dispatch({ type: SET_MONTH, payload: day });
+};
+
+export const setPosition = element => dispatch => {
+  dispatch({ type: SET_CONTRACTOR_POSITION, payload: element });
 };
 
 function setHeaders() {

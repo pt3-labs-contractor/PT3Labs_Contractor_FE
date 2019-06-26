@@ -48,7 +48,7 @@ const EScheduler = props => {
     e.preventDefault();
     const minutes = dateFns.differenceInMinutes(end, start);
     const duration = `${minutes / 60}h`;
-    const { contractorId } = props.user;
+    // const { contractorId } = props.user;
     const newSchedule = {
       startTime: new Date(start),
       duration,

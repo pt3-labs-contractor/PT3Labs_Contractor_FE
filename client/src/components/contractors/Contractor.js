@@ -5,7 +5,7 @@ import Calendar from '../calendar/Calendar';
 import ContractorCard from './ContractorCard';
 import AvailabilityList from '../appointments/AvailabilityList';
 import AppointmentForm from '../appointments/AppointmentForm';
-import NavBarContractor from '../navbar/NavBarContractor';
+// import NavBarContractor from '../navbar/NavBarContractor';
 
 import './Contractor.css';
 
@@ -16,7 +16,7 @@ import {
 } from '../../actions/index';
 
 function Contractor(props) {
-  const [service, setService] = useState({});
+  const [service, setService] = useState({ name: 'Pick a service' });
   const [appointment, setAppointment] = useState({});
   const { id } = props.match.params;
 
@@ -40,9 +40,9 @@ function Contractor(props) {
 
   return (
     <>
-      <NavBarContractor />
+      {/* <NavBarContractor /> */}
       <div className="contractor-container">
-        <ContractorCard contractor={props.contractor} />
+        <ContractorCard full contractor={props.contractor} />
         <div className="services-container">
           {props.services.map(service => (
             <div key={service.id} onClick={() => setService(service)}>
