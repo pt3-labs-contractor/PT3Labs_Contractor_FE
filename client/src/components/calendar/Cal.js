@@ -379,9 +379,9 @@ function ContCalendar(props) {
           <div className={`date ${dateFns.isToday(day) ? 'today' : null}`}>
             {dateFns.format(day, 'D')}
           </div>
-          <div className="weekDay">
-            {window.innerWidth <= 601 ? dateFns.format(day, 'ddd') : null}
-          </div>
+          {window.innerWidth <= 601 ? (
+            <div className="weekDay">{dateFns.format(day, 'ddd')}</div>
+          ) : null}
           <div
             className={`add ${!isSameDay ? 'disabled' : null}`}
             data-day={id}
