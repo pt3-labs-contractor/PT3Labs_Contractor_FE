@@ -6,28 +6,23 @@ import { connect } from 'react-redux';
 import './Settings.css';
 import NavBarUser from '../navbar/NavBarUser';
 import { editUserSettings } from '../../actions/index';
+import UserAvatar from './useravatar.js';
 
 function UserSetting(props) {
-  const [username, setUsername] = useState(props.User.username)
-  const [phoneNumber, setPhoneNumber] = useState(props.User.phoneNumber)
-  const [email, setEmail] = useState(props.User.email)
-  
+  const [username, setUsername] = useState(props.User.username);
+  const [phoneNumber, setPhoneNumber] = useState(props.User.phoneNumber);
+  const [email, setEmail] = useState(props.User.email);
+
   // console.log(props)
   useEffect(() => {
-    setUsername(props.User.username)
-    setPhoneNumber(props.User.phoneNumber)
-    setEmail(props.User.email)
-    
-  }, [
-    props.User.username,
-    props.User.phoneNumber,
-    props.User.email
-  ])
+    setUsername(props.User.username);
+    setPhoneNumber(props.User.phoneNumber);
+    setEmail(props.User.email);
+  }, [props.User.username, props.User.phoneNumber, props.User.email]);
 
-  function handleUpdate (e) {
+  function handleUpdate(e) {
     e.preventDefault();
-    props.editUserSettings({email, username, phoneNumber})
-    
+    props.editUserSettings({ email, username, phoneNumber });
   }
 
   return (
@@ -38,34 +33,32 @@ function UserSetting(props) {
         {'\n'}
         <form onSubmit={handleUpdate}>
           User Email
-          <input 
+          <input
             value={email}
             type="text"
             name="userEmail"
-            onChange={e => setEmail(e.target.value)} 
+            onChange={e => setEmail(e.target.value)}
           />
-
           User Name
-          <input 
-            value={username} 
+          <input
+            value={username}
             type="text"
             name="userUsername"
-            onChange={e => setUsername(e.target.value)} 
+            onChange={e => setUsername(e.target.value)}
           />
           {/* Old Password
           <input />
 
           New Passowrd
           <input /> */}
-
           Phone Number
           <input
-            value={phoneNumber}  
+            value={phoneNumber}
             type="text"
             name="userphoneNumber"
-            onChange={e => setPhoneNumber(e.target.value)}         
-          /> 
-
+            onChange={e => setPhoneNumber(e.target.value)}
+          />
+          <UserAvatar />
           <button>Save</button>
         </form>
         {/* <form>
@@ -86,4 +79,7 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, {editUserSettings})(UserSetting);
+export default connect(
+  mapStateToProps,
+  { editUserSettings }
+)(UserSetting);

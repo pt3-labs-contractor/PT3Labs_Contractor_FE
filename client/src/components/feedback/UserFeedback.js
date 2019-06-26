@@ -30,10 +30,10 @@ function UserFeedback(props) {
       <TopNavbar />
       <NavBarUser />
       <div className="main-body feedback-body">
-        <h2>User giving Feedback Page</h2>
+        <h1>&bull; User Feedback &bull;</h1>
         <div className="appointment-info">
           <div className="appointment-heading">
-            <h4>Appointment Info</h4>
+            {/* <h4>Appointment Info</h4> */}
           </div>
           <div className="appointment-body">
             <div className="appointment-item">
@@ -167,4 +167,4 @@ const mapStateToProps = state => {
 export default connect(
   mapStateToProps,
   { getFeedback }
-)(UserFeedback);
+)(React.memo(UserFeedback));

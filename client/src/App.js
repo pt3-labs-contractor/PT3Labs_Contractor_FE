@@ -15,6 +15,8 @@ import Calendar from './components/calendar/Calendar';
 import ContCalendar from './components/calendar/Cal.js';
 import MainNavbar from './components/navbar/MainNavbar';
 import UserLandingPage from './components/landingpage/UserLandingPage';
+// import NavBarUser from './components/navbar/NavBarUser';
+
 import NavBarUser from './components/navbar/NavBarUser';
 import NavBarContractor from './components/navbar/NavBarContractor';
 import Settings from './components/settings/Settings';
@@ -24,6 +26,14 @@ import MyBookings from './components/bookings/MyBookings';
 import Plans from './components/plans/Plans';
 import UserSettings from './components/settings/UserSettings';
 import ContractorSchedule from './components/contractors/ContractorSchedule';
+
+// function App(props) {
+//   useEffect(() => {
+//     props.fetchAccts();
+//     props.getFeedback();
+//     // console.log(props)
+//     // eslint-disable-next-line
+//   }, []);
 
 function App(props) {
   useEffect(() => {
@@ -39,7 +49,7 @@ function App(props) {
         <Route exact path="/" component={Homepage} />
         <Route
           path="/app"
-          component={props.user.contractorId ? NavBarContractor : NavBarUser}
+          component={props.user.contractorId ? NavBarContractor : NavBarUser} // NavBarUser
         />
         <Route exact path="/app" component={UserLandingPage} />
         <Route exact path="/app/contractors" component={ContractorList} />
@@ -77,6 +87,15 @@ const mapStateToProps = state => {
     feedback: state.feedback,
   };
 };
+
+// export default withRouter(
+//   connect(
+//     mapStateToProps,
+//     { fetchAccts, getFeedback }
+//   )(App)
+// );
+
+// const Memo = React.memo(App);
 
 export default withRouter(
   connect(

@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import './NavBarUser.css';
 
-function NavBarUser(props) {
+const NavBarUser = props => {
   console.log(props);
   return (
     <>
@@ -50,6 +50,6 @@ function NavBarUser(props) {
       </div>
     </>
   );
-}
+};
 
 export default NavBarUser;

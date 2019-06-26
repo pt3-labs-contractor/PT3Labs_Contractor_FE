@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import NavBarUser from '../navbar/NavBarUser';
 
-function Users(props) {
+const Users = props => {
   console.log(props.users);
   return (
     <div>
@@ -13,7 +13,7 @@ function Users(props) {
       <p key={props.users.id}>{props.users.username}</p>
     </div>
   );
-}
+};
 
 const mapStateToProps = state => {
   return {
@@ -23,4 +23,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(Users);
+export default React.memo(connect(mapStateToProps)(Users));
