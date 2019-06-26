@@ -11,10 +11,10 @@ import { editUserSettings } from '../../actions/index';
 import TopNavbar from '../navbar/TopNavbar';
 
 function ContractorSetting(props) {
-  const [username, setUsername] = useState(props.User.username)
-  const [phoneNumber, setPhoneNumber] = useState(props.User.phoneNumber)
-  const [email, setEmail] = useState(props.User.email)
-  
+  const [username, setUsername] = useState(props.User.username);
+  const [phoneNumber, setPhoneNumber] = useState(props.User.phoneNumber);
+  const [email, setEmail] = useState(props.User.email);
+
   // console.log(props)
   useEffect(() => {
     setUsername(props.User.username);
@@ -69,11 +69,8 @@ function ContractorSetting(props) {
         </form> */}
         {/* <ul>
           LIST OF SERVICES */}
-        {/* <li>Service1<button><IoMdCreate/></button> <button><IoIosTrash/></button></li>
-          <li>Service2<button><IoMdCreate/></button> <button><IoIosTrash/></button></li>
-          <li>Service3<button><IoMdCreate/></button> <button><IoIosTrash/></button></li>
-          <li>Service4<button><IoMdCreate/></button> <button><IoIosTrash/></button></li> */}
-        {/* </ul> */}
+        <p>Services:</p>
+        {props.services ? props.services.map(x => <li>{x.name}</li>) : null}
       </div>
     </>
   );
@@ -85,6 +82,7 @@ const mapStateToProps = state => {
     User: state.user,
     loading: state.loading,
     error: state.error,
+    services: state.services,
   };
 };
 
