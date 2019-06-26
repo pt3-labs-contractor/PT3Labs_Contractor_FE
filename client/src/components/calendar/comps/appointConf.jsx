@@ -8,7 +8,7 @@ import {
   deleteSchedule,
   getUser,
 } from '../../../actions/index.js';
-import './appointConf.css';
+import './appointConf.scss';
 
 const AppInfo = props => {
   // const [sevId, setSevId] = useState();
@@ -167,7 +167,10 @@ const AppInfo = props => {
   };
 
   return (
-    <div className="infoContApp" style={position}>
+    <div
+      className="infoContApp"
+      style={window.innerWidth > 601 ? position : null}
+    >
       <div className="closeIconEditApp">
         <FontAwesomeIcon icon={faTimesCircle} onClick={close} />
       </div>

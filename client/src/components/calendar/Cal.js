@@ -24,6 +24,9 @@ import TopNavbar from '../navbar/TopNavbar.js';
 import NavBarContractor from '../navbar/NavBarContractor.js';
 
 function ContCalendar(props) {
+  const display = {
+    display: 'none',
+  };
   const [ahead, setAhead] = useState();
   const [behind, setBehind] = useState();
   const [x, setX] = useState();
@@ -48,7 +51,6 @@ function ContCalendar(props) {
   const [filter, setFilter] = useState();
   const [fullFilter, setFullFilter] = useState();
   useEffect(() => {
-    console.log('ran');
     // setId(props.id);
     props.getSchedules(props.id);
     monthPendingCheck();
@@ -62,7 +64,7 @@ function ContCalendar(props) {
   const monthPendingCheck = () => {
     const diffMonth = props.appointments.filter(a => {
       const isSameMonth = dateFns.isSameMonth(a.startTime, props.selectedMonth);
-      if (!isSameMonth) {
+      if (!isSameMonth && a.confirmed === null) {
         return a;
       }
     });
@@ -95,63 +97,65 @@ function ContCalendar(props) {
   };
 
   const refCallback = el => {
-    if (el) {
-      const loc = el.getBoundingClientRect();
-      const ref = { element: el, id: el.id, pos: loc };
-      if (refs) {
-        const find = refs.find(r => {
-          return r.element.id === el.id;
-        });
-        if (find) {
-          const locString = JSON.stringify(loc);
-          const posString = JSON.stringify(find.pos);
-          if (posString !== locString) {
-            const newRef = { ...find, pos: loc };
-            const remove = refArray.filter(r => {
-              return r.element.id !== el.id;
-            });
-            const finalRefs = [...remove, newRef];
-            // console.log(finalRefs);
-            refArray = finalRefs;
-            if (el.parentElement.lastChild === el) {
-              console.log('ran');
-              props.setRefs(refArray);
-            }
-            // props.setRefs(finalRefs);
-          }
-        } else {
-          const newSize = [...refArray];
-          if (newSize.length > 0) {
-            const xs = newSize.map(s => {
-              return s.id;
-            });
-            let eOm = dateFns.endOfMonth(selectedMonth);
-            eOm = dateFns.startOfDay(eOm);
-            eOm = String(eOm);
-            eOm = eOm.split(' ').join('');
-            if (!xs.includes(ref.id)) {
-              const modSize = [...newSize, ref];
-              refArray = modSize;
-              if (ref.id === eOm) {
+    if (window.innerWidth > 601) {
+      if (el) {
+        const loc = el.getBoundingClientRect();
+        const ref = { element: el, id: el.id, pos: loc };
+        if (refs) {
+          const find = refs.find(r => {
+            return r.element.id === el.id;
+          });
+          if (find) {
+            const locString = JSON.stringify(loc);
+            const posString = JSON.stringify(find.pos);
+            if (posString !== locString) {
+              const newRef = { ...find, pos: loc };
+              const remove = refArray.filter(r => {
+                return r.element.id !== el.id;
+              });
+              const finalRefs = [...remove, newRef];
+              // console.log(finalRefs);
+              refArray = finalRefs;
+              if (el.parentElement.lastChild === el) {
+                console.log('ran');
                 props.setRefs(refArray);
               }
-            } else if (ref.id === eOm) {
-              props.setRefs(refArray);
+              // props.setRefs(finalRefs);
             }
           } else {
-            refArray = [ref];
+            const newSize = [...refArray];
+            if (newSize.length > 0) {
+              const xs = newSize.map(s => {
+                return s.id;
+              });
+              let eOm = dateFns.endOfMonth(selectedMonth);
+              eOm = dateFns.startOfDay(eOm);
+              eOm = String(eOm);
+              eOm = eOm.split(' ').join('');
+              if (!xs.includes(ref.id)) {
+                const modSize = [...newSize, ref];
+                refArray = modSize;
+                if (ref.id === eOm) {
+                  props.setRefs(refArray);
+                }
+              } else if (ref.id === eOm) {
+                props.setRefs(refArray);
+              }
+            } else {
+              refArray = [ref];
+            }
+          }
+        } else {
+          // setSize([loc]);
+          // props.setRefs([ref]);
+          refArray.push(ref);
+          if (el.parentElement.lastChild === el) {
+            props.setRefs(refArray);
           }
         }
-      } else {
-        // setSize([loc]);
-        // props.setRefs([ref]);
-        refArray.push(ref);
-        if (el.parentElement.lastChild === el) {
-          props.setRefs(refArray);
-        }
-      }
 
-      // props.getSize(el.getBoundingClientRect());
+        // props.getSize(el.getBoundingClientRect());
+      }
     }
   };
 
@@ -162,18 +166,22 @@ function ContCalendar(props) {
   };
 
   const setPos = e => {
-    const pos = refs.find(r => {
-      return r.id === e.target.dataset.day;
-    });
-    setPosition(pos);
+    if (window.innerWidth > 601) {
+      const pos = refs.find(r => {
+        return r.id === e.target.dataset.day;
+      });
+      setPosition(pos);
+    }
     props.history.push('/contractorCalendar/newSched');
   };
 
   const setPosition = pos => {
-    setX(pos.pos.x);
-    setY(pos.pos.y);
-    setW(pos.pos.width);
-    setH(pos.pos.height);
+    if (window.innerWidth > 601) {
+      setX(pos.pos.x);
+      setY(pos.pos.y);
+      setW(pos.pos.width);
+      setH(pos.pos.height);
+    }
   };
 
   const setServIdUp = (theSevId, theAppId) => {
@@ -219,7 +227,7 @@ function ContCalendar(props) {
     for (let i = 0; i < 7; i++) {
       days.push(
         <div className="day-cell" key={i}>
-          {dateFns.format(dateFns.addDays(start, i), 'dddd')}
+          {dateFns.format(dateFns.addDays(start, i), 'ddd')}
         </div>
       );
     }
@@ -347,15 +355,21 @@ function ContCalendar(props) {
           id={id}
           data-ref={render}
           ref={refCallback}
+          style={
+            window.innerWidth <= 601 &&
+            !dateFns.isSameMonth(temp, selectedMonth)
+              ? display
+              : null
+          }
           className={`spacer ${
             isSameDay
               ? ' selected day'
               : pending.length > 0
-              ? 'pend'
+              ? 'pend sideBordPend'
               : open.length > 0
-              ? 'open'
+              ? 'open sideBordOpen'
               : closed.length > 0
-              ? 'closed'
+              ? 'closed sideBordFull'
               : !dateFns.isSameMonth(temp, selectedMonth)
               ? 'disable'
               : ''
@@ -364,6 +378,9 @@ function ContCalendar(props) {
         >
           <div className={`date ${dateFns.isToday(day) ? 'today' : null}`}>
             {dateFns.format(day, 'D')}
+          </div>
+          <div className="weekDay">
+            {window.innerWidth <= 601 ? dateFns.format(day, 'ddd') : null}
           </div>
           <div
             className={`add ${!isSameDay ? 'disabled' : null}`}
@@ -401,8 +418,36 @@ function ContCalendar(props) {
               />
             ) : null}
           </div>
-          {daySched.length > 1 ||
-          (daySched.length >= 1 && dayApp.length > 0) ? (
+          {(window.innerWidth > 601 && daySched.length > 1) ||
+          (window.innerWidth > 601 &&
+            daySched.length >= 1 &&
+            dayApp.length > 0) ? (
+            <>
+              <div
+                className={`downCont ${
+                  targetCell.hidden === false && targetCell.id === id
+                    ? 'arrowHidden'
+                    : ''
+                }`}
+                data-cell={id}
+                onClick={showHide}
+              >
+                <FontAwesomeIcon icon={faAngleDoubleDown} />
+              </div>
+              <div
+                className={`downCont ${
+                  targetCell.hidden === false && targetCell.id === id
+                    ? ''
+                    : 'arrowHidden'
+                }`}
+                data-cell={id}
+                onClick={showHide}
+              >
+                <FontAwesomeIcon icon={faAngleDoubleUp} />
+              </div>
+            </>
+          ) : daySched.length > 2 ||
+            (daySched.length >= 1 && dayApp.length > 1) ? (
             <>
               <div
                 className={`downCont ${

@@ -12,7 +12,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { deleteSchedule } from '../../../actions/index.js';
 
-import './popBox.css';
+import './popBox.scss';
 
 const PopBoxSched = props => {
   const start = dateFns.format(props.start, 'ddd HH:mm');
@@ -64,7 +64,7 @@ const PopBoxSched = props => {
   });
 
   return (
-    <div className="boxCont" style={position}>
+    <div className="boxCont" style={window.innerWidth > 601 ? position : null}>
       <div className="closeIconEdit">
         <FontAwesomeIcon icon={faTimesCircle} onClick={close} />
       </div>

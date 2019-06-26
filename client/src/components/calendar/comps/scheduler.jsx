@@ -13,6 +13,7 @@ const Scheduler = props => {
   const { y } = props;
   const { w } = props;
   const { h } = props;
+  const width = window.innerWidth;
   const centerPop = 100;
   const centerBox = w / 2;
   const xper = x - centerPop + centerBox;
@@ -50,15 +51,16 @@ const Scheduler = props => {
       duration,
     };
     props.postNewSchedule(newSchedule);
-    console.log(newSchedule);
-    console.log(props.user);
     close();
   };
   const close = () => {
     props.history.push('/contractorCalendar');
   };
   return (
-    <div className="schedulerCont" style={position}>
+    <div
+      className="schedulerCont"
+      style={window.innerWidth > 601 ? position : null}
+    >
       <div className="closeIcon">
         <FontAwesomeIcon icon={faTimesCircle} onClick={close} />
       </div>

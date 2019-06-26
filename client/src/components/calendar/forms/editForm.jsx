@@ -5,7 +5,7 @@ import dateFns from 'date-fns';
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { postNewSchedule, updateSchedule } from '../../../actions/index.js';
-import './editForm.css';
+import './editForm.scss';
 
 const EScheduler = props => {
   const { x, y, w, h } = props;
@@ -59,7 +59,10 @@ const EScheduler = props => {
     props.history.push('/contractorCalendar');
   };
   return (
-    <div className="schedulerCont" style={position}>
+    <div
+      className="schedulerCont"
+      style={window.innerWidth > 601 ? position : null}
+    >
       <div className="closeIcon">
         <FontAwesomeIcon icon={faTimesCircle} onClick={closeEdit} />
       </div>
