@@ -72,10 +72,10 @@ function ContractorSetting(props) {
           <input /> */}
           <button>Save</button>
         </form>
-        {/* <form>
+        <form>
           Add Service <input placeholder="Service" />
           <input placeholder="Price" />
-        </form> */}
+        </form>
   
           LIST OF SERVICES 
           {/* <li>{props.User.services.name}
@@ -91,6 +91,7 @@ function ContractorSetting(props) {
             <div>
               <p>{service.name}</p>
               <p>{service.price}</p>
+              <button><IoIosTrash/></button>
             </div>
           )): null}
         </div>
