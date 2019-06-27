@@ -1,33 +1,59 @@
-.appointment-info {
-  background-color: var(--dark-color);
-  opacity: .9;
-  color: white;
-}
-
-.appointment-heading {
-  background-color: var(--dark-color);
-  margin-left: 1rem;
-  padding: 1rem 0;
-}
-
-.appointment-heading h4 {
-  color: var(--primary-color);
-  background-color: var(--dark-color);
-  font-size: 2rem;
-}
-
-.appointment-body {
+.feedback-body-contractor {
   display: flex;
-  padding: 19px;
-  background-color: lightgrey;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2rem;
+  letter-spacing: 1.2px;
 }
 
-.appointment-item {
+.feedback-body h2 {
+  text-align: center;
+}
+.feedback-container {
+  padding: 1rem 2rem;
+  margin: 1rem;
+  border-bottom: 2px solid var(--secondary-color);
+  color: black;
+  width: 80%;
+}
+
+.feedback-header {
   display: flex;
-  margin: 0 auto;
-  padding: 1rem;
+  border: 1px solid red;
+  justify-content: space-between;
 }
 
-.appointment-item h4{
+.feedback-context {
+  width: 100%;
+  height: auto;
+  margin-top: 1rem;
+  color: grey;
+}
+
+.quotes {
+  font-style: bold;
+  font-weight: 300;
   font-size: 1.5rem;
+  color: black;
+}
+
+.fullstar {
+  color: var(--primary-color);
+}
+
+.posted {
+  margin-top: 1.5rem;
+  text-align: right;
+}
+
+@media (max-width: 1000px) {
+  .feedback-container {
+    width: 600px;
+  }
+}
+
+@media (max-width: 800px) {
+  .feedback-container {
+    width: 100%;
+  }
 }

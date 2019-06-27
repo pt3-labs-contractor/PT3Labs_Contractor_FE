@@ -46,10 +46,10 @@ import {
   // fetching single contractor feedback
   // FETCH_CONTRACTOR_FEEDBACK_SUCCESS,
 
-  //POST feedback by user
+  // POST feedback by user
   POST_FEEDBACK_SUCCESS,
 
-  //DELETE feedback by user
+  // DELETE feedback by user
   DELETE_FEEDBACK_SUCCESS,
 
   // fetching current contractor appointments
@@ -83,8 +83,6 @@ export default (state = initialState, action) => {
     case LOADING:
       return {
         ...state,
-        user: {},
-        contractors: [],
         loading: true,
         error: null,
       };
@@ -169,12 +167,20 @@ export default (state = initialState, action) => {
     case FEEDBACK_SUCCESS:
       return { ...state, feedback: action.payload.feedback };
 
-    
-    case POST_FEEDBACK_SUCCESS: 
-      return {...state, feedback: [...state.feedback, action.payload.feedback] }
+    case POST_FEEDBACK_SUCCESS:
+      return {
+        ...state,
+        feedback: [...state.feedback, action.payload.feedback],
+      };
 
     case DELETE_FEEDBACK_SUCCESS:
-      return {...state, feedback: action.payload.feedback}
+      console.log(action.payload.feedback);
+      return {
+        ...state,
+        feedback: state.feedback.filter(
+          x => x.id !== action.payload.deleted.id
+        ),
+      };
     // fetching current contractor appointments
     // case RET_CONTRACTOR_APP_SUCC:
     //   return {...state, accounts:{appointments: action.payload }}
