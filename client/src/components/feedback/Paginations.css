@@ -1,0 +1,26 @@
+.pagination {
+  color: var(--secondary-color);
+  margin-top: 2rem;
+  margin: 0 auto;
+  text-align: right;
+  display: flex;
+  justify-content: flex-end;
+  width: 80%;
+}
+
+.page-total {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.page-item {
+  background-color: var(--light-color);
+  margin: 0 2px;
+  padding: 5px 0;
+}
+
+@media (max-width:1000px) {
+  .pagination {
+    width: 95%;
+  }
+}
