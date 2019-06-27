@@ -8,8 +8,6 @@ import dateFns from 'date-fns';
 import { getFeedback } from '../../actions/index';
 
 function ContractorFeedback(props) {
-  console.log(props);
-
   useEffect(() => {
     props.getFeedback();
   }, []);

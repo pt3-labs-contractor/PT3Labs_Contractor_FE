@@ -7,7 +7,7 @@ import './Settings.css';
 
 import NavBarContractor from '../navbar/NavBarContractor';
 // import ContractorCard from './ContractorCard';
-import { editUserSettings } from '../../actions/index';
+import { editUserSettings,postNewService,deleteService } from '../../actions/index';
 import TopNavbar from '../navbar/TopNavbar';
 
 function ContractorSetting(props) {
@@ -16,6 +16,10 @@ function ContractorSetting(props) {
   const [phoneNumber, setPhoneNumber] = useState(props.User.phoneNumber)
   const [email, setEmail] = useState(props.User.email)
   const [services, setServices] = useState(props.User.services)
+
+  const [addService, setAddServices] = useState('')
+  const [addPrice, setAddPrice] = useState('')
+
   
   useEffect(() => {
     setUsername(props.User.username);
@@ -34,6 +38,28 @@ function ContractorSetting(props) {
   function handleUpdate(e) {
     e.preventDefault();
     props.editUserSettings({ email, username, phoneNumber });
+  }
+
+  function handleAddServiceChange(e) {
+    setAddServices(e);
+  }
+
+  function handleAddPriceChange(e) {
+    setAddPrice(e)
+  }
+
+
+  function handleAddServiceSubmit(e){
+    e.preventDefault();
+    props.postNewService({ name:addService,price:addPrice })
+    // console.log({ name:addService,price:addPrice })
+  }
+
+
+  function handleServeDelete(service){
+    // e.preventDefault();
+    props.deleteService(service)
+    // console.log(service)
   }
   return (
     <>
@@ -72,30 +98,38 @@ function ContractorSetting(props) {
           <input /> */}
           <button>Save</button>
         </form>
-        <form>
-          Add Service <input placeholder="Service" />
-          <input placeholder="Price" />
+
+        <form onSubmit={handleAddServiceSubmit}>
+          Add Service 
+          <input 
+            placeholder="Service" 
+            name="name"
+            value={addService}
+            onChange={e => handleAddServiceChange(e.target.value)}/>
+          
+          <input
+            placeholder="Price"
+            name="price"
+            value={addPrice}
+            onChange={e => handleAddPriceChange(e.target.value)}
+           />
+          <button onClick={handleAddServiceSubmit}>Add Service</button>
         </form>
-  
-          LIST OF SERVICES 
-          {/* <li>{props.User.services.name}
-              <button><IoMdCreate/></button> 
-              <button><IoIosTrash/></button>
-          </li> */}
-          {/* 
-          <li>Service2<button><IoMdCreate/></button> <button><IoIosTrash/></button></li>
-          <li>Service3<button><IoMdCreate/></button> <button><IoIosTrash/></button></li>
-           <li>Service4<button><IoMdCreate/></button> <button><IoIosTrash/></button></li>  */}
+
+
+          LIST OF SERVICES
+        <p>Services:</p>
         <div>
-          {services ? services.map(service => (
-            <div>
+        {services 
+          ? services.map(service => 
+            <>
               <p>{service.name}</p>
               <p>{service.price}</p>
-              <button><IoIosTrash/></button>
-            </div>
-          )): null}
+              <button onClick={e => handleServeDelete(service)}><IoIosTrash/></button>
+            </>
+          )
+          : null}
         </div>
-
       </div>
     </>
   );
@@ -107,10 +141,11 @@ const mapStateToProps = state => {
     services: state.services,
     loading: state.loading,
     error: state.error,
+    services: state.services,
   };
 };
 
 export default connect(
   mapStateToProps,
-  { editUserSettings }
+  { editUserSettings,postNewService,deleteService }
 )(ContractorSetting);
