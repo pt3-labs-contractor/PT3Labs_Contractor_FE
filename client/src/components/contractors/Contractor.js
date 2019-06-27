@@ -14,6 +14,7 @@ import {
   fetchSchedule,
   fetchServices,
 } from '../../actions/index';
+import TopNavbar from '../navbar/TopNavbar';
 
 function Contractor(props) {
   const [service, setService] = useState({ name: 'Pick a service' });
@@ -24,7 +25,7 @@ function Contractor(props) {
     Promise.all([
       props.selectSingleContractorSetting(id),
       props.fetchSchedule(id),
-      props.fetchServices(id),
+      // props.fetchServices(id),
     ]);
     // eslint-disable-next-line
   }, []);
@@ -38,18 +39,25 @@ function Contractor(props) {
     setService({});
   };
 
+  console.log(props.contractor);
   return (
     <>
-      {/* <NavBarContractor /> */}
+      <TopNavbar />
       <div className="contractor-container">
         <ContractorCard full contractor={props.contractor} />
         <div className="services-container">
-          {props.services.map(service => (
-            <div key={service.id} onClick={() => setService(service)}>
-              <p>{service.name}</p>
-              <p>{service.price}</p>
-            </div>
-          ))}
+          {Object.keys(props.contractor).length > 0
+            ? props.contractor.services.map(service => (
+                <div
+                  className="service"
+                  key={service.id}
+                  onClick={() => setService(service)}
+                >
+                  <p>{service.name}</p>
+                  <p>{service.price}</p>
+                </div>
+              ))
+            : null}
         </div>
         <div className="contractor-calendar">
           <Calendar contractor={props.contractor} schedule={props.schedule} />

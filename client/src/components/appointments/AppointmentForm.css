@@ -6,15 +6,18 @@
   position: relative;
   width: 100%;
   padding: 5px;
-  background-color: var(--dark-color);
+  background: linear-gradient(var(--dark-color), #525a61);
   color: white;
 }
 
 .set-btn {
   /* margin: 0 32%; */
   align-self: center;
-  background-color: var(--primary-color);
+  background: linear-gradient(var(--primary-color), #fcd676);
   font-weight: bold;
+  height: 20px;
+  border-radius: 5px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.452);
   border: none;
   margin-top: 5px;
   padding: 0 5px;

@@ -14,7 +14,7 @@ import dateFns from 'date-fns';
 import {
   fetchSchedule,
   fetchAvailabilityByDay,
-  sortContractorsByService,
+  // sortContractorsByService,
   storeServiceName,
 } from '../../actions/index';
 
@@ -63,7 +63,7 @@ function UserLandingPage(props) {
 
   useEffect(() => {
     const dateString = dateFns.format(props.selectedDay, 'YYYY-MM-DD');
-    props.fetchAvailabilityByDay(dateString);
+    props.fetchAvailabilityByDay(dateString, props.contractors, props.serviceFilter);
     clearAppointment();
     // eslint-disable-next-line
   }, [props.selectedDay, serviceSort]);
@@ -184,8 +184,10 @@ function UserLandingPage(props) {
 
 const mapStateToProps = state => {
   return {
+    contractors: state.contractors,
     sorted: state.sortedContractors,
     selectedDay: state.thisDay,
+    serviceFilter: state.serviceFilter,
   };
 };
 
@@ -194,7 +196,7 @@ export default connect(
   {
     fetchSchedule,
     fetchAvailabilityByDay,
-    sortContractorsByService,
+    // sortContractorsByService,
     storeServiceName,
   }
 )(UserLandingPage);

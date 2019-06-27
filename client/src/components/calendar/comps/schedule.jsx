@@ -2,8 +2,8 @@ import React from 'react';
 import dateFns from 'date-fns';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { faHourglassEnd } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faHourglassEnd } from '@fortawesome/free-solid-svg-icons';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { deleteSchedule } from '../../../actions/index.js';
 import Appointment from './appointment.jsx';
 
@@ -77,6 +77,7 @@ const Schedule = props => {
     if (a.confirmed === true) {
       return a.id;
     }
+    return false;
   });
 
   const modifiedEnd = dateFns.format(end, 'HH:mm A');
