@@ -10,10 +10,9 @@ import { getFeedback } from '../../actions/index';
 function ContractorFeedback(props) {
   console.log(props);
 
-  const stringify = JSON.stringify(props.feedback);
   useEffect(() => {
     props.getFeedback();
-  }, [stringify]);
+  }, []);
 
   return (
     <>

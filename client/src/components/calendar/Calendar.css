@@ -38,8 +38,8 @@
 
 .cell-container {
   display: grid;
-  grid-template-columns: repeat(7, minmax(50px, auto));
-  grid-auto-rows: minmax(50px, 65px);
+  grid-template-columns: repeat(7, minmax(auto, auto));
+  grid-auto-rows: minmax(auto, auto);
 }
 
 .cell,
@@ -77,4 +77,14 @@
 
 .cell.available {
   border: 3px solid green;
+}
+
+@media (max-width:400px) {
+  .day-cell {
+    font-size: .8rem;
+  }
+  .cell {
+    padding: 5px;
+    font-size: .8rem;
+  }
 }

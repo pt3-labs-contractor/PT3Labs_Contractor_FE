@@ -37,13 +37,23 @@ const Appointment = props => {
       {props.contractorId === props.contID ? (
         <>
           <Link
-            className="appLink"
+            className={
+              dateFns.isSameDay(props.temp, props.selectedDay)
+                ? 'appLink'
+                : 'disabledLink appLink'
+            }
             to={`/contractorCalendar/app/${id}`}
             onClick={setServId}
           >
             <li
-              className={`appSlot ${
-                props.confirmed ? 'confirmedSlot' : 'pendingSlot'
+              className={`timeSlot ${
+                props.confirmed === true
+                  ? 'confirmedSlot'
+                  : props.confirmed === null
+                  ? 'pendingSlot'
+                  : props.confirmed === false
+                  ? 'deniedSlot'
+                  : null
               }`}
               data-refid={id}
               data-sevid={props.sevId}
@@ -65,6 +75,7 @@ const mstp = state => {
   return {
     contractorId: state.user.contractorId,
     refs: state.refs,
+    selectedDay: state.thisDay,
   };
 };
 
