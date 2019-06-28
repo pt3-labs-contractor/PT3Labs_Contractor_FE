@@ -1,7 +1,5 @@
 .user.container {
-  /* margin-top: 20px; */
   margin-left: 200px;
-  /* padding-left: 10px; */
   width: 81%;
   max-width: 1000px;
   min-height: 85vh;
@@ -10,7 +8,6 @@
 
 .user form select {
   background: linear-gradient(lightgrey, grey);
-  /* margin-left: 30px; */
   width: 200px;
   height: 35px;
   border-radius: 5px;
@@ -24,7 +21,6 @@
 .user-calendar {
   display: flex;
   justify-content: flex-start;
-  /* padding-top: 18px; */
   max-height: 100vh;
   min-height: 485px;
 }
@@ -55,7 +51,6 @@
   padding: 0px;
   margin: 0;
   height: 100%;
-  /* max-height: 95%; */
   min-height: 395px;
   font-size: 12px;
   color: var(--light-color);
@@ -156,12 +151,6 @@
   border-left: none;
   box-shadow: inset 0px 2px 3px rgba(0, 0, 0, 0.74);
   border-radius: 0px 5px 5px 0px;
-  /* transition: all 10s linear; */
-}
-
-.user-calendar > div:not(.calendar) {
-  /* margin-top: 15px; */
-  /* padding-left: 5px; */
 }
 
 .appointment-form-target {
@@ -211,7 +200,6 @@
     margin-left: 12%;
     margin-top: 0px;
     width: 88%;
-    /* overflow: hidden; */
   }
 
   .service-list {
@@ -219,7 +207,6 @@
     text-align: center;
     display: flex;
     flex-direction: column;
-    /* padding: 3vh 0; */
     font-size: 2.4rem;
   }
 
@@ -262,8 +249,6 @@
     height: 100vh;
     max-height: none;
     text-align: center;
-    /* margin: 0 auto; */
-    /* padding-top: 40px; */
   }
 
   .user-calendar .contractor-list {
@@ -284,9 +269,7 @@
     flex-direction: column;
     align-items: center;
     border-radius: 0;
-    /* padding: 50vh 0; */
     width: 92%;
-    /* height: 100vh; */
   }
 
   .user-calendar .availability-target .availability-list button {
@@ -345,7 +328,6 @@
   font-size: 1.2rem;
   box-shadow: 2px 0 4px rgba(0, 0, 0, 0.4);
   text-shadow: 1px 1px 2px #000;
-  /* position: relative; */
 }
 
 @keyframes test {
