@@ -53,7 +53,10 @@ function Contractor(props) {
                   key={service.id}
                   onClick={() => setService(service)}
                 >
-                  <p>{service.name}</p>
+                  <p>
+                    {service.name.charAt(0).toUpperCase() +
+                      service.name.slice(1)}
+                  </p>
                   <p>{service.price}</p>
                 </div>
               ))
@@ -68,6 +71,12 @@ function Contractor(props) {
               setAppointment={makeAppointment}
             />
           </div>
+          {/* <AppointmentForm
+          contractor={id}
+          clearAppointment={clearAppointment}
+          appointment={appointment}
+          service={service}
+        /> */}
         </div>
         <AppointmentForm
           contractor={id}

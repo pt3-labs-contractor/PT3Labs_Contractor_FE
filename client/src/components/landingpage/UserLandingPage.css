@@ -1,15 +1,16 @@
 .user.container {
-  margin-top: 20px;
+  /* margin-top: 20px; */
   margin-left: 200px;
   /* padding-left: 10px; */
   width: 81%;
   max-width: 1000px;
+  min-height: 85vh;
   position: relative;
 }
 
 .user form select {
   background: linear-gradient(lightgrey, grey);
-  margin-left: 30px;
+  /* margin-left: 30px; */
   width: 200px;
   height: 35px;
   border-radius: 5px;
@@ -23,9 +24,9 @@
 .user-calendar {
   display: flex;
   justify-content: flex-start;
-  padding-top: 18px;
-  max-height: 600px;
-  min-height: 495px;
+  /* padding-top: 18px; */
+  max-height: 100vh;
+  min-height: 485px;
 }
 
 .user-calendar .calendar-target {
