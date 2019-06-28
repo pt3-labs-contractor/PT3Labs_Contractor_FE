@@ -17,7 +17,7 @@ function AvailabilityList(props) {
   }, [selectedDay, schedule]);
 
   useEffect(() => {
-    if (!mql) {
+    if (!mql && !props.contractor) {
       const { top, right, height } = position;
       setPos({
         position: 'fixed',

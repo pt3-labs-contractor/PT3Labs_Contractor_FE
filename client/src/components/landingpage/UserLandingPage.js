@@ -14,7 +14,6 @@ import dateFns from 'date-fns';
 import {
   fetchSchedule,
   fetchAvailabilityByDay,
-  sortContractorsByService,
   storeServiceName,
 } from '../../actions/index';
 
@@ -63,7 +62,11 @@ function UserLandingPage(props) {
 
   useEffect(() => {
     const dateString = dateFns.format(props.selectedDay, 'YYYY-MM-DD');
-    props.fetchAvailabilityByDay(dateString);
+    props.fetchAvailabilityByDay(
+      dateString,
+      props.contractors,
+      props.serviceFilter
+    );
     clearAppointment();
     // eslint-disable-next-line
   }, [props.selectedDay, serviceSort]);
@@ -104,13 +107,11 @@ function UserLandingPage(props) {
   };
 
   const scrollBack = () => {
-    console.log(targets[1].current);
     scroll(targets[currentTarget - 1].current);
     setTarget(currentTarget - 1);
   };
 
   const handleSort = event => {
-    console.log(event.target.value);
     setServiceSort(event.target.value);
     props.storeServiceName(event.target.value);
     clearAppointment();
@@ -126,7 +127,7 @@ function UserLandingPage(props) {
   return (
     <>
       <TopNavbar />
-      <div className="user container">
+      <div className="calendar-container">
         {mql ? (
           <div ref={serviceTarget} className="service-list">
             <h2>Pick a service</h2>
@@ -138,7 +139,11 @@ function UserLandingPage(props) {
           </div>
         ) : (
           <form>
-            <select value={serviceSort} onChange={handleSort}>
+            <select
+              className="select-service"
+              value={serviceSort}
+              onChange={handleSort}
+            >
               <option value="">Pick a service</option>
               {serviceList.map(service => (
                 <option key={service} value={service.toLowerCase()}>
@@ -184,8 +189,10 @@ function UserLandingPage(props) {
 
 const mapStateToProps = state => {
   return {
+    contractors: state.contractors,
     sorted: state.sortedContractors,
     selectedDay: state.thisDay,
+    serviceFilter: state.serviceFilter,
   };
 };
 
@@ -194,7 +201,6 @@ export default connect(
   {
     fetchSchedule,
     fetchAvailabilityByDay,
-    sortContractorsByService,
     storeServiceName,
   }
 )(UserLandingPage);

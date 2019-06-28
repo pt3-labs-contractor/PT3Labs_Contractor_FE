@@ -1,45 +1,22 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import NavBarUser from '../navbar/NavBarUser';
 import TopNavbar from '../navbar/TopNavbar';
+import { confirmApp, fetchAccts } from '../../actions/index';
 import './MyBookings.css';
 
 function MyBookings(props) {
-  const sendText = () => {
-    fetch(`http://localhost:5000/api/send-text`).then(console.log('clicked'));
-  };
-
   return (
-    <div>
+    <>
       <TopNavbar />
       <NavBarUser />
       <div className="main-body">
-        <h1>MyBookings Page</h1>
-        <p>Twilio SMS Testing</p>
-        <button onClick={sendText}>Click to send text</button>
-
-        <div className="appointment-info">
-          <div className="appointment-heading">
-            <h4>Appointment Info</h4>
-          </div>
-          <div className="appointment-body">
-            <div className="appointment-item">
-              <h4>Contractor</h4>
-            </div>
-            <div className="appointment-item">
-              <h4>Service</h4>
-            </div>
-            <div className="appointment-item">
-              <h4>Date</h4>
-            </div>
-            <div className="appointment-item">
-              <h4>Time</h4>
-            </div>
-          </div>
+        <div className="booking-container">
+          <h2 className="main-header-title">Appointment Summary</h2>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
@@ -52,4 +29,7 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(MyBookings);
+export default connect(
+  mapStateToProps,
+  { confirmApp, fetchAccts }
+)(MyBookings);

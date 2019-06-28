@@ -44,7 +44,6 @@ function ContractorList(props) {
         contractorRef.current[id] = React.createRef();
         resolve(contractorRef.current[id]);
       }).then(element => {
-        // console.log(element.current.getBoundingClientRect());
         props.setPosition(element.current.getBoundingClientRect());
       });
     }

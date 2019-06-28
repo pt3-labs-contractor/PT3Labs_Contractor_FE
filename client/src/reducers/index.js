@@ -84,8 +84,6 @@ export default (state = initialState, action) => {
     case LOADING:
       return {
         ...state,
-        // user: {},
-        // contractors: [],
         loading: true,
         error: null,
       };
@@ -177,6 +175,13 @@ export default (state = initialState, action) => {
 
     case DELETE_FEEDBACK_SUCCESS:
       return { ...state, feedback: action.payload.feedback };
+      console.log(action.payload.feedback);
+      return {
+        ...state,
+        feedback: state.feedback.filter(
+          x => x.id !== action.payload.deleted.id
+        ),
+      };
     // fetching current contractor appointments
     // case RET_CONTRACTOR_APP_SUCC:
     //   return {...state, accounts:{appointments: action.payload }}
