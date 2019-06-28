@@ -20,9 +20,8 @@ function ContractorCard(props) {
       setService(filtered[0]);
     }
   }, [props.service]);
-  console.log('service', service);
   return (
-    <div>
+    <div className="contractor-card">
       <h3>{name}</h3>
       <address>
         <p>{phoneNumber}</p>

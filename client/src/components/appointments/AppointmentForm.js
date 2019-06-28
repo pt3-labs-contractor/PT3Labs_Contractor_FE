@@ -54,7 +54,6 @@ function AppointmentForm(props) {
     }
     setConfirm(false);
   }
-  // console.log(props.appointment);
   return (
     <div className="appointment-form">
       <p>
@@ -75,9 +74,9 @@ function AppointmentForm(props) {
           Set Appointment
         </button>
       ) : null}
-      <button className="close-btn" onClick={props.clearAppointment}>
+      {/* <button className="close-btn" onClick={props.clearAppointment}>
         X
-      </button>
+      </button> */}
       <ConfirmModal confirm={confirm} postAppointment={postAppointment} />
     </div>
   );

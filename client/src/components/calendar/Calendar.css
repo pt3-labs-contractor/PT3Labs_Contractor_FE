@@ -68,7 +68,7 @@
 }
 
 .cell.selected {
-  background-color: var(--secondary-color);
+  background-color: #febd178c;
 }
 
 .cell.disable {
