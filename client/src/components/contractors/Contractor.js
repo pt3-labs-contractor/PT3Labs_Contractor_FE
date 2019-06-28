@@ -39,7 +39,6 @@ function Contractor(props) {
     setService({});
   };
 
-  console.log(props.contractor);
   return (
     <>
       <TopNavbar />
@@ -71,12 +70,6 @@ function Contractor(props) {
               setAppointment={makeAppointment}
             />
           </div>
-          {/* <AppointmentForm
-          contractor={id}
-          clearAppointment={clearAppointment}
-          appointment={appointment}
-          service={service}
-        /> */}
         </div>
         <AppointmentForm
           contractor={id}

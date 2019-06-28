@@ -55,7 +55,6 @@ function AppointmentForm(props) {
     }
     setConfirm(false);
   }
-  // console.log(props.appointment);
   return (
     <div className="appointment-form">
       <p>
