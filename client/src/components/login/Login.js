@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import axios from 'axios';
+import { connect } from 'react-redux';
 import MainNavbar from '../navbar/MainNavbar';
+import { fetchAccts, getFeedback } from '../../actions/index.js';
 
 import './Login.css';
 
@@ -26,6 +28,8 @@ function Login(props) {
       .then(res => {
         localStorage.setItem('jwt', res.data.token);
         console.log(res.data);
+        props.fetchAccts();
+        props.getFeedback();
         props.history.push('/contractors');
         props.history.push('/app');
       })
@@ -79,4 +83,7 @@ function Login(props) {
   );
 }
 
-export default Login;
+export default connect(
+  null,
+  { fetchAccts, getFeedback }
+)(Login);

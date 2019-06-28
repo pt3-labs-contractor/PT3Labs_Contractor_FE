@@ -109,8 +109,11 @@ $mobile: (max-width: 601px);
 
 
 .cel {
-  height: 58px;
-  overflow: hidden;
+	height: 58px;
+	overflow: hidden;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
 	@media screen and (max-width: 601px) {
 		height: 80px;
 	}
@@ -132,8 +135,6 @@ $mobile: (max-width: 601px);
 	border-bottom: 4px solid black;
   padding-bottom: 0px;
   margin-bottom: 0px;
-
-
 }
 
 .spacer.disable {
@@ -170,11 +171,8 @@ $mobile: (max-width: 601px);
   width: 100%;
 }
 
-.cel {
-  display: flex;
-  flex-wrap: wrap;
-  width: 100%;
-}
+
+
 
 .listCont {
   width: 100%;
@@ -332,12 +330,13 @@ $mobile: (max-width: 601px);
   pointer-events: none;
 }
 
-.hidden {
-  height: max-content;
-}
 
 .arrowHidden {
   display: none;
+}
+
+.hidden {
+	height: max-content;
 }
 
 /* .react-datetime-picker__inputGroup__month, */
@@ -455,6 +454,7 @@ $mobile: (max-width: 601px);
 .date {
   margin-bottom: 5px;
 	width: 20px;
+	height: min-content;
 }
 
 .weekDay {
@@ -512,3 +512,4 @@ $mobile: (max-width: 601px);
     background-color: rgba(1, 1, 1, 0.5);
   }
 }
+

@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import { TweenMax } from 'gsap/all';
 import dateFns from 'date-fns';
 import { Route } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -27,6 +28,11 @@ function ContCalendar(props) {
   const display = {
     display: 'none',
   };
+  const theRef = useRef();
+  const sty = {
+    backgroundColor: 'black',
+  };
+
   const [ahead, setAhead] = useState();
   const [behind, setBehind] = useState();
   const [x, setX] = useState();
@@ -45,13 +51,15 @@ function ContCalendar(props) {
   const { refs } = props;
   const [win, setWindow] = useState();
   // console.log(refs);
-  let [refArray, setRefArray] = useState([]);
+  const [refArray, setRefArray] = useState([]);
   // const ref = React.createRef();
   const [render, setRender] = useState();
   const [filter, setFilter] = useState();
   const [fullFilter, setFullFilter] = useState();
+  const selecDayString = JSON.stringify(props.selectedDay);
   useEffect(() => {
     // setId(props.id);
+    setTheRefs();
     props.getSchedules(props.id);
     monthPendingCheck();
     startEndId(start, end, schedId);
@@ -59,8 +67,43 @@ function ContCalendar(props) {
     return () => {
       window.removeEventListener('resize', windowResize);
     };
-  }, [stringify, start, props.selectedDay, props.id, win, props.selectedMonth]);
+  }, [stringify, selecDayString, start, props.id, win, props.selectedMonth]);
 
+  const setTheRefs = () => {
+    if (theRef.current !== undefined) {
+      const compArray = [];
+      let calDays = theRef.current.querySelectorAll('.spacer');
+      let schedules = theRef.current.querySelectorAll('.schCont');
+      let appoints = theRef.current.querySelectorAll('.appContRef');
+      calDays = Array.from(calDays);
+      schedules = Array.from(schedules);
+      appoints = Array.from(appoints);
+      const arr = calDays.map(n => {
+        // console.log(n);
+        // console.log(n.getBoundingClientRect());
+        const ref = { element: n, id: n.id, pos: n.getBoundingClientRect() };
+        return ref;
+        // console.log(n.dataset);
+      });
+      schedules.forEach(n => {
+        const ref = { element: n, id: n.id, pos: n.getBoundingClientRect() };
+        arr.push(ref);
+      });
+      appoints.forEach(n => {
+        const ref = { element: n, id: n.id, pos: n.getBoundingClientRect() };
+        arr.push(ref);
+      });
+      // const compString = JSON.stringify(calDays);
+      // const refString = JSON.stringify(refArray);
+      if (
+        arr.length !== props.refs.length ||
+        window.innerWidth !== props.win.width ||
+        window.innerHeight !== props.win.height
+      ) {
+        props.setRefs(arr);
+      }
+    }
+  };
   const monthPendingCheck = () => {
     const diffMonth = props.appointments.filter(a => {
       const isSameMonth = dateFns.isSameMonth(a.startTime, props.selectedMonth);
@@ -96,68 +139,8 @@ function ContCalendar(props) {
     }
   };
 
-  const refCallback = el => {
-    if (window.innerWidth > 601) {
-      if (el) {
-        const loc = el.getBoundingClientRect();
-        const ref = { element: el, id: el.id, pos: loc };
-        if (refs) {
-          const find = refs.find(r => {
-            return r.element.id === el.id;
-          });
-          if (find) {
-            const locString = JSON.stringify(loc);
-            const posString = JSON.stringify(find.pos);
-            if (posString !== locString) {
-              const newRef = { ...find, pos: loc };
-              const remove = refArray.filter(r => {
-                return r.element.id !== el.id;
-              });
-              const finalRefs = [...remove, newRef];
-              // console.log(finalRefs);
-              refArray = finalRefs;
-              if (el.parentElement.lastChild === el) {
-                console.log('ran');
-                props.setRefs(refArray);
-              }
-              // props.setRefs(finalRefs);
-            }
-          } else {
-            const newSize = [...refArray];
-            if (newSize.length > 0) {
-              const xs = newSize.map(s => {
-                return s.id;
-              });
-              let eOm = dateFns.endOfMonth(selectedMonth);
-              eOm = dateFns.startOfDay(eOm);
-              eOm = String(eOm);
-              eOm = eOm.split(' ').join('');
-              if (!xs.includes(ref.id)) {
-                const modSize = [...newSize, ref];
-                refArray = modSize;
-                if (ref.id === eOm) {
-                  props.setRefs(refArray);
-                }
-              } else if (ref.id === eOm) {
-                props.setRefs(refArray);
-              }
-            } else {
-              refArray = [ref];
-            }
-          }
-        } else {
-          // setSize([loc]);
-          // props.setRefs([ref]);
-          refArray.push(ref);
-          if (el.parentElement.lastChild === el) {
-            props.setRefs(refArray);
-          }
-        }
-
-        // props.getSize(el.getBoundingClientRect());
-      }
-    }
-  };
+  const counter = 0;
+  const secondcounter = 0;
 
   const startEndId = (start, end, id) => {
     setStart(start);
@@ -264,6 +247,8 @@ function ContCalendar(props) {
 
     let day = startCalendar;
     const days = [];
+    const counter = 0;
+    const insideFuncRef = [];
 
     while (day <= endCalendar) {
       let newDay = String(day);
@@ -354,7 +339,6 @@ function ContCalendar(props) {
           key={temp}
           id={id}
           data-ref={render}
-          ref={refCallback}
           style={
             window.innerWidth <= 601 &&
             !dateFns.isSameMonth(temp, selectedMonth)
@@ -446,7 +430,7 @@ function ContCalendar(props) {
                 <FontAwesomeIcon icon={faAngleDoubleUp} />
               </div>
             </>
-          ) : daySched.length > 2 ||
+          ) : daySched.length >= 2 ||
             (daySched.length >= 1 && dayApp.length > 1) ? (
             <>
               <div
@@ -479,19 +463,34 @@ function ContCalendar(props) {
       // console.log(state.appointments);
     }
 
-    return <div className="cel-container">{days}</div>;
+    return (
+      <div className="cel-container" ref={theRef}>
+        {days}
+      </div>
+    );
   }
 
   function handleSelect(day) {
-    if (dateFns.isSameMonth(day, selectedMonth)) {
+    if (
+      dateFns.isSameMonth(day, selectedMonth) &&
+      !dateFns.isSameDay(day, props.selectedDay)
+    ) {
       props.setDay(day);
-    } else if (!dateFns.isBefore(day, dateFns.startOfMonth(new Date()))) {
+    } else if (
+      !dateFns.isBefore(day, dateFns.startOfMonth(new Date())) &&
+      !dateFns.isSameMonth(day, props.selectedMonth)
+    ) {
       props.setMonth(day);
       props.setDay(day);
     }
   }
 
   const showHide = e => {
+    console.log(e.target);
+    const findRef = refs.find(r => {
+      return r.id === e.target.dataset.cell;
+    });
+    console.log(findRef.element.lastChild);
     targetCell.hidden === true
       ? setTargetCell({ hidden: false, id: e.target.dataset.cell })
       : setTargetCell({ hidden: true, id: null });

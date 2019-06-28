@@ -32,7 +32,7 @@ const AppInfo = props => {
   const { h } = props;
   const centerPop = 100;
   const centerBox = w / 2;
-  const xper = x - centerPop + centerBox + 6;
+  const xper = x - centerPop + centerBox;
   const yper = y - 150;
 
   const position = {
