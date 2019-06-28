@@ -127,63 +127,61 @@ function UserLandingPage(props) {
   return (
     <>
       <TopNavbar />
-      <div className="main-body">
-        <div className="calendar-container">
-          {mql ? (
-            <div ref={serviceTarget} className="service-list">
-              <h2>Pick a service</h2>
-              {serviceList.map(service => (
-                <button value={service.toLowerCase()} onClick={handleSort}>
-                  {service}
-                </button>
-              ))}
-            </div>
-          ) : (
-            <form>
-              <select
-                className="select-service"
-                value={serviceSort}
-                onChange={handleSort}
-              >
-                <option value="">Pick a service</option>
-                {serviceList.map(service => (
-                  <option key={service} value={service.toLowerCase()}>
-                    {service}
-                  </option>
-                ))}
-              </select>
-            </form>
-          )}
-          <div className="user-calendar">
-            <div className="calendar-target" ref={calendarTarget}>
-              <Calendar user />
-            </div>
-            <div className="contractor-target" ref={contractorTarget}>
-              <ContractorList userLanding selectContractor={selectContractor} />
-            </div>
-            <div className="availability-target" ref={availabilityTarget}>
-              <AvailabilityList setAppointment={selectTime} />
-            </div>
-            <div className="appointment-form-target" ref={appointmentTarget}>
-              {contractor.id && time.id && (
-                <AppointmentForm
-                  user
-                  contractor={contractor}
-                  clearAppointment={clearAppointment}
-                  appointment={time}
-                  service={service}
-                />
-              )}
-            </div>
+      <div className="calendar-container">
+        {mql ? (
+          <div ref={serviceTarget} className="service-list">
+            <h2>Pick a service</h2>
+            {serviceList.map(service => (
+              <button value={service.toLowerCase()} onClick={handleSort}>
+                {service}
+              </button>
+            ))}
           </div>
-
-          {mql && currentTarget > 0 ? (
-            <div onClick={scrollBack} id="back-button">
-              Back
-            </div>
-          ) : null}
-          {!mql && <AppointmentList />}
+        ) : (
+          <form>
+            <select
+              className="select-service"
+              value={serviceSort}
+              onChange={handleSort}
+            >
+              <option value="">Pick a service</option>
+              {serviceList.map(service => (
+                <option key={service} value={service.toLowerCase()}>
+                  {service}
+                </option>
+              ))}
+            </select>
+          </form>
+        )}
+        <div className="user-calendar">
+          <div className="calendar-target" ref={calendarTarget}>
+            <Calendar user />
+          </div>
+          <div className="contractor-target" ref={contractorTarget}>
+            <ContractorList userLanding selectContractor={selectContractor} />
+          </div>
+          <div className="availability-target" ref={availabilityTarget}>
+            <AvailabilityList setAppointment={selectTime} />
+          </div>
+          <div className="appointment-form-target" ref={appointmentTarget}>
+            {contractor.id && time.id && (
+              <AppointmentForm
+                user
+                contractor={contractor}
+                clearAppointment={clearAppointment}
+                appointment={time}
+                service={service}
+              />
+            )}
+          </div>
         </div>
+
+        {mql && currentTarget > 0 ? (
+          <div onClick={scrollBack} id="back-button">
+            Back
+          </div>
+        ) : null}
+        {!mql && <AppointmentList />}
       </div>
     </>
   );
