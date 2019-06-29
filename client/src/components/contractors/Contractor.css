@@ -34,6 +34,16 @@
   margin: 10px 0 5px;
 }
 
+.services-container .service {
+  width: 14%;
+}
+
+.services-container .service p:first-child {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .contractor-calendar {
   width: 100%;
   display: flex;
@@ -72,4 +82,23 @@
   position: absolute;
   width: 20%;
   left: 45%;
+}
+
+@media (max-width: 600px) {
+  .contractor-container {
+    margin-left: 60px;
+    padding: 0;
+  }
+
+  .contractor-container .contractor-card {
+    width: 94%;
+  }
+
+  .contractor-calendar {
+    flex-direction: column;
+  }
+
+  .contractor-calendar .calendar {
+    width: 100%;
+  }
 }

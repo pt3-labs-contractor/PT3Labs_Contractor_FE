@@ -8,6 +8,7 @@ import './Login.css';
 function Login(props) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -30,7 +31,12 @@ function Login(props) {
         props.history.push('/app');
       })
       .catch(err => {
-        console.log(err);
+        console.log(err.response);
+        switch (err.response.status) {
+          case 400:
+          case 401:
+            return setError('Invalid username or password');
+        }
       });
   }
   // state = {
@@ -68,6 +74,7 @@ function Login(props) {
           />
           <input type="submit" value="Sign In" className="btn btn-primary" />
         </form>
+        {error.length > 0 && <p style={{ color: 'red' }}>{error}</p>}
         <p>
           Don't have an account?
           <NavLink to="/register" className="form-links">

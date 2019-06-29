@@ -48,7 +48,7 @@ function UserLandingPage(props) {
 
   useEffect(() => {
     if (mql) {
-      const container = document.querySelector('.user.container');
+      const container = document.querySelector('.calendar-container');
       container.addEventListener('touchmove', e => {
         e.preventDefault();
       });
