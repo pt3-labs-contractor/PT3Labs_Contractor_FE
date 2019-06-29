@@ -29,8 +29,9 @@ function App(props) {
   const [win, setWin] = useState();
   const string = JSON.stringify(win);
   useEffect(() => {
+    console.log('ran');
     setWin({ width: window.innerWidth, height: window.innerHeight });
-  }, [string]);
+  }, []);
 
   return (
     <div className="App">

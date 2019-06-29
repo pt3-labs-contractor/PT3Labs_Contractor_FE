@@ -335,8 +335,12 @@ $mobile: (max-width: 601px);
   display: none;
 }
 
-.hidden {
-	height: max-content;
+.notHidden {
+	overflow: hidden;
+	background-color: #e4e4e4;
+	border: none;
+	box-shadow: none;
+	
 }
 
 /* .react-datetime-picker__inputGroup__month, */

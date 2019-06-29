@@ -8,7 +8,7 @@ import {
   faAngleDoubleDown,
   faAngleDoubleUp,
 } from '@fortawesome/free-solid-svg-icons';
-import ServiceForm from './forms/servicesForm.jsx';
+// import ServiceForm from './forms/servicesForm.jsx';
 import Scheduler from './comps/scheduler.jsx';
 import SchduleList from './comps/scheduleList.jsx';
 import EScheduler from './forms/editForm.jsx';
@@ -29,9 +29,6 @@ function ContCalendar(props) {
     display: 'none',
   };
   const theRef = useRef();
-  const sty = {
-    backgroundColor: 'black',
-  };
 
   const [ahead, setAhead] = useState();
   const [behind, setBehind] = useState();
@@ -50,24 +47,51 @@ function ContCalendar(props) {
   const stringify = JSON.stringify(props.schedules);
   const { refs } = props;
   const [win, setWindow] = useState();
-  // console.log(refs);
-  const [refArray, setRefArray] = useState([]);
-  // const ref = React.createRef();
   const [render, setRender] = useState();
   const [filter, setFilter] = useState();
   const [fullFilter, setFullFilter] = useState();
   const selecDayString = JSON.stringify(props.selectedDay);
+  const [ani, setAni] = useState();
+  const newRef = useRef();
+  let toTween;
   useEffect(() => {
+    props.getSchedules(props.id);
+  }, [stringify]);
+
+  useEffect(() => {
+    console.log('ran');
     // setId(props.id);
     setTheRefs();
-    props.getSchedules(props.id);
     monthPendingCheck();
     startEndId(start, end, schedId);
     window.addEventListener('resize', windowResize);
     return () => {
       window.removeEventListener('resize', windowResize);
     };
-  }, [stringify, selecDayString, start, props.id, win, props.selectedMonth]);
+  }, [
+    // stringify,
+    selecDayString,
+    start,
+    win,
+    targetCell,
+    props.selectedMonth,
+  ]);
+
+  useEffect(() => {
+    if (theRef !== undefined) {
+      toTween = theRef.current.getElementsByClassName('spacer selected');
+      toTween = Array.from(toTween)[0];
+      toTween = toTween.getElementsByClassName('cel');
+      toTween = Array.from(toTween)[0];
+      console.log(toTween);
+      // setTimeout(function() {
+      //   TweenMax.to(toTween, 10, { height: 'auto' });
+      // }, 500);
+      toTween.className = 'cel selected day notHidden ';
+      TweenMax.set(toTween, { height: 'auto' });
+      TweenMax.from(toTween, 1, { height: 58 });
+    }
+  });
 
   const setTheRefs = () => {
     if (theRef.current !== undefined) {
@@ -139,9 +163,6 @@ function ContCalendar(props) {
     }
   };
 
-  const counter = 0;
-  const secondcounter = 0;
-
   const startEndId = (start, end, id) => {
     setStart(start);
     setEnd(end);
@@ -180,7 +201,6 @@ function ContCalendar(props) {
             className={`nav ${behind ? 'pend' : null}`}
             onClick={() => {
               setMonth(dateFns.subMonths(selectedMonth, 1));
-              setRefArray([]);
             }}
           >
             &lt;
@@ -193,7 +213,6 @@ function ContCalendar(props) {
           className={`nav ${ahead ? 'pend' : null}`}
           onClick={() => {
             setMonth(dateFns.addMonths(selectedMonth, 1));
-            setRefArray([]);
           }}
         >
           &gt;
@@ -247,8 +266,6 @@ function ContCalendar(props) {
 
     let day = startCalendar;
     const days = [];
-    const counter = 0;
-    const insideFuncRef = [];
 
     while (day <= endCalendar) {
       let newDay = String(day);
@@ -377,7 +394,7 @@ function ContCalendar(props) {
             key={temp}
             className={`cel ${
               isSameDay && targetCell.hidden === false && targetCell.id === id
-                ? ' selected day hidden'
+                ? ' selected day notHidden'
                 : !dateFns.isSameMonth(temp, selectedMonth)
                 ? 'disable'
                 : ''
@@ -463,11 +480,7 @@ function ContCalendar(props) {
       // console.log(state.appointments);
     }
 
-    return (
-      <div className="cel-container" ref={theRef}>
-        {days}
-      </div>
-    );
+    return <div className="cel-container">{days}</div>;
   }
 
   function handleSelect(day) {
@@ -486,11 +499,9 @@ function ContCalendar(props) {
   }
 
   const showHide = e => {
-    console.log(e.target);
     const findRef = refs.find(r => {
       return r.id === e.target.dataset.cell;
     });
-    console.log(findRef.element.lastChild);
     targetCell.hidden === true
       ? setTargetCell({ hidden: false, id: e.target.dataset.cell })
       : setTargetCell({ hidden: true, id: null });
@@ -500,7 +511,7 @@ function ContCalendar(props) {
     <>
       <TopNavbar />
       <NavBarContractor />
-      <div className="main-body">
+      <div className="main-body" ref={theRef}>
         <div className="filterButtons">
           <button className="fbutt pendingApp" onClick={handleFilterClick}>
             Pending Appointments

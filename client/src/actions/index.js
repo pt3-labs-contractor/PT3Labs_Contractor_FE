@@ -156,7 +156,11 @@ export const fetchServices = id => dispatch => {
     });
 };
 
-export const fetchAvailabilityByDay = (date, contractorList, query) => dispatch => {
+export const fetchAvailabilityByDay = (
+  date,
+  contractorList,
+  query
+) => dispatch => {
   // dispatch({ type: LOADING });
   const headers = setHeaders();
   // const state = store.getState();
@@ -293,7 +297,7 @@ export const editUserSettings = data => dispatch => {
 export const postNewService = serv => {
   return dispatch => {
     dispatch({ type: SEND_SERV });
-    const headers = setHeaders()
+    const headers = setHeaders();
     axios
       .post('https://fierce-plains-47590.herokuapp.com/api/services', serv, {
         headers,

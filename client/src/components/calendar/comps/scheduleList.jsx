@@ -4,9 +4,6 @@ import Schedule from './schedule.jsx';
 import { setRefs } from '../../../actions/index.js';
 
 const ScheduleList = props => {
-  const { refs } = props;
-  const refArray = [];
-
   return (
     <div className="listCont">
       {props.schs.map((s, i) => {

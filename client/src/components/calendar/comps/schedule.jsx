@@ -45,76 +45,6 @@ const Schedule = props => {
     }
     props.getSE(start, newEnd, id);
   };
-  const { refs } = props;
-  const refArray = [];
-  // const refCallback = el => {
-  //   if (window.innerWidth > 601) {
-  //     if (el) {
-  //       const loc = el.getBoundingClientRect();
-  //       const ref = { element: el, id: el.id, pos: loc };
-  //       if (refs) {
-  //         const find = refs.find(r => {
-  //           return r.element.id === el.id;
-  //         });
-  //         if (find) {
-  //           const locString = JSON.stringify(loc);
-  //           const posString = JSON.stringify(find.pos);
-  //           if (posString !== locString) {
-  //             const newRef = { ...find, pos: loc };
-  //             const remove = refArray.filter(r => {
-  //               return r.element.id !== el.id;
-  //             });
-  //             const finalRefs = [...remove, newRef];
-  //             refArray = finalRefs;
-  //             if (el.parentElement.lastChild === el) {
-  //               props.setRefs(refArray);
-  //             }
-  //             // props.setRefs(finalRefs);
-  //           }
-  //         } else {
-  //           let newSize = [];
-  //           if (refArray.length > 0) {
-  //             newSize = [...refArray];
-  //           } else {
-  //             newSize = [...refs];
-  //           }
-  //           if (newSize.length > 0) {
-  //             const xs = newSize.map(s => {
-  //               return s.id;
-  //             });
-  //             if (!xs.includes(ref.id)) {
-  //               const modSize = [...newSize, ref];
-  //               const htmlArr = Array.from(el.parentElement.children);
-  //               refArray = modSize;
-  //               props.setRefs(modSize);
-  //               const newids = htmlArr.map(h => {
-  //                 return h.id;
-  //               });
-  //               const check = refArray.filter(r => {
-  //                 return newids.includes(r.id);
-  //               });
-  //               if (check.length + 1 === htmlArr.length) {
-  //                 props.setRefs(refArray);
-  //               }
-  //               if (el.parentElement.firstChild === el) {
-  //                 props.setRefs(refArray);
-  //               }
-  //             }
-  //           }
-  //         }
-  //       } else {
-  //         // setSize([loc]);
-  //         // props.setRefs([ref]);
-  //         refArray.push(ref);
-  //         if (el.parentElement.lastChild === el) {
-  //           props.setRefs(refArray);
-  //         }
-  //       }
-  //
-  //       // props.getSize(el.getBoundingClientRect());
-  //     }
-  //   }
-  // };
 
   const confirmed = apps.filter(a => {
     if (a.confirmed === true) {
@@ -154,7 +84,7 @@ const Schedule = props => {
           </Link>
           {apps.map(a => {
             return (
-              <div className="appContRef" id={a.id}>
+              <div className="appContRef" key={a.id} id={a.id}>
                 <Appointment
                   id={a.id}
                   sevId={a.serviceId}
