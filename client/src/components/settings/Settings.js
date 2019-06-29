@@ -1,48 +1,58 @@
 import React, { useEffect, useState } from 'react';
 // import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { IoIosTrash } from 'react-icons/io'
-import { IoMdCreate } from 'react-icons/io'
+import { IoIosTrash, IoMdCreate } from 'react-icons/io';
+
 import './Settings.css';
 
 import NavBarContractor from '../navbar/NavBarContractor';
 // import ContractorCard from './ContractorCard';
-import { editUserSettings,postNewService,deleteService } from '../../actions/index';
+import {
+  editUserSettings,
+  postNewService,
+  deleteService,
+} from '../../actions/index';
 import TopNavbar from '../navbar/TopNavbar';
 
 function ContractorSetting(props) {
   // console.log(props.User)
-  const [username, setUsername] = useState(props.User.username)
-  const [phoneNumber, setPhoneNumber] = useState(props.User.phoneNumber)
-  const [email, setEmail] = useState(props.User.email)
-  const [services, setServices] = useState(props.User.services)
+  const [username, setUsername] = useState(props.User.username);
+  const [phoneNumber, setPhoneNumber] = useState(props.User.phoneNumber);
+  const [email, setEmail] = useState(props.User.email);
+  const [services, setServices] = useState(props.User.services);
 
-  const [addService, setAddServices] = useState('')
-  const [addPrice, setAddPrice] = useState('')
+  const [addService, setAddServices] = useState('');
+  const [addPrice, setAddPrice] = useState('');
 
-  
+  const serviceList = [
+    'Electrical',
+    'Plumbing',
+    'Carpentry',
+    'Landscaping',
+    'Masonry',
+    'Health and Beauty',
+    'Roofing and Siding',
+  ];
+
   useEffect(() => {
     setUsername(props.User.username);
     setPhoneNumber(props.User.phoneNumber);
     setEmail(props.User.email);
-    setServices(props.User.services)
-    
+    setServices(props.User.services);
   }, [
-    props.User.username, 
-    props.User.phoneNumber, 
-    props.User.email, 
+    props.User.username,
+    props.User.phoneNumber,
+    props.User.email,
     props.User.services,
-    props.services
+    props.services,
   ]);
 
   // useEffect(() => {
   //   console.log('fired')
   // }, [
   //   props.services
-  // ])  
+  // ])
 
-
-  
   function handleUpdate(e) {
     e.preventDefault();
     props.editUserSettings({ email, username, phoneNumber });
@@ -53,20 +63,18 @@ function ContractorSetting(props) {
   }
 
   function handleAddPriceChange(e) {
-    setAddPrice(e)
+    setAddPrice(e);
   }
 
-
-  function handleAddServiceSubmit(e){
+  function handleAddServiceSubmit(e) {
     e.preventDefault();
-    props.postNewService({ name:addService, price:addPrice })
+    props.postNewService({ name: addService, price: addPrice });
     // console.log({ name:addService,price:addPrice })
   }
 
-
-  function handleServeDelete(service){
+  function handleServeDelete(service) {
     // e.preventDefault();
-    props.deleteService(service)
+    props.deleteService(service);
     // console.log(service)
   }
   return (
@@ -106,37 +114,42 @@ function ContractorSetting(props) {
           <input /> */}
           <button>Save</button>
         </form>
-
         <form onSubmit={handleAddServiceSubmit}>
-          Add Service 
-          <input 
-            placeholder="Service" 
-            name="name"
+          Add Service
+          <select
+            className="select-service"
             value={addService}
-            onChange={e => handleAddServiceChange(e.target.value)}/>
-          
+            onChange={e => handleAddServiceChange(e.target.value)}
+          >
+            <option value="">Pick a service</option>
+            {serviceList.map(service => (
+              <option key={service} value={service.toLowerCase()}>
+                {service}
+              </option>
+            ))}
+          </select>
           <input
             placeholder="Price"
             name="price"
             value={addPrice}
             onChange={e => handleAddPriceChange(e.target.value)}
-           />
+          />
           <button onClick={handleAddServiceSubmit}>Add Service</button>
         </form>
-
-
-          LIST OF SERVICES
+        LIST OF SERVICES
         <p>Services:</p>
         <div>
-        {props.services 
-          ? props.services.map(service => 
-            <>
-              <p>{service.name}</p>
-              <p>{service.price}</p>
-              <button onClick={e => handleServeDelete(service)}><IoIosTrash/></button>
-            </>
-          )
-          : null}
+          {props.services
+            ? props.services.map(service => (
+                <>
+                  <p>{service.name}</p>
+                  <p>{service.price}</p>
+                  <button onClick={e => handleServeDelete(service)}>
+                    <IoIosTrash />
+                  </button>
+                </>
+              ))
+            : null}
         </div>
       </div>
     </>
@@ -148,15 +161,15 @@ const mapStateToProps = state => {
     User: state.user,
     services: state.services,
     loading: state.loading,
-    error: state.error
+    error: state.error,
   };
 };
 
 export default connect(
   mapStateToProps,
-  { 
+  {
     editUserSettings,
     postNewService,
-    deleteService 
+    deleteService,
   }
 )(ContractorSetting);
