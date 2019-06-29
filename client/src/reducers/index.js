@@ -185,7 +185,13 @@ export default (state = initialState, action) => {
       };
 
     case DELETE_FEEDBACK_SUCCESS:
-      return { ...state, feedback: action.payload.feedback };
+      console.log(action.payload.feedback);
+      return {
+        ...state,
+        feedback: state.feedback.filter(
+          x => x.id !== action.payload.deleted.id
+        ),
+      };
     // fetching current contractor appointments
     // case RET_CONTRACTOR_APP_SUCC:
     //   return {...state, accounts:{appointments: action.payload }}
@@ -197,7 +203,8 @@ export default (state = initialState, action) => {
         loading: true,
       };
     case SEND_SERV_COMP:
-      return { ...state, loading: false };
+      return { ...state, loading: false, services:[...state.services, action.payload]};
+
     case SEND_SCHED:
       return { ...state, loading: true };
     case SEND_SCHED_COMP:

@@ -312,15 +312,15 @@ export const editUserSettings = data => dispatch => {
 export const postNewService = serv =>{
   return dispatch => {
     dispatch({ type: SEND_SERV });
-    const bearer = `Bearer ${localStorage.getItem('jwt')}`;
-    const headers = { authorization: bearer };
+    const headers = setHeaders();
+
     axios
       .post('https://fierce-plains-47590.herokuapp.com/api/services', serv, {
         headers,
       })
       .then(res => {
         console.log(res.data);
-        dispatch({ type: SEND_SERV_COMP });
+        dispatch({ type: SEND_SERV_COMP, payload:res.data.created });
       })
       .catch(err => {
         console.log(err);
@@ -330,14 +330,17 @@ export const postNewService = serv =>{
 
 
 
-export const deleteService = service => dispatch =>{
+export const deleteService = (service, list) => dispatch =>{
   dispatch({ type: LOADING });
   const headers = setHeaders();
 
   axios
   .delete(`https://fierce-plains-47590.herokuapp.com/api/services/${service.id}`,{headers})
   .then(res => {
-    dispatch({ type: DELETE_SERV_SUCC, payload: res.data})
+    // console.log(res.data)
+    const newList = list.filter((service) => service.id !== res.data.deleted.id
+    )
+    dispatch({ type: DELETE_SERV_SUCC, payload: newList})
   })
   .catch(err=> {
     dispatch({ type: FAILURE, payload: err})

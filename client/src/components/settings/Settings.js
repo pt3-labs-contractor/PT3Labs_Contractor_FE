@@ -26,12 +26,20 @@ function ContractorSetting(props) {
     setPhoneNumber(props.User.phoneNumber);
     setEmail(props.User.email);
     setServices(props.User.services)
+    
   }, [
     props.User.username, 
     props.User.phoneNumber, 
     props.User.email, 
-    props.User.services
+    props.User.services,
+    props.services
   ]);
+
+  // useEffect(() => {
+  //   console.log('fired')
+  // }, [
+  //   props.services
+  // ])  
 
 
   
@@ -51,7 +59,7 @@ function ContractorSetting(props) {
 
   function handleAddServiceSubmit(e){
     e.preventDefault();
-    props.postNewService({ name:addService,price:addPrice })
+    props.postNewService({ name:addService, price:addPrice })
     // console.log({ name:addService,price:addPrice })
   }
 
@@ -120,8 +128,8 @@ function ContractorSetting(props) {
           LIST OF SERVICES
         <p>Services:</p>
         <div>
-        {services 
-          ? services.map(service => 
+        {props.services 
+          ? props.services.map(service => 
             <>
               <p>{service.name}</p>
               <p>{service.price}</p>
@@ -140,12 +148,15 @@ const mapStateToProps = state => {
     User: state.user,
     services: state.services,
     loading: state.loading,
-    error: state.error,
-    services: state.services,
+    error: state.error
   };
 };
 
 export default connect(
   mapStateToProps,
-  { editUserSettings,postNewService,deleteService }
+  { 
+    editUserSettings,
+    postNewService,
+    deleteService 
+  }
 )(ContractorSetting);

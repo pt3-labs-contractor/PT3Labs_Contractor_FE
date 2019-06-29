@@ -20,7 +20,7 @@ function NavBarUser(props) {
           activeClassName="current"
         >
           <i className="fas fa-book" />
-          <span className="side-listing"> My Bookings</span>
+          <span className="side-listing"> Appointments</span>
         </NavLink>
         <NavLink
           to="/userFeedback"
