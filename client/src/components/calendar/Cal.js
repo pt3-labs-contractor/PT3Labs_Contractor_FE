@@ -40,7 +40,6 @@ function ContCalendar(props) {
   const [sevAppId, setSevAppId] = useState();
   const [appId, setAppId] = useState();
   const { selectedDay, selectedMonth, setMonth } = props;
-  // const [id, setId] = useState('');
   const [start, setStart] = useState();
   const [end, setEnd] = useState();
   const [schedId, setSchedId] = useState();
@@ -54,13 +53,10 @@ function ContCalendar(props) {
   const [ani, setAni] = useState();
   const newRef = useRef();
   let toTween;
-  useEffect(() => {
-    props.getSchedules(props.id);
-  }, [stringify]);
 
   useEffect(() => {
-    console.log('ran');
     // setId(props.id);
+    props.getSchedules(props.id);
     setTheRefs();
     monthPendingCheck();
     startEndId(start, end, schedId);
@@ -70,6 +66,7 @@ function ContCalendar(props) {
     };
   }, [
     // stringify,
+    props.id,
     selecDayString,
     start,
     win,
@@ -77,21 +74,73 @@ function ContCalendar(props) {
     props.selectedMonth,
   ]);
 
-  useEffect(() => {
-    if (theRef !== undefined) {
+  const downTweenFull = e => {
+    showHide(e);
+    if (targetCell.hidden === true) {
+      if (theRef.current !== undefined) {
+        toTween = theRef.current.getElementsByClassName('spacer selected');
+        toTween = Array.from(toTween)[0];
+        toTween = toTween.getElementsByClassName('cel');
+        toTween = Array.from(toTween)[0];
+        TweenMax.to(toTween, 0.5, { height: 'auto' });
+        // TweenMax.set(toTween, { height: 'auto' });
+        // setTimeout(function() {
+        toTween.className = 'cel selected day notHidden';
+        // setAni(TweenMax.from(toTween, 1, { height: 58 }));
+        TweenMax.from(toTween, 0.5, { height: 58 });
+      }
+    }
+    if (targetCell.hidden === false) {
       toTween = theRef.current.getElementsByClassName('spacer selected');
       toTween = Array.from(toTween)[0];
       toTween = toTween.getElementsByClassName('cel');
       toTween = Array.from(toTween)[0];
-      console.log(toTween);
-      // setTimeout(function() {
-      //   TweenMax.to(toTween, 10, { height: 'auto' });
-      // }, 500);
-      toTween.className = 'cel selected day notHidden ';
-      TweenMax.set(toTween, { height: 'auto' });
-      TweenMax.from(toTween, 1, { height: 58 });
+      TweenMax.to(toTween, 0.5, { height: 61 });
     }
-  });
+  };
+  const downTweenCompact = e => {
+    showHide(e);
+    if (targetCell.hidden === true) {
+      if (theRef.current !== undefined) {
+        toTween = theRef.current.getElementsByClassName('spacer selected');
+        toTween = Array.from(toTween)[0];
+        toTween = toTween.getElementsByClassName('cel');
+        toTween = Array.from(toTween)[0];
+        TweenMax.to(toTween, 0.5, { height: 'auto' });
+        // TweenMax.set(toTween, { height: 'auto' });
+        // setTimeout(function() {
+        toTween.className = 'cel selected day notHidden';
+        // setAni(TweenMax.from(toTween, 1, { height: 58 }));
+        TweenMax.from(toTween, 0.5, { height: 80 });
+      }
+    }
+    if (targetCell.hidden === false) {
+      toTween = theRef.current.getElementsByClassName('spacer selected');
+      toTween = Array.from(toTween)[0];
+      toTween = toTween.getElementsByClassName('cel');
+      toTween = Array.from(toTween)[0];
+      TweenMax.to(toTween, 0.5, { height: 85 });
+    }
+  };
+
+  const showHide = e => {
+    e.persist();
+    const findRef = refs.find(r => {
+      return r.id === e.target.dataset.cell;
+    });
+    if (targetCell.hidden === true) {
+      setTimeout(function() {
+        setTargetCell({ hidden: false, id: e.target.dataset.cell });
+      }, 500);
+    } else {
+      setTimeout(function() {
+        setTargetCell({ hidden: true, id: null });
+      }, 500);
+    }
+    // targetCell.hidden === true
+    //   ? setTargetCell({ hidden: false, id: e.target.dataset.cell })
+    //   : setTargetCell({ hidden: true, id: null });
+  };
 
   const setTheRefs = () => {
     if (theRef.current !== undefined) {
@@ -103,11 +152,8 @@ function ContCalendar(props) {
       schedules = Array.from(schedules);
       appoints = Array.from(appoints);
       const arr = calDays.map(n => {
-        // console.log(n);
-        // console.log(n.getBoundingClientRect());
         const ref = { element: n, id: n.id, pos: n.getBoundingClientRect() };
         return ref;
-        // console.log(n.dataset);
       });
       schedules.forEach(n => {
         const ref = { element: n, id: n.id, pos: n.getBoundingClientRect() };
@@ -117,8 +163,6 @@ function ContCalendar(props) {
         const ref = { element: n, id: n.id, pos: n.getBoundingClientRect() };
         arr.push(ref);
       });
-      // const compString = JSON.stringify(calDays);
-      // const refString = JSON.stringify(refArray);
       if (
         arr.length !== props.refs.length ||
         window.innerWidth !== props.win.width ||
@@ -426,12 +470,15 @@ function ContCalendar(props) {
             <>
               <div
                 className={`downCont ${
-                  targetCell.hidden === false && targetCell.id === id
+                  !isSameDay
+                    ? 'disabledLink'
+                    : targetCell.hidden === false && targetCell.id === id
                     ? 'arrowHidden'
                     : ''
                 }`}
                 data-cell={id}
-                onClick={showHide}
+                // onClick={showHide}
+                onClick={downTweenFull}
               >
                 <FontAwesomeIcon icon={faAngleDoubleDown} />
               </div>
@@ -442,7 +489,7 @@ function ContCalendar(props) {
                     : 'arrowHidden'
                 }`}
                 data-cell={id}
-                onClick={showHide}
+                onClick={downTweenFull}
               >
                 <FontAwesomeIcon icon={faAngleDoubleUp} />
               </div>
@@ -452,12 +499,14 @@ function ContCalendar(props) {
             <>
               <div
                 className={`downCont ${
-                  targetCell.hidden === false && targetCell.id === id
+                  !isSameDay
+                    ? 'disabledLink'
+                    : targetCell.hidden === false && targetCell.id === id
                     ? 'arrowHidden'
                     : ''
                 }`}
                 data-cell={id}
-                onClick={showHide}
+                onClick={downTweenCompact}
               >
                 <FontAwesomeIcon icon={faAngleDoubleDown} />
               </div>
@@ -468,7 +517,7 @@ function ContCalendar(props) {
                     : 'arrowHidden'
                 }`}
                 data-cell={id}
-                onClick={showHide}
+                onClick={downTweenCompact}
               >
                 <FontAwesomeIcon icon={faAngleDoubleUp} />
               </div>
@@ -489,23 +538,16 @@ function ContCalendar(props) {
       !dateFns.isSameDay(day, props.selectedDay)
     ) {
       props.setDay(day);
+      setTargetCell({ ...targetCell, hidden: true });
     } else if (
       !dateFns.isBefore(day, dateFns.startOfMonth(new Date())) &&
       !dateFns.isSameMonth(day, props.selectedMonth)
     ) {
       props.setMonth(day);
       props.setDay(day);
+      setTargetCell({ ...targetCell, hidden: true });
     }
   }
-
-  const showHide = e => {
-    const findRef = refs.find(r => {
-      return r.id === e.target.dataset.cell;
-    });
-    targetCell.hidden === true
-      ? setTargetCell({ hidden: false, id: e.target.dataset.cell })
-      : setTargetCell({ hidden: true, id: null });
-  };
 
   return (
     <>
