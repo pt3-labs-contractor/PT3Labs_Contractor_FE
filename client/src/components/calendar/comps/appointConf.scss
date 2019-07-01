@@ -7,6 +7,15 @@
   box-shadow: 0 3px 20px #555555;
   border-radius: 5px;
   font-size: 0.8rem;
+
+	@media screen and (max-width: 601px) {
+		position: fixed;
+		top: 33%;
+		left: 20%;
+		width: 73%;
+		background-color: white;
+		z-index: 2000;
+	}
 }
 .closeIconEditApp {
   width: 100%;
@@ -47,6 +56,12 @@
   height: 80%;
   padding: 10px;
   cursor: pointer;
+	@media screen and (max-width: 601px) {
+		background-color: red;
+		color: white;
+		border-radius: 5px;
+		font-weight: bold;
+	}
 }
 
 .deny:hover {
@@ -63,6 +78,12 @@
   background-color: white;
   height: 80%;
   cursor: pointer;
+	@media screen and (max-width: 601px) {
+		background-color: green;
+		color: white;
+		border-radius: 5px;
+		font-weight: bold;
+	}
 }
 
 .confirm:hover {
