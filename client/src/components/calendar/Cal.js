@@ -29,7 +29,7 @@ function ContCalendar(props) {
     display: 'none',
   };
   const theRef = useRef();
-
+  const [appoints, setAppoints] = useState();
   const [ahead, setAhead] = useState();
   const [behind, setBehind] = useState();
   const [x, setX] = useState();
@@ -57,6 +57,7 @@ function ContCalendar(props) {
   useEffect(() => {
     // setId(props.id);
     props.getSchedules(props.id);
+    pendingAppoints();
     setTheRefs();
     monthPendingCheck();
     startEndId(start, end, schedId);
@@ -65,7 +66,7 @@ function ContCalendar(props) {
       window.removeEventListener('resize', windowResize);
     };
   }, [
-    // stringify,
+    stringify,
     props.id,
     selecDayString,
     start,
@@ -82,12 +83,12 @@ function ContCalendar(props) {
         toTween = Array.from(toTween)[0];
         toTween = toTween.getElementsByClassName('cel');
         toTween = Array.from(toTween)[0];
-        TweenMax.to(toTween, 0.5, { height: 'auto' });
+        TweenMax.to(toTween, 0.25, { height: 'auto' });
         // TweenMax.set(toTween, { height: 'auto' });
         // setTimeout(function() {
         toTween.className = 'cel selected day notHidden';
         // setAni(TweenMax.from(toTween, 1, { height: 58 }));
-        TweenMax.from(toTween, 0.5, { height: 58 });
+        TweenMax.from(toTween, 0.25, { height: 58 });
       }
     }
     if (targetCell.hidden === false) {
@@ -95,7 +96,7 @@ function ContCalendar(props) {
       toTween = Array.from(toTween)[0];
       toTween = toTween.getElementsByClassName('cel');
       toTween = Array.from(toTween)[0];
-      TweenMax.to(toTween, 0.5, { height: 61 });
+      TweenMax.to(toTween, 0.25, { height: 61 });
     }
   };
   const downTweenCompact = e => {
@@ -106,12 +107,12 @@ function ContCalendar(props) {
         toTween = Array.from(toTween)[0];
         toTween = toTween.getElementsByClassName('cel');
         toTween = Array.from(toTween)[0];
-        TweenMax.to(toTween, 0.5, { height: 'auto' });
+        TweenMax.to(toTween, 0.25, { height: 'auto' });
         // TweenMax.set(toTween, { height: 'auto' });
         // setTimeout(function() {
         toTween.className = 'cel selected day notHidden';
         // setAni(TweenMax.from(toTween, 1, { height: 58 }));
-        TweenMax.from(toTween, 0.5, { height: 80 });
+        TweenMax.from(toTween, 0.25, { height: 80 });
       }
     }
     if (targetCell.hidden === false) {
@@ -140,6 +141,34 @@ function ContCalendar(props) {
     // targetCell.hidden === true
     //   ? setTargetCell({ hidden: false, id: e.target.dataset.cell })
     //   : setTargetCell({ hidden: true, id: null });
+  };
+
+  const parentOpenTween = () => {
+    if (theRef.current !== undefined) {
+      let schedTween;
+      let boxTween;
+      let appTween;
+      setTimeout(function() {
+        schedTween = theRef.current.getElementsByClassName('schedulerCont');
+        boxTween = theRef.current.getElementsByClassName('boxCont');
+        appTween = theRef.current.getElementsByClassName('infoContApp');
+        schedTween = Array.from(schedTween);
+        boxTween = Array.from(boxTween);
+        if (schedTween[0] !== undefined) {
+          schedTween[0].classList.remove('arrowHidden');
+          TweenMax.from(schedTween[0], 0.15, { opacity: 0 });
+          TweenMax.to(schedTween[0], 0.15, { opacity: 1 });
+        } else if (boxTween[0] !== undefined) {
+          boxTween[0].classList.remove('arrowHidden');
+          TweenMax.from(boxTween[0], 0.15, { opacity: 0 });
+          TweenMax.to(boxTween[0], 0.15, { opacity: 1 });
+        } else if (appTween[0] !== undefined) {
+          appTween[0].classList.remove('arrowHidden');
+          TweenMax.from(appTween[0], 0.15, { opacity: 0 });
+          TweenMax.to(appTween[0], 0.15, { opacity: 1 });
+        }
+      }, 1);
+    }
   };
 
   const setTheRefs = () => {
@@ -213,13 +242,14 @@ function ContCalendar(props) {
     setSchedId(id);
   };
 
-  const setPos = e => {
+  const setPosAdd = e => {
     if (window.innerWidth > 601) {
       const pos = refs.find(r => {
         return r.id === e.target.dataset.day;
       });
       setPosition(pos);
     }
+    parentOpenTween();
     props.history.push('/contractorCalendar/newSched');
   };
 
@@ -237,9 +267,23 @@ function ContCalendar(props) {
     setAppId(theAppId);
   };
 
+  const pendingAppoints = () => {
+    const pend = props.appointments.filter(a => {
+      return a.confirmed === null;
+    });
+    setAppoints(pend.length);
+  };
+
   function CalendarNav() {
     return (
       <div className="calendar-nav">
+        <div id="legend">
+          <div className="leg">Legend</div>
+          <div className="confirmedl">Confirmed</div>
+          <div className="pendingl">Pending</div>
+          <div className="openl">Open</div>
+          <div className="deniedl">Cancelled</div>
+        </div>
         {!dateFns.isThisMonth(selectedMonth) ? (
           <div
             className={`nav ${behind ? 'pend' : null}`}
@@ -430,7 +474,7 @@ function ContCalendar(props) {
           <div
             className={`add ${!isSameDay ? 'disabled' : null}`}
             data-day={id}
-            onClick={setPos}
+            onClick={setPosAdd}
           >
             +
           </div>
@@ -460,6 +504,7 @@ function ContCalendar(props) {
                 setPosition={setPosition}
                 setServIdUp={setServIdUp}
                 appointments={dayApp}
+                tween={parentOpenTween}
               />
             ) : null}
           </div>
@@ -554,9 +599,12 @@ function ContCalendar(props) {
       <TopNavbar />
       <NavBarContractor />
       <div className="main-body" ref={theRef}>
+        {appoints !== undefined ? (
+          <div className="notification">You Have Pending Appointments</div>
+        ) : null}
         <div className="filterButtons">
           <button className="fbutt pendingApp" onClick={handleFilterClick}>
-            Pending Appointments
+            {`Pending Appointments: ${appoints}`}
           </button>
           <button className="fbutt openDays" onClick={handleFilterClick}>
             Open Days
@@ -584,6 +632,7 @@ function ContCalendar(props) {
                 start={start}
                 end={end}
                 id={schedId}
+                tween={parentOpenTween}
               />
             )}
           />
@@ -592,7 +641,16 @@ function ContCalendar(props) {
           <Route
             exact
             path="/contractorCalendar/newSched"
-            render={props => <Scheduler {...props} x={x} y={y} h={h} w={w} />}
+            render={props => (
+              <Scheduler
+                {...props}
+                x={x}
+                y={y}
+                h={h}
+                w={w}
+                today={props.selectedDay}
+              />
+            )}
           />
           <Route
             exact

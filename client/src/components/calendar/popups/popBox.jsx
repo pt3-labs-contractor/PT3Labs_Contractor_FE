@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import dateFns from 'date-fns';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -64,7 +64,10 @@ const PopBoxSched = props => {
   });
 
   return (
-    <div className="boxCont" style={window.innerWidth > 601 ? position : null}>
+    <div
+      className="boxCont arrowHidden"
+      style={window.innerWidth > 601 ? position : null}
+    >
       <div className="closeIconEdit">
         <FontAwesomeIcon icon={faTimesCircle} onClick={close} />
       </div>

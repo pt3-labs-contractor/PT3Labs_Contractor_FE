@@ -54,7 +54,6 @@ const EScheduler = props => {
       duration,
       open: true,
     };
-    console.log(newSchedule);
     props.updateSchedule(id, newSchedule);
     props.history.push('/contractorCalendar');
   };
@@ -86,7 +85,6 @@ const EScheduler = props => {
 };
 
 const mstp = state => {
-  console.log(state.schedule);
   return {
     user: state.user,
   };

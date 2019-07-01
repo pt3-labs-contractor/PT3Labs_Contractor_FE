@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import DateTimePicker from 'react-datetime-picker';
 import dateFns from 'date-fns';
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { TweenMax } from 'gsap/all';
 import { postNewSchedule } from '../../../actions/index.js';
 
 const Scheduler = props => {
-  const [start, setStart] = useState(props.today || new Date());
+  const schedRef = useRef();
+  const [start, setStart] = useState(new Date());
   const [end, setEnd] = useState(new Date());
   const { x } = props;
   const { y } = props;
@@ -56,9 +58,10 @@ const Scheduler = props => {
   const close = () => {
     props.history.push('/contractorCalendar');
   };
+
   return (
     <div
-      className="schedulerCont"
+      className="schedulerCont arrowHidden"
       style={window.innerWidth > 601 ? position : null}
     >
       <div className="closeIcon">
@@ -66,9 +69,9 @@ const Scheduler = props => {
       </div>
       <DateTimePicker
         className="start"
-        clearIcon={null}
         value={start}
         onChange={schange}
+        clearIcon={null}
       />
       <DateTimePicker
         className="end"

@@ -35,7 +35,7 @@ const Appointment = props => {
   };
 
   return (
-    <div className="appCont">
+    <div className="appCont" onClick={props.tween}>
       {props.contractorId === props.contID ? (
         <>
           <Link

@@ -22,6 +22,7 @@ const ScheduleList = props => {
               appointments={props.appointments}
               setServIdUp={props.setServIdUp}
               setRefs={props.setRefs}
+              tween={props.tween}
             />
           </div>
         );

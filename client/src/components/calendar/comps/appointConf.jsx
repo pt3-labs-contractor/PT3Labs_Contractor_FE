@@ -168,7 +168,7 @@ const AppInfo = props => {
 
   return (
     <div
-      className="infoContApp"
+      className="infoContApp arrowHidden"
       style={window.innerWidth > 601 ? position : null}
     >
       <div className="closeIconEditApp">

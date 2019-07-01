@@ -43,6 +43,7 @@ const Schedule = props => {
       });
       props.setPosition(pos);
     }
+    props.tween();
     props.getSE(start, newEnd, id);
   };
 
@@ -94,6 +95,7 @@ const Schedule = props => {
                   setServIdUp={props.setServIdUp}
                   setPosition={props.setPosition}
                   confirmed={a.confirmed}
+                  tween={props.tween}
                   temp={props.temp}
                 />
               </div>
