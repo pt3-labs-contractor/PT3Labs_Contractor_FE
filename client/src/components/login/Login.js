@@ -26,12 +26,10 @@ function Login(props) {
       )
       .then(res => {
         localStorage.setItem('jwt', res.data.token);
-        console.log(res.data);
         props.history.push('/contractors');
         props.history.push('/app');
       })
       .catch(err => {
-        console.log(err.response);
         switch (err.response.status) {
           case 400:
           case 401:
@@ -39,9 +37,6 @@ function Login(props) {
         }
       });
   }
-  // state = {
-  //   username: ''
-  // }
 
   return (
     <>

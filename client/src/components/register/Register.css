@@ -5,13 +5,13 @@
   margin-top: 6rem;
   margin-bottom: 3rem;
   background-color: var(--dark-color);
-  opacity: .9;
+  opacity: 0.9;
   text-align: center;
   color: white;
 }
 
 .text-primary {
-  color: var(--primary-color)
+  color: var(--primary-color);
 }
 
 input {
@@ -27,7 +27,7 @@ input {
   display: block;
   width: 100%;
   padding: 0.4rem;
-  font-size: 1.rems;
+  font-size: 1rems;
   border: 1px solid #ccc;
 }
 
@@ -35,7 +35,7 @@ input {
   display: block;
   width: 100%;
   padding: 0.4rem;
-  font-size: 1.rems;
+  font-size: 1rems;
   border: 1px solid #ccc;
   margin-top: 1rem;
 }
@@ -49,10 +49,13 @@ input {
 }
 
 .btn-register {
-  background-color: var(--light-color)
+  background-color: var(--light-color);
+}
+.btn-register.selected {
+  background-color: var(--primary-color);
 }
 .btn-register:hover {
-  background-color: var(--primary-color)
+  background-color: var(--primary-color);
 }
 
 @media (max-width: 500px) {

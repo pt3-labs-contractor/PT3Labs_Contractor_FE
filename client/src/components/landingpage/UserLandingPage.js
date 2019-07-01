@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import Calendar from '../calendar/Calendar';
 import AppointmentList from '../appointments/AppointmentList';
 import ContractorList from '../contractors/ContractorList';
 import AvailabilityList from '../appointments/AvailabilityList';
 import AppointmentForm from '../appointments/AppointmentForm';
-// import ContractorCard from '../contractors/ContractorCard';
 import TopNavbar from '../navbar/TopNavbar';
 import './UserLandingPage.css';
 
@@ -204,3 +204,34 @@ export default connect(
     storeServiceName,
   }
 )(UserLandingPage);
+
+UserLandingPage.propTypes = {
+  contractors: PropTypes.arrayOf(
+    PropTypes.shape({
+      city: PropTypes.string,
+      createdAt: PropTypes.string,
+      id: PropTypes.string,
+      latitude: PropTypes.string,
+      longitude: PropTypes.string,
+      name: PropTypes.string,
+      phoneNumber: PropTypes.string,
+      stateAbbr: PropTypes.string,
+      streetAddress: PropTypes.string,
+      zipCode: PropTypes.string,
+      services: PropTypes.arrayOf(
+        PropTypes.shape({
+          contractorId: PropTypes.string,
+          createdAt: PropTypes.string,
+          id: PropTypes.string,
+          name: PropTypes.string,
+          price: PropTypes.string,
+        })
+      ),
+    })
+  ),
+  sorted: PropTypes.array, // This is just a sorted copy of contractors
+  fetchAvailabilityByDay: PropTypes.func,
+  fetchSchedule: PropTypes.func,
+  storeServiceName: PropTypes.func,
+  selectedDay: PropTypes.instanceOf(Date),
+};
