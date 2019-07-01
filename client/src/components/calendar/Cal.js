@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import { TweenMax } from 'gsap/all';
 import dateFns from 'date-fns';
 import { Route } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -7,7 +8,7 @@ import {
   faAngleDoubleDown,
   faAngleDoubleUp,
 } from '@fortawesome/free-solid-svg-icons';
-import ServiceForm from './forms/servicesForm.jsx';
+// import ServiceForm from './forms/servicesForm.jsx';
 import Scheduler from './comps/scheduler.jsx';
 import SchduleList from './comps/scheduleList.jsx';
 import EScheduler from './forms/editForm.jsx';
@@ -24,6 +25,11 @@ import TopNavbar from '../navbar/TopNavbar.js';
 import NavBarContractor from '../navbar/NavBarContractor.js';
 
 function ContCalendar(props) {
+  const display = {
+    display: 'none',
+  };
+  const theRef = useRef();
+  const [appoints, setAppoints] = useState();
   const [ahead, setAhead] = useState();
   const [behind, setBehind] = useState();
   const [x, setX] = useState();
@@ -34,35 +40,171 @@ function ContCalendar(props) {
   const [sevAppId, setSevAppId] = useState();
   const [appId, setAppId] = useState();
   const { selectedDay, selectedMonth, setMonth } = props;
-  // const [id, setId] = useState('');
   const [start, setStart] = useState();
   const [end, setEnd] = useState();
   const [schedId, setSchedId] = useState();
   const stringify = JSON.stringify(props.schedules);
   const { refs } = props;
   const [win, setWindow] = useState();
-  // console.log(refs);
-  let [refArray, setRefArray] = useState([]);
-  // const ref = React.createRef();
   const [render, setRender] = useState();
   const [filter, setFilter] = useState();
   const [fullFilter, setFullFilter] = useState();
+  const selecDayString = JSON.stringify(props.selectedDay);
+  const [ani, setAni] = useState();
+  const newRef = useRef();
+  let toTween;
+
   useEffect(() => {
-    console.log('ran');
     // setId(props.id);
     props.getSchedules(props.id);
+    pendingAppoints();
+    setTheRefs();
     monthPendingCheck();
     startEndId(start, end, schedId);
     window.addEventListener('resize', windowResize);
     return () => {
       window.removeEventListener('resize', windowResize);
     };
-  }, [stringify, start, props.selectedDay, props.id, win, props.selectedMonth]);
+  }, [
+    stringify,
+    props.id,
+    selecDayString,
+    start,
+    win,
+    targetCell,
+    props.selectedMonth,
+  ]);
 
+  const downTweenFull = e => {
+    showHide(e);
+    if (targetCell.hidden === true) {
+      if (theRef.current !== undefined) {
+        toTween = theRef.current.getElementsByClassName('spacer selected');
+        toTween = Array.from(toTween)[0];
+        toTween = toTween.getElementsByClassName('cel');
+        toTween = Array.from(toTween)[0];
+        TweenMax.to(toTween, 0.25, { height: 'auto' });
+        // TweenMax.set(toTween, { height: 'auto' });
+        // setTimeout(function() {
+        toTween.className = 'cel selected day notHidden';
+        // setAni(TweenMax.from(toTween, 1, { height: 58 }));
+        TweenMax.from(toTween, 0.25, { height: 58 });
+      }
+    }
+    if (targetCell.hidden === false) {
+      toTween = theRef.current.getElementsByClassName('spacer selected');
+      toTween = Array.from(toTween)[0];
+      toTween = toTween.getElementsByClassName('cel');
+      toTween = Array.from(toTween)[0];
+      TweenMax.to(toTween, 0.25, { height: 61 });
+    }
+  };
+  const downTweenCompact = e => {
+    showHide(e);
+    if (targetCell.hidden === true) {
+      if (theRef.current !== undefined) {
+        toTween = theRef.current.getElementsByClassName('spacer selected');
+        toTween = Array.from(toTween)[0];
+        toTween = toTween.getElementsByClassName('cel');
+        toTween = Array.from(toTween)[0];
+        TweenMax.to(toTween, 0.25, { height: 'auto' });
+        // TweenMax.set(toTween, { height: 'auto' });
+        // setTimeout(function() {
+        toTween.className = 'cel selected day notHidden';
+        // setAni(TweenMax.from(toTween, 1, { height: 58 }));
+        TweenMax.from(toTween, 0.25, { height: 80 });
+      }
+    }
+    if (targetCell.hidden === false) {
+      toTween = theRef.current.getElementsByClassName('spacer selected');
+      toTween = Array.from(toTween)[0];
+      toTween = toTween.getElementsByClassName('cel');
+      toTween = Array.from(toTween)[0];
+      TweenMax.to(toTween, 0.5, { height: 85 });
+    }
+  };
+
+  const showHide = e => {
+    e.persist();
+    const findRef = refs.find(r => {
+      return r.id === e.target.dataset.cell;
+    });
+    if (targetCell.hidden === true) {
+      setTimeout(function() {
+        setTargetCell({ hidden: false, id: e.target.dataset.cell });
+      }, 500);
+    } else {
+      setTimeout(function() {
+        setTargetCell({ hidden: true, id: null });
+      }, 500);
+    }
+    // targetCell.hidden === true
+    //   ? setTargetCell({ hidden: false, id: e.target.dataset.cell })
+    //   : setTargetCell({ hidden: true, id: null });
+  };
+
+  const parentOpenTween = () => {
+    if (theRef.current !== undefined) {
+      let schedTween;
+      let boxTween;
+      let appTween;
+      setTimeout(function() {
+        schedTween = theRef.current.getElementsByClassName('schedulerCont');
+        boxTween = theRef.current.getElementsByClassName('boxCont');
+        appTween = theRef.current.getElementsByClassName('infoContApp');
+        schedTween = Array.from(schedTween);
+        boxTween = Array.from(boxTween);
+        if (schedTween[0] !== undefined) {
+          schedTween[0].classList.remove('arrowHidden');
+          TweenMax.from(schedTween[0], 0.15, { opacity: 0 });
+          TweenMax.to(schedTween[0], 0.15, { opacity: 1 });
+        } else if (boxTween[0] !== undefined) {
+          boxTween[0].classList.remove('arrowHidden');
+          TweenMax.from(boxTween[0], 0.15, { opacity: 0 });
+          TweenMax.to(boxTween[0], 0.15, { opacity: 1 });
+        } else if (appTween[0] !== undefined) {
+          appTween[0].classList.remove('arrowHidden');
+          TweenMax.from(appTween[0], 0.15, { opacity: 0 });
+          TweenMax.to(appTween[0], 0.15, { opacity: 1 });
+        }
+      }, 1);
+    }
+  };
+
+  const setTheRefs = () => {
+    if (theRef.current !== undefined) {
+      const compArray = [];
+      let calDays = theRef.current.querySelectorAll('.spacer');
+      let schedules = theRef.current.querySelectorAll('.schCont');
+      let appoints = theRef.current.querySelectorAll('.appContRef');
+      calDays = Array.from(calDays);
+      schedules = Array.from(schedules);
+      appoints = Array.from(appoints);
+      const arr = calDays.map(n => {
+        const ref = { element: n, id: n.id, pos: n.getBoundingClientRect() };
+        return ref;
+      });
+      schedules.forEach(n => {
+        const ref = { element: n, id: n.id, pos: n.getBoundingClientRect() };
+        arr.push(ref);
+      });
+      appoints.forEach(n => {
+        const ref = { element: n, id: n.id, pos: n.getBoundingClientRect() };
+        arr.push(ref);
+      });
+      if (
+        arr.length !== props.refs.length ||
+        window.innerWidth !== props.win.width ||
+        window.innerHeight !== props.win.height
+      ) {
+        props.setRefs(arr);
+      }
+    }
+  };
   const monthPendingCheck = () => {
     const diffMonth = props.appointments.filter(a => {
       const isSameMonth = dateFns.isSameMonth(a.startTime, props.selectedMonth);
-      if (!isSameMonth) {
+      if (!isSameMonth && a.confirmed === null) {
         return a;
       }
     });
@@ -94,86 +236,30 @@ function ContCalendar(props) {
     }
   };
 
-  const refCallback = el => {
-    if (el) {
-      const loc = el.getBoundingClientRect();
-      const ref = { element: el, id: el.id, pos: loc };
-      if (refs) {
-        const find = refs.find(r => {
-          return r.element.id === el.id;
-        });
-        if (find) {
-          const locString = JSON.stringify(loc);
-          const posString = JSON.stringify(find.pos);
-          if (posString !== locString) {
-            const newRef = { ...find, pos: loc };
-            const remove = refArray.filter(r => {
-              return r.element.id !== el.id;
-            });
-            const finalRefs = [...remove, newRef];
-            // console.log(finalRefs);
-            refArray = finalRefs;
-            if (el.parentElement.lastChild === el) {
-              console.log('ran');
-              props.setRefs(refArray);
-            }
-            // props.setRefs(finalRefs);
-          }
-        } else {
-          const newSize = [...refArray];
-          if (newSize.length > 0) {
-            const xs = newSize.map(s => {
-              return s.id;
-            });
-            let eOm = dateFns.endOfMonth(selectedMonth);
-            eOm = dateFns.startOfDay(eOm);
-            eOm = String(eOm);
-            eOm = eOm.split(' ').join('');
-            if (!xs.includes(ref.id)) {
-              const modSize = [...newSize, ref];
-              refArray = modSize;
-              if (ref.id === eOm) {
-                props.setRefs(refArray);
-              }
-            } else if (ref.id === eOm) {
-              props.setRefs(refArray);
-            }
-          } else {
-            refArray = [ref];
-          }
-        }
-      } else {
-        // setSize([loc]);
-        // props.setRefs([ref]);
-        refArray.push(ref);
-        if (el.parentElement.lastChild === el) {
-          props.setRefs(refArray);
-        }
-      }
-
-      // props.getSize(el.getBoundingClientRect());
-    }
-  };
-
   const startEndId = (start, end, id) => {
     setStart(start);
     setEnd(end);
     setSchedId(id);
   };
 
-  const setPos = e => {
-    const pos = refs.find(r => {
-      return r.id === e.target.dataset.day;
-    });
-    setPosition(pos);
+  const setPosAdd = e => {
+    if (window.innerWidth > 601) {
+      const pos = refs.find(r => {
+        return r.id === e.target.dataset.day;
+      });
+      setPosition(pos);
+    }
+    parentOpenTween();
     props.history.push('/contractorCalendar/newSched');
   };
 
   const setPosition = pos => {
-    setX(pos.pos.x);
-    setY(pos.pos.y);
-    setW(pos.pos.width);
-    setH(pos.pos.height);
+    if (window.innerWidth > 601) {
+      setX(pos.pos.x);
+      setY(pos.pos.y);
+      setW(pos.pos.width);
+      setH(pos.pos.height);
+    }
   };
 
   const setServIdUp = (theSevId, theAppId) => {
@@ -181,15 +267,28 @@ function ContCalendar(props) {
     setAppId(theAppId);
   };
 
+  const pendingAppoints = () => {
+    const pend = props.appointments.filter(a => {
+      return a.confirmed === null;
+    });
+    setAppoints(pend.length);
+  };
+
   function CalendarNav() {
     return (
       <div className="calendar-nav">
+        <div id="legend">
+          <div className="leg">Legend</div>
+          <div className="confirmedl">Confirmed</div>
+          <div className="pendingl">Pending</div>
+          <div className="openl">Open</div>
+          <div className="deniedl">Cancelled</div>
+        </div>
         {!dateFns.isThisMonth(selectedMonth) ? (
           <div
             className={`nav ${behind ? 'pend' : null}`}
             onClick={() => {
               setMonth(dateFns.subMonths(selectedMonth, 1));
-              setRefArray([]);
             }}
           >
             &lt;
@@ -202,7 +301,6 @@ function ContCalendar(props) {
           className={`nav ${ahead ? 'pend' : null}`}
           onClick={() => {
             setMonth(dateFns.addMonths(selectedMonth, 1));
-            setRefArray([]);
           }}
         >
           &gt;
@@ -219,7 +317,7 @@ function ContCalendar(props) {
     for (let i = 0; i < 7; i++) {
       days.push(
         <div className="day-cell" key={i}>
-          {dateFns.format(dateFns.addDays(start, i), 'dddd')}
+          {dateFns.format(dateFns.addDays(start, i), 'ddd')}
         </div>
       );
     }
@@ -346,16 +444,21 @@ function ContCalendar(props) {
           key={temp}
           id={id}
           data-ref={render}
-          ref={refCallback}
+          style={
+            window.innerWidth <= 601 &&
+            !dateFns.isSameMonth(temp, selectedMonth)
+              ? display
+              : null
+          }
           className={`spacer ${
             isSameDay
               ? ' selected day'
               : pending.length > 0
-              ? 'pend'
+              ? 'pend sideBordPend'
               : open.length > 0
-              ? 'open'
+              ? 'open sideBordOpen'
               : closed.length > 0
-              ? 'closed'
+              ? 'closed sideBordFull'
               : !dateFns.isSameMonth(temp, selectedMonth)
               ? 'disable'
               : ''
@@ -365,10 +468,13 @@ function ContCalendar(props) {
           <div className={`date ${dateFns.isToday(day) ? 'today' : null}`}>
             {dateFns.format(day, 'D')}
           </div>
+          {window.innerWidth <= 601 ? (
+            <div className="weekDay">{dateFns.format(day, 'ddd')}</div>
+          ) : null}
           <div
             className={`add ${!isSameDay ? 'disabled' : null}`}
             data-day={id}
-            onClick={setPos}
+            onClick={setPosAdd}
           >
             +
           </div>
@@ -376,7 +482,7 @@ function ContCalendar(props) {
             key={temp}
             className={`cel ${
               isSameDay && targetCell.hidden === false && targetCell.id === id
-                ? ' selected day hidden'
+                ? ' selected day notHidden'
                 : !dateFns.isSameMonth(temp, selectedMonth)
                 ? 'disable'
                 : ''
@@ -398,20 +504,26 @@ function ContCalendar(props) {
                 setPosition={setPosition}
                 setServIdUp={setServIdUp}
                 appointments={dayApp}
+                tween={parentOpenTween}
               />
             ) : null}
           </div>
-          {daySched.length > 1 ||
-          (daySched.length >= 1 && dayApp.length > 0) ? (
+          {(window.innerWidth > 601 && daySched.length > 1) ||
+          (window.innerWidth > 601 &&
+            daySched.length >= 1 &&
+            dayApp.length > 0) ? (
             <>
               <div
                 className={`downCont ${
-                  targetCell.hidden === false && targetCell.id === id
+                  !isSameDay
+                    ? 'disabledLink'
+                    : targetCell.hidden === false && targetCell.id === id
                     ? 'arrowHidden'
                     : ''
                 }`}
                 data-cell={id}
-                onClick={showHide}
+                // onClick={showHide}
+                onClick={downTweenFull}
               >
                 <FontAwesomeIcon icon={faAngleDoubleDown} />
               </div>
@@ -422,7 +534,35 @@ function ContCalendar(props) {
                     : 'arrowHidden'
                 }`}
                 data-cell={id}
-                onClick={showHide}
+                onClick={downTweenFull}
+              >
+                <FontAwesomeIcon icon={faAngleDoubleUp} />
+              </div>
+            </>
+          ) : daySched.length >= 2 ||
+            (daySched.length >= 1 && dayApp.length > 1) ? (
+            <>
+              <div
+                className={`downCont ${
+                  !isSameDay
+                    ? 'disabledLink'
+                    : targetCell.hidden === false && targetCell.id === id
+                    ? 'arrowHidden'
+                    : ''
+                }`}
+                data-cell={id}
+                onClick={downTweenCompact}
+              >
+                <FontAwesomeIcon icon={faAngleDoubleDown} />
+              </div>
+              <div
+                className={`downCont ${
+                  targetCell.hidden === false && targetCell.id === id
+                    ? ''
+                    : 'arrowHidden'
+                }`}
+                data-cell={id}
+                onClick={downTweenCompact}
               >
                 <FontAwesomeIcon icon={faAngleDoubleUp} />
               </div>
@@ -438,28 +578,33 @@ function ContCalendar(props) {
   }
 
   function handleSelect(day) {
-    if (dateFns.isSameMonth(day, selectedMonth)) {
+    if (
+      dateFns.isSameMonth(day, selectedMonth) &&
+      !dateFns.isSameDay(day, props.selectedDay)
+    ) {
       props.setDay(day);
-    } else if (!dateFns.isBefore(day, dateFns.startOfMonth(new Date()))) {
+      setTargetCell({ ...targetCell, hidden: true });
+    } else if (
+      !dateFns.isBefore(day, dateFns.startOfMonth(new Date())) &&
+      !dateFns.isSameMonth(day, props.selectedMonth)
+    ) {
       props.setMonth(day);
       props.setDay(day);
+      setTargetCell({ ...targetCell, hidden: true });
     }
   }
-
-  const showHide = e => {
-    targetCell.hidden === true
-      ? setTargetCell({ hidden: false, id: e.target.dataset.cell })
-      : setTargetCell({ hidden: true, id: null });
-  };
 
   return (
     <>
       <TopNavbar />
       <NavBarContractor />
-      <div className="main-body">
+      <div className="main-body" ref={theRef}>
+        {appoints !== undefined ? (
+          <div className="notification">You Have Pending Appointments</div>
+        ) : null}
         <div className="filterButtons">
           <button className="fbutt pendingApp" onClick={handleFilterClick}>
-            Pending Appointments
+            {`Pending Appointments: ${appoints}`}
           </button>
           <button className="fbutt openDays" onClick={handleFilterClick}>
             Open Days
@@ -487,6 +632,7 @@ function ContCalendar(props) {
                 start={start}
                 end={end}
                 id={schedId}
+                tween={parentOpenTween}
               />
             )}
           />
@@ -495,7 +641,16 @@ function ContCalendar(props) {
           <Route
             exact
             path="/contractorCalendar/newSched"
-            render={props => <Scheduler {...props} x={x} y={y} h={h} w={w} />}
+            render={props => (
+              <Scheduler
+                {...props}
+                x={x}
+                y={y}
+                h={h}
+                w={w}
+                today={props.selectedDay}
+              />
+            )}
           />
           <Route
             exact
