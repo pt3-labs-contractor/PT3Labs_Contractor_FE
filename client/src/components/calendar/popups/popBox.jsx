@@ -58,14 +58,28 @@ const PopBoxSched = props => {
   const pending = appointments.filter(a => {
     const check = dateFns.isEqual(new Date(a.startTime), new Date(props.start));
     const { confirmed } = a;
-    if (check === true && confirmed === false) {
+    if (check === true && confirmed === null) {
+      return a;
+    }
+  });
+
+  const confirmed = appointments.filter(a => {
+    const check = dateFns.isEqual(new Date(a.startTime), new Date(props.start));
+    const { confirmed } = a;
+    if (check === true && confirmed === true) {
       return a;
     }
   });
 
   return (
     <div
-      className="boxCont arrowHidden"
+      className={`boxCont arrowHidden ${
+        confirmed.length > 0
+          ? 'sBordConfirm'
+          : pending.length > 0
+          ? 'sBordPend'
+          : 'sBordOpen'
+      }`}
       style={window.innerWidth > 601 ? position : null}
     >
       <div className="closeIconEdit">

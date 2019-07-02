@@ -271,7 +271,14 @@ function ContCalendar(props) {
     const pend = props.appointments.filter(a => {
       return a.confirmed === null;
     });
-    setAppoints(pend.length);
+
+    const month = dateFns.startOfMonth(new Date());
+    console.log(month);
+    const notBefore = pend.filter(a => {
+      return !dateFns.isBefore(a.startTime, month);
+    });
+    console.log(notBefore);
+    setAppoints(notBefore.length);
   };
 
   function CalendarNav() {
