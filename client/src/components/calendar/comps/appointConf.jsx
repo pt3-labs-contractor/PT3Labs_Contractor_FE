@@ -83,38 +83,6 @@ const AppInfo = props => {
     returnToCal();
   };
 
-  // const pending = e => {
-  //   e.preventDefault();
-  //   const { id, startTime, duration, scheduleId } = theAppoint;
-  //   let dur;
-  //   const { hours } = duration;
-  //   const { minutes } = duration;
-  //   if (hours && minutes) {
-  //     dur = `${(hours * 60 + minutes) / 60}h`;
-  //   }
-  //   if (hours) {
-  //     dur = `${hours}h`;
-  //   }
-  //   if (minutes) {
-  //     dur = `${minutes / 60}h`;
-  //   }
-  //   const returnObj = {
-  //     startTime,
-  //     duration: dur,
-  //     confirmed: null,
-  //   };
-  //
-  //   const scheduleUnLock = {
-  //     startTime,
-  //     duration: dur,
-  //     open: true,
-  //   };
-  //   props.confirmApp(id, returnObj);
-  //   props.updateSchedule(scheduleId, scheduleUnLock);
-  //   // props.deleteSchedule(scheduleI;
-  //   returnToCal();
-  // };
-
   const unConfirm = e => {
     e.preventDefault();
     const { id, startTime, duration, scheduleId } = theAppoint;
@@ -168,7 +136,15 @@ const AppInfo = props => {
 
   return (
     <div
-      className="infoContApp arrowHidden"
+      className={`infoContApp arrowHidden ${
+        theAppoint.confirmed === null
+          ? 'sBordPend'
+          : theAppoint.confirmed === true
+          ? 'sBordConfirm'
+          : theAppoint.confirmed === false
+          ? 'sBordDeny'
+          : null
+      }`}
       style={window.innerWidth > 601 ? position : null}
     >
       <div className="closeIconEditApp">
