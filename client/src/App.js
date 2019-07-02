@@ -29,11 +29,7 @@ function App(props) {
   const [win, setWin] = useState();
   const string = JSON.stringify(win);
   useEffect(() => {
-    props.fetchAccts();
-    props.getFeedback();
     setWin({ width: window.innerWidth, height: window.innerHeight });
-    // console.log(props)
-    // eslint-disable-next-line
   }, [string]);
 
   console.log(props.user);

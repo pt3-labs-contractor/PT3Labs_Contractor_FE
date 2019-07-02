@@ -32,7 +32,7 @@ function Register(props) {
         )
         .then(res => {
           localStorage.setItem('jwt', res.data.token);
-          props.history.push('/');
+          props.history.push('/app');
         })
         .catch(err => {
           console.log(err);
@@ -91,13 +91,13 @@ function Register(props) {
           <i className="fas fa-user" /> Create your account:
         </p>
         <button
-          className="btn btn-register"
+          className={`btn btn-register ${contractor && 'selected'}`}
           onClick={() => setContractor(true)}
         >
           Contractor
         </button>
         <button
-          className="btn btn-register"
+          className={`btn btn-register ${!contractor && 'selected'}`}
           onClick={() => setContractor(false)}
         >
           User{' '}

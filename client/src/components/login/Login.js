@@ -3,13 +3,14 @@ import { NavLink } from 'react-router-dom';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import MainNavbar from '../navbar/MainNavbar';
-import { fetchAccts } from '../../actions/index';
+import { fetchAccts, getFeedback } from '../../actions/index.js';
 
 import './Login.css';
 
 function Login(props) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -27,20 +28,19 @@ function Login(props) {
       )
       .then(res => {
         localStorage.setItem('jwt', res.data.token);
-        // console.log(res.data);
-        if (props.user.contractorId) {
-          props.history.push('/contractorcalendar');
-        } else {
-          props.history.push('/app');
-        }
+        props.fetchAccts();
+        props.getFeedback();
+        props.history.push('/contractors');
+        props.history.push('/app');
       })
       .catch(err => {
-        console.log(err);
+        switch (err.response.status) {
+          case 400:
+          case 401:
+            return setError('Invalid username or password');
+        }
       });
   }
-  // state = {
-  //   username: ''
-  // }
 
   return (
     <>
@@ -75,6 +75,7 @@ function Login(props) {
           />
           <input type="submit" value="Sign In" className="btn btn-primary" />
         </form>
+        {error.length > 0 && <p style={{ color: 'red' }}>{error}</p>}
         <p>
           Don't have an account?
           <NavLink to="/register" className="form-links">
@@ -86,13 +87,7 @@ function Login(props) {
   );
 }
 
-const mapStateToProps = state => {
-  return {
-    user: state.user,
-  };
-};
-
 export default connect(
-  mapStateToProps,
-  { fetchAccts }
+  null,
+  { fetchAccts, getFeedback }
 )(Login);
