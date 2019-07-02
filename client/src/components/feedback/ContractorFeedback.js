@@ -32,7 +32,7 @@ function ContractorFeedback(props) {
       <TopNavbar />
       <NavBarContractor />
       <div className="main-body">
-        <h2 className="main-header-title">Reviews</h2>
+        <h2 className="main-header-feedback">Reviews</h2>
         <div className="feedback-pages">
           <Pagination
             postsPerPage={postsPerPage}
