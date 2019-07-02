@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import axios from 'axios';
+import { connect } from 'react-redux';
 import MainNavbar from '../navbar/MainNavbar';
+import { fetchAccts } from '../../actions/index';
 
 import './Login.css';
 
@@ -25,9 +27,12 @@ function Login(props) {
       )
       .then(res => {
         localStorage.setItem('jwt', res.data.token);
-        console.log(res.data);
-        props.history.push('/contractors');
-        props.history.push('/app');
+        // console.log(res.data);
+        if (props.user.contractorId) {
+          props.history.push('/contractorcalendar');
+        } else {
+          props.history.push('/app');
+        }
       })
       .catch(err => {
         console.log(err);
@@ -81,4 +86,13 @@ function Login(props) {
   );
 }
 
-export default Login;
+const mapStateToProps = state => {
+  return {
+    user: state.user,
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  { fetchAccts }
+)(Login);

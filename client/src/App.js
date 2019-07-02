@@ -36,6 +36,8 @@ function App(props) {
     // eslint-disable-next-line
   }, [string]);
 
+  console.log(props.user);
+
   return (
     <div className="App">
       <main>
