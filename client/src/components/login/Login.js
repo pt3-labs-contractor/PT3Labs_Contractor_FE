@@ -63,6 +63,7 @@ function Login(props) {
             placeholder="Username"
             onChange={e => setUsername(e.target.value)}
             value={username}
+            required
           />
           <input
             type="password"
@@ -70,6 +71,7 @@ function Login(props) {
             placeholder="Password"
             onChange={e => setPassword(e.target.value)}
             value={password}
+            required
           />
           <input type="submit" value="Sign In" className="btn btn-primary" />
         </form>
