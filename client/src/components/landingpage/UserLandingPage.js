@@ -190,6 +190,7 @@ function UserLandingPage(props) {
 const mapStateToProps = state => {
   return {
     contractors: state.contractors,
+    serviceFilter: state.serviceFilter,
     sorted: state.sortedContractors,
     selectedDay: state.thisDay,
     serviceFilter: state.serviceFilter,

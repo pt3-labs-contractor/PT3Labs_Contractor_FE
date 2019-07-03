@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import { Route } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
@@ -12,8 +13,8 @@ import Login from './components/login/Login';
 import Redirect from './components/login/Redirect';
 import Register from './components/register/Register';
 import Calendar from './components/calendar/Calendar';
-import ContCalendar from './components/calendar/Cal.js';
-import MainNavbar from './components/navbar/MainNavbar';
+import ContCalendar from './components/calendar/Cal';
+// import MainNavbar from './components/navbar/MainNavbar';
 import UserLandingPage from './components/landingpage/UserLandingPage';
 import NavBarUser from './components/navbar/NavBarUser';
 import NavBarContractor from './components/navbar/NavBarContractor';
@@ -25,11 +26,12 @@ import Plans from './components/plans/Plans';
 import UserSettings from './components/settings/UserSettings';
 import ContractorSchedule from './components/contractors/ContractorSchedule';
 
-function App(props) {
+function App({ user, ...props }) {
   const [win, setWin] = useState();
   const string = JSON.stringify(win);
   useEffect(() => {
     setWin({ width: window.innerWidth, height: window.innerHeight });
+    // eslint-disable-next-line
   }, [string]);
 
   console.log(props.user);
@@ -40,7 +42,7 @@ function App(props) {
         <Route exact path="/" component={Homepage} />
         <Route
           path="/app"
-          component={props.user.contractorId ? NavBarContractor : NavBarUser}
+          component={user.contractorId ? NavBarContractor : NavBarUser}
         />
         <Route exact path="/app" component={UserLandingPage} />
         <Route exact path="/app/contractors" component={ContractorList} />
@@ -50,16 +52,16 @@ function App(props) {
         <Route exact path="/register" component={Register} />
         <Route
           path="/register/oauth"
-          render={props => <Register {...props} oauth />}
+          render={routeProps => <Register {...routeProps} oauth />}
         />
         <Route
           path="/calendar"
-          render={props => <Calendar {...props} contractor={{}} />}
+          render={routeProps => <Calendar {...routeProps} contractor={{}} />}
         />
         <Route
           path="/contractorCalendar"
-          render={props => (
-            <ContCalendar {...props} contractor={{}} win={win} />
+          render={routeProps => (
+            <ContCalendar {...routeProps} contractor={{}} win={win} />
           )}
         />
         <Route path="/settings" component={Settings} />
@@ -73,6 +75,18 @@ function App(props) {
     </div>
   );
 }
+
+App.defaultProps = {
+  user: {},
+  fetchAccts: undefined,
+  getFeedback: undefined,
+};
+
+App.propTypes = {
+  user: PropTypes.objectOf(PropTypes.string),
+  fetchAccts: PropTypes.func,
+  getFeedback: PropTypes.func,
+};
 
 const mapStateToProps = state => {
   return {

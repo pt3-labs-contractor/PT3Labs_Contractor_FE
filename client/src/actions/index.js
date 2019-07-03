@@ -3,6 +3,9 @@ import dateFns from 'date-fns';
 
 export const SEND_SERV = 'SEND_SERV';
 export const SEND_SERV_COMP = 'SEND_SERV_COMP';
+export const DELETE_SERV_SUCC = 'DELETE_SERV_SUCC';
+
+
 export const SEND_SCHED = 'SEND_SCHED';
 export const SEND_SCHED_COMP = 'SEND_SCHED_COMP';
 export const GET_SCHED = 'GET_SCHED';
@@ -46,6 +49,7 @@ export const FETCH_CONTRACTOR_FEEDBACK_SUCCESS =
   'FETCH_CONTRACTOR_FEEDBACK_SUCCESS';
 export const POST_FEEDBACK_SUCCESS = 'POST_FEEDBACK_SUCCESS';
 export const DELETE_FEEDBACK_SUCCESS = 'DELETE_FEEDBACK_SUCCESS';
+
 // exports for retrieving current contractor user appointments
 export const RET_CONTRACTOR_APP_SUCC = 'RET_CONTRACTOR_APP_SUCC';
 
@@ -56,6 +60,12 @@ export const EDIT_USER_SUCCESS = 'EDIT_USER_SUCCESS';
 export const FAIL_SCHEDULE = 'FAIL_SCHEDULE';
 export const LOAD_SCHEDULE = 'LOAD_SCHEDULE';
 // ---------------------------------------------------------------
+
+function setHeaders() {
+  const bearer = `Bearer ${localStorage.getItem('jwt')}`;
+  const headers = { authorization: bearer };
+  return headers;
+}
 
 // axios get all accounts
 export const fetchAccts = () => dispatch => {
@@ -77,42 +87,40 @@ export const fetchAccts = () => dispatch => {
     .then(
       axios.spread((userRes, contRes, apmtRes) => {
         let { user } = userRes.data;
-        const services = [];
-        if (user.contractorId) {
-          Promise.all([
-            axios.get(
-              `https://fierce-plains-47590.herokuapp.com/api/contractors/${
-                user.contractorId
-              }`,
-              { headers }
-            ),
-            axios.get(
-              `https://fierce-plains-47590.herokuapp.com/api/services/contractor/${
-                user.contractorId
-              }`,
-              { headers }
-            ),
-          ]).then(([resOne, resTwo]) => {
-            user = Object.assign(user, resOne.data.contractor);
-            const serv = resTwo.data.services;
-            serv.forEach(s => {
-              services.push(s);
-            });
-          });
-        }
         const { appointments } = apmtRes.data;
         appointments.sort((a, b) => {
           return new Date(a.startTime) - new Date(b.startTime);
         });
-        dispatch({
-          type: FETCHING_USERS_SUCCESS,
-          payload: {
-            user,
-            contractors: contRes.data.contractors,
-            appointments,
-            services,
-          },
-        });
+        if (user.contractorId) {
+          axios
+            .get(
+              `https://fierce-plains-47590.herokuapp.com/api/contractors/${
+                user.contractorId
+              }`,
+              { headers }
+            )
+            .then(res => {
+              user = { ...res.data.contractor, ...user };
+              dispatch({
+                type: FETCHING_USERS_SUCCESS,
+                payload: {
+                  user,
+                  contractors: contRes.data.contractors,
+                  appointments,
+                  services: res.data.contractor.services,
+                },
+              });
+            });
+        } else {
+          dispatch({
+            type: FETCHING_USERS_SUCCESS,
+            payload: {
+              user,
+              contractors: contRes.data.contractors,
+              appointments,
+            },
+          });
+        }
       })
     )
     .catch(() => {
@@ -156,6 +164,7 @@ export const fetchServices = id => dispatch => {
     });
 };
 
+<<<<<<< HEAD
 export const fetchAvailabilityByDay = (
   date,
   contractorList,
@@ -165,19 +174,39 @@ export const fetchAvailabilityByDay = (
   const headers = setHeaders();
   // const state = store.getState();
 
+=======
+function serviceSort(query, state) {
+  const list = state.filter(contractor => {
+    return contractor.services.some(service => service.name.includes(query));
+  });
+  return list;
+}
+
+export const fetchAvailabilityByDay = (
+  date,
+  serviceFilter,
+  contractors
+) => dispatch => {
+  // dispatch({ type: LOADING });
+  const headers = setHeaders();
+>>>>>>> 4c41c3af34a8e787338ed6393da49148ba79ce84
   axios
     .get(
       `https://fierce-plains-47590.herokuapp.com/api/schedules/date/${date}`,
       { headers }
     )
     .then(res => {
+<<<<<<< HEAD
       const contractors = serviceSort(query, contractorList);
+=======
+      const sortedContractors = serviceSort(serviceFilter, contractors);
+>>>>>>> 4c41c3af34a8e787338ed6393da49148ba79ce84
       const filter = res.data.appointments
         .filter(item =>
           dateFns.isSameDay(dateFns.addDays(new Date(date), 1), item.startTime)
         )
         .map(item => item.contractorId);
-      const list = contractors.filter(contractor =>
+      const list = sortedContractors.filter(contractor =>
         filter.includes(contractor.id)
       );
       dispatch({ type: SET_SORTED_CONTRACTORS, payload: list });
@@ -187,6 +216,7 @@ export const fetchAvailabilityByDay = (
     });
 };
 
+<<<<<<< HEAD
 // export const sortContractorsByService = query => dispatch => {
 //   const state = store.getState();
 //   const list = state.contractors.filter(contractor => {
@@ -194,6 +224,15 @@ export const fetchAvailabilityByDay = (
 //   });
 //   dispatch({ type: SET_SORTED_CONTRACTORS, payload: list });
 // };
+=======
+export const sortContractorsByService = query => dispatch => {
+  const state = {};
+  const list = state.contractors.filter(contractor => {
+    return contractor.services.some(service => service.name.includes(query));
+  });
+  dispatch({ type: SET_SORTED_CONTRACTORS, payload: list });
+};
+>>>>>>> 4c41c3af34a8e787338ed6393da49148ba79ce84
 
 export const storeServiceName = service => dispatch => {
   dispatch({ type: SET_SERVICE_SORT, payload: service });
@@ -294,23 +333,46 @@ export const editUserSettings = data => dispatch => {
 //   .catch(err => dispatch({ type: FAILURE, payload:err }))
 // }
 
-export const postNewService = serv => {
+
+//axios request for services 
+export const postNewService = serv =>{
   return dispatch => {
     dispatch({ type: SEND_SERV });
     const headers = setHeaders();
+
     axios
       .post('https://fierce-plains-47590.herokuapp.com/api/services', serv, {
         headers,
       })
       .then(res => {
         console.log(res.data);
-        dispatch({ type: SEND_SERV_COMP });
+        dispatch({ type: SEND_SERV_COMP, payload:res.data.created });
       })
       .catch(err => {
         console.log(err);
       });
   };
 };
+
+
+
+export const deleteService = (service, list) => dispatch =>{
+  dispatch({ type: LOADING });
+  const headers = setHeaders();
+
+  axios
+  .delete(`https://fierce-plains-47590.herokuapp.com/api/services/${service.id}`,{headers})
+  .then(res => {
+    // console.log(res.data)
+    const newList = list.filter((service) => service.id !== res.data.deleted.id
+    )
+    dispatch({ type: DELETE_SERV_SUCC, payload: newList})
+  })
+  .catch(err=> {
+    dispatch({ type: FAILURE, payload: err})
+  })
+
+}
 
 export const postNewSchedule = sched => {
   const headers = setHeaders();
@@ -362,7 +424,7 @@ export const deleteSchedule = id => {
       .delete(`https://fierce-plains-47590.herokuapp.com/api/schedules/${id}`, {
         headers,
       })
-      .then(res => {
+      .then(() => {
         dispatch({ type: DEL_SCHED_COMP, payload: id });
       })
       .catch(err => {
@@ -454,19 +516,6 @@ export const setMonth = day => dispatch => {
 export const setPosition = element => dispatch => {
   dispatch({ type: SET_CONTRACTOR_POSITION, payload: element });
 };
-
-function setHeaders() {
-  const bearer = `Bearer ${localStorage.getItem('jwt')}`;
-  const headers = { authorization: bearer };
-  return headers;
-}
-
-function serviceSort(query, state) {
-  const list = state.filter(contractor => {
-    return contractor.services.some(service => service.name.includes(query));
-  });
-  return list;
-}
 
 // export const selectContractor = (id, list) => dispatch => {
 //   const selected = list.filter(item => item.id === id);

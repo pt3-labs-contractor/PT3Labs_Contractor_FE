@@ -30,8 +30,12 @@ function Login(props) {
         localStorage.setItem('jwt', res.data.token);
         props.fetchAccts();
         props.getFeedback();
-        props.history.push('/contractors');
-        props.history.push('/app');
+
+        if (props.user.contractorId) {
+          props.history.push('/contractorcalendar');
+        } else {
+          props.history.push('/app');
+        }
       })
       .catch(err => {
         switch (err.response.status) {
@@ -87,7 +91,14 @@ function Login(props) {
   );
 }
 
+const mapStateToProps = state => {
+  return {
+    user: state.user,
+    feedback: state.feedback,
+  };
+};
+
 export default connect(
-  null,
+  mapStateToProps,
   { fetchAccts, getFeedback }
 )(Login);
