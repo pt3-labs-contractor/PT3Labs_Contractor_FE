@@ -84,9 +84,11 @@
   background-color: white;
   height: 60%;
 	@media screen and (max-width: 601px) {
-		height: 40px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 		color: darkred;
-		padding-top: 0px;
+		padding-bottom: 5px;
 		font-size: 1.1rem;
 	}
 }
@@ -108,7 +110,11 @@
 
 	@media screen and (max-width: 601px) {
 		color: green;
-		padding-top: 3px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding-top: 5px;
+		padding-bottom: 5px;
 		font-size: 1.1rem;
 	}
 }
