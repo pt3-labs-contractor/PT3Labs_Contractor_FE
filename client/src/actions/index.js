@@ -59,6 +59,7 @@ export const EDIT_USER_SUCCESS = 'EDIT_USER_SUCCESS';
 //
 export const FAIL_SCHEDULE = 'FAIL_SCHEDULE';
 export const LOAD_SCHEDULE = 'LOAD_SCHEDULE';
+export const SELECTED = 'SELECTED';
 // ---------------------------------------------------------------
 
 function setHeaders() {
@@ -490,7 +491,7 @@ export const setPosition = element => dispatch => {
   dispatch({ type: SET_CONTRACTOR_POSITION, payload: element });
 };
 
-// export const selectContractor = (id, list) => dispatch => {
-//   const selected = list.filter(item => item.id === id);
-//   dispatch({ type: SELECTED, payload: selected[0]})
-// }
+export const selectContractor = (id, list) => dispatch => {
+  const selected = list.filter(item => item.id === id);
+  dispatch({ type: SELECTED, payload: selected[0]})
+}
