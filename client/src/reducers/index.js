@@ -77,6 +77,7 @@ const initialState = {
   schedule: [],
   errorSchedule: null,
   serviceFilter: '',
+  refs: [],
   positionContractor: {},
 };
 
@@ -90,7 +91,6 @@ export default (state = initialState, action) => {
         error: null,
       };
     case FETCHING_USERS_SUCCESS:
-      // console.log(action.payload.services);
       return {
         ...state,
         user: action.payload.user,
@@ -104,7 +104,7 @@ export default (state = initialState, action) => {
     case FAILURE:
       return {
         ...state,
-        user: {},
+        // user: {},
         contractors: [],
         loading: false,
         error: action.error,
@@ -185,6 +185,7 @@ export default (state = initialState, action) => {
       };
 
     case DELETE_FEEDBACK_SUCCESS:
+      return { ...state, feedback: action.payload.feedback };
       console.log(action.payload.feedback);
       return {
         ...state,

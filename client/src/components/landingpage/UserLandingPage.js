@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import Calendar from '../calendar/Calendar';
 import AppointmentList from '../appointments/AppointmentList';
 import ContractorList from '../contractors/ContractorList';
 import AvailabilityList from '../appointments/AvailabilityList';
 import AppointmentForm from '../appointments/AppointmentForm';
-// import ContractorCard from '../contractors/ContractorCard';
 import TopNavbar from '../navbar/TopNavbar';
 import './UserLandingPage.css';
 
@@ -14,7 +14,6 @@ import dateFns from 'date-fns';
 import {
   fetchSchedule,
   fetchAvailabilityByDay,
-  sortContractorsByService,
   storeServiceName,
 } from '../../actions/index';
 
@@ -49,7 +48,7 @@ function UserLandingPage(props) {
 
   useEffect(() => {
     if (mql) {
-      const container = document.querySelector('.user.container');
+      const container = document.querySelector('.calendar-container');
       container.addEventListener('touchmove', e => {
         e.preventDefault();
       });
@@ -65,8 +64,8 @@ function UserLandingPage(props) {
     const dateString = dateFns.format(props.selectedDay, 'YYYY-MM-DD');
     props.fetchAvailabilityByDay(
       dateString,
-      props.serviceFilter,
-      props.contractors
+      props.contractors,
+      props.serviceFilter
     );
     clearAppointment();
     // eslint-disable-next-line
@@ -108,13 +107,11 @@ function UserLandingPage(props) {
   };
 
   const scrollBack = () => {
-    console.log(targets[1].current);
     scroll(targets[currentTarget - 1].current);
     setTarget(currentTarget - 1);
   };
 
   const handleSort = event => {
-    console.log(event.target.value);
     setServiceSort(event.target.value);
     props.storeServiceName(event.target.value);
     clearAppointment();
@@ -130,63 +127,61 @@ function UserLandingPage(props) {
   return (
     <>
       <TopNavbar />
-      <div className="main-body">
-        <div className="calendar-container">
-          {mql ? (
-            <div ref={serviceTarget} className="service-list">
-              <h2>Pick a service</h2>
-              {serviceList.map(service => (
-                <button value={service.toLowerCase()} onClick={handleSort}>
-                  {service}
-                </button>
-              ))}
-            </div>
-          ) : (
-            <form>
-              <select
-                className="select-service"
-                value={serviceSort}
-                onChange={handleSort}
-              >
-                <option value="">Pick a service</option>
-                {serviceList.map(service => (
-                  <option key={service} value={service.toLowerCase()}>
-                    {service}
-                  </option>
-                ))}
-              </select>
-            </form>
-          )}
-          <div className="user-calendar">
-            <div className="calendar-target" ref={calendarTarget}>
-              <Calendar user />
-            </div>
-            <div className="contractor-target" ref={contractorTarget}>
-              <ContractorList userLanding selectContractor={selectContractor} />
-            </div>
-            <div className="availability-target" ref={availabilityTarget}>
-              <AvailabilityList setAppointment={selectTime} />
-            </div>
-            <div className="appointment-form-target" ref={appointmentTarget}>
-              {contractor.id && time.id && (
-                <AppointmentForm
-                  user
-                  contractor={contractor}
-                  clearAppointment={clearAppointment}
-                  appointment={time}
-                  service={service}
-                />
-              )}
-            </div>
+      <div className="calendar-container">
+        {mql ? (
+          <div ref={serviceTarget} className="service-list">
+            <h2>Pick a service</h2>
+            {serviceList.map(service => (
+              <button value={service.toLowerCase()} onClick={handleSort}>
+                {service}
+              </button>
+            ))}
           </div>
-
-          {mql && currentTarget > 0 ? (
-            <div onClick={scrollBack} id="back-button">
-              Back
-            </div>
-          ) : null}
-          {!mql && <AppointmentList />}
+        ) : (
+          <form>
+            <select
+              className="select-service"
+              value={serviceSort}
+              onChange={handleSort}
+            >
+              <option value="">Pick a service</option>
+              {serviceList.map(service => (
+                <option key={service} value={service.toLowerCase()}>
+                  {service}
+                </option>
+              ))}
+            </select>
+          </form>
+        )}
+        <div className="user-calendar">
+          <div className="calendar-target" ref={calendarTarget}>
+            <Calendar user />
+          </div>
+          <div className="contractor-target" ref={contractorTarget}>
+            <ContractorList userLanding selectContractor={selectContractor} />
+          </div>
+          <div className="availability-target" ref={availabilityTarget}>
+            <AvailabilityList setAppointment={selectTime} />
+          </div>
+          <div className="appointment-form-target" ref={appointmentTarget}>
+            {contractor.id && time.id && (
+              <AppointmentForm
+                user
+                contractor={contractor}
+                clearAppointment={clearAppointment}
+                appointment={time}
+                service={service}
+              />
+            )}
+          </div>
         </div>
+
+        {mql && currentTarget > 0 ? (
+          <div onClick={scrollBack} id="back-button">
+            Back
+          </div>
+        ) : null}
+        {!mql && <AppointmentList />}
       </div>
     </>
   );
@@ -195,9 +190,9 @@ function UserLandingPage(props) {
 const mapStateToProps = state => {
   return {
     contractors: state.contractors,
-    serviceFilter: state.serviceFilter,
     sorted: state.sortedContractors,
     selectedDay: state.thisDay,
+    serviceFilter: state.serviceFilter,
   };
 };
 
@@ -206,7 +201,37 @@ export default connect(
   {
     fetchSchedule,
     fetchAvailabilityByDay,
-    sortContractorsByService,
     storeServiceName,
   }
 )(UserLandingPage);
+
+UserLandingPage.propTypes = {
+  contractors: PropTypes.arrayOf(
+    PropTypes.shape({
+      city: PropTypes.string,
+      createdAt: PropTypes.string,
+      id: PropTypes.string,
+      latitude: PropTypes.string,
+      longitude: PropTypes.string,
+      name: PropTypes.string,
+      phoneNumber: PropTypes.string,
+      stateAbbr: PropTypes.string,
+      streetAddress: PropTypes.string,
+      zipCode: PropTypes.string,
+      services: PropTypes.arrayOf(
+        PropTypes.shape({
+          contractorId: PropTypes.string,
+          createdAt: PropTypes.string,
+          id: PropTypes.string,
+          name: PropTypes.string,
+          price: PropTypes.string,
+        })
+      ),
+    })
+  ),
+  sorted: PropTypes.array, // This is just a sorted copy of contractors
+  fetchAvailabilityByDay: PropTypes.func,
+  fetchSchedule: PropTypes.func,
+  storeServiceName: PropTypes.func,
+  selectedDay: PropTypes.instanceOf(Date),
+};

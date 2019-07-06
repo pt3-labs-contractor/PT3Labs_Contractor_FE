@@ -313,7 +313,6 @@ export const postNewService = serv =>{
   return dispatch => {
     dispatch({ type: SEND_SERV });
     const headers = setHeaders();
-
     axios
       .post('https://fierce-plains-47590.herokuapp.com/api/services', serv, {
         headers,
@@ -349,8 +348,7 @@ export const deleteService = (service, list) => dispatch =>{
 }
 
 export const postNewSchedule = sched => {
-  const bearer = `Bearer ${localStorage.getItem('jwt')}`;
-  const headers = { authorization: bearer };
+  const headers = setHeaders();
   return dispatch => {
     dispatch({ type: SEND_SCHED });
     axios
@@ -368,8 +366,7 @@ export const postNewSchedule = sched => {
 };
 
 export const getSchedules = id => {
-  const bearer = `Bearer ${localStorage.getItem('jwt')}`;
-  const headers = { authorization: bearer };
+  const headers = setHeaders();
   return dispatch => {
     dispatch({ type: GET_SCHED });
     axios
@@ -393,8 +390,7 @@ export const getSchedules = id => {
 };
 
 export const deleteSchedule = id => {
-  const bearer = `Bearer ${localStorage.getItem('jwt')}`;
-  const headers = { authorization: bearer };
+  const headers = setHeaders();
   return dispatch => {
     dispatch({ type: DEL_SCHED });
     axios
@@ -411,8 +407,7 @@ export const deleteSchedule = id => {
 };
 
 export const updateSchedule = (id, obj) => {
-  const bearer = `Bearer ${localStorage.getItem('jwt')}`;
-  const headers = { authorization: bearer };
+  const headers = setHeaders();
   console.log(id, obj);
   return dispatch => {
     dispatch({ type: UP_SCHED });
@@ -435,8 +430,7 @@ export const updateSchedule = (id, obj) => {
 };
 
 export const confirmApp = (id, obj) => {
-  const bearer = `Bearer ${localStorage.getItem('jwt')}`;
-  const headers = { authorization: bearer };
+  const headers = setHeaders();
   return dispatch => {
     dispatch({ type: CONFIRMING_APP });
     axios
@@ -456,8 +450,7 @@ export const confirmApp = (id, obj) => {
 };
 
 export const getUser = id => {
-  const bearer = `Bearer ${localStorage.getItem('jwt')}`;
-  const headers = { authorization: bearer };
+  const headers = setHeaders();
   return dispatch => {
     dispatch({ type: GETTING_USER });
     axios

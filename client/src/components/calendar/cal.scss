@@ -1,3 +1,4 @@
+$mobile: (max-width: 601px);
 .cal {
   padding-top: 10px;
   width: 90%;
@@ -8,13 +9,21 @@
 	.calendar-nav {
 		display: flex;
 		justify-content: center;
+		@media screen and (max-width: 601px) {
+			margin-bottom: 5px;
+			border-radius: 5px;
+		}
 	}
 	.nav-month {
 		padding: 0 20px;
+		width: 30%;
 	}
 	.day-container {
 		display: grid;
 		grid-template-columns: repeat(7, 1fr);
+		@media screen and (max-width: 601px) {
+			display: none;
+		}
 
 		.day-cell {
 			border: 1px solid #000;
@@ -22,14 +31,97 @@
 	}
 }
 
+.notification {
+	text-align: center;
+	margin-top: 20px;
+	font-size: 2rem;
+}
+
+#legend {
+	display: flex;
+	border-radius: 5px;
+	flex-direction: column;
+	position: absolute;
+	left: 29.3%;
+	height: 28px;
+	width: 80px;
+	overflow: hidden;
+	justify-content: space-between;
+	z-index: 10000;
+	border: 2px solid black;
+	background-color: white;
+	@media screen and (max-width: 800px)  {
+		left: 20%;
+	}
+		@media screen and (max-width: 450px) {
+			height: 15px;
+			width: 35px;
+			left: 24%;
+		}
+	&:hover {
+		height: auto;
+		width: 110px;
+		padding: 0px 15px 15px 15px;
+	}
+
+	.leg {
+		font-size: 1.3rem !important;
+		color: black !important;
+		text-align: center;
+		text-decoration: underline;
+
+		@media screen and (max-width: 450px) {
+			font-size: .5rem !important;
+		}
+	}
+	.confirmedl {
+	font-size: 15px !important;
+	color: black !important;
+		background-color: #febd17;
+		padding: 3px;
+		margin-top: 10px;
+		margin-bottom: 2px;
+		border-radius: 5px;
+	}
+
+	.pendingl {
+	font-size: 15px !important;
+	color: black !important;
+		background-color: #8c20f8;
+		padding: 3px;
+		margin-bottom: 2px;
+		border-radius: 5px;
+	}
+	.openl {
+	font-size: 15px !important;
+	color: black !important;
+		background-color: white;
+		border: 1px solid black;
+		padding: 3px;
+		margin-bottom: 2px;
+		border-radius: 5px;
+	}
+	.deniedl {
+	font-size: 15px !important;
+	color: black !important;
+		background-color: red;
+		padding: 3px;
+		margin-bottom: 2px;
+		border-radius: 5px;
+	}
+}
+
 .filterButtons {
 	display: flex;
 	flex-wrap:  wrap;
 	justify-content: space-between;
-	max-width: 600px;
 	width: 90%;
+	max-width: 900px;
 	margin: 0 auto;
-	margin-top: 100px;
+	margin-top: 50px;
+	align-items: flex-end;
+
+
 
 	.fbutt {
 		border: none;
@@ -39,32 +131,43 @@
 		padding: 15px;
 		padding-top: 7px;
 		padding-bottom: 7px;
-		background: red;
 		text-decoration: none;
+		height: 40px;
 
 		&:hover {
 			cursor: pointer;
-			transform: scale(1.2);
+			transform: scale(1.1);
 		}
 	}
-	
 	.pendingApp {
-    background-color: rgba(173, 140, 233, 0.4);
+		background-color: rgba(173, 140, 233, 0.4);
 	}
 
 	.openDays {
-    background-color: rgba(73, 182, 117, 0.3);
+		background-color: rgba(73, 182, 117, 0.3);
 	}
 
 	.closedDays {
-    background-color: rgba(1, 1, 1, 0.5);
+		background-color: rgba(1, 1, 1, 0.5);
 	}
 
 	.wholeCal {
 		background-color: white;
 		border: 2px solid black;
 	}
+
+
+	@media screen and (max-width: 601px) {
+		margin-top: 10px;
+
+		.fbutt {
+			width: 100%;
+			margin-bottom: 5px;
+
+		}
+	}
 }
+
 
 .nav {
 	border-radius: 50%;
@@ -81,13 +184,24 @@
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   grid-auto-rows: 85px;
+
+	@media screen and (max-width: 601px) {
+  grid-template-columns: repeat(1, 1fr);
+	grid-auto-rows: 115px;
+	}
 }
 
 
 
 .cel {
-  height: 58px;
-  overflow: hidden;
+	height: 58px;
+	overflow: hidden;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+	@media screen and (max-width: 601px) {
+		height: 80px;
+	}
 }
 
 
@@ -106,9 +220,6 @@
 	border-bottom: 4px solid black;
   padding-bottom: 0px;
   margin-bottom: 0px;
-	transition-property: all;
-	transition-duration: 5s;
-	transition-timing-function: cubic-bezier(0, 1, 0.5, 1)
 }
 
 .spacer.disable {
@@ -145,11 +256,8 @@
   width: 100%;
 }
 
-.cel {
-  display: flex;
-  flex-wrap: wrap;
-  width: 100%;
-}
+
+
 
 .listCont {
   width: 100%;
@@ -159,11 +267,34 @@
   margin-bottom: 10px;
 }
 
+.schCont {
+	@media screen and (max-width: 601px) {
+		width: 80%;
+		list-style: none;
+
+		.timeSlot {
+			font-size: 1rem;
+			padding: 5px;
+		}
+
+		.appCont {
+			display: flex;
+			justify-content: center;
+
+			.timeSlot {
+				font-size: .8rem;
+			}
+		}
+	}
+
+}
+
 .scheduleCont {
   display: flex;
   flex-wrap: wrap;
   width: 100%;
   height: 0px;
+
 }
 
 .editLink {
@@ -183,6 +314,45 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+	@media screen and (max-width: 601px) {
+		border: 2px solid black;
+		margin-bottom: 2px;
+		border-radius: 10px;
+	}
+}
+
+.sBordPend {
+	border-left: 10px solid #8c20f8;
+}
+
+.sBordConfirm {
+	border-left: 10px solid #febd17;
+}
+
+.sBordDeny {
+	border-left: 10px solid red;
+}
+
+.sBordOpen {
+	border-left: 10px solid rgb(73, 182, 117);
+}
+
+.sideBordPend {
+	@media screen and (max-width: 601px) {
+	border-left: 10px solid #8c20f8;
+	}
+}
+
+.sideBordOpen {
+	@media screen and (max-width: 601px) {
+    border-left: 10px solid rgb(73, 182, 117);
+	}
+}
+
+.sideBordFull {
+	@media screen and (max-width: 601px) {
+    border-left: 10px solid rgb(1, 1, 1);
+	}
 }
 
 .add {
@@ -215,10 +385,19 @@
   color: black;
 }
 
-.schedulerCont {
-  width: 200px;
-  height: 150px;
-}
+// .schedulerCont {
+// 	display: fixed;
+// 	top: 50%;
+// 	left: 50%;
+//   width: 200px;
+//   height: 150px;
+
+	// @media screen and (max-width: 601px) {
+	// 	display: fixed;
+	// 	top: 50%;
+	// 	left: 50%;
+	// }
+// }
 
 .infoCont {
   border: 1px solid black;
@@ -236,24 +415,34 @@
   width: 100%;
   background-color: none;
   cursor: pointer;
+
 }
 
 .fa-angle-double-down,
 .fa-angle-double-up {
   font-size: 0.7rem;
   pointer-events: none;
+	@media screen and (max-width: 601px) {
+		font-size: 1.5rem;
+	}
 }
 
 .disabledLink {
   pointer-events: none;
 }
 
-.hidden {
-  height: max-content;
-}
 
 .arrowHidden {
   display: none;
+}
+
+.notHidden {
+	overflow: hidden;
+	height: auto;
+	background-color: #e4e4e4;
+	border: none;
+	box-shadow: none;
+	
 }
 
 /* .react-datetime-picker__inputGroup__month, */
@@ -311,6 +500,10 @@
   margin-left: -1px;
   margin-right: 2px;
   margin-top: -5px;
+
+	@media screen and (max-width: 601px) {
+		font-size: 1.5rem;
+	}
 }
 
 .pendingSlot {
@@ -330,7 +523,12 @@
   margin-left: -1px;
   margin-right: 2px;
   margin-top: -5px;
+
+	@media screen and (max-width: 601px) {
+		font-size: 1.5rem;
+	}
 }
+
 
 .deniedSlot {
   display: flex;
@@ -349,6 +547,10 @@
   margin-left: -1px;
   margin-right: 2px;
   margin-top: -5px;
+
+	@media screen and (max-width: 601px) {
+		font-size: 1.5rem;
+	}
 }
 
 .disabled {
@@ -357,6 +559,12 @@
 
 .date {
   margin-bottom: 5px;
+	width: 20px;
+	height: min-content;
+}
+
+.weekDay {
+	width: 83%;
 }
 
 .today {
@@ -410,3 +618,4 @@
     background-color: rgba(1, 1, 1, 0.5);
   }
 }
+

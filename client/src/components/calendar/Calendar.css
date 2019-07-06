@@ -1,10 +1,6 @@
 .calendar {
-  /* margin-left: 208px; */
   width: 60%;
-  /* max-width: 73vh; */
   border: 15px solid var(--dark-color);
-  /* margin: 0 20px; */
-  /* max-height: 70vh; */
 }
 
 .calendar-nav {
@@ -38,8 +34,8 @@
 
 .cell-container {
   display: grid;
-  grid-template-columns: repeat(7, minmax(auto, auto));
-  grid-auto-rows: minmax(auto, auto);
+  grid-template-columns: repeat(7, minmax(50px, auto));
+  grid-auto-rows: minmax(50px, 65px);
 }
 
 .cell,
@@ -68,7 +64,7 @@
 }
 
 .cell.selected {
-  background-color: var(--secondary-color);
+  background-color: #febd178c;
 }
 
 .cell.disable {
@@ -79,12 +75,12 @@
   border: 3px solid green;
 }
 
-@media (max-width:400px) {
+@media (max-width: 400px) {
   .day-cell {
-    font-size: .8rem;
+    font-size: 0.8rem;
   }
   .cell {
     padding: 5px;
-    font-size: .8rem;
+    font-size: 0.8rem;
   }
 }

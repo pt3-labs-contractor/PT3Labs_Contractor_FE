@@ -7,17 +7,28 @@ function AppointmentList(props) {
     <div className="appointment-list">
       <h3>Pending Appointments</h3>
       <div className="appointments-container">
-        {props.appointments.map(item => (
-          <div className="appointment-card" key={item.id}>
-            <h5>{dateFns.format(item.startTime, 'MMMM Do:')}</h5>
-            <p>
-              {`${dateFns.format(item.startTime, 'HH:mm')} - ${dateFns.format(
-                dateFns.addHours(item.startTime, item.duration.hours),
-                'HH:mm'
-              )}`}
-            </p>
-          </div>
-        ))}
+        {props.appointments.map(item => {
+          const contractor = props.contractors.filter(
+            con => con.id === item.contractorId
+          )[0];
+          if (item.confirmed === null)
+            return (
+              <div className="appointment-card" key={item.id}>
+                <h5>{dateFns.format(item.startTime, 'MMMM Do:')}</h5>
+                <p>
+                  {`${dateFns.format(
+                    item.startTime,
+                    'HH:mm'
+                  )} - ${dateFns.format(
+                    dateFns.addHours(item.startTime, item.duration.hours),
+                    'HH:mm'
+                  )}`}
+                </p>
+                <p>{contractor.name}</p>
+                <p>{contractor.phoneNumber}</p>
+              </div>
+            );
+        })}
       </div>
     </div>
   );
@@ -26,6 +37,7 @@ function AppointmentList(props) {
 const mapStateToProps = state => {
   return {
     appointments: state.appointments,
+    contractors: state.contractors,
   };
 };
 

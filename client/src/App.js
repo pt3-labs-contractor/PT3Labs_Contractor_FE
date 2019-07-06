@@ -30,10 +30,7 @@ function App({ user, ...props }) {
   const [win, setWin] = useState();
   const string = JSON.stringify(win);
   useEffect(() => {
-    props.fetchAccts();
-    props.getFeedback();
     setWin({ width: window.innerWidth, height: window.innerHeight });
-    // eslint-disable-next-line
   }, [string]);
 
   return (
@@ -44,7 +41,7 @@ function App({ user, ...props }) {
           path="/app"
           component={user.contractorId ? NavBarContractor : NavBarUser}
         />
-        <Route path="/app" component={UserLandingPage} />
+        <Route exact path="/app" component={UserLandingPage} />
         <Route exact path="/app/contractors" component={ContractorList} />
         <Route path="/app/contractors/:id" component={Contractor} />
         <Route path="/login" component={Login} />

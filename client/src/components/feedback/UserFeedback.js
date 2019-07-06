@@ -147,8 +147,10 @@ function UserFeedback(props) {
               totalPosts={props.feedback.length}
               paginate={paginate}
               currentPosts={currentPosts}
+              createdAt={props.feedback.createdAt}
             />
-            {/* {props.loading ? <p>Loading...</p> : null} */}
+
+            {props.loading ? <p>Loading...</p> : null}
             {props.error ? <p>{props.error}</p> : null}
             {currentPosts.map(feedback => {
               return (
