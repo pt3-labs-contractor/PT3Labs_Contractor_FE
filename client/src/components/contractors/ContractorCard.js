@@ -1,66 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import React from 'react'
 
-function ContractorCard({ contractor, service, full }) {
-  const [localService, setService] = useState({});
-  const {
-    name,
-    phoneNumber,
-    streetAddress,
-    city,
-    stateAbbr,
-    zipCode,
-  } = contractor;
+function ContractorCard(props) {
+  const { name, phone_number, street_address, city, state_abbr, zip_code } = props.contractor;
 
-  useEffect(() => {
-    if (contractor.id) {
-      const filtered = contractor.services.filter(entry => {
-        return entry.name === service;
-      });
-      setService(filtered[0]);
-    }
-  }, [props.service]);
   return (
-    <div className="contractor-card">
+    <div>
       <h3>{name}</h3>
       <address>
-        <p>{phoneNumber}</p>
-        {display}
+        <p>{phone_number}</p>
+        <p>{street_address}</p>
+        <p>{city}</p>
+        <p>{state_abbr}</p>
+        <p>{zip_code}</p>
       </address>
     </div>
-  );
+  )
 }
 
-const mapStateToProps = state => {
-  return {
-    service: state.serviceFilter,
-  };
-};
-
-export default connect(mapStateToProps)(ContractorCard);
-
-ContractorCard.propTypes = {
-  contractor: PropTypes.shape({
-    city: PropTypes.string,
-    createdAt: PropTypes.string,
-    id: PropTypes.string,
-    latitude: PropTypes.string,
-    longitude: PropTypes.string,
-    name: PropTypes.string,
-    phoneNumber: PropTypes.string,
-    stateAbbr: PropTypes.string,
-    streetAddress: PropTypes.string,
-    zipCode: PropTypes.string,
-    services: PropTypes.arrayOf(
-      PropTypes.shape({
-        contractorId: PropTypes.string,
-        createdAt: PropTypes.string,
-        id: PropTypes.string,
-        name: PropTypes.string,
-        price: PropTypes.string,
-      })
-    ),
-  }),
-  service: PropTypes.string,
-};
+export default ContractorCard
