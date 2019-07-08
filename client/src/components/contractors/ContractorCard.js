@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
+import Rating from 'react-rating';
 import PropTypes from 'prop-types';
 
 function ContractorCard(props) {
@@ -11,6 +12,7 @@ function ContractorCard(props) {
     city,
     stateAbbr,
     zipCode,
+    userScore,
   } = props.contractor;
 
   useEffect(() => {
@@ -36,12 +38,25 @@ function ContractorCard(props) {
           </>
         ) : service ? (
           <>
-            <p>
+            <p className="service-title">
               {service.name}: {service.price}
             </p>
           </>
         ) : null}
       </address>
+      <Rating
+        className="contractor-card-star-container"
+        fullSymbol={
+          <span className="contractor-card-star fullstar">&#9733;</span>
+        }
+        emptySymbol={
+          <span className="contractor-card-star emptystar">&#9734;</span>
+        }
+        initialRating={1.6}
+        fractions={4}
+        stop={3}
+        readonly
+      />
     </div>
   );
 }
