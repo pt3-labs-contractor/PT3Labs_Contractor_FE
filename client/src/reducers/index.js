@@ -46,10 +46,10 @@ import {
   // fetching single contractor feedback
   // FETCH_CONTRACTOR_FEEDBACK_SUCCESS,
 
-  //POST feedback by user
+  // POST feedback by user
   POST_FEEDBACK_SUCCESS,
 
-  //DELETE feedback by user
+  // DELETE feedback by user
   DELETE_FEEDBACK_SUCCESS,
 
   // fetching current contractor appointments
@@ -74,6 +74,7 @@ const initialState = {
   schedule: [],
   errorSchedule: null,
   serviceFilter: '',
+  refs: [],
   positionContractor: {},
 };
 
@@ -83,13 +84,10 @@ export default (state = initialState, action) => {
     case LOADING:
       return {
         ...state,
-        user: {},
-        contractors: [],
         loading: true,
         error: null,
       };
     case FETCHING_USERS_SUCCESS:
-      // console.log(action.payload.services);
       return {
         ...state,
         user: action.payload.user,
@@ -103,7 +101,7 @@ export default (state = initialState, action) => {
     case FAILURE:
       return {
         ...state,
-        user: {},
+        // user: {},
         contractors: [],
         loading: false,
         error: action.error,
@@ -169,12 +167,21 @@ export default (state = initialState, action) => {
     case FEEDBACK_SUCCESS:
       return { ...state, feedback: action.payload.feedback };
 
-    
-    case POST_FEEDBACK_SUCCESS: 
-      return {...state, feedback: [...state.feedback, action.payload.feedback] }
+    case POST_FEEDBACK_SUCCESS:
+      return {
+        ...state,
+        feedback: [...state.feedback, action.payload.feedback],
+      };
 
     case DELETE_FEEDBACK_SUCCESS:
-      return {...state, feedback: action.payload.feedback}
+      return { ...state, feedback: action.payload.feedback };
+      console.log(action.payload.feedback);
+      return {
+        ...state,
+        feedback: state.feedback.filter(
+          x => x.id !== action.payload.deleted.id
+        ),
+      };
     // fetching current contractor appointments
     // case RET_CONTRACTOR_APP_SUCC:
     //   return {...state, accounts:{appointments: action.payload }}

@@ -7,6 +7,15 @@
   box-shadow: 0 3px 20px #555555;
   border-radius: 5px;
   font-size: 0.8rem;
+	background-color: white;
+	z-index: 10000;
+
+	@media screen and (max-width: 601px) {
+		position: fixed;
+		top: 33%;
+		left: 20%;
+		width: 73%;
+	}
 }
 .closeIconEdit {
   width: 100%;
@@ -18,7 +27,6 @@
   margin-bottom: 0px;
   height: min-content;
   padding-bottom: 0px;
-  width: min-content;
 }
 
 .infoList {
@@ -36,6 +44,7 @@
 }
 
 .duration {
+	width: 50%;
   display: flex;
   flex-wrap: wrap;
 }
@@ -48,6 +57,11 @@
 .min {
   width: 100%;
   padding-left: 15px;
+}
+
+.pending {
+	@media screen and (max-width: 601px) {
+}
 }
 
 .actions {
@@ -69,6 +83,14 @@
   width: 50%;
   background-color: white;
   height: 60%;
+	@media screen and (max-width: 601px) {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: darkred;
+		padding-bottom: 5px;
+		font-size: 1.1rem;
+	}
 }
 
 .delete:hover {
@@ -85,6 +107,16 @@
   font-size: 0.8rem;
   width: 50%;
   height: 60%;
+
+	@media screen and (max-width: 601px) {
+		color: green;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding-top: 5px;
+		padding-bottom: 5px;
+		font-size: 1.1rem;
+	}
 }
 
 .pending {

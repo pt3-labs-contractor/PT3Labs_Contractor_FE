@@ -1,10 +1,6 @@
 .calendar {
-  /* margin-left: 208px; */
   width: 60%;
-  /* max-width: 73vh; */
   border: 15px solid var(--dark-color);
-  /* margin: 0 20px; */
-  /* max-height: 70vh; */
 }
 
 .calendar-nav {
@@ -68,7 +64,7 @@
 }
 
 .cell.selected {
-  background-color: var(--secondary-color);
+  background-color: #febd178c;
 }
 
 .cell.disable {
@@ -77,4 +73,14 @@
 
 .cell.available {
   border: 3px solid green;
+}
+
+@media (max-width: 400px) {
+  .day-cell {
+    font-size: 0.8rem;
+  }
+  .cell {
+    padding: 5px;
+    font-size: 0.8rem;
+  }
 }

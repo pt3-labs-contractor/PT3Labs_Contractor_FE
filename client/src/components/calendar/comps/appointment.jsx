@@ -26,14 +26,16 @@ const Appointment = props => {
 
   const setServId = e => {
     props.setServIdUp(e.target.dataset.sevid, e.target.dataset.refid);
-    const pos = props.refs.find(r => {
-      return r.id === e.target.dataset.refid;
-    });
-    props.setPosition(pos);
+    if (window.innerWidth > 601) {
+      const pos = props.refs.find(r => {
+        return r.id === e.target.dataset.refid;
+      });
+      props.setPosition(pos);
+    }
   };
 
   return (
-    <div className="appCont">
+    <div className="appCont" onClick={props.tween}>
       {props.contractorId === props.contID ? (
         <>
           <Link

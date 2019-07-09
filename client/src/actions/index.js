@@ -1,6 +1,5 @@
 import axios from 'axios';
 import dateFns from 'date-fns';
-import store from '../index';
 
 export const SEND_SERV = 'SEND_SERV';
 export const SEND_SERV_COMP = 'SEND_SERV_COMP';
@@ -157,10 +156,14 @@ export const fetchServices = id => dispatch => {
     });
 };
 
-export const fetchAvailabilityByDay = date => dispatch => {
+export const fetchAvailabilityByDay = (
+  date,
+  contractorList,
+  query
+) => dispatch => {
   // dispatch({ type: LOADING });
   const headers = setHeaders();
-  const state = store.getState();
+  // const state = store.getState();
 
   axios
     .get(
@@ -168,7 +171,7 @@ export const fetchAvailabilityByDay = date => dispatch => {
       { headers }
     )
     .then(res => {
-      const contractors = serviceSort(state.serviceFilter, state.contractors);
+      const contractors = serviceSort(query, contractorList);
       const filter = res.data.appointments
         .filter(item =>
           dateFns.isSameDay(dateFns.addDays(new Date(date), 1), item.startTime)
@@ -184,13 +187,13 @@ export const fetchAvailabilityByDay = date => dispatch => {
     });
 };
 
-export const sortContractorsByService = query => dispatch => {
-  const state = store.getState();
-  const list = state.contractors.filter(contractor => {
-    return contractor.services.some(service => service.name.includes(query));
-  });
-  dispatch({ type: SET_SORTED_CONTRACTORS, payload: list });
-};
+// export const sortContractorsByService = query => dispatch => {
+//   const state = store.getState();
+//   const list = state.contractors.filter(contractor => {
+//     return contractor.services.some(service => service.name.includes(query));
+//   });
+//   dispatch({ type: SET_SORTED_CONTRACTORS, payload: list });
+// };
 
 export const storeServiceName = service => dispatch => {
   dispatch({ type: SET_SERVICE_SORT, payload: service });
@@ -294,8 +297,7 @@ export const editUserSettings = data => dispatch => {
 export const postNewService = serv => {
   return dispatch => {
     dispatch({ type: SEND_SERV });
-    const bearer = `Bearer ${localStorage.getItem('jwt')}`;
-    const headers = { authorization: bearer };
+    const headers = setHeaders();
     axios
       .post('https://fierce-plains-47590.herokuapp.com/api/services', serv, {
         headers,
@@ -311,8 +313,7 @@ export const postNewService = serv => {
 };
 
 export const postNewSchedule = sched => {
-  const bearer = `Bearer ${localStorage.getItem('jwt')}`;
-  const headers = { authorization: bearer };
+  const headers = setHeaders();
   return dispatch => {
     dispatch({ type: SEND_SCHED });
     axios
@@ -330,8 +331,7 @@ export const postNewSchedule = sched => {
 };
 
 export const getSchedules = id => {
-  const bearer = `Bearer ${localStorage.getItem('jwt')}`;
-  const headers = { authorization: bearer };
+  const headers = setHeaders();
   return dispatch => {
     dispatch({ type: GET_SCHED });
     axios
@@ -355,8 +355,7 @@ export const getSchedules = id => {
 };
 
 export const deleteSchedule = id => {
-  const bearer = `Bearer ${localStorage.getItem('jwt')}`;
-  const headers = { authorization: bearer };
+  const headers = setHeaders();
   return dispatch => {
     dispatch({ type: DEL_SCHED });
     axios
@@ -373,8 +372,7 @@ export const deleteSchedule = id => {
 };
 
 export const updateSchedule = (id, obj) => {
-  const bearer = `Bearer ${localStorage.getItem('jwt')}`;
-  const headers = { authorization: bearer };
+  const headers = setHeaders();
   console.log(id, obj);
   return dispatch => {
     dispatch({ type: UP_SCHED });
@@ -397,8 +395,7 @@ export const updateSchedule = (id, obj) => {
 };
 
 export const confirmApp = (id, obj) => {
-  const bearer = `Bearer ${localStorage.getItem('jwt')}`;
-  const headers = { authorization: bearer };
+  const headers = setHeaders();
   return dispatch => {
     dispatch({ type: CONFIRMING_APP });
     axios
@@ -418,8 +415,7 @@ export const confirmApp = (id, obj) => {
 };
 
 export const getUser = id => {
-  const bearer = `Bearer ${localStorage.getItem('jwt')}`;
-  const headers = { authorization: bearer };
+  const headers = setHeaders();
   return dispatch => {
     dispatch({ type: GETTING_USER });
     axios

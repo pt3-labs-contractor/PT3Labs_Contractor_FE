@@ -1,33 +1,27 @@
-.appointment-info {
-  background-color: var(--dark-color);
-  opacity: .9;
-  color: white;
-}
-
-.appointment-heading {
-  background-color: var(--dark-color);
-  margin-left: 1rem;
-  padding: 1rem 0;
-}
-
-.appointment-heading h4 {
-  color: var(--primary-color);
-  background-color: var(--dark-color);
-  font-size: 2rem;
-}
-
-.appointment-body {
+.booking-container {
   display: flex;
-  padding: 19px;
-  background-color: lightgrey;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2rem;
+  letter-spacing: 1.2px;
 }
 
-.appointment-item {
-  display: flex;
-  margin: 0 auto;
-  padding: 1rem;
+.booking-item-container {
+  padding: 1rem 2rem;
+  margin: 1rem;
+  border-bottom: 2px solid var(--secondary-color);
+  color: black;
+  width: 80%;
 }
 
-.appointment-item h4{
-  font-size: 1.5rem;
+@media (max-width: 1000px) {
+  .booking-container {
+    width: 600px;
+  }
+}
+
+@media (max-width: 800px) {
+  .booking-container {
+    width: 100%;
+  }
 }

@@ -1,17 +1,23 @@
-.feedback-body-contractor {
+.main-header-feedback {
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
+  font-size: 3rem;
+  font-weight: 100;
   margin-top: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.feedback-pages {
+  display: flex;
+  flex-direction: column;
   letter-spacing: 1.2px;
 }
 
-.feedback-body h2 {
-  text-align: center;
-}
 .feedback-container {
   padding: 1rem 2rem;
-  margin: 1rem;
+  margin: 0 auto;
   border-bottom: 2px solid var(--secondary-color);
   color: black;
   width: 80%;
@@ -48,7 +54,7 @@
 
 @media (max-width: 1000px) {
   .feedback-container {
-    width: 600px;
+    width: 0 auto;
   }
 }
 
@@ -56,4 +62,8 @@
   .feedback-container {
     width: 100%;
   }
+  .feedback-pages {
+    width: 100%;
+  }
 }
+

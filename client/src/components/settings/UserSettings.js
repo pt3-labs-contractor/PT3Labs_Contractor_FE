@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import './Settings.css';
 import NavBarUser from '../navbar/NavBarUser';
 import { editUserSettings } from '../../actions/index';
-import UserAvatar from './useravatar.js';
+import TopNavbar from '../navbar/TopNavbar';
 
 function UserSetting(props) {
   const [username, setUsername] = useState(props.User.username);
@@ -27,6 +27,7 @@ function UserSetting(props) {
 
   return (
     <>
+      <TopNavbar />
       <NavBarUser />
       <div className="settings-container">
         <h2>User Setting Page</h2>
@@ -58,7 +59,6 @@ function UserSetting(props) {
             name="userphoneNumber"
             onChange={e => setPhoneNumber(e.target.value)}
           />
-          <UserAvatar />
           <button>Save</button>
         </form>
         {/* <form>

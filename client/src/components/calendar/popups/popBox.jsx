@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import dateFns from 'date-fns';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -12,7 +12,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { deleteSchedule } from '../../../actions/index.js';
 
-import './popBox.css';
+import './popBox.scss';
 
 const PopBoxSched = props => {
   const start = dateFns.format(props.start, 'ddd HH:mm');
@@ -58,13 +58,30 @@ const PopBoxSched = props => {
   const pending = appointments.filter(a => {
     const check = dateFns.isEqual(new Date(a.startTime), new Date(props.start));
     const { confirmed } = a;
-    if (check === true && confirmed === false) {
+    if (check === true && confirmed === null) {
+      return a;
+    }
+  });
+
+  const confirmed = appointments.filter(a => {
+    const check = dateFns.isEqual(new Date(a.startTime), new Date(props.start));
+    const { confirmed } = a;
+    if (check === true && confirmed === true) {
       return a;
     }
   });
 
   return (
-    <div className="boxCont" style={position}>
+    <div
+      className={`boxCont arrowHidden ${
+        confirmed.length > 0
+          ? 'sBordConfirm'
+          : pending.length > 0
+          ? 'sBordPend'
+          : 'sBordOpen'
+      }`}
+      style={window.innerWidth > 601 ? position : null}
+    >
       <div className="closeIconEdit">
         <FontAwesomeIcon icon={faTimesCircle} onClick={close} />
       </div>

@@ -1,0 +1,43 @@
+.pagination {
+  color: var(--secondary-color);
+  margin: 1rem auto;
+  text-align: right;
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+  align-items: center;
+}
+
+.page-total {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.page-numbers {
+  display: flex;
+}
+
+.page-numbers:hover {
+  cursor: pointer;
+}
+
+.page-item {
+  background-color: var(--light-color);
+  margin: 0 2px;
+  padding: 5px 0;
+}
+
+@media (max-width:800px) {
+  .pagination {
+    width: 95%;
+  }
+  .page-total {
+    width: 95%;
+  }
+}
+
+@media (max-width:500px) {
+  .page-item {
+    padding: 5px;
+  }
+}

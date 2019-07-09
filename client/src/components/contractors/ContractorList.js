@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import './ContractorList.css';
 
 import ContractorCard from './ContractorCard';
@@ -44,7 +45,6 @@ function ContractorList(props) {
         contractorRef.current[id] = React.createRef();
         resolve(contractorRef.current[id]);
       }).then(element => {
-        // console.log(element.current.getBoundingClientRect());
         props.setPosition(element.current.getBoundingClientRect());
       });
     }
@@ -122,3 +122,34 @@ export default connect(
   mapStateToProps,
   { setPosition }
 )(ContractorList);
+
+ContractorList.propTypes = {
+  contractors: PropTypes.arrayOf(
+    PropTypes.shape({
+      city: PropTypes.string,
+      createdAt: PropTypes.string,
+      id: PropTypes.string,
+      latitude: PropTypes.string,
+      longitude: PropTypes.string,
+      name: PropTypes.string,
+      phoneNumber: PropTypes.string,
+      stateAbbr: PropTypes.string,
+      streetAddress: PropTypes.string,
+      zipCode: PropTypes.string,
+      services: PropTypes.arrayOf(
+        PropTypes.shape({
+          contractorId: PropTypes.string,
+          createdAt: PropTypes.string,
+          id: PropTypes.string,
+          name: PropTypes.string,
+          price: PropTypes.string,
+        })
+      ),
+    })
+  ),
+  error: PropTypes.string,
+  loading: PropTypes.bool,
+  selectContractor: PropTypes.func,
+  setPosition: PropTypes.func,
+  userLanding: PropTypes.bool,
+};

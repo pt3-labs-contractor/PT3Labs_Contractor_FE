@@ -13,18 +13,21 @@ function UserFeedback(props) {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage] = useState(5);
+  // const [postsPerPage] = useState(5);
 
   const { id } = props.user;
   const currentStar = 0;
   const [stars, setStars] = useState(currentStar);
   const [message, setMessage] = useState([]);
   const [contractorId, setContractorId] = useState('');
+  // const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage, setPostsPerPage] = useState(3);
+  // const [loading, setLoading] = useState(false);
 
   function deleteFeedback(feedback) {
     // feedback.preventDefault();
     // e.preventDefault();
-    // console.log(feedback)
+    // console.log(feedback);
     props.deleteFeedback(feedback.id);
   }
   function handleChange(contrID) {
@@ -43,17 +46,33 @@ function UserFeedback(props) {
     // console.log(props)
   }
 
+  const stringify = JSON.stringify(props.feedback);
   useEffect(() => {
-    props.getFeedback(); // props.getFeedback();
-  }, []);
+    setLoading(true);
+    props.getFeedback();
+    setLoading(false);
+  }, [stringify]);
 
-  // Get current post feebacks
+  // Get current posts
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+  const currentPosts = props.feedback.slice(indexOfFirstPost, indexOfLastPost);
+
+  console.log(currentPosts);
+  // console.log(props.feedback);
 
   // Change page
-  const paginate = pageNumber => setCurrentPage(pageNumber);
+  const paginate = pageNumber => {
+    setCurrentPage(pageNumber);
+  };
+
+  // Get current post feebacks
+  // const indexOfLastPost = currentPage * postsPerPage;
+  // const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  // const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+
+  // Change page
+  // const paginate = pageNumber => setCurrentPage(pageNumber);
 
   return (
     <>
@@ -136,52 +155,57 @@ function UserFeedback(props) {
         <div>
           <h4 className="feedback-user-header">Your Feedback History</h4>
           <div>
+            <Pagination
+              postsPerPage={postsPerPage}
+              totalPosts={props.feedback.length}
+              paginate={paginate}
+              currentPosts={currentPosts}
+              createdAt={props.feedback.createdAt}
+            />
+
             {props.loading ? <p>Loading...</p> : null}
             {props.error ? <p>{props.error}</p> : null}
-            {props.feedback.map((feedback, id) => (
-              <div key={feedback.id} className="user-feedback-container">
-                <p>Contractor: {feedback.contractorName}</p>
-                <div>
-                  Rating:{' '}
-                  <Rating
-                    emptySymbol={<span className="icon-text">&#9734;</span>}
-                    fullSymbol={
-                      <span className="icon-text fullstar">&#9733;</span>
-                    }
-                    readonly
-                    initialRating={feedback.stars}
-                    stop={3}
-                  />
-                  {'\n'}
-                  <div className="feedback-context">
-                    <p>
-                      <span className="quotes">"</span>
-                      {feedback.message}
-                      <span className="quotes">"</span>
-                    </p>
-                  </div>
-                  <div className="posted-user">
-                    <div>
-                      <button
-                        className="btn delete-btn"
-                        onClick={() => deleteFeedback(feedback)}
-                      >
-                        Delete Feedback
-                      </button>
+            {currentPosts.map(feedback => {
+              return (
+                <div key={feedback.id} className="user-feedback-container">
+                  <p>Contractor: {feedback.contractorName}</p>
+                  <div>
+                    Rating:{' '}
+                    <Rating
+                      emptySymbol={<span className="icon-text">&#9734;</span>}
+                      fullSymbol={
+                        <span className="icon-text fullstar">&#9733;</span>
+                      }
+                      readonly
+                      initialRating={feedback.stars}
+                      stop={3}
+                    />
+                    {'\n'}
+                    <div className="feedback-context">
+                      <p>
+                        <span className="quotes">"</span>
+                        {feedback.message}
+                        <span className="quotes">"</span>
+                      </p>
                     </div>
-                    <div>
-                      Posted:{' '}
-                      {dateFns.format(feedback.createdAt, 'MMM DD YYYY')}
+                    <div className="posted-user">
+                      <div>
+                        <button
+                          className="btn delete-btn"
+                          onClick={e => deleteFeedback(feedback)}
+                        >
+                          Delete Feedback
+                        </button>
+                      </div>
+                      <div>
+                        Posted:{' '}
+                        {dateFns.format(feedback.createdAt, 'MMM DD YYYY')}
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
-            <Pagination
-              postsPerPage={postsPerPage}
-              totalPosts={posts.length}
-              paginate={paginate}
-            />
+              );
+            })}
           </div>
         </div>
       </div>

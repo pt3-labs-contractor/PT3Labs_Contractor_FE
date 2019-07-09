@@ -10,7 +10,12 @@ function NavBarUser(props) {
           <i className="fas fa-home" />
           <span className="side-listing"> Home</span>
         </NavLink>
-        <NavLink to="/app" className="side-link" activeClassName="current">
+        <NavLink
+          to="/app"
+          className="side-link"
+          exact
+          activeClassName="current"
+        >
           <i className="fas fa-calendar-alt" />
           <span className="side-listing"> Schedule</span>
         </NavLink>
@@ -20,7 +25,7 @@ function NavBarUser(props) {
           activeClassName="current"
         >
           <i className="fas fa-book" />
-          <span className="side-listing"> My Bookings</span>
+          <span className="side-listing"> Appointments</span>
         </NavLink>
         <NavLink
           to="/userFeedback"

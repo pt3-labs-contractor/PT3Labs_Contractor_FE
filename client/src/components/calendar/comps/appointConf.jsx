@@ -8,7 +8,7 @@ import {
   deleteSchedule,
   getUser,
 } from '../../../actions/index.js';
-import './appointConf.css';
+import './appointConf.scss';
 
 const AppInfo = props => {
   // const [sevId, setSevId] = useState();
@@ -32,7 +32,7 @@ const AppInfo = props => {
   const { h } = props;
   const centerPop = 100;
   const centerBox = w / 2;
-  const xper = x - centerPop + centerBox + 6;
+  const xper = x - centerPop + centerBox;
   const yper = y - 150;
 
   const position = {
@@ -82,38 +82,6 @@ const AppInfo = props => {
     // props.deleteSchedule(scheduleI;
     returnToCal();
   };
-
-  // const pending = e => {
-  //   e.preventDefault();
-  //   const { id, startTime, duration, scheduleId } = theAppoint;
-  //   let dur;
-  //   const { hours } = duration;
-  //   const { minutes } = duration;
-  //   if (hours && minutes) {
-  //     dur = `${(hours * 60 + minutes) / 60}h`;
-  //   }
-  //   if (hours) {
-  //     dur = `${hours}h`;
-  //   }
-  //   if (minutes) {
-  //     dur = `${minutes / 60}h`;
-  //   }
-  //   const returnObj = {
-  //     startTime,
-  //     duration: dur,
-  //     confirmed: null,
-  //   };
-  //
-  //   const scheduleUnLock = {
-  //     startTime,
-  //     duration: dur,
-  //     open: true,
-  //   };
-  //   props.confirmApp(id, returnObj);
-  //   props.updateSchedule(scheduleId, scheduleUnLock);
-  //   // props.deleteSchedule(scheduleI;
-  //   returnToCal();
-  // };
 
   const unConfirm = e => {
     e.preventDefault();
@@ -167,7 +135,18 @@ const AppInfo = props => {
   };
 
   return (
-    <div className="infoContApp" style={position}>
+    <div
+      className={`infoContApp arrowHidden ${
+        theAppoint.confirmed === null
+          ? 'sBordPend'
+          : theAppoint.confirmed === true
+          ? 'sBordConfirm'
+          : theAppoint.confirmed === false
+          ? 'sBordDeny'
+          : null
+      }`}
+      style={window.innerWidth > 601 ? position : null}
+    >
       <div className="closeIconEditApp">
         <FontAwesomeIcon icon={faTimesCircle} onClick={close} />
       </div>
