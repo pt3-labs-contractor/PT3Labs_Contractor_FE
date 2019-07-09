@@ -321,6 +321,22 @@ $mobile: (max-width: 601px);
 	}
 }
 
+.sBordPend {
+	border-left: 10px solid #8c20f8;
+}
+
+.sBordConfirm {
+	border-left: 10px solid #febd17;
+}
+
+.sBordDeny {
+	border-left: 10px solid red;
+}
+
+.sBordOpen {
+	border-left: 10px solid rgb(73, 182, 117);
+}
+
 .sideBordPend {
 	@media screen and (max-width: 601px) {
 	border-left: 10px solid #8c20f8;

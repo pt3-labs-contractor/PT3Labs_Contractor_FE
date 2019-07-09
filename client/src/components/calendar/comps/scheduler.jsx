@@ -4,7 +4,7 @@ import DateTimePicker from 'react-datetime-picker';
 import dateFns from 'date-fns';
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { TweenMax } from 'gsap/all';
+import { TweenMax } from 'gsap';
 import { postNewSchedule } from '../../../actions/index.js';
 
 const Scheduler = props => {
