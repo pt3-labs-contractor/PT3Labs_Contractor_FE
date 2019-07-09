@@ -32,7 +32,7 @@ function Login(props) {
         props.getFeedback();
 
         if (props.user.contractorId) {
-          props.history.push('/contractorcalendar');
+          props.history.push('/contractorCalendar');
         } else {
           props.history.push('/app');
         }

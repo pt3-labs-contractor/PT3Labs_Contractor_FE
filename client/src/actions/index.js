@@ -5,7 +5,6 @@ export const SEND_SERV = 'SEND_SERV';
 export const SEND_SERV_COMP = 'SEND_SERV_COMP';
 export const DELETE_SERV_SUCC = 'DELETE_SERV_SUCC';
 
-
 export const SEND_SCHED = 'SEND_SCHED';
 export const SEND_SCHED_COMP = 'SEND_SCHED_COMP';
 export const GET_SCHED = 'GET_SCHED';
@@ -164,17 +163,6 @@ export const fetchServices = id => dispatch => {
     });
 };
 
-<<<<<<< HEAD
-export const fetchAvailabilityByDay = (
-  date,
-  contractorList,
-  query
-) => dispatch => {
-  // dispatch({ type: LOADING });
-  const headers = setHeaders();
-  // const state = store.getState();
-
-=======
 function serviceSort(query, state) {
   const list = state.filter(contractor => {
     return contractor.services.some(service => service.name.includes(query));
@@ -189,18 +177,13 @@ export const fetchAvailabilityByDay = (
 ) => dispatch => {
   // dispatch({ type: LOADING });
   const headers = setHeaders();
->>>>>>> 4c41c3af34a8e787338ed6393da49148ba79ce84
   axios
     .get(
       `https://fierce-plains-47590.herokuapp.com/api/schedules/date/${date}`,
       { headers }
     )
     .then(res => {
-<<<<<<< HEAD
-      const contractors = serviceSort(query, contractorList);
-=======
       const sortedContractors = serviceSort(serviceFilter, contractors);
->>>>>>> 4c41c3af34a8e787338ed6393da49148ba79ce84
       const filter = res.data.appointments
         .filter(item =>
           dateFns.isSameDay(dateFns.addDays(new Date(date), 1), item.startTime)
@@ -216,15 +199,6 @@ export const fetchAvailabilityByDay = (
     });
 };
 
-<<<<<<< HEAD
-// export const sortContractorsByService = query => dispatch => {
-//   const state = store.getState();
-//   const list = state.contractors.filter(contractor => {
-//     return contractor.services.some(service => service.name.includes(query));
-//   });
-//   dispatch({ type: SET_SORTED_CONTRACTORS, payload: list });
-// };
-=======
 export const sortContractorsByService = query => dispatch => {
   const state = {};
   const list = state.contractors.filter(contractor => {
@@ -232,7 +206,6 @@ export const sortContractorsByService = query => dispatch => {
   });
   dispatch({ type: SET_SORTED_CONTRACTORS, payload: list });
 };
->>>>>>> 4c41c3af34a8e787338ed6393da49148ba79ce84
 
 export const storeServiceName = service => dispatch => {
   dispatch({ type: SET_SERVICE_SORT, payload: service });
@@ -333,9 +306,8 @@ export const editUserSettings = data => dispatch => {
 //   .catch(err => dispatch({ type: FAILURE, payload:err }))
 // }
 
-
-//axios request for services 
-export const postNewService = serv =>{
+//axios request for services
+export const postNewService = serv => {
   return dispatch => {
     dispatch({ type: SEND_SERV });
     const headers = setHeaders();
@@ -346,7 +318,7 @@ export const postNewService = serv =>{
       })
       .then(res => {
         console.log(res.data);
-        dispatch({ type: SEND_SERV_COMP, payload:res.data.created });
+        dispatch({ type: SEND_SERV_COMP, payload: res.data.created });
       })
       .catch(err => {
         console.log(err);
@@ -354,25 +326,26 @@ export const postNewService = serv =>{
   };
 };
 
-
-
-export const deleteService = (service, list) => dispatch =>{
+export const deleteService = (service, list) => dispatch => {
   dispatch({ type: LOADING });
   const headers = setHeaders();
 
   axios
-  .delete(`https://fierce-plains-47590.herokuapp.com/api/services/${service.id}`,{headers})
-  .then(res => {
-    // console.log(res.data)
-    const newList = list.filter((service) => service.id !== res.data.deleted.id
+    .delete(
+      `https://fierce-plains-47590.herokuapp.com/api/services/${service.id}`,
+      { headers }
     )
-    dispatch({ type: DELETE_SERV_SUCC, payload: newList})
-  })
-  .catch(err=> {
-    dispatch({ type: FAILURE, payload: err})
-  })
-
-}
+    .then(res => {
+      // console.log(res.data)
+      const newList = list.filter(
+        service => service.id !== res.data.deleted.id
+      );
+      dispatch({ type: DELETE_SERV_SUCC, payload: newList });
+    })
+    .catch(err => {
+      dispatch({ type: FAILURE, payload: err });
+    });
+};
 
 export const postNewSchedule = sched => {
   const headers = setHeaders();

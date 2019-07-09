@@ -70,8 +70,8 @@ img {
   }
 }
 
-@media (max-width: 500px) {
-  .main-body {
-    margin-left: 4rem;
+@media (max-width: 400px) {
+  body {
+    font-size: .8rem;
   }
 }

@@ -12,7 +12,7 @@ import App from './App';
 
 import reducer from './reducers';
 
-const store = createStore(reducer, applyMiddleware(thunk, logger));
+const store = createStore(reducer, applyMiddleware(thunk));
 
 ReactDOM.render(
   <Provider store={store}>
@@ -22,4 +22,3 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root')
 );
-

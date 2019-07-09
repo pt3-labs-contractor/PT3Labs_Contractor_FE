@@ -48,6 +48,8 @@ function UserFeedback(props) {
     setLoading(false);
   }, [stringify]);
 
+  console.log(props.feedback);
+
   // Get current posts
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
@@ -139,7 +141,7 @@ function UserFeedback(props) {
           </div>
         </div>
 
-        <div>
+        <div className="feeback-form-container">
           <h4 className="feedback-user-header">Your Feedback History</h4>
           <div>
             <Pagination
