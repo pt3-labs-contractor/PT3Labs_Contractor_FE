@@ -259,7 +259,7 @@ export const deleteFeedback = id => dispatch => {
       headers,
     })
     .then(res => {
-      dispatch({ type: DELETE_FEEDBACK_SUCCESS, payload: res.data });
+      dispatch({ type: DELETE_FEEDBACK_SUCCESS, payload: res.data }); 
     })
     .catch(err => dispatch({ type: FAILURE, payload: err }));
 };

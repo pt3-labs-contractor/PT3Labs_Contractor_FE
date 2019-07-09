@@ -5,7 +5,7 @@ import Avatar from 'react-avatar-edit';
 class UserAvatar extends React.Component {
   constructor(props) {
     super(props);
-    const src = '../../../public/images/personal-user.png';
+    const src = '../../public/images/personal-user.png';
     this.state = {
       preview: null,
       src,
@@ -34,8 +34,8 @@ class UserAvatar extends React.Component {
     return (
       <div>
         <Avatar
-          width={390}
-          height={295}
+          width={350}
+          height={250}
           onCrop={this.onCrop}
           onClose={this.onClose}
           onBeforeFileLoad={this.onBeforeFileLoad}

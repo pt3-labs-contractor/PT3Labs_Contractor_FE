@@ -16,17 +16,17 @@ function AvailabilityList(props) {
     // eslint-disable-next-line
   }, [selectedDay, schedule]);
 
-  useEffect(() => {
-    if (!mql) {
-      const { top, right, height } = position;
-      setPos({
-        position: 'fixed',
-        top,
-        left: right,
-        minHeight: height,
-      });
-    }
-  }, [props.position]);
+  // useEffect(() => {
+  //   if (!mql) {
+  //     const { top, right, height } = position;
+  //     setPos({
+  //       position: 'fixed',
+  //       top,
+  //       left: right,
+  //       minHeight: height,
+  //     });
+  //   }
+  // }, [props.position]);
 
   const RenderTimes = () => {
     const times = availability.map(item => {

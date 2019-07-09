@@ -10,6 +10,11 @@ import dateFns from 'date-fns';
 import Pagination from './Pagination';
 
 function UserFeedback(props) {
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage] = useState(5);
+
   const { id } = props.user;
   const currentStar = 0;
   const [stars, setStars] = useState(currentStar);
@@ -39,8 +44,16 @@ function UserFeedback(props) {
   }
 
   useEffect(() => {
-    props.getFeedback();
+    props.getFeedback(); // props.getFeedback();
   }, []);
+
+  // Get current post feebacks
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+
+  // Change page
+  const paginate = pageNumber => setCurrentPage(pageNumber);
 
   return (
     <>
@@ -125,7 +138,7 @@ function UserFeedback(props) {
           <div>
             {props.loading ? <p>Loading...</p> : null}
             {props.error ? <p>{props.error}</p> : null}
-            {props.feedback.map(feedback => (
+            {props.feedback.map((feedback, id) => (
               <div key={feedback.id} className="user-feedback-container">
                 <p>Contractor: {feedback.contractorName}</p>
                 <div>
@@ -151,7 +164,7 @@ function UserFeedback(props) {
                     <div>
                       <button
                         className="btn delete-btn"
-                        onClick={e => deleteFeedback(feedback)}
+                        onClick={() => deleteFeedback(feedback)}
                       >
                         Delete Feedback
                       </button>
@@ -164,6 +177,11 @@ function UserFeedback(props) {
                 </div>
               </div>
             ))}
+            <Pagination
+              postsPerPage={postsPerPage}
+              totalPosts={posts.length}
+              paginate={paginate}
+            />
           </div>
         </div>
       </div>
