@@ -107,4 +107,6 @@ export default connect(
 
 Login.propTypes = {
   user: PropTypes.object,
+  fetchAccts: PropTypes.func,
+  getFeedback: PropTypes.func,
 };
