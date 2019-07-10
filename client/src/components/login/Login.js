@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import MainNavbar from '../navbar/MainNavbar';
 import { fetchAccts, getFeedback } from '../../actions/index.js';
 
@@ -11,6 +12,14 @@ function Login(props) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+
+  useEffect(() => {
+    if (props.user.contractorId) {
+      props.history.push('/contractorcalendar');
+    } else if (props.user.username) {
+      props.history.push('/app');
+    }
+  }, [props.user]);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -30,8 +39,6 @@ function Login(props) {
         localStorage.setItem('jwt', res.data.token);
         props.fetchAccts();
         props.getFeedback();
-        props.history.push('/contractors');
-        props.history.push('/app');
       })
       .catch(err => {
         switch (err.response.status) {
@@ -87,7 +94,19 @@ function Login(props) {
   );
 }
 
+const mapStateToProps = state => {
+  return {
+    user: state.user,
+  };
+};
+
 export default connect(
-  null,
+  mapStateToProps,
   { fetchAccts, getFeedback }
 )(Login);
+
+Login.propTypes = {
+  user: PropTypes.object,
+  fetchAccts: PropTypes.func,
+  getFeedback: PropTypes.func,
+};
