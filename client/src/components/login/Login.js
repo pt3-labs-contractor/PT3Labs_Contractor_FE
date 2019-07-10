@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import axios from 'axios';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import MainNavbar from '../navbar/MainNavbar';
+import { fetchAccts, getFeedback } from '../../actions/index.js';
 
 import './Login.css';
 
@@ -9,6 +12,14 @@ function Login(props) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+
+  useEffect(() => {
+    if (props.user.contractorId) {
+      props.history.push('/contractorcalendar');
+    } else if (props.user.username) {
+      props.history.push('/app');
+    }
+  }, [props.user]);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -26,8 +37,8 @@ function Login(props) {
       )
       .then(res => {
         localStorage.setItem('jwt', res.data.token);
-        props.history.push('/contractors');
-        props.history.push('/app');
+        props.fetchAccts();
+        props.getFeedback();
       })
       .catch(err => {
         switch (err.response.status) {
@@ -59,6 +70,7 @@ function Login(props) {
             placeholder="Username"
             onChange={e => setUsername(e.target.value)}
             value={username}
+            required
           />
           <input
             type="password"
@@ -66,6 +78,7 @@ function Login(props) {
             placeholder="Password"
             onChange={e => setPassword(e.target.value)}
             value={password}
+            required
           />
           <input type="submit" value="Sign In" className="btn btn-primary" />
         </form>
@@ -81,4 +94,17 @@ function Login(props) {
   );
 }
 
-export default Login;
+const mapStateToProps = state => {
+  return {
+    user: state.user,
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  { fetchAccts, getFeedback }
+)(Login);
+
+Login.propTypes = {
+  user: PropTypes.object,
+};
