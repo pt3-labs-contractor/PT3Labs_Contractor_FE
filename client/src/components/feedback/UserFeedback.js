@@ -20,9 +20,7 @@ function UserFeedback(props) {
   const [loading, setLoading] = useState(false);
 
   function deleteFeedback(feedback) {
-    // feedback.preventDefault();
-    // e.preventDefault();
-    // console.log(feedback);
+    console.log(feedback);
     props.deleteFeedback(feedback.id);
   }
   function handleChange(contrID) {
@@ -48,15 +46,13 @@ function UserFeedback(props) {
     setLoading(false);
   }, [stringify]);
 
-  console.log(props.feedback);
-
   // Get current posts
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = props.feedback.slice(indexOfFirstPost, indexOfLastPost);
 
+  console.log(props.feedback);
   console.log(currentPosts);
-  // console.log(props.feedback);
 
   // Change page
   const paginate = pageNumber => {

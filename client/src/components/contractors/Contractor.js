@@ -52,10 +52,7 @@ function Contractor(props) {
                   key={service.id}
                   onClick={() => setService(service)}
                 >
-                  <p>
-                    {service.name.charAt(0).toUpperCase() +
-                      service.name.slice(1)}
-                  </p>
+                  <p className="service-title">{service.name}</p>
                   <p>{service.price}</p>
                 </div>
               ))
