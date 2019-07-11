@@ -19,7 +19,12 @@ function UserFeedback(props) {
   const [postsPerPage, setPostsPerPage] = useState(3);
   const [loading, setLoading] = useState(false);
 
-  function deleteFeedback(feedback) {
+  const stringify = JSON.stringify(props.feedback);
+  useEffect(() => {
+    props.getFeedback();
+  }, [stringify]);
+
+  function deleteHandler(feedback) {
     console.log(feedback);
     props.deleteFeedback(feedback.id);
   }
@@ -39,20 +44,16 @@ function UserFeedback(props) {
     // console.log(props)
   }
 
-  const stringify = JSON.stringify(props.feedback);
-  useEffect(() => {
-    setLoading(true);
-    props.getFeedback();
-    setLoading(false);
-  }, [stringify]);
-
   // Get current posts
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = props.feedback.slice(indexOfFirstPost, indexOfLastPost);
 
-  console.log(props.feedback);
+  console.log(props);
   console.log(currentPosts);
+  console.log(indexOfLastPost);
+  console.log(indexOfFirstPost);
+  console.log(props.feedback);
 
   // Change page
   const paginate = pageNumber => {
@@ -149,6 +150,7 @@ function UserFeedback(props) {
             />
 
             {props.loading ? <p>Loading...</p> : null}
+            {console.log(props.loading)}
             {props.error ? <p>{props.error}</p> : null}
             {currentPosts.map(feedback => {
               return (
@@ -177,7 +179,7 @@ function UserFeedback(props) {
                       <div>
                         <button
                           className="btn delete-btn"
-                          onClick={e => deleteFeedback(feedback)}
+                          onClick={() => deleteHandler(feedback)}
                         >
                           Delete Feedback
                         </button>

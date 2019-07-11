@@ -20,6 +20,7 @@ function Login(props) {
       props.history.push('/app');
     }
   }, [props.user]);
+  console.log(props.user);
 
   function handleSubmit(e) {
     e.preventDefault();
