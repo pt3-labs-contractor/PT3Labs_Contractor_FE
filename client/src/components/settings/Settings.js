@@ -38,7 +38,7 @@ function ContractorSetting(props) {
     setUsername(props.User.username);
     setPhoneNumber(props.User.phoneNumber);
     setEmail(props.User.email);
-    setServices(props.User.services);
+    setServices(props.services);
   }, [
     props.User.username,
     props.User.phoneNumber,
