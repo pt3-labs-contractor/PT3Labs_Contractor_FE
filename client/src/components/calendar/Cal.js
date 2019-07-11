@@ -607,6 +607,9 @@ function ContCalendar(props) {
         {appoints !== undefined ? (
           <div className="notification">You Have Pending Appointments</div>
         ) : null}
+        <div className="errorCont">
+          {props.error ? <div className="errorNot">{props.error}</div> : null}
+        </div>
         <div className="filterButtons">
           <button className="fbutt pendingApp" onClick={handleFilterClick}>
             {`Pending Appointments: ${appoints}`}
@@ -702,6 +705,7 @@ const mapStateToProps = state => {
     appointments: state.appointments,
     id: state.user.contractorId,
     refs: state.refs,
+    error: state.error,
     // contractor: state.thisContractor
   };
 };

@@ -325,7 +325,11 @@ export const postNewSchedule = sched => {
         dispatch({ type: SEND_SCHED_COMP, payload: res.data });
       })
       .catch(err => {
-        console.log(err);
+        console.log(err.response.data.error);
+        dispatch({
+          type: FAILURE,
+          error: err.response.data.error,
+        });
       });
   };
 };
