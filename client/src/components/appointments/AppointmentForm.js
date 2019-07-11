@@ -62,8 +62,8 @@ function AppointmentForm(props) {
           ? dateFns.format(startTime, 'MMM Do [at] HH:mm')
           : 'Select date and time.'} */}
       </p>
-      <p>
-        {`${props.service.name.toUpperCase()}: ${props.service.price}`}
+      <p className="service-title">
+        {`${props.service.name}: ${props.service.price}`}
         {/* {props.service.name
           ? `${props.service.name}: ${props.service.price}`
           : null} */}

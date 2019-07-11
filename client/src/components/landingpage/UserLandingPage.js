@@ -12,6 +12,7 @@ import './UserLandingPage.css';
 import dateFns from 'date-fns';
 
 import {
+  fetchAccts,
   fetchSchedule,
   fetchAvailabilityByDay,
   storeServiceName,
@@ -70,7 +71,7 @@ function UserLandingPage(props) {
     );
     clearAppointment();
     // eslint-disable-next-line
-  }, [props.selectedDay, serviceSort]);
+  }, [props.selectedDay, props.contractors, serviceSort]);
 
   useEffect(() => {
     if (serviceSort !== 'Pick a service' && mql) {
@@ -201,6 +202,7 @@ const mapStateToProps = state => {
 export default connect(
   mapStateToProps,
   {
+    fetchAccts,
     fetchSchedule,
     fetchAvailabilityByDay,
     storeServiceName,

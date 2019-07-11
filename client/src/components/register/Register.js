@@ -107,6 +107,7 @@ function Register(props) {
             name="username"
             placeholder="Username"
             onChange={handleChange}
+            required
           />
           {!oauth && (
             <>
@@ -115,14 +116,21 @@ function Register(props) {
                 type="password"
                 placeholder="Password"
                 onChange={handleChange}
+                required
               />
             </>
           )}
-          <input name="email" placeholder="E-mail" onChange={handleChange} />
+          <input
+            name="email"
+            placeholder="E-mail"
+            onChange={handleChange}
+            required
+          />
           <input
             name="phoneNumber"
             placeholder="Phone#"
             onChange={handleChange}
+            required
           />
           {contractor && (
             <>
@@ -130,22 +138,31 @@ function Register(props) {
                 name="contractorName"
                 placeholder="Name"
                 onChange={handleChange}
+                required
               />
               <input
                 name="streetAddress"
                 placeholder="Street Address"
                 onChange={handleChange}
+                required
               />
-              <input name="city" placeholder="City" onChange={handleChange} />
+              <input
+                name="city"
+                placeholder="City"
+                onChange={handleChange}
+                required
+              />
               <input
                 name="stateAbbr"
                 placeholder="State"
                 onChange={handleChange}
+                required
               />
               <input
                 name="zipCode"
                 placeholder="Zip Code"
                 onChange={handleChange}
+                required
               />
             </>
           )}
