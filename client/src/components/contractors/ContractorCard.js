@@ -13,7 +13,7 @@ function ContractorCard({ contractor, service, full }) {
     stateAbbr,
     zipCode,
     userScore,
-  } = props.contractor;
+  } = contractor;
 
   useEffect(() => {
     if (contractor.id) {
@@ -23,7 +23,6 @@ function ContractorCard({ contractor, service, full }) {
       setService(filtered[0]);
     }
   }, [service]);
-  console.log('service', service);
   let display = null;
   if (full)
     display = (
@@ -48,7 +47,7 @@ function ContractorCard({ contractor, service, full }) {
       <h3>{name}</h3>
       <address>
         <p>{phoneNumber}</p>
-        {props.full ? (
+        {full ? (
           <>
             <p>{streetAddress}</p>
             <p>

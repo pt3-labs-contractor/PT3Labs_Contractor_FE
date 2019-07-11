@@ -306,7 +306,7 @@ export const editUserSettings = data => dispatch => {
 //   .catch(err => dispatch({ type: FAILURE, payload:err }))
 // }
 
-//axios request for services
+// axios request for services
 export const postNewService = serv => {
   return dispatch => {
     dispatch({ type: SEND_SERV });

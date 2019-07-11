@@ -65,8 +65,8 @@ function UserLandingPage(props) {
     const dateString = dateFns.format(props.selectedDay, 'YYYY-MM-DD');
     props.fetchAvailabilityByDay(
       dateString,
-      props.contractors,
-      props.serviceFilter
+      props.serviceFilter,
+      props.contractors
     );
     clearAppointment();
     // eslint-disable-next-line
