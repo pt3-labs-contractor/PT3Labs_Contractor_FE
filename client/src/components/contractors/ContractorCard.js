@@ -36,7 +36,7 @@ function ContractorCard(props) {
           </>
         ) : service ? (
           <>
-            <p>
+            <p className="service-title">
               {service.name}: {service.price}
             </p>
           </>

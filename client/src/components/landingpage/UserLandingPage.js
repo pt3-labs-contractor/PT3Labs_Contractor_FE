@@ -58,6 +58,7 @@ function UserLandingPage(props) {
       scroll(serviceTarget.current);
       setTarget(0);
     }
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
@@ -75,6 +76,7 @@ function UserLandingPage(props) {
     if (serviceSort !== 'Pick a service' && mql) {
       scroll(contractorTarget.current);
     }
+    // eslint-disable-next-line
   }, [props.selectedDay]);
 
   useEffect(() => {

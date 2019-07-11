@@ -45,6 +45,8 @@ function Login(props) {
           case 400:
           case 401:
             return setError('Invalid username or password');
+          default:
+            return setError('System failure.');
         }
       });
   }

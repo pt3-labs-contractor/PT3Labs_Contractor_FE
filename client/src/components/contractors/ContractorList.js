@@ -15,27 +15,21 @@ function ContractorList(props) {
   const [list, setList] = useState([]);
   const [select, setSelect] = useState({});
   const contractorRef = useRef({});
+  const limit = props.userLanding ? 5 : 25;
+  const { contractors } = props;
 
   useEffect(() => {
-    const { contractors } = props;
-    const length = contractors.length + 1;
-    const limit = props.userLanding ? 5 : 25;
-    const dividedContractors = [];
-    for (let x = 1; x <= Math.ceil(length / limit); x++) {
-      const temp = [];
-      const pageItems = length / (limit * x) > 1 ? limit : (length % limit) - 1;
-      for (let y = 0; y < pageItems; y++) {
-        temp.push(contractors[(x - 1) * limit + y]);
-      }
-      dividedContractors.push(temp);
-    }
+    const dividedContractors = contractors.slice(
+      pageNum * limit,
+      pageNum * limit + limit
+    );
     setContractors(dividedContractors);
     setPageNum(0);
     // eslint-disable-next-line
   }, [props.contractors]);
 
   useEffect(() => {
-    setList(contractorList[pageNum] || []);
+    setList(contractorList || []);
   }, [pageNum, contractorList]);
 
   const selectElement = id => {
@@ -51,7 +45,13 @@ function ContractorList(props) {
   };
 
   const pageChange = dir => {
-    setPageNum(pageNum + dir);
+    const newPage = pageNum + dir;
+    const dividedContractors = contractors.slice(
+      newPage * limit,
+      newPage * limit + limit
+    );
+    setContractors(dividedContractors);
+    setPageNum(newPage);
   };
 
   return (
