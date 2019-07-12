@@ -17,14 +17,14 @@
   padding: 4rem 6rem 4rem 6rem;
   margin-top: 6rem;
   margin-bottom: 3rem;
-  background-color: darkslategray;
+  background-color: #F2F2F2;
   opacity: .9;
   text-align: center;
   color: white;
   display:flex;
   flex-direction: column;
   font-family: 'Merriweather', serif;
-  color:azure;
+  color:dimgray;
   width: 500px;
   border-radius: 30px;
   
@@ -45,10 +45,10 @@ input:focus {
   
 }
 
-.box { background-color: #66A182; }
+/* .box { background-color: #656475; } */
 
 .btn-three {
-	color: #FFF;
+	color: #656475;
 	transition: all 0.5s;
   position: relative;
   width: 100%;
@@ -64,7 +64,7 @@ input:focus {
 	width: 100%;
 	height: 100%;
 	z-index: 1;
-  background-color: rgba(76, 0, 255, 0.1);
+  background-color: #656475 10%;
 	/* background-color: lightskyblue; */
   transition: all 0.3s;  
 }
@@ -90,6 +90,46 @@ input:focus {
 .btn-three:hover::after {
 	opacity: 1;
   transform: scale(1,1);
-  background-color: rgba(13, 136, 236, 0.1);
+  /* background-color: rgba(13, 136, 236, 0.1); */
+
+}
+
+.title{
+  padding: 0px 0px 20px 0px;
+  font-family: 'Merriweather', serif;
+
+}
+
+.email-div, .username-div, .phonenumber-div, .title {
+  font-family: 'Merriweather', serif;
+  border-bottom: 2px solid #FEBD17;
+  border-image: radial-gradient(circle,
+      #FEBD17 40%, 
+      rgba(0,0,255,0) 100%, 
+      rgba(9,9,121,0) 100%, 
+      rgba(0,212,255,1) 100%); 
+
+  border-image-slice: 1;
+  border-width: 2px;
+  margin: 0px 0px 20px 0px;
+}
+
+@media (max-width: 800px) {
+  .main-container {
+    width: 100%;
+    /* height: 100%; */
+    background-image: none;
+    justify-content: center;
+  }
+  
+  .settings-container {
+    border-radius: 0px;
+    width: 100%;
+    margin: 0px 0px 0px 50px;
+  }
+
+  .title {
+    font-size: 15px;
+  }
 
 }
