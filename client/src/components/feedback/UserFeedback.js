@@ -19,6 +19,11 @@ function UserFeedback(props) {
   const [postsPerPage, setPostsPerPage] = useState(3);
   const [loading, setLoading] = useState(false);
 
+  const stringify = JSON.stringify(props.feedback);
+  useEffect(() => {
+    props.getFeedback();
+  }, [stringify]);
+
   function deleteFeedback(feedback) {
     console.log(feedback);
     props.deleteFeedback(feedback.id);
@@ -39,13 +44,6 @@ function UserFeedback(props) {
     // console.log(props)
   }
 
-  const stringify = JSON.stringify(props.feedback);
-  useEffect(() => {
-    setLoading(true);
-    props.getFeedback();
-    setLoading(false);
-  }, [stringify]);
-
   // Get current posts
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
@@ -58,14 +56,11 @@ function UserFeedback(props) {
 
   // console.log(currentPosts);
   // console.log(props.feedback);
-  // console.log(props.feedback);
-  // console.log(currentPosts);
 
   // Change page
   const paginate = pageNumber => {
     setCurrentPage(pageNumber);
   };
-  // console.log(currentPosts);
 
   return (
     <>
@@ -84,24 +79,39 @@ function UserFeedback(props) {
                   <ul className="legend">
                     <li>
                       {<span className="icon-text fullstar">&#9733;</span>}=
-                      Needs Improvement
+                      Poor
                     </li>
                     <li>
                       {<span className="icon-text fullstar">&#9733;</span>}
                       {<span className="icon-text fullstar">&#9733;</span>}=
-                      Fair Service
+                      Fair
                     </li>
                     <li>
                       {<span className="icon-text fullstar">&#9733;</span>}
                       {<span className="icon-text fullstar">&#9733;</span>}
                       {<span className="icon-text fullstar">&#9733;</span>}=
-                      Great Service
+                      Good
+                    </li>
+                    <li>
+                      {<span className="icon-text fullstar">&#9733;</span>}
+                      {<span className="icon-text fullstar">&#9733;</span>}
+                      {<span className="icon-text fullstar">&#9733;</span>}
+                      {<span className="icon-text fullstar">&#9733;</span>}=
+                      Very Good
+                    </li>
+                    <li>
+                      {<span className="icon-text fullstar">&#9733;</span>}
+                      {<span className="icon-text fullstar">&#9733;</span>}
+                      {<span className="icon-text fullstar">&#9733;</span>}
+                      {<span className="icon-text fullstar">&#9733;</span>}
+                      {<span className="icon-text fullstar">&#9733;</span>}=
+                      Excellent
                     </li>
                     <li />
                   </ul>
                 </div>
                 <div className="form-box box-2">
-                  <p>Who was your Contractor?</p>
+                  <h6 className="feedback-h6">Who was your Contractor?</h6>
                   <div>
                     <select
                       className="select"
@@ -120,13 +130,13 @@ function UserFeedback(props) {
                     </select>
                   </div>
                   <div>
-                    <p>Overall Rating</p>
+                    <h6 className="feedback-h6">Overall Rating</h6>
                     <Rating
                       emptySymbol={<span className="icon-text">&#9734;</span>}
                       fullSymbol={
                         <span className="icon-text fullstar">&#9733;</span>
                       }
-                      stop={3}
+                      stop={5}
                       initialRating={stars}
                       onChange={e => setStars(e)}
                     />
@@ -172,7 +182,7 @@ function UserFeedback(props) {
                         }
                         readonly
                         initialRating={feedback.stars}
-                        stop={3}
+                        stop={5}
                       />
                       {'\n'}
                       <div className="feedback-context">
@@ -186,12 +196,20 @@ function UserFeedback(props) {
                         <div>
                           <button
                             className="btn delete-btn"
-                            onClick={e => {
+                            onClick={() => {
                               deleteFeedback(feedback);
                             }}
                           >
                             Delete Feedback
                           </button>
+                          <i
+                            className="fas fa-trash"
+                            onClick={() => {
+                              deleteFeedback(feedback);
+                            }}
+                          >
+                            <span className="helper-tool">Delete Feedback</span>
+                          </i>
                         </div>
                         <div>
                           Posted:{' '}
