@@ -23,7 +23,6 @@ function ContractorCard({ contractor, service, full }) {
       setService(filtered[0]);
     }
   }, [service]);
-  console.log('service', service);
   let display = null;
   if (full)
     display = (

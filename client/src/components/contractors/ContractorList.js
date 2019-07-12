@@ -93,7 +93,7 @@ function ContractorList({
         {error ? <p>{error}</p> : null}
         {list.map(contractor =>
           userLanding ? (
-            <button
+            <div
               type="button"
               key={contractor.id}
               ref={contractorRef.current[contractor.id]}
@@ -107,7 +107,7 @@ function ContractorList({
               }}
             >
               <ContractorCard contractor={contractor} />
-            </button>
+            </div>
           ) : (
             <Link to={`/app/contractors/${contractor.id}`} key={contractor.id}>
               <ContractorCard full contractor={contractor} />

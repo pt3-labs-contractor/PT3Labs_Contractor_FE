@@ -55,13 +55,12 @@ function UserFeedback(props) {
   }
 
   // console.log(currentPosts);
-  console.log(props.feedback);
+  // console.log(props.feedback);
 
   // Change page
   const paginate = pageNumber => {
     setCurrentPage(pageNumber);
   };
-  console.log(currentPosts);
 
   return (
     <>

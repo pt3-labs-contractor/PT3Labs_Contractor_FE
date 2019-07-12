@@ -229,6 +229,10 @@ export const selectSingleContractorSetting = id => dispatch => {
     .catch(err => dispatch({ type: FAILURE, payload: err }));
 };
 
+export const resetFailure = () => dispatch => {
+  dispatch({ type: FAILURE, payload: null });
+};
+
 // axios get feedback
 export const getFeedback = () => dispatch => {
   dispatch({ type: LOADING });
