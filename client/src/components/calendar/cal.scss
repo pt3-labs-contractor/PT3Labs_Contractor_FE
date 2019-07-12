@@ -578,6 +578,65 @@ $mobile: (max-width: 601px);
   animation: fade 3s infinite;
 }
 
+.errorCont {
+	width: 100%;
+	display: flex;
+	flex-wrap:  wrap;
+	justify-content: center;
+	.errorNot {
+		display: flex;
+		flex-wrap:  wrap;
+		justify-content: space-around;
+		border-top: 8px solid red;
+		position: fixed;
+		top: 50%;
+		width: 200px;
+		padding: 5px;
+		box-shadow: 0 3px 20px #555555;
+		border-radius: 5px;
+		font-size: .9rem;
+		z-index: 100000;
+		background-color: white;
+	}
+
+	.ok {
+		background-color: white;
+		border: 1px solid black;
+		font-weight: bold;
+		padding-top: 5px;
+		padding-bottom: 5px;
+		border-radius: 5px;
+		width: 30%;
+		margin-top: 7px;
+		margin-bottom: 5px;
+		
+		&:hover {
+			cursor: pointer;
+			background-color: green;
+			color: white;
+			border: 1px solid white;
+		}
+	}
+
+	.plans {
+		border: none;
+		background-color: rgba(73, 182, 117, 0.3);
+		color: white;
+		font-weight: bold;
+		padding-top: 5px;
+		padding-bottom: 5px;
+		border-radius: 5px;
+		width: 80%;
+		margin-bottom: 5px;
+		
+		&:hover {
+			cursor: pointer;
+			background-color: green;
+		}
+
+	}
+}
+
 @keyframes fade {
   0%,
   100% {

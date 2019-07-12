@@ -49,15 +49,23 @@ function UserFeedback(props) {
   // Get current posts
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = props.feedback.slice(indexOfFirstPost, indexOfLastPost);
+  let currentPosts;
+  let feedback = [];
+  if (props.feedback) {
+    currentPosts = props.feedback.slice(indexOfFirstPost, indexOfLastPost);
+    feedback = props.feedback;
+  }
 
-  console.log(props.feedback);
-  console.log(currentPosts);
+  // console.log(currentPosts);
+  // console.log(props.feedback);
+  // console.log(props.feedback);
+  // console.log(currentPosts);
 
   // Change page
   const paginate = pageNumber => {
     setCurrentPage(pageNumber);
   };
+  // console.log(currentPosts);
 
   return (
     <>
@@ -142,55 +150,61 @@ function UserFeedback(props) {
           <div>
             <Pagination
               postsPerPage={postsPerPage}
-              totalPosts={props.feedback.length}
+              totalPosts={feedback.length}
               paginate={paginate}
               currentPosts={currentPosts}
-              createdAt={props.feedback.createdAt}
+              createdAt={currentPosts ? currentPosts.createdAt : null}
             />
 
-            {props.loading ? <p>Loading...</p> : null}
-            {props.error ? <p>{props.error}</p> : null}
-            {currentPosts.map(feedback => {
-              return (
-                <div key={feedback.id} className="user-feedback-container">
-                  <p>Contractor: {feedback.contractorName}</p>
-                  <div>
-                    Rating:{' '}
-                    <Rating
-                      emptySymbol={<span className="icon-text">&#9734;</span>}
-                      fullSymbol={
-                        <span className="icon-text fullstar">&#9733;</span>
-                      }
-                      readonly
-                      initialRating={feedback.stars}
-                      stop={3}
-                    />
-                    {'\n'}
-                    <div className="feedback-context">
-                      <p>
-                        <span className="quotes">"</span>
-                        {feedback.message}
-                        <span className="quotes">"</span>
-                      </p>
-                    </div>
-                    <div className="posted-user">
-                      <div>
-                        <button
-                          className="btn delete-btn"
-                          onClick={e => deleteFeedback(feedback)}
-                        >
-                          Delete Feedback
-                        </button>
+            {props.error ? (
+              <p>{props.error}</p>
+            ) : currentPosts ? (
+              currentPosts.map(feedback => {
+                return (
+                  <div key={feedback.id} className="user-feedback-container">
+                    <p>Contractor: {feedback.contractorName}</p>
+                    <div>
+                      Rating:{' '}
+                      <Rating
+                        emptySymbol={<span className="icon-text">&#9734;</span>}
+                        fullSymbol={
+                          <span className="icon-text fullstar">&#9733;</span>
+                        }
+                        readonly
+                        initialRating={feedback.stars}
+                        stop={3}
+                      />
+                      {'\n'}
+                      <div className="feedback-context">
+                        <p>
+                          <span className="quotes">"</span>
+                          {feedback.message}
+                          <span className="quotes">"</span>
+                        </p>
                       </div>
-                      <div>
-                        Posted:{' '}
-                        {dateFns.format(feedback.createdAt, 'MMM DD YYYY')}
+                      <div className="posted-user">
+                        <div>
+                          <button
+                            className="btn delete-btn"
+                            onClick={e => {
+                              deleteFeedback(feedback);
+                            }}
+                          >
+                            Delete Feedback
+                          </button>
+                        </div>
+                        <div>
+                          Posted:{' '}
+                          {dateFns.format(feedback.createdAt, 'MMM DD YYYY')}
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })
+            ) : props.loading ? (
+              <p>...Loading</p>
+            ) : null}
           </div>
         </div>
       </div>

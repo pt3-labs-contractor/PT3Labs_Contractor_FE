@@ -23,6 +23,7 @@ import AvailabilityList from '../appointments/AvailabilityList';
 import './Calendar.css';
 import TopNavbar from '../navbar/TopNavbar.js';
 import NavBarContractor from '../navbar/NavBarContractor.js';
+import ErrorBox from './popups/errorBox.jsx';
 
 function ContCalendar(props) {
   const display = {
@@ -132,11 +133,11 @@ function ContCalendar(props) {
     if (targetCell.hidden === true) {
       setTimeout(function() {
         setTargetCell({ hidden: false, id: e.target.dataset.cell });
-      }, 500);
+      }, 250);
     } else {
       setTimeout(function() {
         setTargetCell({ hidden: true, id: null });
-      }, 500);
+      }, 250);
     }
     // targetCell.hidden === true
     //   ? setTargetCell({ hidden: false, id: e.target.dataset.cell })
@@ -148,10 +149,13 @@ function ContCalendar(props) {
       let schedTween;
       let boxTween;
       let appTween;
+      let errorTween;
       setTimeout(function() {
         schedTween = theRef.current.getElementsByClassName('schedulerCont');
         boxTween = theRef.current.getElementsByClassName('boxCont');
         appTween = theRef.current.getElementsByClassName('infoContApp');
+        errorTween = theRef.current.getElementsByClassName('errorNot');
+        console.log(errorTween);
         schedTween = Array.from(schedTween);
         boxTween = Array.from(boxTween);
         if (schedTween[0] !== undefined) {
@@ -607,6 +611,15 @@ function ContCalendar(props) {
         {appoints !== undefined ? (
           <div className="notification">You Have Pending Appointments</div>
         ) : null}
+        <div className="errorCont">
+          {props.error ? (
+            <ErrorBox
+              history={props.history}
+              tween={parentOpenTween}
+              error={props.error}
+            />
+          ) : null}
+        </div>
         <div className="filterButtons">
           <button className="fbutt pendingApp" onClick={handleFilterClick}>
             {`Pending Appointments: ${appoints}`}
@@ -702,6 +715,7 @@ const mapStateToProps = state => {
     appointments: state.appointments,
     id: state.user.contractorId,
     refs: state.refs,
+    error: state.error,
     // contractor: state.thisContractor
   };
 };
