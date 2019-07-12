@@ -306,7 +306,7 @@ export const editUserSettings = data => dispatch => {
 //   .catch(err => dispatch({ type: FAILURE, payload:err }))
 // }
 
-//axios request for services
+// axios request for services
 export const postNewService = serv => {
   return dispatch => {
     dispatch({ type: SEND_SERV });
@@ -360,7 +360,11 @@ export const postNewSchedule = sched => {
         dispatch({ type: SEND_SCHED_COMP, payload: res.data });
       })
       .catch(err => {
-        console.log(err);
+        console.log(err.response.data.error);
+        dispatch({
+          type: FAILURE,
+          error: err.response.data.error,
+        });
       });
   };
 };

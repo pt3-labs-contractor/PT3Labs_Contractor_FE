@@ -29,38 +29,41 @@ function UserSetting(props) {
     <>
       <TopNavbar />
       <NavBarUser />
-      <div className="settings-container">
-        <h2>User Setting Page</h2>
-        {'\n'}
-        <form onSubmit={handleUpdate}>
-          User Email
-          <input
-            value={email}
-            type="text"
-            name="userEmail"
-            onChange={e => setEmail(e.target.value)}
-          />
-          User Name
-          <input
-            value={username}
-            type="text"
-            name="userUsername"
-            onChange={e => setUsername(e.target.value)}
-          />
-          {/* Old Password
+      <div className="main-body">
+        <div className="feedback-body-user">
+          <h2 className="main-header-title">Setting</h2>
+          {'\n'}
+          <form onSubmit={handleUpdate} className="feedback-form-container">
+            User Email
+            <input
+              value={email}
+              type="text"
+              name="userEmail"
+              onChange={e => setEmail(e.target.value)}
+            />
+            User Name
+            <input
+              value={username}
+              type="text"
+              name="userUsername"
+              onChange={e => setUsername(e.target.value)}
+            />
+            {/* Old Password
           <input />
 
           New Passowrd
           <input /> */}
-          Phone Number
-          <input
-            value={phoneNumber}
-            type="text"
-            name="userphoneNumber"
-            onChange={e => setPhoneNumber(e.target.value)}
-          />
-          <button>Save</button>
-        </form>
+            Phone Number
+            <input
+              value={phoneNumber}
+              type="text"
+              name="userphoneNumber"
+              onChange={e => setPhoneNumber(e.target.value)}
+            />
+            <button className="btn btn-primary">Save</button>
+          </form>
+        </div>
+
         {/* <form>
           Add Service <input placeholder="Service" />
           <input placeholder="Price" />

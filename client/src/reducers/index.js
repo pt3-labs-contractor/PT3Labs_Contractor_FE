@@ -17,28 +17,26 @@ import {
   LOADING,
   FETCHING_USERS_SUCCESS,
   FAILURE,
-  
+
   // fetching calander
   SET_DAY,
   SET_MONTH,
-  
+
   // Window position of specific contractor in list
   SET_CONTRACTOR_POSITION,
-  
+
   // fetching schedule
   SET_SCHEDULE,
   LOAD_SCHEDULE,
   FAIL_SCHEDULE,
   SET_SORTED_CONTRACTORS,
   SET_SERVICE_SORT,
-  
+
   // CRUD services
   SEND_SERV,
   SEND_SERV_COMP,
   SET_SERVICES,
   DELETE_SERV_SUCC,
-
-  
 
   // fetching single contractor
   FETCH_SINGLE_CONTRACTOR_SUCCESS,
@@ -166,13 +164,13 @@ export default (state = initialState, action) => {
         error: null,
       };
 
-    case DELETE_SERV_SUCC: 
+    case DELETE_SERV_SUCC:
       return {
         ...state,
         service: action.payload,
         loading: false,
-        error: null
-      }
+        error: null,
+      };
 
     // fetching current user written feedback
     case FEEDBACK_SUCCESS:
@@ -204,7 +202,11 @@ export default (state = initialState, action) => {
         loading: true,
       };
     case SEND_SERV_COMP:
-      return { ...state, loading: false, services:[...state.services, action.payload]};
+      return {
+        ...state,
+        loading: false,
+        services: [...state.services, action.payload],
+      };
 
     case SEND_SCHED:
       return { ...state, loading: true };
@@ -273,7 +275,7 @@ export default (state = initialState, action) => {
       return { ...state, user: action.payload };
 
     case LOGOUTUSER:
-      return { ...state, user: { ...state.user, username: action.payload } };
+      return { ...state, user: {} };
 
     default:
       return state;

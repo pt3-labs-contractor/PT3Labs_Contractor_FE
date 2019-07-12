@@ -14,6 +14,7 @@ function Login(props) {
   const [error, setError] = useState('');
 
   useEffect(() => {
+    console.log(`${props.user}` + 'hihi');
     if (props.user.contractorId) {
       props.history.push('/contractorcalendar');
     } else if (props.user.username) {

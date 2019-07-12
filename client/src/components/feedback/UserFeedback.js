@@ -24,7 +24,7 @@ function UserFeedback(props) {
     props.getFeedback();
   }, [stringify]);
 
-  function deleteHandler(feedback) {
+  function deleteFeedback(feedback) {
     console.log(feedback);
     props.deleteFeedback(feedback.id);
   }
@@ -47,18 +47,21 @@ function UserFeedback(props) {
   // Get current posts
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = props.feedback.slice(indexOfFirstPost, indexOfLastPost);
+  let currentPosts;
+  let feedback = [];
+  if (props.feedback) {
+    currentPosts = props.feedback.slice(indexOfFirstPost, indexOfLastPost);
+    feedback = props.feedback;
+  }
 
-  console.log(props);
-  console.log(currentPosts);
-  console.log(indexOfLastPost);
-  console.log(indexOfFirstPost);
+  // console.log(currentPosts);
   console.log(props.feedback);
 
   // Change page
   const paginate = pageNumber => {
     setCurrentPage(pageNumber);
   };
+  console.log(currentPosts);
 
   return (
     <>
@@ -77,24 +80,39 @@ function UserFeedback(props) {
                   <ul className="legend">
                     <li>
                       {<span className="icon-text fullstar">&#9733;</span>}=
-                      Needs Improvement
+                      Poor
                     </li>
                     <li>
                       {<span className="icon-text fullstar">&#9733;</span>}
                       {<span className="icon-text fullstar">&#9733;</span>}=
-                      Fair Service
+                      Fair
                     </li>
                     <li>
                       {<span className="icon-text fullstar">&#9733;</span>}
                       {<span className="icon-text fullstar">&#9733;</span>}
                       {<span className="icon-text fullstar">&#9733;</span>}=
-                      Great Service
+                      Good
+                    </li>
+                    <li>
+                      {<span className="icon-text fullstar">&#9733;</span>}
+                      {<span className="icon-text fullstar">&#9733;</span>}
+                      {<span className="icon-text fullstar">&#9733;</span>}
+                      {<span className="icon-text fullstar">&#9733;</span>}=
+                      Very Good
+                    </li>
+                    <li>
+                      {<span className="icon-text fullstar">&#9733;</span>}
+                      {<span className="icon-text fullstar">&#9733;</span>}
+                      {<span className="icon-text fullstar">&#9733;</span>}
+                      {<span className="icon-text fullstar">&#9733;</span>}
+                      {<span className="icon-text fullstar">&#9733;</span>}=
+                      Excellent
                     </li>
                     <li />
                   </ul>
                 </div>
                 <div className="form-box box-2">
-                  <p>Who was your Contractor?</p>
+                  <h6 className="feedback-h6">Who was your Contractor?</h6>
                   <div>
                     <select
                       className="select"
@@ -113,13 +131,13 @@ function UserFeedback(props) {
                     </select>
                   </div>
                   <div>
-                    <p>Overall Rating</p>
+                    <h6 className="feedback-h6">Overall Rating</h6>
                     <Rating
                       emptySymbol={<span className="icon-text">&#9734;</span>}
                       fullSymbol={
                         <span className="icon-text fullstar">&#9733;</span>
                       }
-                      stop={3}
+                      stop={5}
                       initialRating={stars}
                       onChange={e => setStars(e)}
                     />
@@ -143,56 +161,69 @@ function UserFeedback(props) {
           <div>
             <Pagination
               postsPerPage={postsPerPage}
-              totalPosts={props.feedback.length}
+              totalPosts={feedback.length}
               paginate={paginate}
               currentPosts={currentPosts}
-              createdAt={props.feedback.createdAt}
+              createdAt={currentPosts ? currentPosts.createdAt : null}
             />
 
-            {props.loading ? <p>Loading...</p> : null}
-            {console.log(props.loading)}
-            {props.error ? <p>{props.error}</p> : null}
-            {currentPosts.map(feedback => {
-              return (
-                <div key={feedback.id} className="user-feedback-container">
-                  <p>Contractor: {feedback.contractorName}</p>
-                  <div>
-                    Rating:{' '}
-                    <Rating
-                      emptySymbol={<span className="icon-text">&#9734;</span>}
-                      fullSymbol={
-                        <span className="icon-text fullstar">&#9733;</span>
-                      }
-                      readonly
-                      initialRating={feedback.stars}
-                      stop={3}
-                    />
-                    {'\n'}
-                    <div className="feedback-context">
-                      <p>
-                        <span className="quotes">"</span>
-                        {feedback.message}
-                        <span className="quotes">"</span>
-                      </p>
-                    </div>
-                    <div className="posted-user">
-                      <div>
-                        <button
-                          className="btn delete-btn"
-                          onClick={() => deleteHandler(feedback)}
-                        >
-                          Delete Feedback
-                        </button>
+            {props.error ? (
+              <p>{props.error}</p>
+            ) : currentPosts ? (
+              currentPosts.map(feedback => {
+                return (
+                  <div key={feedback.id} className="user-feedback-container">
+                    <p>Contractor: {feedback.contractorName}</p>
+                    <div>
+                      Rating:{' '}
+                      <Rating
+                        emptySymbol={<span className="icon-text">&#9734;</span>}
+                        fullSymbol={
+                          <span className="icon-text fullstar">&#9733;</span>
+                        }
+                        readonly
+                        initialRating={feedback.stars}
+                        stop={5}
+                      />
+                      {'\n'}
+                      <div className="feedback-context">
+                        <p>
+                          <span className="quotes">"</span>
+                          {feedback.message}
+                          <span className="quotes">"</span>
+                        </p>
                       </div>
-                      <div>
-                        Posted:{' '}
-                        {dateFns.format(feedback.createdAt, 'MMM DD YYYY')}
+                      <div className="posted-user">
+                        <div>
+                          <button
+                            className="btn delete-btn"
+                            onClick={() => {
+                              deleteFeedback(feedback);
+                            }}
+                          >
+                            Delete Feedback
+                          </button>
+                          <i
+                            className="fas fa-trash"
+                            onClick={() => {
+                              deleteFeedback(feedback);
+                            }}
+                          >
+                            <span className="helper-tool">Delete Feedback</span>
+                          </i>
+                        </div>
+                        <div>
+                          Posted:{' '}
+                          {dateFns.format(feedback.createdAt, 'MMM DD YYYY')}
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })
+            ) : props.loading ? (
+              <p>...Loading</p>
+            ) : null}
           </div>
         </div>
       </div>
