@@ -80,7 +80,7 @@ function ContractorList({
             type="button"
             className="btn"
             onClick={() => pageChange(1)}
-            disabled={pageNum >= contractorList.length - 1}
+            disabled={pageNum * limit + limit >= contractors.length - 1}
           >
             Page
             <br />

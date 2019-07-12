@@ -168,7 +168,7 @@
 }
 
 .availability-target .availability-list.display {
-  width: 10%;
+  width: 15%;
   background: linear-gradient(lightgrey, rgb(173, 173, 173));
   box-shadow: var(--shadow);
   border: 1px solid var(--primary-color);

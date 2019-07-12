@@ -142,7 +142,7 @@ function ContractorSetting(props) {
           {props.services
             ? props.services.map(service => (
                 <>
-                  <p>{service.name}</p>
+                  <p className="service-title">{service.name}</p>
                   <p>{service.price}</p>
                   <button onClick={e => handleServeDelete(service)}>
                     <IoIosTrash />
