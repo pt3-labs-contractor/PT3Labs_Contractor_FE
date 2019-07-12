@@ -20,9 +20,7 @@ function UserFeedback(props) {
   const [loading, setLoading] = useState(false);
 
   function deleteFeedback(feedback) {
-    // feedback.preventDefault();
-    // e.preventDefault();
-    // console.log(feedback);
+    console.log(feedback);
     props.deleteFeedback(feedback.id);
   }
   function handleChange(contrID) {
@@ -59,13 +57,15 @@ function UserFeedback(props) {
   }
 
   // console.log(currentPosts);
-  console.log(props.feedback);
+  // console.log(props.feedback);
+  // console.log(props.feedback);
+  // console.log(currentPosts);
 
   // Change page
   const paginate = pageNumber => {
     setCurrentPage(pageNumber);
   };
-  console.log(currentPosts);
+  // console.log(currentPosts);
 
   return (
     <>
@@ -145,7 +145,7 @@ function UserFeedback(props) {
           </div>
         </div>
 
-        <div>
+        <div className="feeback-form-container">
           <h4 className="feedback-user-header">Your Feedback History</h4>
           <div>
             <Pagination

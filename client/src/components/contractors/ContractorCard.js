@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import Rating from 'react-rating';
 import PropTypes from 'prop-types';
 
-function ContractorCard(props) {
-  const [service, setService] = useState({});
+function ContractorCard({ contractor, service, full }) {
+  const [localService, setService] = useState({});
   const {
     name,
     phoneNumber,
@@ -13,22 +13,41 @@ function ContractorCard(props) {
     stateAbbr,
     zipCode,
     userScore,
-  } = props.contractor;
+  } = contractor;
 
   useEffect(() => {
-    if (props.contractor.id) {
-      const filtered = props.contractor.services.filter(service => {
-        return service.name === props.service;
+    if (contractor.id) {
+      const filtered = contractor.services.filter(entry => {
+        return entry.name === service;
       });
       setService(filtered[0]);
     }
-  }, [props.service]);
+  }, [service]);
+  let display = null;
+  if (full)
+    display = (
+      <>
+        <p>{streetAddress}</p>
+        <p>
+          {city} {stateAbbr}
+        </p>
+        <p>{zipCode}</p>
+      </>
+    );
+  else if (localService)
+    display = (
+      <>
+        <p>
+          {localService.name}: {localService.price}
+        </p>
+      </>
+    );
   return (
     <div className="contractor-card">
       <h3>{name}</h3>
       <address>
         <p>{phoneNumber}</p>
-        {props.full ? (
+        {full ? (
           <>
             <p>{streetAddress}</p>
             <p>
