@@ -229,6 +229,10 @@ export const selectSingleContractorSetting = id => dispatch => {
     .catch(err => dispatch({ type: FAILURE, payload: err }));
 };
 
+export const resetFailure = () => dispatch => {
+  dispatch({ type: FAILURE, payload: null });
+};
+
 // axios get feedback
 export const getFeedback = () => dispatch => {
   dispatch({ type: LOADING });
@@ -360,7 +364,11 @@ export const postNewSchedule = sched => {
         dispatch({ type: SEND_SCHED_COMP, payload: res.data });
       })
       .catch(err => {
-        console.log(err);
+        console.log(err.response.data.error);
+        dispatch({
+          type: FAILURE,
+          error: err.response.data.error,
+        });
       });
   };
 };
