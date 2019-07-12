@@ -39,7 +39,7 @@
 }
 
 .user-calendar .contractor-target {
-  width: 15%;
+  width: 20%;
   max-height: 495px;
   margin-right: 0;
   margin-left: 0;
@@ -179,15 +179,15 @@
 
 .appointment-form-target {
   position: absolute;
-  right: 1%;
-  width: 33%;
+  right: 3%;
+  width: 26%;
   box-shadow: var(--shadow);
 }
 
 .calendar-container .appointment-list {
   background-color: lightgrey;
   box-shadow: inset 3px 3px 5px rgba(0, 0, 0, 0.4);
-  width: 65%;
+  width: 70%;
   padding: 5px 15px;
 }
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 import './ContractorList.css';
 
 import ContractorCard from './ContractorCard';
@@ -9,14 +9,20 @@ import ContractorCard from './ContractorCard';
 
 import { setPosition } from '../../actions/index';
 
-function ContractorList(props) {
+function ContractorList({
+  error,
+  loading,
+  contractors,
+  user,
+  userLanding,
+  ...handlers
+}) {
   const [pageNum, setPageNum] = useState(0);
   const [contractorList, setContractors] = useState([]);
   const [list, setList] = useState([]);
   const [select, setSelect] = useState({});
   const contractorRef = useRef({});
-  const limit = props.userLanding ? 5 : 25;
-  const { contractors } = props;
+  const limit = userLanding ? 5 : 25;
 
   useEffect(() => {
     const dividedContractors = contractors.slice(
@@ -26,7 +32,7 @@ function ContractorList(props) {
     setContractors(dividedContractors);
     setPageNum(0);
     // eslint-disable-next-line
-  }, [props.contractors]);
+  }, [contractors]);
 
   useEffect(() => {
     setList(contractorList || []);
@@ -35,11 +41,12 @@ function ContractorList(props) {
   const selectElement = id => {
     if (select !== id) {
       setSelect(id);
-      new Promise((resolve, reject) => {
+      new Promise(resolve => {
         contractorRef.current[id] = React.createRef();
         resolve(contractorRef.current[id]);
       }).then(element => {
-        props.setPosition(element.current.getBoundingClientRect());
+        // console.log(element.current.getBoundingClientRect());
+        handlers.setPosition(element.current.getBoundingClientRect());
       });
     }
   };
@@ -60,6 +67,7 @@ function ContractorList(props) {
         <h3>Contractors:</h3>
         <div className="btn-container">
           <button
+            type="button"
             className="btn"
             onClick={() => pageChange(-1)}
             disabled={pageNum <= 0}
@@ -69,6 +77,7 @@ function ContractorList(props) {
             down
           </button>
           <button
+            type="button"
             className="btn"
             onClick={() => pageChange(1)}
             disabled={pageNum >= contractorList.length - 1}
@@ -80,11 +89,12 @@ function ContractorList(props) {
         </div>
       </div>
       <div className="contractor-list-container">
-        {props.loading ? <p>Loading...</p> : null}
-        {props.error ? <p>{props.error}</p> : null}
+        {loading ? <p>Loading...</p> : null}
+        {error ? <p>{error}</p> : null}
         {list.map(contractor =>
-          props.userLanding ? (
+          userLanding ? (
             <div
+              type="button"
               key={contractor.id}
               ref={contractorRef.current[contractor.id]}
               className={
@@ -92,7 +102,7 @@ function ContractorList(props) {
                 `${select === contractor.id ? ' selected' : ''}`
               }
               onClick={() => {
-                props.selectContractor(contractor);
+                handlers.selectContractor(contractor);
                 selectElement(contractor.id);
               }}
             >
@@ -108,6 +118,49 @@ function ContractorList(props) {
     </div>
   );
 }
+
+ContractorList.defaultProps = {
+  contractors: [],
+  loading: false,
+  error: null,
+  user: {},
+  userLanding: undefined,
+  setPosition: undefined,
+  selectContractor: undefined,
+};
+
+ContractorList.propTypes = {
+  contractors: PropTypes.arrayOf(PropTypes.object),
+  loading: PropTypes.bool,
+  error: PropTypes.string,
+  user: PropTypes.shape({
+    id: PropTypes.string,
+    googleId: PropTypes.string,
+    email: PropTypes.string,
+    phoneNumber: PropTypes.string,
+    contractorId: PropTypes.string,
+    city: PropTypes.string,
+  }),
+  userLanding: PropTypes.bool,
+  setPosition: PropTypes.func,
+  selectContractor: PropTypes.func,
+};
+
+// city: "Test City"
+// contractorId: "aec1f8d3-a534-48e5-8be1-9fc4197acccd"
+// createdAt: "2019-06-25T01:28:58.426Z"
+// email: "testContractor@email.com"
+// googleId: null
+// id: "aec1f8d3-a534-48e5-8be1-9fc4197acccd"
+// latitude: "40.6042"
+// longitude: "-74.2825"
+// name: "Test Contractor"
+// phoneNumber: "(555)867-5309"
+// services: (3) [{…}, {…}, {…}]
+// stateAbbr: "TE"
+// streetAddress: "1 Test St."
+// username: "Test Contractor"
+// zipCode: "07065"
 
 const mapStateToProps = state => {
   return {
