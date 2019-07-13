@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import './ContractorList.css';
@@ -60,19 +60,7 @@ function ContractorList({
     setPageNum(pageNum + dir);
   };
 
-function ContractorList(props) {
   return (
-<<<<<<< HEAD
-    <div>
-      <h3>Contractors:</h3>
-      {props.loading ? <p>Loading...</p> : null}
-      {props.error ? <p>{props.error}</p> : null}
-      {props.contractors.map(contractor => (
-        <Link to={`/contractors/${contractor.id}`} key={contractor.id}>
-          <ContractorCard contractor={contractor} />
-        </Link>
-      ))}
-=======
     <div className="contractor-list container">
       <div className="list-header">
         <h3>Contractors:</h3>
@@ -126,17 +114,16 @@ function ContractorList(props) {
           )
         )}
       </div>
->>>>>>> eade825f1590ef89991b543c29a5fac70dfd97a4
     </div>
-  )
+  );
 }
 
 const mapStateToProps = state => {
   return {
     contractors: state.contractors,
     loading: state.loading,
-    error: state.error
-  }
-}
+    error: state.error,
+  };
+};
 
 export default connect(mapStateToProps)(ContractorList);
