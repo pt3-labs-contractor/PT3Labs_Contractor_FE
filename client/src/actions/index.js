@@ -5,7 +5,6 @@ export const SEND_SERV = 'SEND_SERV';
 export const SEND_SERV_COMP = 'SEND_SERV_COMP';
 export const DELETE_SERV_SUCC = 'DELETE_SERV_SUCC';
 
-
 export const SEND_SCHED = 'SEND_SCHED';
 export const SEND_SCHED_COMP = 'SEND_SCHED_COMP';
 export const GET_SCHED = 'GET_SCHED';
@@ -231,6 +230,10 @@ export const selectSingleContractorSetting = id => dispatch => {
     .catch(err => dispatch({ type: FAILURE, payload: err }));
 };
 
+export const resetFailure = () => dispatch => {
+  dispatch({ type: FAILURE, payload: null });
+};
+
 // axios get feedback
 export const getFeedback = () => dispatch => {
   dispatch({ type: LOADING });
@@ -308,9 +311,8 @@ export const editUserSettings = data => dispatch => {
 //   .catch(err => dispatch({ type: FAILURE, payload:err }))
 // }
 
-
-//axios request for services 
-export const postNewService = serv =>{
+// axios request for services
+export const postNewService = serv => {
   return dispatch => {
     dispatch({ type: SEND_SERV });
     const headers = setHeaders();
@@ -320,7 +322,7 @@ export const postNewService = serv =>{
       })
       .then(res => {
         console.log(res.data);
-        dispatch({ type: SEND_SERV_COMP, payload:res.data.created });
+        dispatch({ type: SEND_SERV_COMP, payload: res.data.created });
       })
       .catch(err => {
         console.log(err);
@@ -328,25 +330,26 @@ export const postNewService = serv =>{
   };
 };
 
-
-
-export const deleteService = (service, list) => dispatch =>{
+export const deleteService = (service, list) => dispatch => {
   dispatch({ type: LOADING });
   const headers = setHeaders();
 
   axios
-  .delete(`https://fierce-plains-47590.herokuapp.com/api/services/${service.id}`,{headers})
-  .then(res => {
-    // console.log(res.data)
-    const newList = list.filter((service) => service.id !== res.data.deleted.id
+    .delete(
+      `https://fierce-plains-47590.herokuapp.com/api/services/${service.id}`,
+      { headers }
     )
-    dispatch({ type: DELETE_SERV_SUCC, payload: newList})
-  })
-  .catch(err=> {
-    dispatch({ type: FAILURE, payload: err})
-  })
-
-}
+    .then(res => {
+      // console.log(res.data)
+      const newList = list.filter(
+        service => service.id !== res.data.deleted.id
+      );
+      dispatch({ type: DELETE_SERV_SUCC, payload: newList });
+    })
+    .catch(err => {
+      dispatch({ type: FAILURE, payload: err });
+    });
+};
 
 export const postNewSchedule = sched => {
   const headers = setHeaders();
@@ -361,7 +364,11 @@ export const postNewSchedule = sched => {
         dispatch({ type: SEND_SCHED_COMP, payload: res.data });
       })
       .catch(err => {
-        console.log(err);
+        console.log(err.response.data.error);
+        dispatch({
+          type: FAILURE,
+          error: err.response.data.error,
+        });
       });
   };
 };

@@ -63,6 +63,10 @@ img {
   margin-left: 200px;
 }
 
+.service-title {
+  text-transform: capitalize;
+}
+
 @media (max-width: 800px) {
   .main-body {
     margin-left: 5rem;

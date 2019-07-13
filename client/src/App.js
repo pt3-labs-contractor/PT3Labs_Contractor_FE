@@ -31,7 +31,10 @@ function App({ user, ...props }) {
   const string = JSON.stringify(win);
   useEffect(() => {
     setWin({ width: window.innerWidth, height: window.innerHeight });
+    // eslint-disable-next-line
   }, [string]);
+
+  // console.log(props.user);
 
   return (
     <div className="App">

@@ -101,24 +101,28 @@
     align-items: center;
   }
   .main-header p {
-    margin: 0 2rem;
+    margin: 1rem 2rem;
     font-size: 1rem;
   }
 }
 
 @media (max-width: 400px) {
+  .main-header-title {
+    font-size: 2rem;
+  }
   .single-price {
-    width: auto;
+    width: 90%;
+    height: auto;
   }
   .single-price a {
-    padding: .5rem 1.5rem;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
   }
-  .single-price:hover {
-    background: var(--secondary-color);
-    color: #FFF;
-    box-shadow: 0 0 15px rgba(0,0,0,1);
-    transform: scale(1.05);
-    z-index: 1;
-    border-radius: 25px;
+  .single-price h2 {
+    font-size: 1rem;
+    padding: 1rem 0;
   }
 }

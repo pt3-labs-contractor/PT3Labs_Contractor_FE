@@ -122,12 +122,14 @@ function Register(props) {
           )}
           <input
             name="email"
+            type="email"
             placeholder="E-mail"
             onChange={handleChange}
             required
           />
           <input
             name="phoneNumber"
+            type="number"
             placeholder="Phone#"
             onChange={handleChange}
             required

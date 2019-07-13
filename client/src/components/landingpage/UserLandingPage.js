@@ -12,6 +12,7 @@ import './UserLandingPage.css';
 import dateFns from 'date-fns';
 
 import {
+  fetchAccts,
   fetchSchedule,
   fetchAvailabilityByDay,
   storeServiceName,
@@ -64,12 +65,17 @@ function UserLandingPage(props) {
     const dateString = dateFns.format(props.selectedDay, 'YYYY-MM-DD');
     props.fetchAvailabilityByDay(
       dateString,
+<<<<<<< HEAD
       props.contractors,
       props.serviceFilter
+=======
+      props.serviceFilter,
+      props.contractors
+>>>>>>> eade825f1590ef89991b543c29a5fac70dfd97a4
     );
     clearAppointment();
     // eslint-disable-next-line
-  }, [props.selectedDay, serviceSort]);
+  }, [props.selectedDay, props.contractors, serviceSort]);
 
   useEffect(() => {
     if (serviceSort !== 'Pick a service' && mql) {
@@ -190,6 +196,10 @@ function UserLandingPage(props) {
 const mapStateToProps = state => {
   return {
     contractors: state.contractors,
+<<<<<<< HEAD
+=======
+    serviceFilter: state.serviceFilter,
+>>>>>>> eade825f1590ef89991b543c29a5fac70dfd97a4
     sorted: state.sortedContractors,
     selectedDay: state.thisDay,
     serviceFilter: state.serviceFilter,
@@ -199,6 +209,7 @@ const mapStateToProps = state => {
 export default connect(
   mapStateToProps,
   {
+    fetchAccts,
     fetchSchedule,
     fetchAvailabilityByDay,
     storeServiceName,
