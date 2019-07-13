@@ -1,95 +1,37 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import Calendar from '../calendar/Calendar';
 import ContractorCard from './ContractorCard';
-import AvailabilityList from '../appointments/AvailabilityList';
-import AppointmentForm from '../appointments/AppointmentForm';
-// import NavBarContractor from '../navbar/NavBarContractor';
 
-import './Contractor.css';
-
-import {
-  selectSingleContractorSetting,
-  fetchSchedule,
-  fetchServices,
-} from '../../actions/index';
-import TopNavbar from '../navbar/TopNavbar';
+import { selectContractor } from '../../actions/index';
+import NavBarContractor from '../navbar/NavBarContractor';
 
 function Contractor(props) {
-  const [service, setService] = useState({ name: 'Pick a service' });
-  const [appointment, setAppointment] = useState({});
-  const { id } = props.match.params;
-
   useEffect(() => {
-    Promise.all([
-      props.selectSingleContractorSetting(id),
-      props.fetchSchedule(id),
-      // props.fetchServices(id),
-    ]);
+    props.selectContractor(props.match.params.id, props.list); // replace with get request
     // eslint-disable-next-line
-  }, []);
-
-  const makeAppointment = date => {
-    setAppointment(date);
-  };
-
-  const clearAppointment = () => {
-    setAppointment({});
-    setService({});
-  };
+  }, [props.contractor])
 
   return (
-    <>
-      <TopNavbar />
-      <div className="contractor-container">
-        <ContractorCard full contractor={props.contractor} />
-        <div className="services-container">
-          {Object.keys(props.contractor).length > 0
-            ? props.contractor.services.map(service => (
-                <div
-                  className="service"
-                  key={service.id}
-                  onClick={() => setService(service)}
-                >
-                  <p className="service-title">{service.name}</p>
-                  <p>{service.price}</p>
-                </div>
-              ))
-            : null}
-        </div>
-        <div className="contractor-calendar">
-          <Calendar contractor={props.contractor} schedule={props.schedule} />
-          <div className="availability-list">
-            <AvailabilityList
-              contractor
-              selectedDay={props.selectedDay}
-              setAppointment={makeAppointment}
-            />
-          </div>
-        </div>
-        <AppointmentForm
-          contractor={id}
-          clearAppointment={clearAppointment}
-          appointment={appointment}
-          service={service}
-        />
-      </div>
-    </>
+    <div>
+      <NavBarContractor />
+      <ContractorCard contractor={props.contractor} />
+      <Calendar contractor={props.contractor} />
+    </div>
   );
 }
 
 const mapStateToProps = state => {
   return {
+    list: state.accounts.contractors,
     contractor: state.thisContractor,
-    services: state.services,
     selectedDay: state.thisDay,
     schedule: state.schedule,
-    error: state.errorSchedule,
   };
 };
 
 export default connect(
   mapStateToProps,
-  { selectSingleContractorSetting, fetchSchedule, fetchServices }
+  { selectContractor }
 )(Contractor);

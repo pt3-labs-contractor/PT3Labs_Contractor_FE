@@ -277,9 +277,11 @@ function ContCalendar(props) {
     });
 
     const month = dateFns.startOfMonth(new Date());
+    console.log(month);
     const notBefore = pend.filter(a => {
       return !dateFns.isBefore(a.startTime, month);
     });
+    console.log(notBefore);
     setAppoints(notBefore.length);
   };
 

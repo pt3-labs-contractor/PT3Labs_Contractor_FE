@@ -38,7 +38,7 @@ function ContractorSetting(props) {
     setUsername(props.User.username);
     setPhoneNumber(props.User.phoneNumber);
     setEmail(props.User.email);
-    setServices(props.User.services);
+    setServices(props.services);
   }, [
     props.User.username,
     props.User.phoneNumber,
@@ -81,75 +81,104 @@ function ContractorSetting(props) {
     <>
       <TopNavbar />
       <NavBarContractor />
-      <div className="settings-container">
-        <h2>Contractor Setting Page</h2>
-        {'\n'}
-        <form onSubmit={handleUpdate}>
-          Username
-          <input
-            type="text"
-            name="contUN"
-            value={username}
-            onChange={e => setUsername(e.target.value)}
-          />
-          Email
-          <input
-            // value="contractor Email"
-            type="text"
-            name="contEmail"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-          />
-          Contractor Phone
-          <input
-            // value="contractor phonenumber"
-            type="text"
-            name="contPN"
-            value={phoneNumber}
-            onChange={e => setPhoneNumber(e.target.value)}
-          />
-          {/* Old Password
-          <input />
-          New Passowrd
+      <div className="main-container">
+        <div className="settings-container">
+          <h2 className="title">{props.User.username} Settings</h2>
+          {'\n'}
+          <form onSubmit={handleUpdate}>
+
+          <div className="username-div">
+              Username
+              <input
+                type="text"
+                name="contUN"
+                value={username}
+                onChange={e => setUsername(e.target.value)}
+                />
+            </div>
+
+            <div className="email-div">
+              Email
+              <input
+                // value="contractor Email"
+                type="text"
+                name="contEmail"
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+                />
+            </div>
+
+            <div className="phonenumber-div">
+              Contractor Phone
+              <input
+                // value="contractor phonenumber"
+                type="text"
+                name="contPN"
+                value={phoneNumber}
+                onChange={e => setPhoneNumber(e.target.value)}
+                />
+            </div>
+            {/* Old Password
+            <input />
+            New Passowrd
           <input /> */}
-          <button>Save</button>
-        </form>
-        <form onSubmit={handleAddServiceSubmit}>
-          Add Service
-          <select
-            className="select-service"
-            value={addService}
-            onChange={e => handleAddServiceChange(e.target.value)}
-          >
-            <option value="">Pick a service</option>
-            {serviceList.map(service => (
-              <option key={service} value={service.toLowerCase()}>
-                {service}
-              </option>
-            ))}
-          </select>
-          <input
-            placeholder="Price"
-            name="price"
-            value={addPrice}
-            onChange={e => handleAddPriceChange(e.target.value)}
-          />
-          <button onClick={handleAddServiceSubmit}>Add Service</button>
-        </form>
-        LIST OF SERVICES
-        <p>Services:</p>
-        <div>
-          {props.services
-            ? props.services.map(service => (
-                <>
-                  <p>{service.name}</p>
-                  <p>{service.price}</p>
-                  <button onClick={e => handleServeDelete(service)}>
-                    <IoIosTrash />
-                  </button>
-                </>
-              ))
-            : null}
+             <div class="box">
+              <button  className="btn btn-three">Save</button>
+            </div>
+          </form>
+
+         
+            <form onSubmit={handleAddServiceSubmit}>
+              Add Service
+
+              <div className="add-service">
+                <select
+                  className="select-service"
+                  value={addService}
+                  onChange={e => handleAddServiceChange(e.target.value)}
+                  >
+                  <option value="">Pick a service</option>
+                  {serviceList.map(service => (
+                    <option key={service} value={service.toLowerCase()}>
+                      {service}
+                    </option>
+                  ))}
+                </select>
+                </div>
+
+              <input
+                placeholder="Price"
+                name="price"
+                value={addPrice}
+                onChange={e => handleAddPriceChange(e.target.value)}
+                />
+
+
+                <div class="box">
+                  <button onClick={handleAddServiceSubmit} className="btn btn-three">Add Service</button>
+                </div>
+      
+            </form>
+        
+          {props.User.username}'s Services
+          {/* <p>Services:</p> */}
+
+          <div className="services">
+            <div >
+              {props.services
+                ? props.services.map(service => (
+                  <div className="indi-services">
+                      <p>{service.name}</p>
+                      <p>{service.price}</p>
+                      <button onClick={e => handleServeDelete(service)}>
+                        <IoIosTrash />
+                      </button>
+                    </div>
+                  ))
+                  : null}
+            </div>
+          </div>
+
         </div>
       </div>
     </>

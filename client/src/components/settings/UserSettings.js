@@ -29,46 +29,59 @@ function UserSetting(props) {
     <>
       <TopNavbar />
       <NavBarUser />
-      <div className="main-body">
-        <div className="feedback-body-user">
-          <h2 className="main-header-title">Setting</h2>
+      <div className="main-container">
+        <div className="settings-container">
+          <h2 className="title">{props.User.username} Settings</h2>
           {'\n'}
-          <form onSubmit={handleUpdate} className="feedback-form-container">
-            User Email
-            <input
-              value={email}
-              type="text"
-              name="userEmail"
-              onChange={e => setEmail(e.target.value)}
-            />
-            User Name
-            <input
-              value={username}
-              type="text"
-              name="userUsername"
-              onChange={e => setUsername(e.target.value)}
-            />
+          <form onSubmit={handleUpdate}>
+              <div className="email-div">
+                Email
+                <input
+                  className="email-input"
+                  value={email}
+                  type="text"
+                  name="userEmail"
+                  onChange={e => setEmail(e.target.value)}
+                  />
+              </div>
+
+              <div className="username-div">
+                Username
+                <input
+                  value={username}
+                  type="text"
+                  name="userUsername"
+                  onChange={e => setUsername(e.target.value)}
+                  />
+                </div>
             {/* Old Password
-          <input />
+            <input />
 
-          New Passowrd
-          <input /> */}
-            Phone Number
-            <input
-              value={phoneNumber}
-              type="text"
-              name="userphoneNumber"
-              onChange={e => setPhoneNumber(e.target.value)}
-            />
-            <button className="btn btn-primary">Save</button>
+            New Passowrd
+            <input /> */}
+            <div className="phonenumber-div">
+                Phone Number
+                <input
+                  value={phoneNumber}
+                  type="text"
+                  name="userphoneNumber"
+                  onChange={e => setPhoneNumber(e.target.value)}
+                  />
+            </div>
+
+            <div class="box">
+              <button  className="btn btn-three">Save</button>
+            </div>
+
           </form>
-        </div>
 
-        {/* <form>
-          Add Service <input placeholder="Service" />
-          <input placeholder="Price" />
-        </form> */}
+          {/* <form>
+            Add Service <input placeholder="Service" />
+            <input placeholder="Price" />
+          </form> */}
+        </div>
       </div>
+
     </>
   );
 }

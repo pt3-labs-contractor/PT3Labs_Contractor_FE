@@ -43,7 +43,7 @@ function ContractorCard({ contractor, service, full }) {
       </>
     );
   return (
-    <div className="contractor-card">
+    <div>
       <h3>{name}</h3>
       <address>
         <p>{phoneNumber}</p>
@@ -77,38 +77,7 @@ function ContractorCard({ contractor, service, full }) {
         readonly
       />
     </div>
-  );
+  )
 }
 
-const mapStateToProps = state => {
-  return {
-    service: state.serviceFilter,
-  };
-};
-
-export default connect(mapStateToProps)(ContractorCard);
-
-ContractorCard.propTypes = {
-  contractor: PropTypes.shape({
-    city: PropTypes.string,
-    createdAt: PropTypes.string,
-    id: PropTypes.string,
-    latitude: PropTypes.string,
-    longitude: PropTypes.string,
-    name: PropTypes.string,
-    phoneNumber: PropTypes.string,
-    stateAbbr: PropTypes.string,
-    streetAddress: PropTypes.string,
-    zipCode: PropTypes.string,
-    services: PropTypes.arrayOf(
-      PropTypes.shape({
-        contractorId: PropTypes.string,
-        createdAt: PropTypes.string,
-        id: PropTypes.string,
-        name: PropTypes.string,
-        price: PropTypes.string,
-      })
-    ),
-  }),
-  service: PropTypes.string,
-};
+export default ContractorCard
