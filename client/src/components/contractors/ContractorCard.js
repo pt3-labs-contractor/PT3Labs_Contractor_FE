@@ -21,7 +21,6 @@ function ContractorCard({ contractor, service, full }) {
         return entry.name === service;
       });
       setService(filtered[0]);
-      console.log(localService);
     }
   }, [service]);
   let display = null;
