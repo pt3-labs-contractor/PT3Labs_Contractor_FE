@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Rating from 'react-rating';
 import PropTypes from 'prop-types';
 
-function ContractorCard({ contractor, service, full }) {
+function ContractorCard({ contractor, service, full, mainList }) {
   const [localService, setService] = useState({});
   const {
     name,
@@ -43,7 +43,7 @@ function ContractorCard({ contractor, service, full }) {
       </>
     );
   return (
-    <div>
+    <div className={mainList ? 'contractor-card-full' : ''}>
       <h3>{name}</h3>
       <address>
         <p>{phoneNumber}</p>
@@ -77,7 +77,7 @@ function ContractorCard({ contractor, service, full }) {
         readonly
       />
     </div>
-  )
+  );
 }
 
-export default ContractorCard
+export default ContractorCard;

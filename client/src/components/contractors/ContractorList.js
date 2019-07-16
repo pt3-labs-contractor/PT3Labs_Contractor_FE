@@ -118,7 +118,7 @@ function ContractorList({
   return (
     <div className="contractor-list container">
       <div className="list-header">
-        <h3>Contractors:</h3>
+        <h3 className="contractor-list-title">Contractors:</h3>
         <div className="btn-container">
           <button
             type="button"
@@ -141,12 +141,8 @@ function ContractorList({
             up
           </button>
         </div>
-      </div>
-      <div className="contractor-list-container">
-        {loading ? <p>Loading...</p> : null}
-        {error ? <p>{error}</p> : null}
         {userLanding ? null : (
-          <>
+          <div className="contractor-list-form-container">
             <form onSubmit={handleZipSort}>
               <input
                 placeholder="Sort By Distance"
@@ -165,11 +161,15 @@ function ContractorList({
               />
               <button type="submit">Search</button>
             </form>
-          </>
+          </div>
         )}
+      </div>
+      <div className={userLanding ? 'contractor-list' : 'contractor-display'}>
+        {loading ? <p>Loading...</p> : null}
+        {error ? <p>{error}</p> : null}
         {list.map(contractor =>
           userLanding ? (
-            <button
+            <div
               type="button"
               key={contractor.id}
               ref={contractorRef.current[contractor.id]}
@@ -183,10 +183,10 @@ function ContractorList({
               }}
             >
               <ContractorCard contractor={contractor} />
-            </button>
+            </div>
           ) : (
             <Link to={`/app/contractors/${contractor.id}`} key={contractor.id}>
-              <ContractorCard contractor={contractor} />
+              <ContractorCard mainList contractor={contractor} />
             </Link>
           )
         )}
