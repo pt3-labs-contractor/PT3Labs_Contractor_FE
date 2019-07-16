@@ -17,15 +17,15 @@ function AvailabilityList(props) {
   }, [selectedDay, schedule]);
 
   useEffect(() => {
-    if (!mql && !props.contractor) {
-      const { top, right, height } = position;
-      setPos({
-        position: 'fixed',
-        top,
-        left: right,
-        minHeight: height,
-      });
-    }
+    // if (!mql && !props.contractor) {
+    //   const { top, right, height } = position;
+    //   setPos({
+    //     position: 'fixed',
+    //     top,
+    //     left: right,
+    //     minHeight: height,
+    //   });
+    // }
   }, [props.position]);
 
   const RenderTimes = () => {

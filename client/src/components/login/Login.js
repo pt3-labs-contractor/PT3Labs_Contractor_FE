@@ -28,13 +28,9 @@ function Login(props) {
     const credentials = { username, password };
 
     axios
-      .post(
-        'https://fierce-plains-47590.herokuapp.com/api/auth/login',
-        credentials,
-        {
-          headers,
-        }
-      )
+      .post('http://localhost:5000/api/auth/login', credentials, {
+        headers,
+      })
       .then(res => {
         localStorage.setItem('jwt', res.data.token);
         props.fetchAccts();

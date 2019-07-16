@@ -6,6 +6,7 @@ import AppointmentList from '../appointments/AppointmentList';
 import ContractorList from '../contractors/ContractorList';
 import AvailabilityList from '../appointments/AvailabilityList';
 import AppointmentForm from '../appointments/AppointmentForm';
+import FeedbackList from '../feedback/FeedbackList';
 import TopNavbar from '../navbar/TopNavbar';
 import './UserLandingPage.css';
 
@@ -15,6 +16,7 @@ import {
   fetchAccts,
   fetchSchedule,
   fetchAvailabilityByDay,
+  getFeedbackByContractor,
   storeServiceName,
 } from '../../actions/index';
 
@@ -82,7 +84,10 @@ function UserLandingPage(props) {
 
   useEffect(() => {
     setTime({});
-    contractor.id && props.fetchSchedule(contractor.id);
+    if (contractor.id) {
+      const { id } = contractor;
+      Promise.all([props.getFeedbackByContractor(id), props.fetchSchedule(id)]);
+    }
     // eslint-disable-next-line
   }, [contractor]);
 
@@ -165,6 +170,7 @@ function UserLandingPage(props) {
           </div>
           <div className="availability-target" ref={availabilityTarget}>
             <AvailabilityList setAppointment={selectTime} />
+            {!mql && <FeedbackList />}
           </div>
           <div className="appointment-form-target" ref={appointmentTarget}>
             {contractor.id && time.id && (
@@ -206,6 +212,7 @@ export default connect(
     fetchAccts,
     fetchSchedule,
     fetchAvailabilityByDay,
+    getFeedbackByContractor,
     storeServiceName,
   }
 )(UserLandingPage);

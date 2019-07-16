@@ -144,6 +144,12 @@
   color: white;
 }
 
+.availability-target {
+  width: 25%;
+  overflow: scroll;
+  height: 65vh;
+}
+
 .availability-target .availability-list {
   display: flex;
   flex-direction: column;
@@ -168,7 +174,7 @@
 }
 
 .availability-target .availability-list.display {
-  width: 15%;
+  width: 100%;
   background: linear-gradient(lightgrey, rgb(173, 173, 173));
   box-shadow: var(--shadow);
   border: 1px solid var(--primary-color);

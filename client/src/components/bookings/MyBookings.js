@@ -26,9 +26,6 @@ function MyBookings(props) {
       <div className="main-body">
         <div className="booking-container">
           <h2 className="main-header-title">Appointment Summary</h2>
-          {confirmed.map(appointment => (
-            <p>{appointment.id}</p>
-          ))}
         </div>
       </div>
     </>

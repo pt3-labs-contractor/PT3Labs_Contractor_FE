@@ -24,7 +24,7 @@ function AppointmentList(props) {
                     'HH:mm'
                   )}`}
                 </p>
-                <p>{contractor.name}</p>
+                <p>{contractor.contractorName}</p>
                 <p>{contractor.phoneNumber}</p>
               </div>
             );
