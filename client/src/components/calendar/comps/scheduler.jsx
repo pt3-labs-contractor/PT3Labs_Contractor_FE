@@ -25,7 +25,7 @@ const Scheduler = props => {
     position: 'absolute',
     left: `${xper}` + 'px',
     top: `${yper}` + 'px',
-    zIndex: '100',
+    zIndex: '201',
     backgroundColor: 'white',
   };
 
