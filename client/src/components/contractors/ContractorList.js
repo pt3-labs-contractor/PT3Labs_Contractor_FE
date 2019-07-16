@@ -80,7 +80,7 @@ function ContractorList({
             type="button"
             className="btn"
             onClick={() => pageChange(1)}
-            disabled={pageNum * limit + limit >= contractors.length - 1}
+            disabled={pageNum * limit + limit >= contractors.length}
           >
             Page
             <br />
@@ -129,22 +129,22 @@ ContractorList.defaultProps = {
   selectContractor: undefined,
 };
 
-ContractorList.propTypes = {
-  contractors: PropTypes.arrayOf(PropTypes.object),
-  loading: PropTypes.bool,
-  error: PropTypes.string,
-  user: PropTypes.shape({
-    id: PropTypes.string,
-    googleId: PropTypes.string,
-    email: PropTypes.string,
-    phoneNumber: PropTypes.string,
-    contractorId: PropTypes.string,
-    city: PropTypes.string,
-  }),
-  userLanding: PropTypes.bool,
-  setPosition: PropTypes.func,
-  selectContractor: PropTypes.func,
-};
+// ContractorList.propTypes = {
+//   contractors: PropTypes.arrayOf(PropTypes.object),
+//   loading: PropTypes.bool,
+//   error: PropTypes.string,
+//   user: PropTypes.shape({
+//     id: PropTypes.string,
+//     googleId: PropTypes.string,
+//     email: PropTypes.string,
+//     phoneNumber: PropTypes.string,
+//     contractorId: PropTypes.string,
+//     city: PropTypes.string,
+//   }),
+//   userLanding: PropTypes.bool,
+//   setPosition: PropTypes.func,
+//   selectContractor: PropTypes.func,
+// };
 
 // city: "Test City"
 // contractorId: "aec1f8d3-a534-48e5-8be1-9fc4197acccd"

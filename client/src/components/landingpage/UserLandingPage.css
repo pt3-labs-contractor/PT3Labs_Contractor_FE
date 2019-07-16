@@ -4,6 +4,7 @@
   max-width: 1000px;
   min-height: 85vh;
   position: relative;
+  background-color: #c2d4f1;
 }
 
 .calendar-container form select {
@@ -176,17 +177,26 @@
 }
 
 .availability-target .availability-list.display {
+  position: sticky;
+  top: 0;
   width: 100%;
   background: linear-gradient(lightgrey, rgb(173, 173, 173));
   box-shadow: var(--shadow);
   border: 1px solid var(--primary-color);
   border-left: none;
   box-shadow: inset 0px 2px 3px rgba(0, 0, 0, 0.74);
-  /* border-radius: 0px 5px 5px 0px; */
+  z-index: 4;
 }
 
 .user-calendar .feedback-list {
   padding-left: 5px;
+}
+
+.user-calendar .feedback-list h3 {
+}
+
+.user-calendar .feedback-list p {
+  text-indent: 8%;
 }
 
 .appointment-form-target {
@@ -199,7 +209,7 @@
 }
 
 .calendar-container .appointment-list {
-  background-color: lightgrey;
+  background-color: rgba(211, 211, 211, 0.37);
   box-shadow: inset 3px 3px 5px rgba(0, 0, 0, 0.4);
   width: 70%;
   padding: 5px 15px;

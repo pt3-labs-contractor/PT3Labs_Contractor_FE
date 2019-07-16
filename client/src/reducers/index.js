@@ -128,7 +128,7 @@ export default (state = initialState, action) => {
         schedule: [],
       };
     case SET_SERVICE_SORT:
-      return { ...state, serviceFilter: action.payload };
+      return { ...state, serviceFilter: action.payload, feedback: [] };
     case SET_CONTRACTOR_POSITION:
       return { ...state, positionContractor: action.payload };
     case LOAD_SCHEDULE:

@@ -26,6 +26,7 @@ function AppointmentList(props) {
                 </p>
                 <p>{contractor.contractorName}</p>
                 <p>{contractor.phoneNumber}</p>
+                <p className="service-title">{item.service}</p>
               </div>
             );
         })}
