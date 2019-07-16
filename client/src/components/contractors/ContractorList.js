@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import Fuse from 'fuse.js';
+import { sortByDistance } from './searchFunctions';
 import './ContractorList.css';
 
 import ContractorCard from './ContractorCard';
@@ -21,21 +23,27 @@ function ContractorList({
   const [list, setList] = useState([]);
   const [select, setSelect] = useState({});
   const contractorRef = useRef({});
+  const [zip, setZip] = useState('');
+  const [query, setQuery] = useState('');
 
-  useEffect(() => {
-    const length = contractors.length + 1;
+  const paginate = arr => {
+    const length = arr.length + 1;
     const limit = userLanding ? 5 : 25;
     const dividedContractors = [];
     for (let x = 1; x <= Math.ceil(length / limit); x += 1) {
       const temp = [];
       const pageItems = length / (limit * x) > 1 ? limit : (length % limit) - 1;
       for (let y = 0; y < pageItems; y += 1) {
-        temp.push(contractors[(x - 1) * limit + y]);
+        temp.push(arr[(x - 1) * limit + y]);
       }
       dividedContractors.push(temp);
     }
     setContractors(dividedContractors);
     setPageNum(0);
+  };
+
+  useEffect(() => {
+    paginate(contractors);
     // eslint-disable-next-line
   }, [contractors]);
 
@@ -59,6 +67,53 @@ function ContractorList({
   const pageChange = dir => {
     setPageNum(pageNum + dir);
   };
+
+  function handleSearch(ev) {
+    ev.preventDefault();
+    const options = {
+      shouldSort: true,
+      threshold: 0.6,
+      location: 0,
+      distance: 100,
+      minMatchCharLength: 2,
+      keys: [
+        {
+          name: 'name',
+          weight: '0.5',
+        },
+        {
+          name: 'city',
+          weight: '0.3',
+        },
+        {
+          name: 'stateAbbr',
+          weight: query.length === 2 ? '0.7' : '0.1',
+        },
+        {
+          name: 'zipCode',
+          weight: '0.1',
+        },
+      ],
+    };
+    const fuse = new Fuse(contractors, options);
+    setPageNum(1);
+    paginate(query.length > 1 ? fuse.search(query) : contractors);
+    setQuery('');
+  }
+  function handleZipSort(ev) {
+    ev.preventDefault();
+    sortByDistance(zip, contractors)
+      .then(arr => {
+        setZip('');
+        setPageNum(1);
+        if (!arr) {
+          paginate(contractors);
+          throw new Error('Invalid Zip Code');
+        }
+        paginate(arr);
+      })
+      .catch(err => console.log(err));
+  }
 
   return (
     <div className="contractor-list container">
@@ -90,9 +145,31 @@ function ContractorList({
       <div className="contractor-list-container">
         {loading ? <p>Loading...</p> : null}
         {error ? <p>{error}</p> : null}
+        {userLanding ? null : (
+          <>
+            <form onSubmit={handleZipSort}>
+              <input
+                placeholder="Sort By Distance"
+                type="text"
+                onChange={ev => setZip(ev.target.value)}
+                value={zip}
+              />
+              <button type="submit">Search</button>
+            </form>
+            <form onSubmit={handleSearch}>
+              <input
+                placeholder="Search"
+                type="text"
+                onChange={ev => setQuery(ev.target.value)}
+                value={query}
+              />
+              <button type="submit">Search</button>
+            </form>
+          </>
+        )}
         {list.map(contractor =>
           userLanding ? (
-            <div
+            <button
               type="button"
               key={contractor.id}
               ref={contractorRef.current[contractor.id]}
@@ -106,10 +183,10 @@ function ContractorList({
               }}
             >
               <ContractorCard contractor={contractor} />
-            </div>
+            </button>
           ) : (
             <Link to={`/app/contractors/${contractor.id}`} key={contractor.id}>
-              <ContractorCard full contractor={contractor} />
+              <ContractorCard contractor={contractor} />
             </Link>
           )
         )}

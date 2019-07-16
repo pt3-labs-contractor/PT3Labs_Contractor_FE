@@ -58,6 +58,7 @@ import {
 
   // edit the user information
   EDIT_USER_SUCCESS,
+  SELECTED,
 } from '../actions';
 
 const initialState = {
@@ -276,7 +277,8 @@ export default (state = initialState, action) => {
 
     case LOGOUTUSER:
       return { ...state, user: {} };
-
+    case SELECTED:
+      return { ...state, thisContractor: action.payload };
     default:
       return state;
   }
