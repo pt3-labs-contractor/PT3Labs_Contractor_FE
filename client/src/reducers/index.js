@@ -59,6 +59,8 @@ import {
   // edit the user information
   EDIT_USER_SUCCESS,
   SELECTED,
+  SUBSCRIBE_SUCCESS,
+  SUBSCRIBE_FAILURE,
 } from '../actions';
 
 const initialState = {
@@ -279,6 +281,10 @@ export default (state = initialState, action) => {
       return { ...state, user: {} };
     case SELECTED:
       return { ...state, thisContractor: action.payload };
+    case SUBSCRIBE_SUCCESS:
+      return { ...state, user: action.payload, error: null, loading: false };
+    case SUBSCRIBE_FAILURE:
+      return { ...state, error: action.payload, loading: false };
     default:
       return state;
   }

@@ -59,6 +59,9 @@ export const EDIT_USER_SUCCESS = 'EDIT_USER_SUCCESS';
 export const FAIL_SCHEDULE = 'FAIL_SCHEDULE';
 export const LOAD_SCHEDULE = 'LOAD_SCHEDULE';
 export const SELECTED = 'SELECTED';
+
+export const SUBSCRIBE_SUCCESS = 'SUBSCRIBE_SUCCESS';
+export const SUBSCRIBE_FAILURE = 'SUBSCRIBE_FAILURE';
 // ---------------------------------------------------------------
 
 function setHeaders() {
@@ -500,5 +503,22 @@ export const setPosition = element => dispatch => {
 
 export const selectContractor = (id, list) => dispatch => {
   const selected = list.filter(item => item.id === id);
-  dispatch({ type: SELECTED, payload: selected[0]})
-}
+  dispatch({ type: SELECTED, payload: selected[0] });
+};
+
+export const handleSubscribe = (token, address) => dispatch => {
+  dispatch({ type: LOADING });
+  const headers = setHeaders();
+  axios
+    .post(
+      'https://fierce-plains-47590.herokuapp.com/api/subscription',
+      { token, address },
+      { headers }
+    )
+    .then(res =>
+      dispatch({ type: SUBSCRIBE_SUCCESS, payload: res.data.success })
+    )
+    .catch(err => {
+      dispatch({ type: SUBSCRIBE_FAILURE, payload: err.response.data.error });
+    });
+};
