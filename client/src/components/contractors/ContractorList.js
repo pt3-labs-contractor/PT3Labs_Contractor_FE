@@ -26,6 +26,8 @@ function ContractorList({
   const [zip, setZip] = useState('');
   const [query, setQuery] = useState('');
 
+  console.log(list);
+
   const paginate = arr => {
     const length = arr.length + 1;
     const limit = userLanding ? 5 : 25;

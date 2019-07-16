@@ -71,9 +71,9 @@ function ContractorCard({ contractor, service, full, mainList }) {
         emptySymbol={
           <span className="contractor-card-star emptystar">&#9734;</span>
         }
-        initialRating={1.6}
+        initialRating={userScore}
         fractions={4}
-        stop={3}
+        stop={5}
         readonly
       />
     </div>
