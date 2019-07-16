@@ -231,7 +231,11 @@ export const selectSingleContractorSetting = id => dispatch => {
 };
 
 export const resetFailure = () => dispatch => {
-  dispatch({ type: FAILURE, payload: null });
+  dispatch({ type: FAILURE, error: null });
+};
+
+export const setFailure = fail => dispatch => {
+  dispatch({ type: FAILURE, error: fail });
 };
 
 // axios get feedback
@@ -300,16 +304,21 @@ export const editUserSettings = data => dispatch => {
 };
 
 // axios get appointments when current user is contractor
-// export const seeMyAppointments = (id) = dispatch => {
-//   dispatch({ type: LOADING })
-//   const headers = setHeaders();
-
-//   axios.get(`https://fierce-plains-47590.herokuapp.com/api/appointments/${id}`,headers)
-//   .then( res => {
-//     dispatch({ type: RET_CONTRACTOR_APP_SUCC, payload: res.data })
-//   })
-//   .catch(err => dispatch({ type: FAILURE, payload:err }))
-// }
+export const seeMyAppointments = () => dispatch => {
+  dispatch({ type: LOADING });
+  const headers = setHeaders();
+  axios
+    .get(`https://fierce-plains-47590.herokuapp.com/api/appointments`, {
+      headers,
+    })
+    .then(res => {
+      dispatch({
+        type: RET_CONTRACTOR_APP_SUCC,
+        payload: res.data.appointments,
+      });
+    })
+    .catch(err => dispatch({ type: FAILURE, payload: err }));
+};
 
 // axios request for services
 export const postNewService = serv => {
@@ -500,5 +509,5 @@ export const setPosition = element => dispatch => {
 
 export const selectContractor = (id, list) => dispatch => {
   const selected = list.filter(item => item.id === id);
-  dispatch({ type: SELECTED, payload: selected[0]})
-}
+  dispatch({ type: SELECTED, payload: selected[0] });
+};

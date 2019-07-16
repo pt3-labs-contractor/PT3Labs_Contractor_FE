@@ -203,7 +203,7 @@ function UserFeedback(props) {
                             Delete Feedback
                           </button>
                           <i
-                            className="fas fa-trash"
+                            className="fas fa-trash userTrash"
                             onClick={() => {
                               deleteFeedback(feedback);
                             }}
