@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import './ContractorList.css';
@@ -60,7 +60,6 @@ function ContractorList({
     setPageNum(pageNum + dir);
   };
 
-function ContractorList(props) {
   return (
     <div className="contractor-list container">
       <div className="list-header">
@@ -116,15 +115,15 @@ function ContractorList(props) {
         )}
       </div>
     </div>
-  )
+  );
 }
 
 const mapStateToProps = state => {
   return {
     contractors: state.contractors,
     loading: state.loading,
-    error: state.error
-  }
-}
+    error: state.error,
+  };
+};
 
 export default connect(mapStateToProps, {setPosition})(ContractorList);
