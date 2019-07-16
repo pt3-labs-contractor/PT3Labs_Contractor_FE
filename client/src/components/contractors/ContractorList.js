@@ -62,17 +62,6 @@ function ContractorList({
 
 function ContractorList(props) {
   return (
-<<<<<<< HEAD
-    <div>
-      <h3>Contractors:</h3>
-      {props.loading ? <p>Loading...</p> : null}
-      {props.error ? <p>{props.error}</p> : null}
-      {props.contractors.map(contractor => (
-        <Link to={`/contractors/${contractor.id}`} key={contractor.id}>
-          <ContractorCard contractor={contractor} />
-        </Link>
-      ))}
-=======
     <div className="contractor-list container">
       <div className="list-header">
         <h3>Contractors:</h3>
@@ -126,7 +115,6 @@ function ContractorList(props) {
           )
         )}
       </div>
->>>>>>> eade825f1590ef89991b543c29a5fac70dfd97a4
     </div>
   )
 }
@@ -139,4 +127,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(ContractorList);
+export default connect(mapStateToProps, {setPosition})(ContractorList);
