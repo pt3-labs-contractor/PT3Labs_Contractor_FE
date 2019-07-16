@@ -15,7 +15,6 @@ function Contractor(props) {
 
   return (
     <div className="individual-contractor-container">
-      <NavBarContractor />
       <ContractorCard full contractor={props.contractor} />
       <Calendar contractor={props.contractor} />
     </div>

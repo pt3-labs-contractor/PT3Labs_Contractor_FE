@@ -47,3 +47,8 @@
 .contractor-card-full:hover {
   background: #bfbfbf;
 }
+.individual-contractor-container {
+  margin-top: 20px;
+  margin-left: 210px;
+  width: auto;
+}
