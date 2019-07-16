@@ -110,7 +110,7 @@ export default (state = initialState, action) => {
 
     // calander
     case SET_DAY:
-      return { ...state, thisDay: action.payload };
+      return { ...state, thisDay: action.payload, feedback: [] };
     case SET_MONTH:
       return { ...state, thisMonth: action.payload };
     case SET_SCHEDULE:

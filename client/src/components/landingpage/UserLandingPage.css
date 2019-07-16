@@ -146,8 +146,10 @@
 
 .availability-target {
   width: 25%;
-  overflow: scroll;
   height: 65vh;
+  background-color: rgba(211, 211, 211, 0.342);
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .availability-target .availability-list {
@@ -180,13 +182,19 @@
   border: 1px solid var(--primary-color);
   border-left: none;
   box-shadow: inset 0px 2px 3px rgba(0, 0, 0, 0.74);
-  border-radius: 0px 5px 5px 0px;
+  /* border-radius: 0px 5px 5px 0px; */
+}
+
+.user-calendar .feedback-list {
+  padding-left: 5px;
 }
 
 .appointment-form-target {
   position: absolute;
-  right: 3%;
-  width: 26%;
+  top: -70px;
+  right: 27%;
+  width: 31%;
+  /* height: 90px; */
   box-shadow: var(--shadow);
 }
 

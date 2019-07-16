@@ -5,7 +5,7 @@ import FeedbackCard from './FeedbackCard';
 
 function FeedbackList({ feedback }) {
   return (
-    <div>
+    <div className="feedback-list">
       {feedback.map(item => (
         <div key={item.id}>
           <FeedbackCard feedback={item} />
