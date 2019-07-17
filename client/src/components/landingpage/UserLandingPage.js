@@ -65,7 +65,6 @@ function UserLandingPage(props) {
     const dateString = dateFns.format(props.selectedDay, 'YYYY-MM-DD');
     props.fetchAvailabilityByDay(
       dateString,
-      props.contractors,
       props.serviceFilter,
       props.contractors
     );
@@ -195,6 +194,7 @@ const mapStateToProps = state => {
     serviceFilter: state.serviceFilter,
     sorted: state.sortedContractors,
     selectedDay: state.thisDay,
+    serviceFilter: state.serviceFilter,
   };
 };
 
