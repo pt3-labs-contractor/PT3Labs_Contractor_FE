@@ -7,19 +7,17 @@ import { confirmApp, fetchAccts } from '../../actions/index';
 import './MyBookings.css';
 
 function MyBookings(props) {
-  const [appointments, setAppointmentsList] = useState(props.appointments)
+  const [confirmed, setConfirmed] = useState([]);
+  const { appointments } = props;
+
   useEffect(() => {
-    setAppointmentsList(props.appointments)
-    console.log(appointments)
-  }, [props.appointments])
-
-  function cancelApp(e) {
-    // console.log(e)
-    e.preventDefault();
-    // console.log(e)
-    console.log(e)
-
-  }
+    console.log(appointments);
+    const filteredAp = appointments.filter(app => app.confirmed);
+    appointments.forEach(app => {
+      console.log(app.confirmed);
+    });
+    setConfirmed(filteredAp);
+  }, [appointments]);
 
   return (
     <>
@@ -53,7 +51,10 @@ function MyBookings(props) {
 
 const mapStateToProps = state => {
   return {
+<<<<<<< HEAD
     contractors: state.contractors,
+=======
+>>>>>>> ff0d673f6ec22b43e4176c9cc32acf0b6e94b744
     appointments: state.appointments,
     user: state.user,
     loading: state.loading,

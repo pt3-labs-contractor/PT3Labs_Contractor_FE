@@ -11,7 +11,7 @@ function Contractor(props) {
   useEffect(() => {
     props.selectContractor(props.match.params.id, props.list); // replace with get request
     // eslint-disable-next-line
-  }, [props.contractor])
+  }, [props.contractor]);
 
   return (
     <div>
@@ -24,7 +24,7 @@ function Contractor(props) {
 
 const mapStateToProps = state => {
   return {
-    list: state.accounts.contractors,
+    list: state.contractors,
     contractor: state.thisContractor,
     selectedDay: state.thisDay,
     schedule: state.schedule,

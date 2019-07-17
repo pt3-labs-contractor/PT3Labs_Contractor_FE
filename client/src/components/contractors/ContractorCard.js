@@ -20,6 +20,9 @@ function ContractorCard({ contractor, service, full }) {
       const filtered = contractor.services.filter(entry => {
         return entry.name === service;
       });
+      console.log(filtered);
+      console.log(contractor.services);
+      console.log(service);
       setService(filtered[0]);
     }
   }, [service]);
@@ -55,10 +58,10 @@ function ContractorCard({ contractor, service, full }) {
             </p>
             <p>{zipCode}</p>
           </>
-        ) : service ? (
+        ) : localService ? (
           <>
             <p className="service-title">
-              {service.name}: {service.price}
+              {localService.name}: {localService.price}
             </p>
           </>
         ) : null}
@@ -71,13 +74,13 @@ function ContractorCard({ contractor, service, full }) {
         emptySymbol={
           <span className="contractor-card-star emptystar">&#9734;</span>
         }
-        initialRating={1.6}
+        initialRating={userScore}
         fractions={4}
         stop={3}
         readonly
       />
     </div>
-  )
+  );
 }
 
-export default ContractorCard
+export default ContractorCard;
