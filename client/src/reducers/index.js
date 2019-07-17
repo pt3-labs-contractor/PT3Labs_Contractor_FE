@@ -13,6 +13,7 @@ import {
   GETTING_USER_SUCC,
   LOGOUTUSER,
   REFS,
+  SELECTED,
   // fetching users
   LOADING,
   FETCHING_USERS_SUCCESS,
@@ -276,6 +277,8 @@ export default (state = initialState, action) => {
 
     case LOGOUTUSER:
       return { ...state, user: {} };
+    case SELECTED:
+      return { ...state, thisContractor: action.payload };
 
     default:
       return state;

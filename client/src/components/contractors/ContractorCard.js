@@ -20,6 +20,9 @@ function ContractorCard({ contractor, service, full }) {
       const filtered = contractor.services.filter(entry => {
         return entry.name === service;
       });
+      console.log(filtered);
+      console.log(contractor.services);
+      console.log(service);
       setService(filtered[0]);
     }
   }, [service]);
@@ -77,7 +80,7 @@ function ContractorCard({ contractor, service, full }) {
         readonly
       />
     </div>
-  )
+  );
 }
 
-export default ContractorCard
+export default ContractorCard;
