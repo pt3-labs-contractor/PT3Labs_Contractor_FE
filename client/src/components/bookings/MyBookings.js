@@ -51,10 +51,6 @@ function MyBookings(props) {
 
 const mapStateToProps = state => {
   return {
-<<<<<<< HEAD
-    contractors: state.contractors,
-=======
->>>>>>> ff0d673f6ec22b43e4176c9cc32acf0b6e94b744
     appointments: state.appointments,
     user: state.user,
     loading: state.loading,
