@@ -62,6 +62,9 @@ export const SELECTED = 'SELECTED';
 
 export const SUBSCRIBE_SUCCESS = 'SUBSCRIBE_SUCCESS';
 export const SUBSCRIBE_FAILURE = 'SUBSCRIBE_FAILURE';
+
+export const RETRIEVE_SUBSCRIPTION_SUCCESS = 'RETRIEVE_SUBSCRIPTION_SUCCESS';
+export const RETRIEVE_SUBSCRIPTION_FAILURE = 'RETRIEVE_SUBSCRIPTION_FAILURE';
 // ---------------------------------------------------------------
 
 function setHeaders() {
@@ -521,4 +524,25 @@ export const handleSubscribe = (token, address) => dispatch => {
     .catch(err => {
       dispatch({ type: SUBSCRIBE_FAILURE, payload: err.response.data.error });
     });
+};
+
+export const retrieveSubscription = () => dispatch => {
+  dispatch({ type: LOADING });
+  const headers = setHeaders();
+  axios
+    .get('https://fierce-plains-47590.herokuapp.com/api/subscription', {
+      headers,
+    })
+    .then(res =>
+      dispatch({
+        type: RETRIEVE_SUBSCRIPTION_SUCCESS,
+        payload: res.data.subscription,
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: RETRIEVE_SUBSCRIPTION_FAILURE,
+        payload: err.response.data.error,
+      })
+    );
 };

@@ -61,6 +61,8 @@ import {
   SELECTED,
   SUBSCRIBE_SUCCESS,
   SUBSCRIBE_FAILURE,
+  RETRIEVE_SUBSCRIPTION_SUCCESS,
+  RETRIEVE_SUBSCRIPTION_FAILURE,
 } from '../actions';
 
 const initialState = {
@@ -80,6 +82,7 @@ const initialState = {
   serviceFilter: '',
   refs: [],
   positionContractor: {},
+  subscription: null,
 };
 
 export default (state = initialState, action) => {
@@ -284,6 +287,15 @@ export default (state = initialState, action) => {
     case SUBSCRIBE_SUCCESS:
       return { ...state, user: action.payload, error: null, loading: false };
     case SUBSCRIBE_FAILURE:
+      return { ...state, error: action.payload, loading: false };
+    case RETRIEVE_SUBSCRIPTION_SUCCESS:
+      return {
+        ...state,
+        subscription: action.payload,
+        error: null,
+        loading: false,
+      };
+    case RETRIEVE_SUBSCRIPTION_FAILURE:
       return { ...state, error: action.payload, loading: false };
     default:
       return state;
