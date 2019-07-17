@@ -14,10 +14,15 @@ function MyBookings(props) {
     console.log(appointments);
     const filteredAp = appointments.filter(app => app.confirmed);
     appointments.forEach(app => {
-      console.log(app.confirmed);
+      // console.log(app.confirmed);
     });
     setConfirmed(filteredAp);
   }, [appointments]);
+
+
+  function cancelApp() {
+    console.log('cancel!!')
+  }
 
   return (
     <>
@@ -32,9 +37,9 @@ function MyBookings(props) {
             {/* {error ? <p>{error}</p> : null} */}
             {appointments.map(app => 
                 <div>
-                  <p>You have an appointment with {app.contractorId}</p>
+                  <p>You have an appointment with {app.contractorName}</p>
                   <p>On: {app.startTime}</p>
-                  <p>For: {app.serviceId}</p>
+                  <p>For: {app.service}</p>
                   {app.confirmed === null 
                     ? <p>Not confirmed yet</p> 
                     : <p>Contractor confirmed!</p>}
