@@ -65,6 +65,11 @@ export const SUBSCRIBE_FAILURE = 'SUBSCRIBE_FAILURE';
 
 export const RETRIEVE_SUBSCRIPTION_SUCCESS = 'RETRIEVE_SUBSCRIPTION_SUCCESS';
 export const RETRIEVE_SUBSCRIPTION_FAILURE = 'RETRIEVE_SUBSCRIPTION_FAILURE';
+
+export const CANCEL_DEFAULT_SUCCESS = 'CANCEL_DEFAULT_SUCCESS';
+export const CANCEL_DEFAULT_FAILURE = 'CANCEL_DEFAULT_FAILURE';
+export const CANCEL_IMMEDIATE_SUCCESS = 'CANCEL_IMMEDIATE_SUCCESS';
+export const CANCEL_IMMEDIATE_FAILURE = 'CANCEL_IMMEDIATE_FAILURE';
 // ---------------------------------------------------------------
 
 function setHeaders() {
@@ -542,6 +547,41 @@ export const retrieveSubscription = () => dispatch => {
     .catch(err =>
       dispatch({
         type: RETRIEVE_SUBSCRIPTION_FAILURE,
+        payload: err.response.data.error,
+      })
+    );
+};
+
+export const cancelDefault = () => dispatch => {
+  dispatch({ type: LOADING });
+  const headers = setHeaders();
+  axios
+    .delete('https://fierce-plains-47590.herokuapp.com/api/subscription', {
+      headers,
+    })
+    .then(res => dispatch({ type: CANCEL_DEFAULT_SUCCESS }))
+    .catch(err =>
+      dispatch({
+        type: CANCEL_DEFAULT_FAILURE,
+        payload: err.response.data.error,
+      })
+    );
+};
+
+export const cancelImmediate = () => dispatch => {
+  dispatch({ type: LOADING });
+  const headers = setHeaders();
+  axios
+    .delete(
+      'https://fierce-plains-47590.herokuapp.com/api/subscription/immediate',
+      { headers }
+    )
+    .then(res =>
+      dispatch({ type: CANCEL_IMMEDIATE_SUCCESS, payload: res.data })
+    )
+    .catch(err =>
+      dispatch({
+        type: CANCEL_IMMEDIATE_FAILURE,
         payload: err.response.data.error,
       })
     );

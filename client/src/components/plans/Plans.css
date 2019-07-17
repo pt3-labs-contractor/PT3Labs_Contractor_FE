@@ -131,7 +131,52 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 10px;
 }
 .plan-wrapper > * {
   margin: 5px 0;
+}
+.plan-wrapper > *:first-child {
+  margin-top: 0;
+}
+.plan-wrapper > *:last-child {
+  margin-bottom: 0;
+}
+.cancel-btn {
+  background: #dc3545;
+  border: #dc3545;
+  border-radius: 3px;
+  padding: 0.4rem 1.3rem;
+  color: #eee;
+  font-size: 1rem;
+  cursor: pointer;
+}
+.cancel-btn:hover {
+  background: #c82333;
+}
+.single-price.active-sub {
+  box-shadow: none;
+  transform: none;
+  border: 1px solid rgba(52, 58, 64, 0.9);
+  height: auto;
+  background: initial;
+  color: initial;
+}
+.cancel-form {
+  padding: 10px;
+}
+.cancel-form label > * {
+  margin: 3px 0;
+}
+.cancel-form label input {
+  margin-bottom: 30px;
+}
+.cancel-notice {
+  margin: 10px;
+}
+.pending-cancel {
+  padding: 10px;
+}
+.pending-cancel h3 {
+  margin-bottom: 10px;
 }

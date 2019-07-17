@@ -63,6 +63,10 @@ import {
   SUBSCRIBE_FAILURE,
   RETRIEVE_SUBSCRIPTION_SUCCESS,
   RETRIEVE_SUBSCRIPTION_FAILURE,
+  CANCEL_DEFAULT_SUCCESS,
+  CANCEL_DEFAULT_FAILURE,
+  CANCEL_IMMEDIATE_SUCCESS,
+  CANCEL_IMMEDIATE_FAILURE,
 } from '../actions';
 
 const initialState = {
@@ -296,6 +300,24 @@ export default (state = initialState, action) => {
         loading: false,
       };
     case RETRIEVE_SUBSCRIPTION_FAILURE:
+      return { ...state, error: action.payload, loading: false };
+    case CANCEL_DEFAULT_SUCCESS:
+      return {
+        ...state,
+        subscription: { ...state.subscription, cancel_at_period_end: true },
+        loading: false,
+      };
+    case CANCEL_DEFAULT_FAILURE:
+      return { ...state, error: action.payload, loading: false };
+    case CANCEL_IMMEDIATE_SUCCESS:
+      return {
+        ...state,
+        subscription: null,
+        user: { ...state.user, subscriptionId: null },
+        error: null,
+        loading: false,
+      };
+    case CANCEL_IMMEDIATE_FAILURE:
       return { ...state, error: action.payload, loading: false };
     default:
       return state;

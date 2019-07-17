@@ -1,18 +1,29 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import StripeCheckout from 'react-stripe-checkout';
 import { connect } from 'react-redux';
-import { handleSubscribe, retrieveSubscription } from '../../actions';
+import {
+  handleSubscribe,
+  retrieveSubscription,
+  cancelDefault,
+  cancelImmediate,
+} from '../../actions';
 import NavBarContractor from '../navbar/NavBarContractor';
 import './Plans.css';
 import TopNavbar from '../navbar/TopNavbar';
-import { isObject } from 'util';
 
 function Plans({ user, subscription, ...props }) {
+  const [updateForm, setUpdateForm] = useState(false);
+  const [cancelType, setCancelType] = useState('default');
   useEffect(() => {
     if (user.subscriptionId) props.retrieveSubscription();
   }, [user]);
+  const handleCancellation = ev => {
+    ev.preventDefault();
+    if (cancelType === 'immediate') return props.cancelImmediate();
+    return props.cancelDefault();
+  };
   const endDate = subscription
     ? new Date(subscription.current_period_end * 1000)
     : null;
@@ -23,23 +34,68 @@ function Plans({ user, subscription, ...props }) {
       <div className="main-body">
         {subscription ? (
           <div className="wrapper">
-            <div className="single-price">
+            <div className="single-price active-sub">
               <h2 className="plan-attribute">Current Month Ends</h2>
               <div className="plan-wrapper">
                 <p>{endDate.toUTCString()}</p>
               </div>
-              <div>
-                <h2 className="plan-attribute">Current Payment Method</h2>
-                <div className="plan-wrapper">
-                  <h3 className="plan-attribute">Type: </h3>{' '}
-                  {subscription.paymentMethod.card.brand}
-                  <h3 className="plan-attribute">Last 4 Digits: </h3>
-                  {subscription.paymentMethod.card.last4}
-                  <h3 className="plan-attribute">Expiration Date: </h3>
-                  {subscription.paymentMethod.card.exp_month}/
-                  {subscription.paymentMethod.card.exp_year}
-                </div>
+              <h2 className="plan-attribute">Current Payment Method</h2>
+              <div className="plan-wrapper">
+                <h3 className="plan-attribute">Type: </h3>{' '}
+                {subscription.paymentMethod.card.brand}
+                <h3 className="plan-attribute">Last 4 Digits: </h3>
+                {subscription.paymentMethod.card.last4}
+                <h3 className="plan-attribute">Expiration Date: </h3>
+                {subscription.paymentMethod.card.exp_month}/
+                {subscription.paymentMethod.card.exp_year}
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={() => setUpdateForm(true)}
+                >
+                  Update
+                </button>
               </div>
+              <h2 className="plan-attribute">Cancel Subscription</h2>
+              {subscription.cancel_at_period_end ? (
+                <div className="pending-cancel">
+                  <h3>Subscription will cancel at end of current period.</h3>
+                  <button
+                    type="button"
+                    className="cancel-btn"
+                    onClick={props.cancelImmediate}
+                  >
+                    Cancel Now
+                  </button>
+                </div>
+              ) : (
+                <form className="cancel-form" onSubmit={handleCancellation}>
+                  <label htmlFor="default-sub">
+                    Cancel at the end of subscription period, do not renew:
+                    <input
+                      defaultChecked
+                      type="radio"
+                      name="cancel"
+                      value="default"
+                      id="default-sub"
+                      onChange={() => setCancelType('default')}
+                    />
+                  </label>
+                  <label htmlFor="immediate-sub">
+                    Cancel immediately:
+                    <input
+                      type="radio"
+                      name="cancel"
+                      value="immediate"
+                      id="immediate-sub"
+                      onChange={() => setCancelType('immediate')}
+                    />
+                  </label>
+                  <button className="cancel-btn" type="submit">
+                    Cancel
+                  </button>
+                </form>
+              )}
             </div>
           </div>
         ) : (
@@ -116,5 +172,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { handleSubscribe, retrieveSubscription }
+  { handleSubscribe, retrieveSubscription, cancelDefault, cancelImmediate }
 )(Plans);
