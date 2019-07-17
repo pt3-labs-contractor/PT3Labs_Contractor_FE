@@ -26,7 +26,7 @@ function Register(props) {
     if (!oauth) {
       axios
         .post(
-          'http://localhost:5000/api/auth/register',
+          'https://fierce-plains-47590.herokuapp.com/api/auth/register',
           values,
           { headers }
         )
@@ -49,12 +49,12 @@ function Register(props) {
         axios
           .all([
             axios.post(
-              'http://localhost:5000/api/contractors',
+              'https://fierce-plains-47590.herokuapp.com/api/contractors',
               contractorUpdate,
               { headers }
             ),
             axios.put(
-              'http://localhost:5000/api/users',
+              'https://fierce-plains-47590.herokuapp.com/api/users',
               userUpdate,
               { headers }
             ),
@@ -68,7 +68,7 @@ function Register(props) {
       } else {
         axios
           .put(
-            'http://localhost:5000/api/users',
+            'https://fierce-plains-47590.herokuapp.com/api/users',
             userUpdate,
             { headers }
           )

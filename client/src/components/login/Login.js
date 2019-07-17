@@ -28,7 +28,7 @@ function Login(props) {
     const credentials = { username, password };
 
     axios
-      .post('http://localhost:5000/api/auth/login', credentials, {
+      .post('https://fierce-plains-47590.herokuapp.com/api/auth/login', credentials, {
         headers,
       })
       .then(res => {

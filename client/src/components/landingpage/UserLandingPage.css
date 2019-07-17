@@ -189,10 +189,15 @@
 }
 
 .user-calendar .feedback-list {
-  padding-left: 5px;
+  padding: 0 5px;
+}
+
+.user-calendar .feedback-list div {
+  border-bottom: 1px solid #000;
 }
 
 .user-calendar .feedback-list h3 {
+  overflow-wrap: break-word;
 }
 
 .user-calendar .feedback-list p {

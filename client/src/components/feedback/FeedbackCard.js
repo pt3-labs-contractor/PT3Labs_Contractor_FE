@@ -1,5 +1,6 @@
 import React from 'react';
 import Rating from 'react-rating';
+import PropTypes from 'prop-types';
 
 function FeedbackCard({ feedback }) {
   const { username, message, stars } = feedback;
@@ -21,3 +22,18 @@ function FeedbackCard({ feedback }) {
 }
 
 export default FeedbackCard;
+
+FeedbackCard.propTypes = {
+  feedback: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string,
+      contractorName: PropTypes.string,
+      username: PropTypes.string,
+      message: PropTypes.string,
+      contractorId: PropTypes.string,
+      userId: PropTypes.string,
+      stars: PropTypes.number,
+      createdAt: PropTypes.string,
+    })
+  ),
+};

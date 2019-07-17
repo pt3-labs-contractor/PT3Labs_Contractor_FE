@@ -38,6 +38,7 @@ function ContractorList({
     setList(contractorList || []);
   }, [pageNum, contractorList]);
 
+  // Possible removal of this function as the position isn't needed
   const selectElement = id => {
     if (select !== id) {
       setSelect(id);

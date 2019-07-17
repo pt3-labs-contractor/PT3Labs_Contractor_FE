@@ -41,7 +41,7 @@ function AppointmentForm(props) {
       };
       axios
         .post(
-          'http://localhost:5000/api/appointments',
+          'https://fierce-plains-47590.herokuapp.com/api/appointments',
           appointment,
           { headers }
         )
