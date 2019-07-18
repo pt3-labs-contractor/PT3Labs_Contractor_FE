@@ -53,7 +53,7 @@ function ContractorList({
   }, [sortedContractors]);
 
   useEffect(() => {
-    setList(contractorList || []);
+    setList(contractorList[pageNum] || []);
   }, [pageNum, contractorList]);
 
   // Possible removal of this function as the position isn't needed
@@ -71,13 +71,7 @@ function ContractorList({
   };
 
   const pageChange = dir => {
-    const newPage = pageNum + dir;
-    const dividedContractors = contractors.slice(
-      newPage * limit,
-      newPage * limit + limit
-    );
-    setContractors(dividedContractors);
-    setPageNum(newPage);
+    setPageNum(pageNum + dir);
   };
 
   function handleSearch(ev) {
@@ -146,7 +140,7 @@ function ContractorList({
             type="button"
             className="btn"
             onClick={() => pageChange(1)}
-            disabled={pageNum * limit + limit >= contractors.length}
+            disabled={pageNum >= contractorList.length - 1}
           >
             Page
             <br />
