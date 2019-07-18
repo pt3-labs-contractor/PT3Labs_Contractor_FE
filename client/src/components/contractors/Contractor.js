@@ -5,7 +5,6 @@ import Calendar from '../calendar/Calendar';
 import ContractorCard from './ContractorCard';
 import AvailabilityList from '../appointments/AvailabilityList';
 import AppointmentForm from '../appointments/AppointmentForm';
-// import NavBarContractor from '../navbar/NavBarContractor';
 
 import './Contractor.css';
 
