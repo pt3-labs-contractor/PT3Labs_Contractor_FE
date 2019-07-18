@@ -184,7 +184,7 @@ export default (state = initialState, action) => {
 
     // fetching current user written feedback
     case FEEDBACK_SUCCESS:
-      return { ...state, feedback: action.payload.feedback };
+      return { ...state, feedback: action.payload.feedback, loading: false };
 
     case POST_FEEDBACK_SUCCESS:
       return {

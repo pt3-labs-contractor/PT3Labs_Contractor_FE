@@ -25,8 +25,9 @@ import MyBookings from './components/bookings/MyBookings';
 import Plans from './components/plans/Plans';
 import UserSettings from './components/settings/UserSettings';
 import ContractorSchedule from './components/contractors/ContractorSchedule';
+import Loading from './components/loading/loading';
 
-function App({ user, ...props }) {
+function App({ user, loading, ...props }) {
   const [win, setWin] = useState();
   const string = JSON.stringify(win);
   useEffect(() => {
@@ -38,6 +39,7 @@ function App({ user, ...props }) {
 
   return (
     <div className="App">
+      {loading ? <Loading /> : null}
       <main>
         <Route exact path="/" component={Homepage} />
         <Route
@@ -92,6 +94,7 @@ const mapStateToProps = state => {
   return {
     user: state.user,
     feedback: state.feedback,
+    loading: state.loading,
   };
 };
 

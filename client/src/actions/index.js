@@ -80,7 +80,7 @@ function setHeaders() {
 
 // axios get all accounts
 export const fetchAccts = () => dispatch => {
-  // dispatch({ type: LOADING_USERS });
+  dispatch({ type: LOADING });
   const headers = setHeaders();
 
   axios
