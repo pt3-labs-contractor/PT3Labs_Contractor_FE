@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+
+import moment from 'moment';
 import { connect } from 'react-redux';
 
 import NavBarUser from '../navbar/NavBarUser';
 import TopNavbar from '../navbar/TopNavbar';
-import { confirmApp, fetchAccts } from '../../actions/index';
+import { confirmApp, fetchAccts, deleteApp } from '../../actions/index';
 import './MyBookings.css';
 
 function MyBookings(props) {
@@ -11,7 +13,7 @@ function MyBookings(props) {
   const { appointments } = props;
 
   useEffect(() => {
-    console.log(appointments);
+    // console.log(appointments);
     const filteredAp = appointments.filter(app => app.confirmed);
     appointments.forEach(app => {
       // console.log(app.confirmed);
@@ -20,8 +22,10 @@ function MyBookings(props) {
   }, [appointments]);
 
 
-  function cancelApp() {
-    console.log('cancel!!')
+  function cancelApp(id) {
+    // e.preventDefault();
+    // console.log(app.id)
+    props.deleteApp(appointments, id)
   }
 
   return (
@@ -35,18 +39,22 @@ function MyBookings(props) {
           <div>
             {/* {loading ? <p>Loading Appointments....</p> : null} */}
             {/* {error ? <p>{error}</p> : null} */}
-            {appointments.map(app => 
-                <div>
+            {/* {appointments === null ? <p>Loading Appointments</p> : null} */}
+            {appointments ?
+            appointments.map(app => 
+              <div>
                   <p>You have an appointment with {app.contractorName}</p>
-                  <p>On: {app.startTime}</p>
+                  <p> On: {moment(app.startTime).format('MMMM Do')} @ {moment(app.startTime).format('h:mm a')} 
+                  </p>
                   <p>For: {app.service}</p>
                   {app.confirmed === null 
                     ? <p>Not confirmed yet</p> 
                     : <p>Contractor confirmed!</p>}
 
-                <button onClick={cancelApp}>Cancel</button>
+                <button onClick={e => cancelApp(app.id)}>Cancel</button>
                 </div>
-              )}
+              )
+              : null}
           </div>
         </div>
       </div>
@@ -65,5 +73,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { confirmApp, fetchAccts }
+  { confirmApp, fetchAccts, deleteApp }
 )(MyBookings);
