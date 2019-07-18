@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Rating from 'react-rating';
 import NavBarUser from '../navbar/NavBarUser';
@@ -8,6 +9,7 @@ import { getFeedback, postFeedback, deleteFeedback } from '../../actions/index';
 import TopNavbar from '../navbar/TopNavbar';
 import dateFns from 'date-fns';
 import Pagination from './Pagination';
+import DeleteModal from './DeleteModal';
 
 function UserFeedback(props) {
   const { id } = props.user;
@@ -18,11 +20,19 @@ function UserFeedback(props) {
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(3);
   const [loading, setLoading] = useState(false);
+  const [clicked, setClicked] = useState(false);
+  const [toggle, setToggle] = useState(false);
+
+  console.log(props.contractor);
 
   const stringify = JSON.stringify(props.feedback);
   useEffect(() => {
     props.getFeedback();
   }, [stringify]);
+
+  useEffect(() => {
+    setClicked(!clicked);
+  }, []);
 
   function deleteFeedback(feedback) {
     console.log(feedback);
@@ -54,12 +64,15 @@ function UserFeedback(props) {
     feedback = props.feedback;
   }
 
-  // console.log(currentPosts);
-  // console.log(props.feedback);
-
   // Change page
   const paginate = pageNumber => {
     setCurrentPage(pageNumber);
+  };
+
+  const feedbackId = feedback.id;
+
+  const myToggle = () => {
+    setToggle(!toggle);
   };
 
   return (
@@ -155,6 +168,8 @@ function UserFeedback(props) {
           </div>
         </div>
 
+        {clicked ? <DeleteModal toggle={toggle} myToggle={myToggle} /> : null}
+
         <div className="feeback-form-container">
           <h4 className="feedback-user-header">Your Feedback History</h4>
           <div>
@@ -194,26 +209,19 @@ function UserFeedback(props) {
                       </div>
                       <div className="posted-user">
                         <div>
-                          <button
-                            className="btn delete-btn"
-                            onClick={() => {
-                              deleteFeedback(feedback);
-                            }}
-                          >
-                            Delete Feedback
-                          </button>
+                          Posted:{' '}
+                          {dateFns.format(feedback.createdAt, 'MMM DD YYYY')}
+                        </div>
+                        <div>
                           <i
                             className="fas fa-trash"
                             onClick={() => {
-                              deleteFeedback(feedback);
+                              localStorage.setItem('id', feedback.id);
+                              myToggle();
                             }}
                           >
                             <span className="helper-tool">Delete Feedback</span>
                           </i>
-                        </div>
-                        <div>
-                          Posted:{' '}
-                          {dateFns.format(feedback.createdAt, 'MMM DD YYYY')}
                         </div>
                       </div>
                     </div>
