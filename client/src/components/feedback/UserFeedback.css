@@ -114,7 +114,7 @@
     width: 95%;
   }
 }
-@media (max-width:800px) {
+@media (max-width: 800px) {
   .appointment-heading h4 {
     font-size: 1.5rem;
   }
@@ -140,13 +140,13 @@
   }
 }
 
-@media (max-width:400px) {
+@media (max-width: 400px) {
   .main-body {
     margin-right: 0rem;
   }
   .feedback-form-container {
-    padding: .5rem;
-    font-size: .8rem;
+    padding: 0.5rem;
+    font-size: 0.8rem;
   }
   .icon-text {
     font-size: 1.2rem;
@@ -160,7 +160,7 @@
     margin: auto;
   }
   .appointment-heading {
-    margin-left: .2rem;
+    margin-left: 0.2rem;
   }
   .appointment-heading h4 {
     font-size: 1rem;
@@ -169,7 +169,7 @@
   .appointment-body {
     flex-direction: column;
   }
-  .appointment-item h4{
+  .appointment-item h4 {
     font-size: 1rem;
   }
   .feedback-container h2 {
@@ -179,9 +179,9 @@
     padding: 1rem 1rem;
   }
   .feedback-body {
-    font-size: .8rem;
+    font-size: 0.8rem;
   }
   .page-numbers a {
-    font-size: .8rem;
+    font-size: 0.8rem;
   }
 }

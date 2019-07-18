@@ -13,6 +13,7 @@ import {
   GETTING_USER_SUCC,
   LOGOUTUSER,
   REFS,
+  SELECTED,
   // fetching users
   LOADING,
   FETCHING_USERS_SUCCESS,
@@ -110,7 +111,7 @@ export default (state = initialState, action) => {
 
     // calander
     case SET_DAY:
-      return { ...state, thisDay: action.payload };
+      return { ...state, thisDay: action.payload, feedback: [] };
     case SET_MONTH:
       return { ...state, thisMonth: action.payload };
     case SET_SCHEDULE:
@@ -128,7 +129,7 @@ export default (state = initialState, action) => {
         schedule: [],
       };
     case SET_SERVICE_SORT:
-      return { ...state, serviceFilter: action.payload };
+      return { ...state, serviceFilter: action.payload, feedback: [] };
     case SET_CONTRACTOR_POSITION:
       return { ...state, positionContractor: action.payload };
     case LOAD_SCHEDULE:
@@ -276,6 +277,8 @@ export default (state = initialState, action) => {
 
     case LOGOUTUSER:
       return { ...state, user: {} };
+    case SELECTED:
+      return { ...state, thisContractor: action.payload };
 
     default:
       return state;

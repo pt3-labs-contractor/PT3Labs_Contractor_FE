@@ -162,7 +162,7 @@ function ContractorSetting(props) {
             <div>
               {props.services
                 ? props.services.map(service => (
-                    <div className="indi-services" key={service.id}>
+                    <div className="indi-services">
                       <p>{service.name}</p>
                       <p>{service.price}</p>
                       <button onClick={e => handleServeDelete(service)}>

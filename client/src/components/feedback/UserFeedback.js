@@ -214,7 +214,7 @@ function UserFeedback(props) {
                         </div>
                         <div>
                           <i
-                            className="fas fa-trash"
+                            className="fas fa-trash userTrash"
                             onClick={() => {
                               localStorage.setItem('id', feedback.id);
                               myToggle();
