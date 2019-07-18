@@ -5,13 +5,14 @@ import Calendar from '../calendar/Calendar';
 import ContractorCard from './ContractorCard';
 import AvailabilityList from '../appointments/AvailabilityList';
 import AppointmentForm from '../appointments/AppointmentForm';
+import FeedbackList from '../feedback/FeedbackList';
 
 import './Contractor.css';
 
 import {
   selectSingleContractorSetting,
   fetchSchedule,
-  fetchServices,
+  getFeedbackByContractor,
 } from '../../actions/index';
 import TopNavbar from '../navbar/TopNavbar';
 
@@ -24,7 +25,7 @@ function Contractor(props) {
     Promise.all([
       props.selectSingleContractorSetting(id),
       props.fetchSchedule(id),
-      // props.fetchServices(id),
+      props.getFeedbackByContractor(id),
     ]);
     // eslint-disable-next-line
   }, []);
@@ -73,6 +74,7 @@ function Contractor(props) {
           appointment={appointment}
           service={service}
         />
+        <FeedbackList />
       </div>
     </>
   );
@@ -90,5 +92,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { selectSingleContractorSetting, fetchSchedule, fetchServices }
+  { selectSingleContractorSetting, fetchSchedule, getFeedbackByContractor }
 )(Contractor);
