@@ -20,6 +20,9 @@ function ContractorCard({ contractor, service, full, mainList }) {
       const filtered = contractor.services.filter(entry => {
         return entry.name === service;
       });
+      console.log(filtered);
+      console.log(contractor.services);
+      console.log(service);
       setService(filtered[0]);
     }
   }, [service]);
@@ -55,10 +58,10 @@ function ContractorCard({ contractor, service, full, mainList }) {
             </p>
             <p>{zipCode}</p>
           </>
-        ) : service ? (
+        ) : localService ? (
           <>
             <p className="service-title">
-              {service.name}: {service.price}
+              {localService.name}: {localService.price}
             </p>
           </>
         ) : null}

@@ -7,6 +7,18 @@ import { confirmApp, fetchAccts } from '../../actions/index';
 import './MyBookings.css';
 
 function MyBookings(props) {
+  const [confirmed, setConfirmed] = useState([]);
+  const { appointments } = props;
+
+  useEffect(() => {
+    console.log(appointments);
+    const filteredAp = appointments.filter(app => app.confirmed);
+    appointments.forEach(app => {
+      console.log(app.confirmed);
+    });
+    setConfirmed(filteredAp);
+  }, [appointments]);
+
   return (
     <>
       <TopNavbar />
@@ -22,7 +34,7 @@ function MyBookings(props) {
 
 const mapStateToProps = state => {
   return {
-    contractors: state.contractors,
+    appointments: state.appointments,
     user: state.user,
     loading: state.loading,
     error: state.error,

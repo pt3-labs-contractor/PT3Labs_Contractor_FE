@@ -39,7 +39,7 @@ const AppInfo = props => {
     position: 'absolute',
     left: `${xper}` + 'px',
     top: `${yper}` + 'px',
-    zIndex: '100',
+    zIndex: '200',
     backgroundColor: 'white',
   };
 

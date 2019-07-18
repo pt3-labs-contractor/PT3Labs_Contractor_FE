@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Fuse from 'fuse.js';
@@ -52,9 +53,10 @@ function ContractorList({
   }, [sortedContractors]);
 
   useEffect(() => {
-    setList(contractorList[pageNum] || []);
+    setList(contractorList || []);
   }, [pageNum, contractorList]);
 
+  // Possible removal of this function as the position isn't needed
   const selectElement = id => {
     if (select !== id) {
       setSelect(id);
@@ -69,7 +71,13 @@ function ContractorList({
   };
 
   const pageChange = dir => {
-    setPageNum(pageNum + dir);
+    const newPage = pageNum + dir;
+    const dividedContractors = contractors.slice(
+      newPage * limit,
+      newPage * limit + limit
+    );
+    setContractors(dividedContractors);
+    setPageNum(newPage);
   };
 
   function handleSearch(ev) {
@@ -138,7 +146,7 @@ function ContractorList({
             type="button"
             className="btn"
             onClick={() => pageChange(1)}
-            disabled={pageNum >= contractorList.length - 1}
+            disabled={pageNum * limit + limit >= contractors.length}
           >
             Page
             <br />
@@ -199,13 +207,91 @@ function ContractorList({
   );
 }
 
+ContractorList.defaultProps = {
+  contractors: [],
+  loading: false,
+  error: null,
+  user: {},
+  userLanding: undefined,
+  setPosition: undefined,
+  selectContractor: undefined,
+};
+
+// ContractorList.propTypes = {
+//   contractors: PropTypes.arrayOf(PropTypes.object),
+//   loading: PropTypes.bool,
+//   error: PropTypes.string,
+//   user: PropTypes.shape({
+//     id: PropTypes.string,
+//     googleId: PropTypes.string,
+//     email: PropTypes.string,
+//     phoneNumber: PropTypes.string,
+//     contractorId: PropTypes.string,
+//     city: PropTypes.string,
+//   }),
+//   userLanding: PropTypes.bool,
+//   setPosition: PropTypes.func,
+//   selectContractor: PropTypes.func,
+// };
+
+// city: "Test City"
+// contractorId: "aec1f8d3-a534-48e5-8be1-9fc4197acccd"
+// createdAt: "2019-06-25T01:28:58.426Z"
+// email: "testContractor@email.com"
+// googleId: null
+// id: "aec1f8d3-a534-48e5-8be1-9fc4197acccd"
+// latitude: "40.6042"
+// longitude: "-74.2825"
+// name: "Test Contractor"
+// phoneNumber: "(555)867-5309"
+// services: (3) [{…}, {…}, {…}]
+// stateAbbr: "TE"
+// streetAddress: "1 Test St."
+// username: "Test Contractor"
+// zipCode: "07065"
+
 const mapStateToProps = state => {
   return {
     contractors: state.contractors,
     sortedContractors: state.sortedContractors,
+    user: state.user,
     loading: state.loading,
     error: state.error,
   };
 };
 
-export default connect(mapStateToProps)(ContractorList);
+export default connect(
+  mapStateToProps,
+  { setPosition }
+)(ContractorList);
+
+ContractorList.propTypes = {
+  contractors: PropTypes.arrayOf(
+    PropTypes.shape({
+      city: PropTypes.string,
+      createdAt: PropTypes.string,
+      id: PropTypes.string,
+      latitude: PropTypes.string,
+      longitude: PropTypes.string,
+      name: PropTypes.string,
+      phoneNumber: PropTypes.string,
+      stateAbbr: PropTypes.string,
+      streetAddress: PropTypes.string,
+      zipCode: PropTypes.string,
+      services: PropTypes.arrayOf(
+        PropTypes.shape({
+          contractorId: PropTypes.string,
+          createdAt: PropTypes.string,
+          id: PropTypes.string,
+          name: PropTypes.string,
+          price: PropTypes.string,
+        })
+      ),
+    })
+  ),
+  error: PropTypes.string,
+  loading: PropTypes.bool,
+  selectContractor: PropTypes.func,
+  setPosition: PropTypes.func,
+  userLanding: PropTypes.bool,
+};

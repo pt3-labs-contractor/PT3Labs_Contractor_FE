@@ -30,13 +30,9 @@ function Login(props) {
     const credentials = { username, password };
 
     axios
-      .post(
-        'https://fierce-plains-47590.herokuapp.com/api/auth/login',
-        credentials,
-        {
-          headers,
-        }
-      )
+      .post('https://fierce-plains-47590.herokuapp.com/api/auth/login', credentials, {
+        headers,
+      })
       .then(res => {
         localStorage.setItem('jwt', res.data.token);
         props.fetchAccts();
@@ -47,6 +43,8 @@ function Login(props) {
           case 400:
           case 401:
             return setError('Invalid username or password');
+          default:
+            return setError('System failure.');
         }
       });
   }

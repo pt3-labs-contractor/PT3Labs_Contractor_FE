@@ -14,14 +14,16 @@ const ErrorBox = props => {
       >
         Ok
       </button>
-      <button
-        className="plans"
-        onClick={e => {
-          props.history.push('/plans');
-        }}
-      >
-        Upgrade Plan
-      </button>
+      {props.error.includes('5') ? (
+        <button
+          className="plans"
+          onClick={e => {
+            props.history.push('/plans');
+          }}
+        >
+          Upgrade Plan
+        </button>
+      ) : null}
     </div>
   );
 };
