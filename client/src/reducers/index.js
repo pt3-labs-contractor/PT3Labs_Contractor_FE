@@ -285,7 +285,7 @@ export default (state = initialState, action) => {
       return { ...state, user: action.payload };
 
     case LOGOUTUSER:
-      return { ...state, user: {} };
+      return initialState;
     case SELECTED:
       return { ...state, thisContractor: action.payload };
     case SUBSCRIBE_SUCCESS:
