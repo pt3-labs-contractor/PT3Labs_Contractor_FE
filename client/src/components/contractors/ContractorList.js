@@ -28,19 +28,12 @@ function ContractorList({
   const [zip, setZip] = useState('');
   const [query, setQuery] = useState('');
 
-  console.log(list);
-
   const paginate = arr => {
-    const length = arr.length + 1;
     const limit = userLanding ? 5 : 25;
     const dividedContractors = [];
-    for (let x = 1; x <= Math.ceil(length / limit); x += 1) {
-      const temp = [];
-      const pageItems = length / (limit * x) > 1 ? limit : (length % limit) - 1;
-      for (let y = 0; y < pageItems; y += 1) {
-        temp.push(arr[(x - 1) * limit + y]);
-      }
-      dividedContractors.push(temp);
+    for (let i = 0; i < arr.length; i += limit) {
+      const current = arr.slice(i, i + limit);
+      if (current.length) dividedContractors.push(current);
     }
     setContractors(dividedContractors);
     setPageNum(0);

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
 import Rating from 'react-rating';
 import PropTypes from 'prop-types';
 
@@ -58,7 +57,7 @@ function ContractorCard({ contractor, service, full, mainList }) {
             </p>
             <p>{zipCode}</p>
           </>
-        ) : localService ? (
+        ) : !mainList && localService ? (
           <>
             <p className="service-title">
               {localService.name}: {localService.price}
