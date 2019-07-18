@@ -14,6 +14,7 @@ function ContractorList({
   error,
   loading,
   contractors,
+  sortedContractors,
   user,
   userLanding,
   ...handlers
@@ -45,9 +46,10 @@ function ContractorList({
   };
 
   useEffect(() => {
-    paginate(contractors);
+    if (userLanding) return paginate(sortedContractors);
+    return paginate(contractors);
     // eslint-disable-next-line
-  }, [contractors]);
+  }, [sortedContractors]);
 
   useEffect(() => {
     setList(contractorList[pageNum] || []);
@@ -200,6 +202,7 @@ function ContractorList({
 const mapStateToProps = state => {
   return {
     contractors: state.contractors,
+    sortedContractors: state.sortedContractors,
     loading: state.loading,
     error: state.error,
   };
