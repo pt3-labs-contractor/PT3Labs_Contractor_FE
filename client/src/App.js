@@ -35,6 +35,13 @@ function App({ user, loading, ...props }) {
     // eslint-disable-next-line
   }, [string]);
 
+  useEffect(() => {
+    const userSet = Object.keys(user).length; // If user object has keys, we have received a response from back end.
+    const missingMandatoryKeys = // Missing any of these keys indicates an unfinished Oauth registration.
+      !user.email || !user.username || !user.phoneNumber;
+    if (userSet && missingMandatoryKeys) props.history.push('/register/oauth');
+  }, [user]);
+
   // console.log(props.user);
 
   return (
