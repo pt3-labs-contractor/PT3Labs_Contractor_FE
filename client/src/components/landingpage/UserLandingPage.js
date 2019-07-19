@@ -170,7 +170,7 @@ function UserLandingPage(props) {
           </div>
           <div className="availability-target" ref={availabilityTarget}>
             <AvailabilityList setAppointment={selectTime} />
-            {!mql && <FeedbackList />}
+            {!mql && <FeedbackList temp />}
           </div>
           <div className="appointment-form-target" ref={appointmentTarget}>
             {contractor.id && time.id && (

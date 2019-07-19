@@ -50,10 +50,12 @@ export const POST_FEEDBACK_SUCCESS = 'POST_FEEDBACK_SUCCESS';
 export const DELETE_FEEDBACK_SUCCESS = 'DELETE_FEEDBACK_SUCCESS';
 
 // exports for retrieving current contractor user appointments
-export const RET_CONTRACTOR_APP_SUCC = 'RET_CONTRACTOR_APP_SUCC';
+export const RET_CONTRACTOR_APP_SUCC = 'RET_CONTRACTOR_APP_SUCC'; // possible removal
 
 // export PUT request for users settings
 export const EDIT_USER_SUCCESS = 'EDIT_USER_SUCCESS';
+
+export const APPOINTMENT_SUCCESS = 'APPOINTMENT_SUCCES';
 
 //
 export const FAIL_SCHEDULE = 'FAIL_SCHEDULE';
@@ -85,7 +87,7 @@ export const fetchAccts = () => dispatch => {
     ])
     .then(
       axios.spread((userRes, contRes, apmtRes) => {
-        console.log(apmtRes);
+        // console.log(apmtRes);
         let { user } = userRes.data;
         const { appointments } = apmtRes.data;
         appointments.sort((a, b) => {
@@ -93,9 +95,14 @@ export const fetchAccts = () => dispatch => {
         });
         if (user.contractorId) {
           axios
-            .get(`https://fierce-plains-47590.herokuapp.com/api/contractors/${user.contractorId}`, {
-              headers,
-            })
+            .get(
+              `https://fierce-plains-47590.herokuapp.com/api/contractors/${
+                user.contractorId
+              }`,
+              {
+                headers,
+              }
+            )
             .then(res => {
               user = { ...res.data.contractor, ...user };
               dispatch({
@@ -132,7 +139,10 @@ export const fetchSchedule = id => dispatch => {
   // dispatch({ type: LOADING });
   const headers = setHeaders();
   axios
-    .get(`https://fierce-plains-47590.herokuapp.com/api/schedules/contractor/${id}`, { headers })
+    .get(
+      `https://fierce-plains-47590.herokuapp.com/api/schedules/contractor/${id}`,
+      { headers }
+    )
     .then(res => {
       dispatch({ type: SET_SCHEDULE, payload: res.data.schedule });
     })
@@ -146,7 +156,10 @@ export const fetchServices = id => dispatch => {
   const headers = setHeaders();
 
   axios
-    .get(`https://fierce-plains-47590.herokuapp.com/api/services/contractor/${id}`, { headers })
+    .get(
+      `https://fierce-plains-47590.herokuapp.com/api/services/contractor/${id}`,
+      { headers }
+    )
     .then(res => {
       dispatch({ type: SET_SERVICES, payload: res.data.services });
     })
@@ -170,7 +183,10 @@ export const fetchAvailabilityByDay = (
   // dispatch({ type: LOADING });
   const headers = setHeaders();
   axios
-    .get(`https://fierce-plains-47590.herokuapp.com/api/schedules/date/${date}`, { headers })
+    .get(
+      `https://fierce-plains-47590.herokuapp.com/api/schedules/date/${date}`,
+      { headers }
+    )
     .then(res => {
       const sortedContractors = serviceSort(serviceFilter, contractors);
       const filter = res.data.appointments
@@ -241,7 +257,9 @@ export const getFeedbackByContractor = id => dispatch => {
   const headers = setHeaders();
 
   axios
-    .get(`https://fierce-plains-47590.herokuapp.com/api/feedback/${id}`, { headers })
+    .get(`https://fierce-plains-47590.herokuapp.com/api/feedback/${id}`, {
+      headers,
+    })
     .then(res => {
       dispatch({ type: FEEDBACK_SUCCESS, payload: res.data });
     })
@@ -254,9 +272,15 @@ export const postFeedback = data => dispatch => {
   const headers = setHeaders();
   // console.log(data)
   axios
-    .post(`https://fierce-plains-47590.herokuapp.com/api/feedback/${data.contractorId}`, data, {
-      headers,
-    })
+    .post(
+      `https://fierce-plains-47590.herokuapp.com/api/feedback/${
+        data.contractorId
+      }`,
+      data,
+      {
+        headers,
+      }
+    )
     .then(res => {
       // console.log(res)
       dispatch({ type: POST_FEEDBACK_SUCCESS, payload: res.data });
@@ -331,7 +355,10 @@ export const deleteService = (service, list) => dispatch => {
   const headers = setHeaders();
 
   axios
-    .delete(`https://fierce-plains-47590.herokuapp.com/api/services/${service.id}`, { headers })
+    .delete(
+      `https://fierce-plains-47590.herokuapp.com/api/services/${service.id}`,
+      { headers }
+    )
     .then(res => {
       // console.log(res.data)
       const newList = list.filter(
@@ -371,9 +398,12 @@ export const getSchedules = id => {
   return dispatch => {
     dispatch({ type: GET_SCHED });
     axios
-      .get(`https://fierce-plains-47590.herokuapp.com/api/schedules/contractor/${id}`, {
-        headers,
-      })
+      .get(
+        `https://fierce-plains-47590.herokuapp.com/api/schedules/contractor/${id}`,
+        {
+          headers,
+        }
+      )
       .then(res => {
         const scheds = res.data.schedule;
         scheds.sort((a, b) => {
@@ -410,9 +440,13 @@ export const updateSchedule = (id, obj) => {
   return dispatch => {
     dispatch({ type: UP_SCHED });
     axios
-      .put(`https://fierce-plains-47590.herokuapp.com/api/schedules/${id}`, obj, {
-        headers,
-      })
+      .put(
+        `https://fierce-plains-47590.herokuapp.com/api/schedules/${id}`,
+        obj,
+        {
+          headers,
+        }
+      )
       .then(res => {
         dispatch({ type: UP_SCHED_COMP, payload: res.data });
         console.log(res.data);
@@ -423,12 +457,41 @@ export const updateSchedule = (id, obj) => {
   };
 };
 
+export const postAppointment = app => dispatch => {
+  const headers = setHeaders();
+
+  axios
+    .post('https://fierce-plains-47590.herokuapp.com/api/appointments', app, {
+      headers,
+    })
+    .then(() => {
+      console.log('Created!');
+      axios
+        .get('https://fierce-plains-47590.herokuapp.com/api/appointments', {
+          headers,
+        })
+        .then(res => {
+          dispatch({
+            type: APPOINTMENT_SUCCESS,
+            payload: res.data.appointments,
+          });
+        });
+    })
+    .catch(err => {
+      dispatch({ type: FAILURE, payload: err });
+    });
+};
+
 export const confirmApp = (id, obj) => {
   const headers = setHeaders();
   return dispatch => {
     dispatch({ type: CONFIRMING_APP });
     axios
-      .put(`https://fierce-plains-47590.herokuapp.com/api/appointments/${id}`, obj, { headers })
+      .put(
+        `https://fierce-plains-47590.herokuapp.com/api/appointments/${id}`,
+        obj,
+        { headers }
+      )
       .then(res => {
         dispatch({ type: CONFIRMED_APP, payload: res.data });
         console.log(res.data);
