@@ -85,17 +85,28 @@
   font-size: 2rem;
 }
 
-/* .fa-trash { */
-/*   display: none; */
-/* } */
-
 .helper-tool {
   display: none;
   font-size: 1rem;
   color: red;
 }
 
-@media (max-width: 1000px) {
+.fa-trash {
+  color: var(--danger-color);
+  font-size: 1.5rem;
+  cursor: pointer;
+  text-align: right;
+}
+
+.fa-trash:hover {
+  opacity: .8;
+}
+
+.fa-trash:hover .helper-tool{
+  display: flex;
+}
+
+@media (max-width:1000px) {
   .feedback-form-container {
     width: 95%;
   }
@@ -126,18 +137,6 @@
   }
   .delete-btn {
     display: none;
-  }
-  .userTrash {
-    display: block;
-    color: var(--danger-color);
-    font-size: 1.5rem;
-    cursor: pointer;
-  }
-  .userTrash:hover {
-    opacity: 0.8;
-  }
-  .userTrash:hover .helper-tool {
-    display: block;
   }
 }
 
