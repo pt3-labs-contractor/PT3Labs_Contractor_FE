@@ -38,7 +38,7 @@ function UserLandingPage(props) {
     availabilityTarget,
     appointmentTarget,
   ];
-  const mql = window.matchMedia('(max-width: 600px)').matches;
+  const mql = window.matchMedia('(max-width: 800px)').matches;
   const serviceList = [
     'Electrical',
     'Plumbing',
