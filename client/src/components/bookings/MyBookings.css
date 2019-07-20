@@ -14,6 +14,55 @@
   width: 80%;
 }
 
+.app-container {
+  display: flex;
+  width: 70%;
+}
+
+.cancel-app-button {
+  background:#1AAB8A;
+  color:#fff;
+  border:none;
+  position:relative;
+  height:40px;
+  font-size:1.6em;
+  padding:0 2em;
+  cursor:pointer;
+  transition:800ms ease all;
+  outline:none;
+}
+
+.cancel-app-button:hover{
+  background:#fff;
+  color:#1AAB8A;
+}
+.cancel-app-button:before,.cancel-app-button:after{
+  content:'';
+  position:absolute;
+  top:0;
+  right:0;
+  height:2px;
+  width:0;
+  background: #1AAB8A;
+  transition:400ms ease all;
+}
+.cancel-app-button:after{
+  right:inherit;
+  top:inherit;
+  left:0;
+  bottom:0;
+}
+.cancel-app-button:hover:before,.cancel-app-button:hover:after{
+  width:100%;
+  transition:800ms ease all;
+}
+
+
+
+
+
+
+
 @media (max-width: 1000px) {
   .booking-container {
     width: 600px;

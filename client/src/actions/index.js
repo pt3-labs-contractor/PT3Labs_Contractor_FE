@@ -454,7 +454,6 @@ export const confirmApp = (id, obj) => {
 export const deleteApp = (obj, id) => {
   const headers = setHeaders();
   return dispatch => {
-    // dispatch({ type: DELETE_APP });
     axios
       .delete(`https://fierce-plains-47590.herokuapp.com/api/appointments/${id}`, { headers })
       .then(res => {

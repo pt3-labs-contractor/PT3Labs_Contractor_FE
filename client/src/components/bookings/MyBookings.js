@@ -36,10 +36,7 @@ function MyBookings(props) {
         <div className="booking-container">
           <h2 className="main-header-title">Appointment Summary</h2>
 
-          <div>
-            {/* {loading ? <p>Loading Appointments....</p> : null} */}
-            {/* {error ? <p>{error}</p> : null} */}
-            {/* {appointments === null ? <p>Loading Appointments</p> : null} */}
+          <div className="app-container">
             {appointments ?
             appointments.map(app => 
               <div>
@@ -51,7 +48,7 @@ function MyBookings(props) {
                     ? <p>Not confirmed yet</p> 
                     : <p>Contractor confirmed!</p>}
 
-                <button onClick={e => cancelApp(app.id)}>Cancel</button>
+                <button className="cancel-app-button" onClick={e => cancelApp(app.id)}>Cancel</button>
                 </div>
               )
               : null}
