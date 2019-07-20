@@ -15,6 +15,7 @@ export const UP_SCHED_COMP = 'UP_SCHED_COMP';
 export const GET_APP = 'GET_APP';
 export const CONFIRMING_APP = 'CONFIRMING_APP';
 export const CONFIRMED_APP = 'CONFIRMED_APP';
+export const DELETE_APP = 'DELETE_APP';
 export const GETTING_USER_SUCC = 'GETTING_USER_SUCC';
 export const GETTING_USER = 'GETTING_USER';
 export const REFS = 'REFS';
@@ -98,7 +99,7 @@ export const fetchAccts = () => dispatch => {
     ])
     .then(
       axios.spread((userRes, contRes, apmtRes) => {
-        console.log(apmtRes);
+        // console.log(apmtRes);
         let { user } = userRes.data;
         const { appointments } = apmtRes.data;
         appointments.sort((a, b) => {
@@ -495,6 +496,30 @@ export const confirmApp = (id, obj) => {
       });
   };
 };
+
+
+//user delete app
+export const deleteApp = (obj, id) => {
+  const headers = setHeaders();
+  return dispatch => {
+    // dispatch({ type: DELETE_APP });
+    axios
+      .delete(`https://fierce-plains-47590.herokuapp.com/api/appointments/${id}`, { headers })
+      .then(res => {
+        // console.log(obj)
+        const deletedAppVar = obj.filter(a => {
+          return a.id !== id
+        })
+        console.log(deletedAppVar)
+        dispatch({ type: DELETE_APP, payload: deletedAppVar})
+
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+}
+
 
 export const getUser = id => {
   const headers = setHeaders();

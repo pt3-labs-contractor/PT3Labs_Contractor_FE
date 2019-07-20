@@ -26,6 +26,8 @@ import Plans from './components/plans/Plans';
 import UserSettings from './components/settings/UserSettings';
 import ContractorSchedule from './components/contractors/ContractorSchedule';
 import Loading from './components/loading/loading';
+import UploadImage from './components/settings/UploadImage';
+import DeleteModal from './components/feedback/DeleteModal';
 
 function App({ user, loading, ...props }) {
   const [win, setWin] = useState();
@@ -80,6 +82,8 @@ function App({ user, loading, ...props }) {
         <Route path="/mybookings" component={MyBookings} />
         <Route path="/plans" component={Plans} />
         <Route path="/contractorschedule" component={ContractorSchedule} />
+        <Route path="/uploadimage" component={UploadImage} />
+        <Route exact path="/delete/:id" component={DeleteModal} />
       </main>
     </div>
   );
