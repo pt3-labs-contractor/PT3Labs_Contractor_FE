@@ -2,9 +2,9 @@
   margin-left: 200px;
   width: 81%;
   max-width: 1000px;
-  min-height: 91vh;
+  /* min-height: 91vh; */
   position: relative;
-  background-color: #c2d4f1;
+  /* background-color: #c2d4f1; */
 }
 
 .calendar-container form select {
@@ -241,7 +241,7 @@
   background: linear-gradient(var(--dark-color), #485158);
   color: var(--primary-color);
   padding: 6px;
-  max-width: 150px;
+  width: 23.7%;
   height: 105px;
   border-radius: 0 0 5px 5px;
   box-shadow: var(--shadow);
@@ -252,15 +252,18 @@
   .appointment-list
   .appointments-container
   .appointment-card
-  p:nth-of-type(n + 2) {
+  p:nth-of-type(n + 1) {
   color: white;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .calendar-container
   .appointment-list
   .appointments-container
   .appointment-card
-  p:nth-of-type(2) {
+  p:nth-of-type(1) {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

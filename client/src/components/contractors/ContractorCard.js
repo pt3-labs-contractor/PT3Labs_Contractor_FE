@@ -73,7 +73,7 @@ function ContractorCard({ contractor, service, full }) {
         }
         initialRating={userScore}
         fractions={4}
-        stop={3}
+        stop={5}
         readonly
       />
     </div>
