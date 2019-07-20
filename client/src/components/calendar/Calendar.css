@@ -84,3 +84,9 @@
     font-size: 0.8rem;
   }
 }
+.calendar-month-nav {
+  cursor: pointer;
+}
+.calendar-month-nav:active {
+  transform: translateY(1px);
+}

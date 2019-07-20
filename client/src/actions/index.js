@@ -22,6 +22,7 @@ export const LOGOUTUSER = 'LOGOUTUSER';
 
 // exports for fetching all users
 export const LOADING = 'LOADING';
+export const END_LOAD = 'END_LOAD';
 export const FETCHING_USERS_SUCCESS = 'SUCCESS';
 export const FAILURE = 'FAILURE';
 
@@ -611,4 +612,12 @@ export const cancelImmediate = () => dispatch => {
         payload: err.response.data.error,
       })
     );
+};
+
+export const startManualLoad = () => dispatch => {
+  dispatch({ type: LOADING });
+};
+
+export const endManualLoad = () => dispatch => {
+  dispatch({ type: END_LOAD });
 };

@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+// eslint-disable-next-line import/prefer-default-export
 export async function sortByDistance(zip, contractors, limit) {
   function isCenterOfUS(lat, long) {
     return (

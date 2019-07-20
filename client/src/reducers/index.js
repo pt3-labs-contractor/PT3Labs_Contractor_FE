@@ -15,6 +15,7 @@ import {
   REFS,
   // fetching users
   LOADING,
+  END_LOAD,
   FETCHING_USERS_SUCCESS,
   FAILURE,
 
@@ -98,6 +99,8 @@ export default (state = initialState, action) => {
         loading: true,
         error: null,
       };
+    case END_LOAD:
+      return { ...state, loading: false };
     case FETCHING_USERS_SUCCESS:
       return {
         ...state,
@@ -289,7 +292,12 @@ export default (state = initialState, action) => {
     case SELECTED:
       return { ...state, thisContractor: action.payload };
     case SUBSCRIBE_SUCCESS:
-      return { ...state, user: action.payload, error: null, loading: false };
+      return {
+        ...state,
+        user: { ...state.user, subscriptionId: action.payload.subscriptionId },
+        error: null,
+        loading: false,
+      };
     case SUBSCRIBE_FAILURE:
       return { ...state, error: action.payload, loading: false };
     case RETRIEVE_SUBSCRIPTION_SUCCESS:
