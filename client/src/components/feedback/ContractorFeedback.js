@@ -53,7 +53,7 @@ function ContractorFeedback(props) {
                   }
                   readonly
                   initialRating={feedback.stars}
-                  stop={3}
+                  stop={5}
                 />
                 {'\n'}
                 <div className="feedback-context">

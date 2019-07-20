@@ -14,6 +14,7 @@ import {
   LOGOUTUSER,
   REFS,
   SELECTED,
+  DELETE_APP,
   // fetching users
   LOADING,
   FETCHING_USERS_SUCCESS,
@@ -265,6 +266,15 @@ export default (state = initialState, action) => {
       return {
         ...state,
         refs: action.payload,
+      };
+
+
+    //delete app by user
+    case DELETE_APP:
+      return {
+        ...state,
+        appointments: action.payload,
+        loading: false,
       };
 
     // fetching appointments for a contractor
