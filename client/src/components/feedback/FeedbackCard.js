@@ -14,7 +14,7 @@ function FeedbackCard({ feedback }) {
         emptySymbol={<span className="">&#9734;</span>}
         initialRating={stars}
         fractions={4}
-        stop={3}
+        stop={5}
         readonly
       />
     </>

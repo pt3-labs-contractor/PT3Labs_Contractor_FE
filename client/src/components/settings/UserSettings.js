@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 // import { IoIosTrash } from 'react-icons/io'
 // import { IoMdCreate } from 'react-icons/io'
@@ -31,48 +31,50 @@ function UserSetting(props) {
       <NavBarUser />
       <div className="main-container">
         <div className="settings-container">
+          <Link to="/uploadimage">
+            <p>Upload Image</p>
+          </Link>
           <h2 className="title">{props.User.username} Settings</h2>
           {'\n'}
           <form onSubmit={handleUpdate}>
-              <div className="email-div">
-                Email
-                <input
-                  className="email-input"
-                  value={email}
-                  type="text"
-                  name="userEmail"
-                  onChange={e => setEmail(e.target.value)}
-                  />
-              </div>
+            <div className="email-div">
+              Email
+              <input
+                className="email-input"
+                value={email}
+                type="text"
+                name="userEmail"
+                onChange={e => setEmail(e.target.value)}
+              />
+            </div>
 
-              <div className="username-div">
-                Username
-                <input
-                  value={username}
-                  type="text"
-                  name="userUsername"
-                  onChange={e => setUsername(e.target.value)}
-                  />
-                </div>
+            <div className="username-div">
+              Username
+              <input
+                value={username}
+                type="text"
+                name="userUsername"
+                onChange={e => setUsername(e.target.value)}
+              />
+            </div>
             {/* Old Password
             <input />
 
             New Passowrd
             <input /> */}
             <div className="phonenumber-div">
-                Phone Number
-                <input
-                  value={phoneNumber}
-                  type="text"
-                  name="userphoneNumber"
-                  onChange={e => setPhoneNumber(e.target.value)}
-                  />
+              Phone Number
+              <input
+                value={phoneNumber}
+                type="text"
+                name="userphoneNumber"
+                onChange={e => setPhoneNumber(e.target.value)}
+              />
             </div>
 
-            <div class="box">
-              <button  className="btn btn-three">Save</button>
+            <div className="box">
+              <button className="btn btn-three">Save</button>
             </div>
-
           </form>
 
           {/* <form>
@@ -81,7 +83,6 @@ function UserSetting(props) {
           </form> */}
         </div>
       </div>
-
     </>
   );
 }

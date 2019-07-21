@@ -21,11 +21,10 @@ function MyBookings(props) {
     setConfirmed(filteredAp);
   }, [appointments]);
 
-
   function cancelApp(id) {
     // e.preventDefault();
     // console.log(app.id)
-    props.deleteApp(appointments, id)
+    props.deleteApp(appointments, id);
   }
 
   return (
@@ -34,21 +33,27 @@ function MyBookings(props) {
       <NavBarUser />
       <div className="main-body">
         <div className="booking-container">
-          <h2 className="main-header-title">Appointment Summary</h2>
+          <h2 className="main-header-title">Your Appointment Summary</h2>
 
           <div className="app-container">
             {appointments ?
             appointments.map(app => 
-              <div>
-                  <p>You have an appointment with {app.contractorName}</p>
-                  <p> On: {moment(app.startTime).format('MMMM Do')} @ {moment(app.startTime).format('h:mm a')} 
+              <div className="mapping-div">
+                  <p className="app-information">Company: <span className="important">
+                     {app.contractorName}
+                    </span>
                   </p>
-                  <p>For: {app.service}</p>
-                  {app.confirmed === null 
-                    ? <p>Not confirmed yet</p> 
-                    : <p>Contractor confirmed!</p>}
+                  <p className="app-information"> On: <span className="important">{moment(app.startTime).format('MMMM Do')} @ {moment(app.startTime).format('h:mm a')} </span>
+                  </p>
+                  <p className="app-information">For: <span className="important">{app.service}</span></p>
 
-                <button className="cancel-app-button" onClick={e => cancelApp(app.id)}>Cancel</button>
+                  {app.confirmed === null 
+                    ? <p className="confirmation" >Not confirmed yet</p> 
+                    : <p className="confirmation" >Contractor confirmed!</p>}
+                  <div className="button-div">
+                    <button className="cancel-app-button" onClick={e => cancelApp(app.id)}>Cancel</button>
+                </div>
+
                 </div>
               )
               : null}
