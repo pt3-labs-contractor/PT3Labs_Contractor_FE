@@ -92,6 +92,7 @@ function UserLandingPage(props) {
   }, [contractor]);
 
   const selectContractor = item => {
+    console.log('clicked contractor');
     setContractor(item);
     const filter = item.services.filter(service => {
       return service.name === serviceSort;

@@ -1,11 +1,11 @@
 .settings-container {
   max-width: 500px;
-  margin-left: 210px;
+  margin-left: calc(var(--nav-bar-width) + 10px);
   padding: 1rem 2rem;
   margin-top: 6rem;
   margin-bottom: 3rem;
   background-color: var(--dark-color);
-  opacity: .9;
+  opacity: 0.9;
   text-align: center;
   color: white;
 }

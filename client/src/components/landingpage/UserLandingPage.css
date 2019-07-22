@@ -1,6 +1,6 @@
 .calendar-container {
-  margin-left: 200px;
-  width: calc(100% - 200px);
+  margin-left: var(--nav-bar-width);
+  width: calc(100% - var(--nav-bar-width));
   max-width: 880px;
   position: relative;
   /* background-color: #c2d4f1; */
@@ -71,6 +71,7 @@
 
 .contractor-target .contractor-list .btn-container {
   display: flex;
+  justify-content: center;
 }
 
 .contractor-target .contractor-list .btn {
@@ -316,6 +317,7 @@
     flex-direction: column;
     justify-content: space-between;
     width: 100%;
+    height: max-content;
     max-height: none;
   }
 
@@ -340,17 +342,24 @@
     text-align: center;
   }
 
-  .user-calendar .contractor-list {
+  .user-calendar .contractor-target .contractor-list {
     width: 100%;
+    font-size: 1.2rem;
     text-align: center;
+  }
+
+  .user-calendar .contractor-card .service-title {
+    width: unset;
   }
 
   .user-calendar .availability-target {
     width: 100%;
-    height: 100vh;
+    height: 100vh !important;
     display: flex;
     align-items: center;
     background-color: var(--dark-color);
+    overflow-x: unset;
+    overflow-y: unset;
   }
 
   .user-calendar .availability-target .availability-list {
@@ -358,7 +367,8 @@
     flex-direction: column;
     align-items: center;
     border-radius: 0;
-    width: 92%;
+    width: 97%;
+    border: 1px solid var(--primary-color);
   }
 
   .user-calendar .availability-target .availability-list button {
@@ -371,6 +381,8 @@
     position: relative;
     width: 101%;
     height: 100vh;
+    top: 0;
+    right: 0;
   }
 
   .user-calendar .appointment-form {
