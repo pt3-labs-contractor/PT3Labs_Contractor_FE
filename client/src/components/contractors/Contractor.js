@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import Calendar from '../calendar/Calendar';
 import ContractorCard from './ContractorCard';
@@ -61,13 +62,13 @@ function Contractor(props) {
         </div>
         <div className="contractor-calendar">
           <Calendar contractor={props.contractor} schedule={props.schedule} />
-          <div className="availability-list">
+          {/* <div className="availability-list"> */}
             <AvailabilityList
               contractor
               selectedDay={props.selectedDay}
               setAppointment={makeAppointment}
             />
-          </div>
+          {/* </div> */}
         </div>
         <AppointmentForm
           contractor={id}
@@ -84,7 +85,6 @@ function Contractor(props) {
 const mapStateToProps = state => {
   return {
     contractor: state.thisContractor,
-    services: state.services,
     selectedDay: state.thisDay,
     schedule: state.schedule,
     error: state.errorSchedule,
@@ -95,3 +95,29 @@ export default connect(
   mapStateToProps,
   { selectSingleContractorSetting, fetchSchedule, getFeedbackByContractor }
 )(Contractor);
+
+
+Contractor.propTypes = {
+  contractor: PropTypes.shape({
+    id: PropTypes.string,
+    name: PropTypes.string,
+    phoneNumber: PropTypes.string,
+    city: PropTypes.string,
+    stateAbbr: PropTypes.string,
+    streetAddress: PropTypes.string,
+    zipCode: PropTypes.string,
+    userScore: PropTypes.number,
+    latitude: PropTypes.string,
+    longitude: PropTypes.string,
+    createdAt: PropTypes.string,
+    services: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.string,
+        contractorId: PropTypes.string,
+        name: PropTypes.string,
+        price: PropTypes.string,
+        createdAt: PropTypes.string
+      })
+    )
+  })
+}
