@@ -44,7 +44,7 @@ header {
   }
 
   .sideNav {
-    width: 60px;
+    width: var(--nav-bar-width-mobile);
   }
 
   .sideNav a {

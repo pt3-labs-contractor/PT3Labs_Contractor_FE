@@ -56,7 +56,6 @@
 
 @media (max-width: 800px) {
   .confirm-box {
-    /* width: 55%; */
-    margin-left: 60px;
+    margin-left: var(--nav-bar-width-mobile);
   }
 }

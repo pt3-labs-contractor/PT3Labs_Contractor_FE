@@ -281,8 +281,7 @@
 
 @media (max-width: 800px) {
   .calendar-container {
-    margin-left: 12%;
-    /* padding-left: 60px; */
+    margin-left: var(--nav-bar-width-mobile);
     margin-top: 0px;
     width: 88%;
   }

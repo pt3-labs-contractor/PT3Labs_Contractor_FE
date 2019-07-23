@@ -19,6 +19,7 @@ import TopNavbar from '../navbar/TopNavbar';
 function Contractor(props) {
   const [service, setService] = useState({ name: 'Pick a service' });
   const [appointment, setAppointment] = useState({});
+  const mql = window.matchMedia('(max-width: 800px)').matches;
   const { id } = props.match.params;
 
   useEffect(() => {
@@ -74,7 +75,7 @@ function Contractor(props) {
           appointment={appointment}
           service={service}
         />
-        <FeedbackList />
+        {!mql && <FeedbackList />}
       </div>
     </>
   );

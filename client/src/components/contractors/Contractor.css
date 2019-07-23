@@ -1,10 +1,11 @@
 .contractor-container {
   position: relative;
+  width: calc(100% - var(--nav-bar-width));
   max-width: 1000px;
-  margin-left: 180px;
+  margin-left: var(--nav-bar-width);
   display: flex;
   flex-direction: column;
-  padding: 20px;
+  padding-top: 20px;
 }
 
 .contractor-container .contractor-card {
@@ -97,8 +98,20 @@
 
 @media (max-width: 600px) {
   .contractor-container {
-    margin-left: 60px;
+    width: calc(100% - var(--nav-bar-width-mobile));
+    margin-left: var(--nav-bar-width-mobile);
     padding: 0;
+  }
+
+  .contractor-container .services-container {
+    width: 98%;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .services-container .service {
+    /* height: 50p; */
+    width: auto;
   }
 
   .contractor-container .contractor-card {
@@ -106,10 +119,27 @@
   }
 
   .contractor-calendar {
-    flex-direction: column;
+    position: relative;
+    /* height: max-content; */
+    flex-direction: column-reverse;
   }
 
   .contractor-calendar .calendar {
     width: 100%;
+    /* position: absolute; */
+    bottom: 0;
+  }
+
+  .contractor-calendar .availability-list {
+    display: grid;
+    grid-template-columns: repeat(6, auto)
+  }
+
+  .contractor-container .appointment-form {
+    width: 50%;
+    right: 6%;
+    left: unset;
+    top: 45px;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.295);
   }
 }
