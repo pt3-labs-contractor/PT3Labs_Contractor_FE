@@ -26,6 +26,15 @@
   margin: 0 2px;
   padding: 5px 0;
 }
+.page-item:hover {
+  background-color: var(--secondary-color);
+  margin: 0 2px;
+  padding: 5px 0;
+  color: white;
+}
+.page-item a:hover {
+  color: white;
+}
 
 @media (max-width:800px) {
   .pagination {
@@ -35,9 +44,8 @@
     width: 95%;
   }
 }
-
-@media (max-width:500px) {
-  .page-item {
-    padding: 5px;
+@media (max-width: 500px) {
+  .page-item a {
+    padding: 8px
   }
 }

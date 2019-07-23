@@ -28,7 +28,7 @@ function NavBarContractor() {
       </NavLink>
       <NavLink to="/plans" className="side-link" activeClassName="current">
         <i className="fas fa-money-check-alt" />
-        <span className="side-listing"> Plans</span>
+        <span className="side-listing"> Subscription</span>
       </NavLink>
       <NavLink to="/settings" className="side-link" activeClassName="current">
         <i className="fas fa-user-cog" />
