@@ -114,3 +114,27 @@
     color:#8C20F8;
     cursor: pointer;
 }
+
+@media (max-width: 400px) {
+    .card {
+        width: 90%;
+        margin: 1rem;
+    }
+    .heading {
+        font-size: 2rem;  
+    }
+    .meet-the-team {
+        padding-top: 3rem;
+    }
+    .card h1 {
+        font-size: 1.5rem;
+    }
+    .profile-img {
+        width: 10rem;
+        height: 10rem;
+        margin-top: -7rem;
+    }
+    .card .card-img {
+        height: 13rem;
+    }
+}

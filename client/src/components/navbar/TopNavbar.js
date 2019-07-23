@@ -5,15 +5,15 @@ import './TopNavbar.css';
 import { Link } from 'react-router-dom';
 
 function TopNavbar(props) {
-  const logout = () => {
-    localStorage.removeItem('jwt');
-    props.logoutUser();
-  };
-
   const stringify = JSON.stringify(props.user);
   useEffect(() => {
     props.fetchAccts();
   }, [stringify]);
+
+  const logout = () => {
+    localStorage.removeItem('jwt');
+    props.logoutUser();
+  };
   return (
     <div className="topnav">
       <nav className="topnav-style">

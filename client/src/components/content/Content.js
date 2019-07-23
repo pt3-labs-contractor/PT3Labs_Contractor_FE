@@ -8,7 +8,7 @@ export default function Content() {
       <section className="built-on">
         <div className="container .dark-overlay">
           <div className="section-heading">
-            <h1>
+            <h1 className="heading">
               <span className="tech">Technology</span>
               <span className="dark-tech"> Stack</span>
             </h1>

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
+import Rating from 'react-rating';
 import PropTypes from 'prop-types';
 
-function ContractorCard(props) {
-  const [service, setService] = useState({});
+function ContractorCard({ contractor, service, full, mainList }) {
+  const [localService, setService] = useState({});
   const {
     name,
     phoneNumber,
@@ -11,22 +11,45 @@ function ContractorCard(props) {
     city,
     stateAbbr,
     zipCode,
-  } = props.contractor;
+    userScore,
+  } = contractor;
 
   useEffect(() => {
-    if (props.contractor.id) {
-      const filtered = props.contractor.services.filter(service => {
-        return service.name === props.service;
+    if (contractor.id) {
+      const filtered = contractor.services.filter(entry => {
+        return entry.name === service;
       });
+      console.log(filtered);
+      console.log(contractor.services);
+      console.log(service);
       setService(filtered[0]);
     }
-  }, [props.service]);
+  }, [service]);
+  let display = null;
+  if (full)
+    display = (
+      <>
+        <p>{streetAddress}</p>
+        <p>
+          {city} {stateAbbr}
+        </p>
+        <p>{zipCode}</p>
+      </>
+    );
+  else if (localService)
+    display = (
+      <>
+        <p>
+          {localService.name}: {localService.price}
+        </p>
+      </>
+    );
   return (
-    <div className="contractor-card">
+    <div className={mainList ? 'contractor-card-full' : ''}>
       <h3>{name}</h3>
       <address>
         <p>{phoneNumber}</p>
-        {props.full ? (
+        {full ? (
           <>
             <p>{streetAddress}</p>
             <p>
@@ -34,47 +57,29 @@ function ContractorCard(props) {
             </p>
             <p>{zipCode}</p>
           </>
-        ) : service ? (
+        ) : !mainList && localService ? (
           <>
-            <p>
-              {service.name}: {service.price}
+            <p className="service-title">
+              {localService.name}: {localService.price}
             </p>
           </>
         ) : null}
       </address>
+      <Rating
+        className="contractor-card-star-container"
+        fullSymbol={
+          <span className="contractor-card-star fullstar">&#9733;</span>
+        }
+        emptySymbol={
+          <span className="contractor-card-star emptystar">&#9734;</span>
+        }
+        initialRating={userScore}
+        fractions={4}
+        stop={5}
+        readonly
+      />
     </div>
   );
 }
 
-const mapStateToProps = state => {
-  return {
-    service: state.serviceFilter,
-  };
-};
-
-export default connect(mapStateToProps)(ContractorCard);
-
-ContractorCard.propTypes = {
-  contractor: PropTypes.shape({
-    city: PropTypes.string,
-    createdAt: PropTypes.string,
-    id: PropTypes.string,
-    latitude: PropTypes.string,
-    longitude: PropTypes.string,
-    name: PropTypes.string,
-    phoneNumber: PropTypes.string,
-    stateAbbr: PropTypes.string,
-    streetAddress: PropTypes.string,
-    zipCode: PropTypes.string,
-    services: PropTypes.arrayOf(
-      PropTypes.shape({
-        contractorId: PropTypes.string,
-        createdAt: PropTypes.string,
-        id: PropTypes.string,
-        name: PropTypes.string,
-        price: PropTypes.string,
-      })
-    ),
-  }),
-  service: PropTypes.string,
-};
+export default ContractorCard;

@@ -16,13 +16,20 @@ import PopBoxSched from './popups/popBox.jsx';
 import AppInfo from './comps/appointConf.jsx';
 import './cal.scss';
 
-import { setDay, setMonth, getSchedules, setRefs } from '../../actions/index';
+import {
+  seeMyAppointments,
+  setDay,
+  setMonth,
+  getSchedules,
+  setRefs,
+} from '../../actions/index';
 
 import AvailabilityList from '../appointments/AvailabilityList';
 
 import './Calendar.css';
 import TopNavbar from '../navbar/TopNavbar.js';
 import NavBarContractor from '../navbar/NavBarContractor.js';
+import ErrorBox from './popups/errorBox.jsx';
 
 function ContCalendar(props) {
   const display = {
@@ -52,10 +59,12 @@ function ContCalendar(props) {
   const selecDayString = JSON.stringify(props.selectedDay);
   const [ani, setAni] = useState();
   const newRef = useRef();
+  const appString = JSON.stringify(props.appointments);
   let toTween;
 
   useEffect(() => {
     // setId(props.id);
+    props.seeMyAppointments();
     props.getSchedules(props.id);
     pendingAppoints();
     setTheRefs();
@@ -132,11 +141,11 @@ function ContCalendar(props) {
     if (targetCell.hidden === true) {
       setTimeout(function() {
         setTargetCell({ hidden: false, id: e.target.dataset.cell });
-      }, 500);
+      }, 250);
     } else {
       setTimeout(function() {
         setTargetCell({ hidden: true, id: null });
-      }, 500);
+      }, 250);
     }
     // targetCell.hidden === true
     //   ? setTargetCell({ hidden: false, id: e.target.dataset.cell })
@@ -148,10 +157,13 @@ function ContCalendar(props) {
       let schedTween;
       let boxTween;
       let appTween;
+      let errorTween;
       setTimeout(function() {
         schedTween = theRef.current.getElementsByClassName('schedulerCont');
         boxTween = theRef.current.getElementsByClassName('boxCont');
         appTween = theRef.current.getElementsByClassName('infoContApp');
+        errorTween = theRef.current.getElementsByClassName('errorNot');
+        console.log(errorTween);
         schedTween = Array.from(schedTween);
         boxTween = Array.from(boxTween);
         if (schedTween[0] !== undefined) {
@@ -374,23 +386,27 @@ function ContCalendar(props) {
       });
       let aIds = [];
       if (filter) {
-        if (filter[0].scheduleId) {
-          aIds = filter.map(a => {
-            return a.id;
-          });
-        }
-        if (filter[0].id) {
-          aIds = filter.map(a => {
-            return a.id;
-          });
+        if (filter.length > 0) {
+          if (filter[0].scheduleId) {
+            aIds = filter.map(a => {
+              return a.id;
+            });
+          }
+          if (filter[0].id) {
+            aIds = filter.map(a => {
+              return a.id;
+            });
+          }
         }
       }
       let fFilterIds = [];
       if (fullFilter) {
-        if (fullFilter[0].id) {
-          fFilterIds = fullFilter.map(a => {
-            return a.id;
-          });
+        if (fullFilter.length > 0) {
+          if (fullFilter[0].id) {
+            fFilterIds = fullFilter.map(a => {
+              return a.id;
+            });
+          }
         }
       }
 
@@ -607,6 +623,15 @@ function ContCalendar(props) {
         {appoints !== undefined ? (
           <div className="notification">You Have Pending Appointments</div>
         ) : null}
+        <div className="errorCont">
+          {props.error ? (
+            <ErrorBox
+              history={props.history}
+              tween={parentOpenTween}
+              error={props.error}
+            />
+          ) : null}
+        </div>
         <div className="filterButtons">
           <button className="fbutt pendingApp" onClick={handleFilterClick}>
             {`Pending Appointments: ${appoints}`}
@@ -702,11 +727,12 @@ const mapStateToProps = state => {
     appointments: state.appointments,
     id: state.user.contractorId,
     refs: state.refs,
+    error: state.error,
     // contractor: state.thisContractor
   };
 };
 
 export default connect(
   mapStateToProps,
-  { setDay, setMonth, getSchedules, setRefs }
+  { seeMyAppointments, setDay, setMonth, getSchedules, setRefs }
 )(ContCalendar);

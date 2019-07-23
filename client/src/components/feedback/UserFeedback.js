@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Rating from 'react-rating';
 import NavBarUser from '../navbar/NavBarUser';
@@ -8,6 +9,7 @@ import { getFeedback, postFeedback, deleteFeedback } from '../../actions/index';
 import TopNavbar from '../navbar/TopNavbar';
 import dateFns from 'date-fns';
 import Pagination from './Pagination';
+import DeleteModal from './DeleteModal';
 
 function UserFeedback(props) {
   const [posts, setPosts] = useState([]);
@@ -22,12 +24,23 @@ function UserFeedback(props) {
   const [contractorId, setContractorId] = useState('');
   // const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(3);
-  // const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [clicked, setClicked] = useState(false);
+  const [toggle, setToggle] = useState(false);
+
+  console.log(props.contractor);
+
+  const stringify = JSON.stringify(props.feedback);
+  useEffect(() => {
+    props.getFeedback();
+  }, [stringify]);
+
+  useEffect(() => {
+    setClicked(!clicked);
+  }, []);
 
   function deleteFeedback(feedback) {
-    // feedback.preventDefault();
-    // e.preventDefault();
-    // console.log(feedback);
+    console.log(feedback);
     props.deleteFeedback(feedback.id);
   }
   function handleChange(contrID) {
@@ -46,33 +59,26 @@ function UserFeedback(props) {
     // console.log(props)
   }
 
-  const stringify = JSON.stringify(props.feedback);
-  useEffect(() => {
-    setLoading(true);
-    props.getFeedback();
-    setLoading(false);
-  }, [stringify]);
-
   // Get current posts
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = props.feedback.slice(indexOfFirstPost, indexOfLastPost);
-
-  console.log(currentPosts);
-  // console.log(props.feedback);
+  let currentPosts;
+  let feedback = [];
+  if (props.feedback) {
+    currentPosts = props.feedback.slice(indexOfFirstPost, indexOfLastPost);
+    feedback = props.feedback;
+  }
 
   // Change page
   const paginate = pageNumber => {
     setCurrentPage(pageNumber);
   };
 
-  // Get current post feebacks
-  // const indexOfLastPost = currentPage * postsPerPage;
-  // const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  // const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+  const feedbackId = feedback.id;
 
-  // Change page
-  // const paginate = pageNumber => setCurrentPage(pageNumber);
+  const myToggle = () => {
+    setToggle(!toggle);
+  };
 
   return (
     <>
@@ -91,24 +97,39 @@ function UserFeedback(props) {
                   <ul className="legend">
                     <li>
                       {<span className="icon-text fullstar">&#9733;</span>}=
-                      Needs Improvement
+                      Poor
                     </li>
                     <li>
                       {<span className="icon-text fullstar">&#9733;</span>}
                       {<span className="icon-text fullstar">&#9733;</span>}=
-                      Fair Service
+                      Fair
                     </li>
                     <li>
                       {<span className="icon-text fullstar">&#9733;</span>}
                       {<span className="icon-text fullstar">&#9733;</span>}
                       {<span className="icon-text fullstar">&#9733;</span>}=
-                      Great Service
+                      Good
+                    </li>
+                    <li>
+                      {<span className="icon-text fullstar">&#9733;</span>}
+                      {<span className="icon-text fullstar">&#9733;</span>}
+                      {<span className="icon-text fullstar">&#9733;</span>}
+                      {<span className="icon-text fullstar">&#9733;</span>}=
+                      Very Good
+                    </li>
+                    <li>
+                      {<span className="icon-text fullstar">&#9733;</span>}
+                      {<span className="icon-text fullstar">&#9733;</span>}
+                      {<span className="icon-text fullstar">&#9733;</span>}
+                      {<span className="icon-text fullstar">&#9733;</span>}
+                      {<span className="icon-text fullstar">&#9733;</span>}=
+                      Excellent
                     </li>
                     <li />
                   </ul>
                 </div>
                 <div className="form-box box-2">
-                  <p>Who was your Contractor?</p>
+                  <h6 className="feedback-h6">Who was your Contractor?</h6>
                   <div>
                     <select
                       className="select"
@@ -127,13 +148,13 @@ function UserFeedback(props) {
                     </select>
                   </div>
                   <div>
-                    <p>Overall Rating</p>
+                    <h6 className="feedback-h6">Overall Rating</h6>
                     <Rating
                       emptySymbol={<span className="icon-text">&#9734;</span>}
                       fullSymbol={
                         <span className="icon-text fullstar">&#9733;</span>
                       }
-                      stop={3}
+                      stop={5}
                       initialRating={stars}
                       onChange={e => setStars(e)}
                     />
@@ -152,60 +173,69 @@ function UserFeedback(props) {
           </div>
         </div>
 
-        <div>
+        {clicked ? <DeleteModal toggle={toggle} myToggle={myToggle} /> : null}
+
+        <div className="feeback-form-container">
           <h4 className="feedback-user-header">Your Feedback History</h4>
           <div>
             <Pagination
               postsPerPage={postsPerPage}
-              totalPosts={props.feedback.length}
+              totalPosts={feedback.length}
               paginate={paginate}
               currentPosts={currentPosts}
-              createdAt={props.feedback.createdAt}
+              createdAt={currentPosts ? currentPosts.createdAt : null}
             />
 
-            {props.loading ? <p>Loading...</p> : null}
-            {props.error ? <p>{props.error}</p> : null}
-            {currentPosts.map(feedback => {
-              return (
-                <div key={feedback.id} className="user-feedback-container">
-                  <p>Contractor: {feedback.contractorName}</p>
-                  <div>
-                    Rating:{' '}
-                    <Rating
-                      emptySymbol={<span className="icon-text">&#9734;</span>}
-                      fullSymbol={
-                        <span className="icon-text fullstar">&#9733;</span>
-                      }
-                      readonly
-                      initialRating={feedback.stars}
-                      stop={3}
-                    />
-                    {'\n'}
-                    <div className="feedback-context">
-                      <p>
-                        <span className="quotes">"</span>
-                        {feedback.message}
-                        <span className="quotes">"</span>
-                      </p>
-                    </div>
-                    <div className="posted-user">
-                      <div>
-                        <button
-                          className="btn delete-btn"
-                          onClick={e => deleteFeedback(feedback)}
-                        >
-                          Delete Feedback
-                        </button>
+            {props.error ? (
+              <p>{props.error}</p>
+            ) : currentPosts ? (
+              currentPosts.map(feedback => {
+                return (
+                  <div key={feedback.id} className="user-feedback-container">
+                    <p>Contractor: {feedback.contractorName}</p>
+                    <div>
+                      Rating:{' '}
+                      <Rating
+                        emptySymbol={<span className="icon-text">&#9734;</span>}
+                        fullSymbol={
+                          <span className="icon-text fullstar">&#9733;</span>
+                        }
+                        readonly
+                        initialRating={feedback.stars}
+                        stop={5}
+                      />
+                      {'\n'}
+                      <div className="feedback-context">
+                        <p>
+                          <span className="quotes">"</span>
+                          {feedback.message}
+                          <span className="quotes">"</span>
+                        </p>
                       </div>
-                      <div>
-                        Posted:{' '}
-                        {dateFns.format(feedback.createdAt, 'MMM DD YYYY')}
+                      <div className="posted-user">
+                        <div>
+                          Posted:{' '}
+                          {dateFns.format(feedback.createdAt, 'MMM DD YYYY')}
+                        </div>
+                        <div>
+                          <i
+                            className="fas fa-trash userTrash"
+                            onClick={() => {
+                              localStorage.setItem('id', feedback.id);
+                              myToggle();
+                            }}
+                          >
+                            <span className="helper-tool">Delete Feedback</span>
+                          </i>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })
+            ) : props.loading ? (
+              <p>...Loading</p>
+            ) : null}
           </div>
         </div>
       </div>

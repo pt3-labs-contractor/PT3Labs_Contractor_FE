@@ -1,6 +1,4 @@
 import {
-  SEND_SERV,
-  SEND_SERV_COMP,
   SEND_SCHED,
   SEND_SCHED_COMP,
   GET_SCHED,
@@ -8,15 +6,17 @@ import {
   DEL_SCHED_COMP,
   UP_SCHED,
   UP_SCHED_COMP,
-  GET_APP,
+  // GET_APP,
   CONFIRMING_APP,
   CONFIRMED_APP,
   GETTING_USER,
   GETTING_USER_SUCC,
   LOGOUTUSER,
   REFS,
+  DELETE_APP,
   // fetching users
   LOADING,
+  END_LOAD,
   FETCHING_USERS_SUCCESS,
   FAILURE,
 
@@ -34,8 +34,11 @@ import {
   SET_SORTED_CONTRACTORS,
   SET_SERVICE_SORT,
 
-  // fetching services
+  // CRUD services
+  SEND_SERV,
+  SEND_SERV_COMP,
   SET_SERVICES,
+  DELETE_SERV_SUCC,
 
   // fetching single contractor
   FETCH_SINGLE_CONTRACTOR_SUCCESS,
@@ -57,6 +60,15 @@ import {
 
   // edit the user information
   EDIT_USER_SUCCESS,
+  SELECTED,
+  SUBSCRIBE_SUCCESS,
+  SUBSCRIBE_FAILURE,
+  RETRIEVE_SUBSCRIPTION_SUCCESS,
+  RETRIEVE_SUBSCRIPTION_FAILURE,
+  CANCEL_DEFAULT_SUCCESS,
+  CANCEL_DEFAULT_FAILURE,
+  CANCEL_IMMEDIATE_SUCCESS,
+  CANCEL_IMMEDIATE_FAILURE,
 } from '../actions';
 
 const initialState = {
@@ -76,6 +88,7 @@ const initialState = {
   serviceFilter: '',
   refs: [],
   positionContractor: {},
+  subscription: null,
 };
 
 export default (state = initialState, action) => {
@@ -87,6 +100,8 @@ export default (state = initialState, action) => {
         loading: true,
         error: null,
       };
+    case END_LOAD:
+      return { ...state, loading: false };
     case FETCHING_USERS_SUCCESS:
       return {
         ...state,
@@ -109,7 +124,7 @@ export default (state = initialState, action) => {
 
     // calander
     case SET_DAY:
-      return { ...state, thisDay: action.payload };
+      return { ...state, thisDay: action.payload, feedback: [] };
     case SET_MONTH:
       return { ...state, thisMonth: action.payload };
     case SET_SCHEDULE:
@@ -127,7 +142,7 @@ export default (state = initialState, action) => {
         schedule: [],
       };
     case SET_SERVICE_SORT:
-      return { ...state, serviceFilter: action.payload };
+      return { ...state, serviceFilter: action.payload, feedback: [] };
     case SET_CONTRACTOR_POSITION:
       return { ...state, positionContractor: action.payload };
     case LOAD_SCHEDULE:
@@ -163,9 +178,17 @@ export default (state = initialState, action) => {
         error: null,
       };
 
+    case DELETE_SERV_SUCC:
+      return {
+        ...state,
+        service: action.payload,
+        loading: false,
+        error: null,
+      };
+
     // fetching current user written feedback
     case FEEDBACK_SUCCESS:
-      return { ...state, feedback: action.payload.feedback };
+      return { ...state, feedback: action.payload.feedback, loading: false };
 
     case POST_FEEDBACK_SUCCESS:
       return {
@@ -193,15 +216,19 @@ export default (state = initialState, action) => {
         loading: true,
       };
     case SEND_SERV_COMP:
-      return { ...state, loading: false };
-    case SEND_SCHED:
-      return { ...state, loading: true };
-    case SEND_SCHED_COMP:
-      const newSchedual = [...state.schedule];
       return {
         ...state,
         loading: false,
-        schedule: [...newSchedual, action.payload],
+        services: [...state.services, action.payload],
+      };
+
+    case SEND_SCHED:
+      return { ...state, loading: true };
+    case SEND_SCHED_COMP:
+      return {
+        ...state,
+        loading: false,
+        schedule: [...state.schedule, action.payload],
       };
     case GET_SCHED:
       return { ...state, loading: true };
@@ -210,30 +237,37 @@ export default (state = initialState, action) => {
     case DEL_SCHED:
       return { ...state, loading: true };
     case DEL_SCHED_COMP:
-      const newState = state.schedule.filter(sch => {
-        return sch.id !== action.payload;
-      });
-      return { ...state, loading: false, schedule: newState };
-    case UP_SCHED:
-      return { ...state, loading: true };
-    case UP_SCHED_COMP:
-      const updatedSched = state.schedule.filter(s => {
-        return s.id !== action.payload.id;
-      });
       return {
         ...state,
         loading: false,
-        schedule: [...updatedSched, action.payload],
+        schedule: state.schedule.filter(sch => {
+          return sch.id !== action.payload;
+        }),
+      };
+    case UP_SCHED:
+      return { ...state, loading: true };
+    case UP_SCHED_COMP:
+      return {
+        ...state,
+        loading: false,
+        schedule: [
+          ...state.schedule.filter(s => {
+            return s.id !== action.payload.id;
+          }),
+          action.payload,
+        ],
       };
     case CONFIRMING_APP:
       return { ...state, loading: true, error: null };
     case CONFIRMED_APP:
-      const newAppState = state.appointments.filter(a => {
-        return a.id !== action.payload.updated.id;
-      });
       return {
         ...state,
-        appointments: [...newAppState, action.payload.updated],
+        appointments: [
+          ...state.appointments.filter(a => {
+            return a.id !== action.payload.updated.id;
+          }),
+          action.payload.updated,
+        ],
         loading: false,
       };
     case GETTING_USER:
@@ -246,6 +280,15 @@ export default (state = initialState, action) => {
         refs: action.payload,
       };
 
+
+    //delete app by user
+    case DELETE_APP:
+      return {
+        ...state,
+        appointments: action.payload,
+        loading: false,
+      };
+
     // fetching appointments for a contractor
     case RET_CONTRACTOR_APP_SUCC:
       return { ...state, appointments: action.payload };
@@ -255,8 +298,45 @@ export default (state = initialState, action) => {
       return { ...state, user: action.payload };
 
     case LOGOUTUSER:
-      return { ...state, user: { ...state.user, username: action.payload } };
-
+      return initialState;
+    case SELECTED:
+      return { ...state, thisContractor: action.payload };
+    case SUBSCRIBE_SUCCESS:
+      return {
+        ...state,
+        user: { ...state.user, subscriptionId: action.payload.subscriptionId },
+        error: null,
+        loading: false,
+      };
+    case SUBSCRIBE_FAILURE:
+      return { ...state, error: action.payload, loading: false };
+    case RETRIEVE_SUBSCRIPTION_SUCCESS:
+      return {
+        ...state,
+        subscription: action.payload,
+        error: null,
+        loading: false,
+      };
+    case RETRIEVE_SUBSCRIPTION_FAILURE:
+      return { ...state, error: action.payload, loading: false };
+    case CANCEL_DEFAULT_SUCCESS:
+      return {
+        ...state,
+        subscription: { ...state.subscription, cancel_at_period_end: true },
+        loading: false,
+      };
+    case CANCEL_DEFAULT_FAILURE:
+      return { ...state, error: action.payload, loading: false };
+    case CANCEL_IMMEDIATE_SUCCESS:
+      return {
+        ...state,
+        subscription: null,
+        user: { ...state.user, subscriptionId: null },
+        error: null,
+        loading: false,
+      };
+    case CANCEL_IMMEDIATE_FAILURE:
+      return { ...state, error: action.payload, loading: false };
     default:
       return state;
   }

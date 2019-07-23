@@ -5,7 +5,7 @@ import dateFns from 'date-fns';
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { TweenMax } from 'gsap';
-import { postNewSchedule } from '../../../actions/index.js';
+import { postNewSchedule, setFailure } from '../../../actions/index.js';
 
 const Scheduler = props => {
   const schedRef = useRef();
@@ -25,7 +25,7 @@ const Scheduler = props => {
     position: 'absolute',
     left: `${xper}` + 'px',
     top: `${yper}` + 'px',
-    zIndex: '100',
+    zIndex: '201',
     backgroundColor: 'white',
   };
 
@@ -48,11 +48,15 @@ const Scheduler = props => {
     const minutes = dateFns.differenceInMinutes(end, start);
     const duration = `${minutes / 60}h`;
     const { contractorId } = props.user;
-    const newSchedule = {
-      startTime: start,
-      duration,
-    };
-    props.postNewSchedule(newSchedule);
+    if (start < end) {
+      const newSchedule = {
+        startTime: start,
+        duration,
+      };
+      props.postNewSchedule(newSchedule);
+    } else {
+      props.setFailure('The Start Time must be before the End Time');
+    }
     close();
   };
   const close = () => {
@@ -95,5 +99,5 @@ const mstp = state => {
 
 export default connect(
   mstp,
-  { postNewSchedule }
+  { postNewSchedule, setFailure }
 )(Scheduler);
