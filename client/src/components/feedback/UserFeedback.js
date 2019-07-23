@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import Rating from 'react-rating';
+import PropTypes from 'prop-types';
 import NavBarUser from '../navbar/NavBarUser';
 import './UserFeedback.css';
 import { getFeedback, postFeedback, deleteFeedback } from '../../actions/index';
@@ -226,3 +227,57 @@ export default connect(
   mapStateToProps,
   { getFeedback, postFeedback, deleteFeedback }
 )(UserFeedback);
+
+
+UserFeedback.propTypes = {
+  contractor: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string,
+      name: PropTypes.string,
+      phoneNumber: PropTypes.string,
+      city: PropTypes.string,
+      stateAbbr: PropTypes.string,
+      streetAddress: PropTypes.string,
+      zipCode: PropTypes.string,
+      userScore: PropTypes.number,
+      latitude: PropTypes.string,
+      longitude: PropTypes.string,
+      createdAt: PropTypes.string,
+      services: PropTypes.arrayOf(
+        PropTypes.shape({
+          id: PropTypes.string,
+          contractorId: PropTypes.string,
+          name: PropTypes.string,
+          price: PropTypes.string,
+          createdAt: PropTypes.string
+        })
+      )
+    })
+  ),
+  user: PropTypes.shape({
+    id: PropTypes.string,
+    username: PropTypes.string,
+    email: PropTypes.string,
+    phoneNumber: PropTypes.string,
+    googleId: PropTypes.string,
+    contractorId: PropTypes.string,
+    subscriptionId: PropTypes.string
+  }),
+  feedback: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string,
+      userId: PropTypes.string,
+      contractorId: PropTypes.string,
+      username: PropTypes.string,
+      contractorName: PropTypes.string,
+      message: PropTypes.string,
+      stars: PropTypes.number,
+      createdAt: PropTypes.string 
+    })
+  ),
+  error: PropTypes.string,
+  loading: PropTypes.bool,
+  getFeedback: PropTypes.func,
+  deleteFeedback: PropTypes.func,
+  postFeedback: PropTypes.func
+}
