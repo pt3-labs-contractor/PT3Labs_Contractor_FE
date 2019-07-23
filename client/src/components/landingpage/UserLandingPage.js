@@ -26,6 +26,7 @@ function UserLandingPage(props) {
   const [service, setService] = useState({});
   const [serviceSort, setServiceSort] = useState('Pick a service');
   const [currentTarget, setTarget] = useState(0);
+  const [mediaQuery, setMediaQuery] = useState(window.innerWidth);
   const serviceTarget = useRef(null);
   const calendarTarget = useRef(null);
   const contractorTarget = useRef(null);
@@ -49,6 +50,12 @@ function UserLandingPage(props) {
     'Roofing and Siding',
   ];
 
+  window.addEventListener('resize', () => {
+    if((window.innerWidth <= 800 && mediaQuery > 800) || (mediaQuery < 800 && window.innerWidth > 800)) {
+      window.location.reload();
+    } 
+  });
+
   useEffect(() => {
     if (mql) {
       const container = document.querySelector('.calendar-container');
@@ -63,6 +70,7 @@ function UserLandingPage(props) {
     }
     // eslint-disable-next-line
   }, []);
+
 
   useEffect(() => {
     const dateString = dateFns.format(props.selectedDay, 'YYYY-MM-DD');

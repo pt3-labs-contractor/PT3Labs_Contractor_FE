@@ -33,7 +33,7 @@ function Login(props) {
       })
       .then(res => {
         localStorage.setItem('jwt', res.data.token);
-        props.fetchAccts();
+        props.fetchAccts(); 
         props.getFeedback();
       })
       .catch(err => {
