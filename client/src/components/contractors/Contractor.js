@@ -119,5 +119,21 @@ Contractor.propTypes = {
         createdAt: PropTypes.string
       })
     )
-  })
+  }),
+  selectedDay: PropTypes.instanceOf(Date),
+  schedule: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string,
+      contractorId: PropTypes.string,
+      startTime: PropTypes.string,
+      duration: PropTypes.shape({
+        hours: PropTypes.number
+      }),
+      createdAt: PropTypes.string,
+      open: PropTypes.bool
+    })
+  ),
+  fetchSchedule: PropTypes.func,
+  getFeedbackByContractor: PropTypes.func,
+  selectSingleContractorSetting: PropTypes.func
 }
