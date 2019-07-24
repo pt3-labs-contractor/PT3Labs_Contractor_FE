@@ -88,6 +88,7 @@ export const fetchAccts = () => dispatch => {
       axios.spread((userRes, contRes, apmtRes) => {
         let { user } = userRes.data;
         const { appointments } = apmtRes.data;
+        console.log(appointments);
         appointments.sort((a, b) => {
           return new Date(a.startTime) - new Date(b.startTime);
         });
@@ -123,7 +124,7 @@ export const fetchAccts = () => dispatch => {
         }
       })
     )
-    .catch(() => {
+    .catch(e => {
       dispatch({
         type: FAILURE,
         error: 'Something went wrong.',

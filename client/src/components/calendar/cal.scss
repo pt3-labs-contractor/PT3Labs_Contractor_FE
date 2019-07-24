@@ -678,3 +678,10 @@ $mobile: (max-width: 601px);
   }
 }
 
+.add {
+	&:hover {
+		font-size: 1.2rem;
+		font-weight: bold;
+	}
+}
+

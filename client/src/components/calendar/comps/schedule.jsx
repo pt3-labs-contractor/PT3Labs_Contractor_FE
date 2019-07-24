@@ -29,6 +29,7 @@ const Schedule = props => {
   const apps = props.appointments.filter(app => {
     return app.scheduleId === id;
   });
+  console.log(apps);
 
   const cancApps = apps.filter(a => {
     return a.confirmed === false;
