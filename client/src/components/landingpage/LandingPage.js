@@ -26,10 +26,10 @@ function LandingPage({ user }) {
               </div>
             ) : (
               <div className="button">
-                <NavLink to="/register" className="btn btn-primary">
+                <NavLink to="/register" className="btn btn-primary landing-btn">
                   Sign Up
                 </NavLink>
-                <NavLink to="/login" className="btn btn-light">
+                <NavLink to="/login" className="btn btn-light landing-btn">
                   Log In
                 </NavLink>
               </div>

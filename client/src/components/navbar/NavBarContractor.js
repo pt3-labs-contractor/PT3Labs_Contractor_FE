@@ -34,10 +34,10 @@ function NavBarContractor() {
         <i className="fas fa-user-cog" />
         <span className="side-listing"> Settings</span>
       </NavLink>
-      <NavLink to="/app" className="side-link" activeClassName="current">
+      {/* <NavLink to="/app" className="side-link" activeClassName="current">
         <i className="fas fa-user" />
         <span className="side-listing"> User</span>
-      </NavLink>
+      </NavLink> */}
     </div>
   );
 }
