@@ -11,6 +11,7 @@ import {
   editUserSettings,
   postNewService,
   deleteService,
+  uploadAvatar,
 } from '../../actions/index';
 import TopNavbar from '../navbar/TopNavbar';
 
@@ -175,7 +176,43 @@ function ContractorSetting(props) {
           </div>
         </div>
       </div>
+      <AvatarUpload uploadAvatar={props.uploadAvatar} />
     </>
+  );
+}
+
+function AvatarUpload(props) {
+  const [file, selectFile] = useState(null);
+  function displayEvent(ev) {
+    ev.preventDefault();
+    if (!file) return console.error('No file selected');
+    props.uploadAvatar(file);
+  }
+  function handleChange(ev) {
+    const [selectedFile] = ev.target.files;
+    console.log(selectedFile);
+    const types = ['image/png', 'image/jpeg', 'image/gif'];
+    if (!selectedFile) return console.error('Error: No file selected');
+    if (types.every(type => selectedFile.type !== type))
+      return console.error('Error: Please select an image file.');
+    if (selectedFile.size > 150000)
+      return console.log('File is too large, please selected another image.');
+    selectFile(selectedFile);
+  }
+  return (
+    <form className="avatar-upload" onSubmit={displayEvent}>
+      <label htmlFor="test" style={{ cursor: 'pointer' }}>
+        Click Here to Upload
+      </label>
+      <input
+        id="test"
+        accept="image/*"
+        onChange={handleChange}
+        type="file"
+        style={{ display: 'none' }}
+      />
+      <button>Upload</button>
+    </form>
   );
 }
 
@@ -194,5 +231,6 @@ export default connect(
     editUserSettings,
     postNewService,
     deleteService,
+    uploadAvatar,
   }
 )(ContractorSetting);

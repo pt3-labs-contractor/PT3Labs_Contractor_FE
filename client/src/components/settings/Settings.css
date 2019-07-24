@@ -183,3 +183,8 @@ input:focus {
   width: 50%;
   justify-content: center;
 }
+.avatar-upload {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}

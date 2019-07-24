@@ -72,6 +72,9 @@ export const CANCEL_DEFAULT_SUCCESS = 'CANCEL_DEFAULT_SUCCESS';
 export const CANCEL_DEFAULT_FAILURE = 'CANCEL_DEFAULT_FAILURE';
 export const CANCEL_IMMEDIATE_SUCCESS = 'CANCEL_IMMEDIATE_SUCCESS';
 export const CANCEL_IMMEDIATE_FAILURE = 'CANCEL_IMMEDIATE_FAILURE';
+
+export const UPLOAD_AVATAR_SUCCESS = 'UPLOAD_AVATAR_SUCCESS';
+export const UPLOAD_AVATAR_FAILURE = 'UPLOAD_AVATAR_FAILURE';
 // ---------------------------------------------------------------
 
 function setHeaders() {
@@ -497,28 +500,28 @@ export const confirmApp = (id, obj) => {
   };
 };
 
-
 //user delete app
 export const deleteApp = (obj, id) => {
   const headers = setHeaders();
   return dispatch => {
     axios
-      .delete(`https://fierce-plains-47590.herokuapp.com/api/appointments/${id}`, { headers })
+      .delete(
+        `https://fierce-plains-47590.herokuapp.com/api/appointments/${id}`,
+        { headers }
+      )
       .then(res => {
         // console.log(obj)
         const deletedAppVar = obj.filter(a => {
-          return a.id !== id
-        })
-        console.log(deletedAppVar)
-        dispatch({ type: DELETE_APP, payload: deletedAppVar})
-
+          return a.id !== id;
+        });
+        console.log(deletedAppVar);
+        dispatch({ type: DELETE_APP, payload: deletedAppVar });
       })
       .catch(err => {
-        console.log(err)
-      })
-  }
-}
-
+        console.log(err);
+      });
+  };
+};
 
 export const getUser = id => {
   const headers = setHeaders();
@@ -644,4 +647,23 @@ export const startManualLoad = () => dispatch => {
 
 export const endManualLoad = () => dispatch => {
   dispatch({ type: END_LOAD });
+};
+
+export const uploadAvatar = file => dispatch => {
+  dispatch({ type: LOADING });
+  const headers = setHeaders();
+  const formData = new FormData();
+  formData.append('avatar', file);
+  axios
+    .post('http://localhost:5000/api/cloudinary', {
+      data: formData,
+      headers,
+    })
+    .then(res => dispatch({ type: UPLOAD_AVATAR_SUCCESS, playload: res.data }))
+    .catch(err =>
+      dispatch({
+        type: UPLOAD_AVATAR_FAILURE,
+        payload: err.response.data.error,
+      })
+    );
 };

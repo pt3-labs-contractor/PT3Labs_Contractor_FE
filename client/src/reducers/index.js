@@ -69,6 +69,8 @@ import {
   CANCEL_DEFAULT_FAILURE,
   CANCEL_IMMEDIATE_SUCCESS,
   CANCEL_IMMEDIATE_FAILURE,
+  UPLOAD_AVATAR_SUCCESS,
+  UPLOAD_AVATAR_FAILURE,
 } from '../actions';
 
 const initialState = {
@@ -280,7 +282,6 @@ export default (state = initialState, action) => {
         refs: action.payload,
       };
 
-
     //delete app by user
     case DELETE_APP:
       return {
@@ -336,6 +337,10 @@ export default (state = initialState, action) => {
         loading: false,
       };
     case CANCEL_IMMEDIATE_FAILURE:
+      return { ...state, error: action.payload, loading: false };
+    case UPLOAD_AVATAR_SUCCESS:
+      return { ...state, error: null, loading: false };
+    case UPLOAD_AVATAR_FAILURE:
       return { ...state, error: action.payload, loading: false };
     default:
       return state;
