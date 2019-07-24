@@ -12,10 +12,9 @@ function Navbar({ user }) {
   return (
     <div>
       <nav className="navbar bg-dark">
-        <NavLink to="/">
-          <h1>
-            <i className="far fa-calendar-alt"> Digital Calendar</i>
-          </h1>
+        <NavLink to="/" className="main-title">
+          <i className="far fa-calendar-alt main-title-icon" />
+          <h1>Digital Calendar</h1>
         </NavLink>
         <ul>
           {user.username ? (

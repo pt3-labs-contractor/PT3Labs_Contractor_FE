@@ -67,6 +67,15 @@ function UserFeedback(props) {
     setToggle(!toggle);
   };
 
+  function mySort() {
+    const newOne = createdArray.sort((a, b) => {
+      return b - a;
+    });
+    console.log(newOne);
+  }
+
+  const createdArray = feedback.map(user => user.contractorName);
+
   return (
     <>
       <TopNavbar />
@@ -161,6 +170,8 @@ function UserFeedback(props) {
             </form>
           </div>
         </div>
+
+        <button onClick={mySort}>click</button>
 
         {clicked ? <DeleteModal toggle={toggle} myToggle={myToggle} /> : null}
 
