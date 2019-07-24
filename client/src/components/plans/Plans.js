@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import StripeCheckout from 'react-stripe-checkout';
 import { connect } from 'react-redux';
 import {
@@ -12,6 +11,7 @@ import {
 import NavBarContractor from '../navbar/NavBarContractor';
 import './Plans.css';
 import TopNavbar from '../navbar/TopNavbar';
+import { Link } from 'react-router-dom';
 
 function Plans({ user, subscription, ...props }) {
   const [updateForm, setUpdateForm] = useState(false);
@@ -31,7 +31,7 @@ function Plans({ user, subscription, ...props }) {
     <>
       <TopNavbar />
       <NavBarContractor />
-      <div className="main-body">
+      <div className="main-body plans-body">
         {subscription ? (
           <div className="wrapper">
             <div className="single-price active-sub">
@@ -100,32 +100,54 @@ function Plans({ user, subscription, ...props }) {
           </div>
         ) : (
           <div className="wrapper">
-            <div className="single-price">
-              <h2>Basic</h2>
+            <div className="free-plan single-price">
+              <h3>Basic</h3>
               <div className="price">
-                <h2>Free</h2>
+                <h4>Free</h4>
               </div>
               <div className="deals">
-                <h4>Up to 5 hrs</h4>
-                <h4>Up to 5 hrs</h4>
-                <h4>Up to 5 hrs</h4>
-                <h4>Up to 5 hrs</h4>
-                <h4>Up to 5 hrs</h4>
+                <p>
+                  <i className="fas fa-check checked" />4 appoinments per month
+                </p>
+                <p>
+                  <i className="fas fa-check checked" />5 hour appoinment window
+                </p>
+                <p>
+                  <i className="fas fa-check checked" />
+                  24 hr helpdesk
+                </p>
+                <p>
+                  <i className="fas fa-check checked" />
+                  Access to feedback
+                </p>
+                <Link className="basic-btn" to="contractorcalendar">
+                  Start
+                </Link>
               </div>
-              <Link>Select</Link>
             </div>
 
-            <div className="single-price">
-              <h2>Premium</h2>
+            <div className="premium-plan single-price">
+              <h3>Premium</h3>
               <div className="price">
-                <h2>$19.99</h2>
+                <h4>$20/month</h4>
               </div>
               <div className="deals">
-                <h4>Unlimted Everything!</h4>
-                <h4>Unlimted Everything!</h4>
-                <h4>Unlimted Everything!</h4>
-                <h4>Unlimted Everything!</h4>
-                <h4>Unlimted Everything!</h4>
+                <p>
+                  <i className="fas fa-check checked" />
+                  Unlimted number of appoinments!
+                </p>
+                <p>
+                  <i className="fas fa-check checked" />
+                  24 hr appointment window!
+                </p>
+                <p>
+                  <i className="fas fa-check checked" />
+                  24 hr helpdesk
+                </p>
+                <p>
+                  <i className="fas fa-check checked" />
+                  Access to feedback
+                </p>
               </div>
               {user.subscriptionId ? null : (
                 <StripeCheckout
@@ -137,7 +159,7 @@ function Plans({ user, subscription, ...props }) {
                   amount={1000}
                   name="Contractor Scheduler"
                   description="Expanded scheduling of clients."
-                  label="Select"
+                  label="SELECT"
                 />
               )}
             </div>

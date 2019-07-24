@@ -3,6 +3,7 @@
   flex-direction: column;
   margin-top: 2rem;
   letter-spacing: 1.2px;
+  margin-bottom: 2rem;
 }
 
 .main-header-title {
@@ -51,7 +52,7 @@
   width: 75%;
   align-items: center;
   justify-content: center;
-  margin: 0 auto;
+  margin: 0 auto 1rem;
 }
 
 .feedback-user-header {
@@ -106,6 +107,10 @@
   display: flex;
 }
 
+.bold {
+  font-weight: 700;
+}
+
 @media (max-width:1000px) {
   .feedback-form-container {
     width: 95%;
@@ -137,6 +142,9 @@
   }
   .delete-btn {
     display: none;
+  }
+  .main-body {
+    margin: 0 auto;
   }
 }
 
