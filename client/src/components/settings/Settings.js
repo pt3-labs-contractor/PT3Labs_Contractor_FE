@@ -86,15 +86,14 @@ function ContractorSetting(props) {
           <h2 className="title">{props.User.username} Settings</h2>
           {'\n'}
           <form onSubmit={handleUpdate}>
-
-          <div className="username-div">
+            <div className="username-div">
               Username
               <input
                 type="text"
                 name="contUN"
                 value={username}
                 onChange={e => setUsername(e.target.value)}
-                />
+              />
             </div>
 
             <div className="email-div">
@@ -105,7 +104,7 @@ function ContractorSetting(props) {
                 name="contEmail"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
-                />
+              />
             </div>
 
             <div className="phonenumber-div">
@@ -116,58 +115,54 @@ function ContractorSetting(props) {
                 name="contPN"
                 value={phoneNumber}
                 onChange={e => setPhoneNumber(e.target.value)}
-                />
+              />
             </div>
             {/* Old Password
             <input />
             New Passowrd
           <input /> */}
-             <div class="box">
-              <button  className="btn btn-three">Save</button>
+            <div className="box">
+              <button className="btn btn-three">Save</button>
             </div>
           </form>
-
-         
-            <form onSubmit={handleAddServiceSubmit}>
-              Add Service
-
-              <div className="add-service">
-                <select
-                  className="select-service"
-                  value={addService}
-                  onChange={e => handleAddServiceChange(e.target.value)}
-                  >
-                  <option value="">Pick a service</option>
-                  {serviceList.map(service => (
-                    <option key={service} value={service.toLowerCase()}>
-                      {service}
-                    </option>
-                  ))}
-                </select>
-                </div>
-
-              <input
-                placeholder="Price"
-                name="price"
-                value={addPrice}
-                onChange={e => handleAddPriceChange(e.target.value)}
-                />
-
-
-                <div class="box">
-                  <button onClick={handleAddServiceSubmit} className="btn btn-three">Add Service</button>
-                </div>
-      
-            </form>
-        
+          <form onSubmit={handleAddServiceSubmit}>
+            Add Service
+            <div className="add-service">
+              <select
+                className="select-service"
+                value={addService}
+                onChange={e => handleAddServiceChange(e.target.value)}
+              >
+                <option value="">Pick a service</option>
+                {serviceList.map(service => (
+                  <option key={service} value={service.toLowerCase()}>
+                    {service}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <input
+              placeholder="Price"
+              name="price"
+              value={addPrice}
+              onChange={e => handleAddPriceChange(e.target.value)}
+            />
+            <div className="box">
+              <button
+                onClick={handleAddServiceSubmit}
+                className="btn btn-three"
+              >
+                Add Service
+              </button>
+            </div>
+          </form>
           {props.User.username}'s Services
           {/* <p>Services:</p> */}
-
           <div className="services">
-            <div >
+            <div>
               {props.services
                 ? props.services.map(service => (
-                  <div className="indi-services">
+                    <div className="indi-services">
                       <p>{service.name}</p>
                       <p>{service.price}</p>
                       <button onClick={e => handleServeDelete(service)}>
@@ -175,10 +170,9 @@ function ContractorSetting(props) {
                       </button>
                     </div>
                   ))
-                  : null}
+                : null}
             </div>
           </div>
-
         </div>
       </div>
     </>

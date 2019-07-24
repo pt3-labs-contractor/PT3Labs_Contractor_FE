@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
 import Rating from 'react-rating';
 import PropTypes from 'prop-types';
 
-function ContractorCard({ contractor, service, full }) {
+function ContractorCard({ contractor, service, full, mainList }) {
   const [localService, setService] = useState({});
   const {
     name,
@@ -46,7 +45,7 @@ function ContractorCard({ contractor, service, full }) {
       </>
     );
   return (
-    <div>
+    <div className={mainList ? 'contractor-card-full' : ''}>
       <h3>{name}</h3>
       <address>
         <p>{phoneNumber}</p>
@@ -58,10 +57,10 @@ function ContractorCard({ contractor, service, full }) {
             </p>
             <p>{zipCode}</p>
           </>
-        ) : service ? (
+        ) : !mainList && localService ? (
           <>
             <p className="service-title">
-              {service.name}: {service.price}
+              {localService.name}: {localService.price}
             </p>
           </>
         ) : null}
@@ -74,9 +73,9 @@ function ContractorCard({ contractor, service, full }) {
         emptySymbol={
           <span className="contractor-card-star emptystar">&#9734;</span>
         }
-        initialRating={1.6}
+        initialRating={userScore}
         fractions={4}
-        stop={3}
+        stop={5}
         readonly
       />
     </div>

@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import Fuse from 'fuse.js';
+import { sortByDistance } from './searchFunctions';
 import './ContractorList.css';
 
 import ContractorCard from './ContractorCard';
@@ -13,6 +15,7 @@ function ContractorList({
   error,
   loading,
   contractors,
+  sortedContractors,
   user,
   userLanding,
   ...handlers
@@ -22,22 +25,31 @@ function ContractorList({
   const [list, setList] = useState([]);
   const [select, setSelect] = useState({});
   const contractorRef = useRef({});
-  const limit = userLanding ? 5 : 25;
+  const [zip, setZip] = useState('');
+  const [query, setQuery] = useState('');
 
-  useEffect(() => {
-    const dividedContractors = contractors.slice(
-      pageNum * limit,
-      pageNum * limit + limit
-    );
+  const paginate = arr => {
+    const limit = userLanding ? 5 : 25;
+    const dividedContractors = [];
+    for (let i = 0; i < arr.length; i += limit) {
+      const current = arr.slice(i, i + limit);
+      if (current.length) dividedContractors.push(current);
+    }
     setContractors(dividedContractors);
     setPageNum(0);
-    // eslint-disable-next-line
-  }, [contractors]);
+  };
 
   useEffect(() => {
-    setList(contractorList || []);
+    if (userLanding) return paginate(sortedContractors);
+    return paginate(contractors);
+    // eslint-disable-next-line
+  }, [sortedContractors]);
+
+  useEffect(() => {
+    setList(contractorList[pageNum] || []);
   }, [pageNum, contractorList]);
 
+  // Possible removal of this function as the position isn't needed
   const selectElement = id => {
     if (select !== id) {
       setSelect(id);
@@ -52,19 +64,60 @@ function ContractorList({
   };
 
   const pageChange = dir => {
-    const newPage = pageNum + dir;
-    const dividedContractors = contractors.slice(
-      newPage * limit,
-      newPage * limit + limit
-    );
-    setContractors(dividedContractors);
-    setPageNum(newPage);
+    setPageNum(pageNum + dir);
   };
+
+  function handleSearch(ev) {
+    ev.preventDefault();
+    const options = {
+      shouldSort: true,
+      threshold: 0.6,
+      location: 0,
+      distance: 100,
+      minMatchCharLength: 2,
+      keys: [
+        {
+          name: 'name',
+          weight: '0.5',
+        },
+        {
+          name: 'city',
+          weight: '0.3',
+        },
+        {
+          name: 'stateAbbr',
+          weight: query.length === 2 ? '0.7' : '0.1',
+        },
+        {
+          name: 'zipCode',
+          weight: '0.1',
+        },
+      ],
+    };
+    const fuse = new Fuse(contractors, options);
+    setPageNum(1);
+    paginate(query.length > 1 ? fuse.search(query) : contractors);
+    setQuery('');
+  }
+  function handleZipSort(ev) {
+    ev.preventDefault();
+    sortByDistance(zip, contractors)
+      .then(arr => {
+        setZip('');
+        setPageNum(1);
+        if (!arr) {
+          paginate(contractors);
+          throw new Error('Invalid Zip Code');
+        }
+        paginate(arr);
+      })
+      .catch(err => console.log(err));
+  }
 
   return (
     <div className="contractor-list container">
       <div className="list-header">
-        <h3>Contractors:</h3>
+        <h3 className="contractor-list-title">Contractors:</h3>
         <div className="btn-container">
           <button
             type="button"
@@ -80,15 +133,37 @@ function ContractorList({
             type="button"
             className="btn"
             onClick={() => pageChange(1)}
-            disabled={pageNum * limit + limit >= contractors.length - 1}
+            disabled={pageNum >= contractorList.length - 1}
           >
             Page
             <br />
             up
           </button>
         </div>
+        {userLanding ? null : (
+          <div className="contractor-list-form-container">
+            <form onSubmit={handleZipSort}>
+              <input
+                placeholder="Sort By Distance"
+                type="text"
+                onChange={ev => setZip(ev.target.value)}
+                value={zip}
+              />
+              <button type="submit">Search</button>
+            </form>
+            <form onSubmit={handleSearch}>
+              <input
+                placeholder="Search"
+                type="text"
+                onChange={ev => setQuery(ev.target.value)}
+                value={query}
+              />
+              <button type="submit">Search</button>
+            </form>
+          </div>
+        )}
       </div>
-      <div className="contractor-list-container">
+      <div className={userLanding ? 'contractor-list' : 'contractor-display'}>
         {loading ? <p>Loading...</p> : null}
         {error ? <p>{error}</p> : null}
         {list.map(contractor =>
@@ -110,7 +185,7 @@ function ContractorList({
             </div>
           ) : (
             <Link to={`/app/contractors/${contractor.id}`} key={contractor.id}>
-              <ContractorCard full contractor={contractor} />
+              <ContractorCard mainList contractor={contractor} />
             </Link>
           )
         )}
@@ -129,22 +204,22 @@ ContractorList.defaultProps = {
   selectContractor: undefined,
 };
 
-ContractorList.propTypes = {
-  contractors: PropTypes.arrayOf(PropTypes.object),
-  loading: PropTypes.bool,
-  error: PropTypes.string,
-  user: PropTypes.shape({
-    id: PropTypes.string,
-    googleId: PropTypes.string,
-    email: PropTypes.string,
-    phoneNumber: PropTypes.string,
-    contractorId: PropTypes.string,
-    city: PropTypes.string,
-  }),
-  userLanding: PropTypes.bool,
-  setPosition: PropTypes.func,
-  selectContractor: PropTypes.func,
-};
+// ContractorList.propTypes = {
+//   contractors: PropTypes.arrayOf(PropTypes.object),
+//   loading: PropTypes.bool,
+//   error: PropTypes.string,
+//   user: PropTypes.shape({
+//     id: PropTypes.string,
+//     googleId: PropTypes.string,
+//     email: PropTypes.string,
+//     phoneNumber: PropTypes.string,
+//     contractorId: PropTypes.string,
+//     city: PropTypes.string,
+//   }),
+//   userLanding: PropTypes.bool,
+//   setPosition: PropTypes.func,
+//   selectContractor: PropTypes.func,
+// };
 
 // city: "Test City"
 // contractorId: "aec1f8d3-a534-48e5-8be1-9fc4197acccd"
@@ -164,7 +239,8 @@ ContractorList.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    contractors: state.sortedContractors,
+    contractors: state.contractors,
+    sortedContractors: state.sortedContractors,
     user: state.user,
     loading: state.loading,
     error: state.error,

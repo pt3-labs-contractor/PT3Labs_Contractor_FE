@@ -11,12 +11,11 @@ function Contractor(props) {
   useEffect(() => {
     props.selectContractor(props.match.params.id, props.list); // replace with get request
     // eslint-disable-next-line
-  }, [props.contractor]);
+  }, [props.list]);
 
   return (
-    <div>
-      <NavBarContractor />
-      <ContractorCard contractor={props.contractor} />
+    <div className="individual-contractor-container">
+      <ContractorCard full contractor={props.contractor} />
       <Calendar contractor={props.contractor} />
     </div>
   );
