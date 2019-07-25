@@ -20,8 +20,15 @@ import TopNavbar from '../navbar/TopNavbar';
 function Contractor(props) {
   const [service, setService] = useState({ name: 'Pick a service' });
   const [appointment, setAppointment] = useState({});
+  const [mediaQuery] = useState(window.innerWidth)
   const mql = window.matchMedia('(max-width: 800px)').matches;
   const { id } = props.match.params;
+
+  window.addEventListener('resize', () => {
+    if((window.innerWidth <= 800 && mediaQuery > 800) || (mediaQuery < 800 && window.innerWidth > 800)) {
+      window.location.reload();
+    } 
+  });
 
   useEffect(() => {
     Promise.all([
@@ -62,13 +69,11 @@ function Contractor(props) {
         </div>
         <div className="contractor-calendar">
           <Calendar contractor={props.contractor} schedule={props.schedule} />
-          {/* <div className="availability-list"> */}
-            <AvailabilityList
-              contractor
-              selectedDay={props.selectedDay}
-              setAppointment={makeAppointment}
-            />
-          {/* </div> */}
+          <AvailabilityList
+            contractor
+            selectedDay={props.selectedDay}
+            setAppointment={makeAppointment}
+          />
         </div>
         <AppointmentForm
           contractor={id}
