@@ -51,9 +51,12 @@ function UserLandingPage(props) {
   ];
 
   window.addEventListener('resize', () => {
-    if((window.innerWidth <= 800 && mediaQuery > 800) || (mediaQuery < 800 && window.innerWidth > 800)) {
+    if (
+      (window.innerWidth <= 800 && mediaQuery > 800) ||
+      (mediaQuery < 800 && window.innerWidth > 800)
+    ) {
       window.location.reload();
-    } 
+    }
   });
 
   useEffect(() => {
@@ -71,7 +74,6 @@ function UserLandingPage(props) {
     // eslint-disable-next-line
   }, []);
 
-
   useEffect(() => {
     const dateString = dateFns.format(props.selectedDay, 'YYYY-MM-DD');
     props.fetchAvailabilityByDay(
@@ -84,6 +86,7 @@ function UserLandingPage(props) {
   }, [props.selectedDay, props.contractors, serviceSort]);
 
   useEffect(() => {
+    setContractor({});
     if (serviceSort !== 'Pick a service' && mql) {
       scroll(contractorTarget.current);
     }
