@@ -15,6 +15,7 @@ export const UP_SCHED_COMP = 'UP_SCHED_COMP';
 export const GET_APP = 'GET_APP';
 export const CONFIRMING_APP = 'CONFIRMING_APP';
 export const CONFIRMED_APP = 'CONFIRMED_APP';
+export const DELETE_APP = 'DELETE_APP';
 export const GETTING_USER_SUCC = 'GETTING_USER_SUCC';
 export const GETTING_USER = 'GETTING_USER';
 export const REFS = 'REFS';
@@ -22,6 +23,7 @@ export const LOGOUTUSER = 'LOGOUTUSER';
 
 // exports for fetching all users
 export const LOADING = 'LOADING';
+export const END_LOAD = 'END_LOAD';
 export const FETCHING_USERS_SUCCESS = 'SUCCESS';
 export const FAILURE = 'FAILURE';
 
@@ -60,6 +62,18 @@ export const APPOINTMENT_SUCCESS = 'APPOINTMENT_SUCCES';
 //
 export const FAIL_SCHEDULE = 'FAIL_SCHEDULE';
 export const LOAD_SCHEDULE = 'LOAD_SCHEDULE';
+export const SELECTED = 'SELECTED';
+
+export const SUBSCRIBE_SUCCESS = 'SUBSCRIBE_SUCCESS';
+export const SUBSCRIBE_FAILURE = 'SUBSCRIBE_FAILURE';
+
+export const RETRIEVE_SUBSCRIPTION_SUCCESS = 'RETRIEVE_SUBSCRIPTION_SUCCESS';
+export const RETRIEVE_SUBSCRIPTION_FAILURE = 'RETRIEVE_SUBSCRIPTION_FAILURE';
+
+export const CANCEL_DEFAULT_SUCCESS = 'CANCEL_DEFAULT_SUCCESS';
+export const CANCEL_DEFAULT_FAILURE = 'CANCEL_DEFAULT_FAILURE';
+export const CANCEL_IMMEDIATE_SUCCESS = 'CANCEL_IMMEDIATE_SUCCESS';
+export const CANCEL_IMMEDIATE_FAILURE = 'CANCEL_IMMEDIATE_FAILURE';
 // ---------------------------------------------------------------
 
 function setHeaders() {
@@ -70,7 +84,7 @@ function setHeaders() {
 
 // axios get all accounts
 export const fetchAccts = () => dispatch => {
-  // dispatch({ type: LOADING_USERS });
+  dispatch({ type: LOADING });
   const headers = setHeaders();
 
   axios
@@ -235,7 +249,11 @@ export const selectSingleContractorSetting = id => dispatch => {
 };
 
 export const resetFailure = () => dispatch => {
-  dispatch({ type: FAILURE, payload: null });
+  dispatch({ type: FAILURE, error: null });
+};
+
+export const setFailure = fail => dispatch => {
+  dispatch({ type: FAILURE, error: fail });
 };
 
 // axios get feedback
@@ -319,23 +337,27 @@ export const editUserSettings = data => dispatch => {
 };
 
 // axios get appointments when current user is contractor
-// export const seeMyAppointments = (id) = dispatch => {
-//   dispatch({ type: LOADING })
-//   const headers = setHeaders();
-
-//   axios.get(`https://fierce-plains-47590.herokuapp.com/api/appointments/${id}`,headers)
-//   .then( res => {
-//     dispatch({ type: RET_CONTRACTOR_APP_SUCC, payload: res.data })
-//   })
-//   .catch(err => dispatch({ type: FAILURE, payload:err }))
-// }
+export const seeMyAppointments = () => dispatch => {
+  dispatch({ type: LOADING });
+  const headers = setHeaders();
+  axios
+    .get(`https://fierce-plains-47590.herokuapp.com/api/appointments`, {
+      headers,
+    })
+    .then(res => {
+      dispatch({
+        type: RET_CONTRACTOR_APP_SUCC,
+        payload: res.data.appointments,
+      });
+    })
+    .catch(err => dispatch({ type: FAILURE, payload: err }));
+};
 
 // axios request for services
 export const postNewService = serv => {
   return dispatch => {
     dispatch({ type: SEND_SERV });
     const headers = setHeaders();
-
     axios
       .post('https://fierce-plains-47590.herokuapp.com/api/services', serv, {
         headers,
@@ -502,6 +524,29 @@ export const confirmApp = (id, obj) => {
   };
 };
 
+
+//user delete app
+export const deleteApp = (obj, id) => {
+  const headers = setHeaders();
+  return dispatch => {
+    axios
+      .delete(`https://fierce-plains-47590.herokuapp.com/api/appointments/${id}`, { headers })
+      .then(res => {
+        // console.log(obj)
+        const deletedAppVar = obj.filter(a => {
+          return a.id !== id
+        })
+        console.log(deletedAppVar)
+        dispatch({ type: DELETE_APP, payload: deletedAppVar})
+
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+}
+
+
 export const getUser = id => {
   const headers = setHeaders();
   return dispatch => {
@@ -543,7 +588,87 @@ export const setPosition = element => dispatch => {
   dispatch({ type: SET_CONTRACTOR_POSITION, payload: element });
 };
 
-// export const selectContractor = (id, list) => dispatch => {
-//   const selected = list.filter(item => item.id === id);
-//   dispatch({ type: SELECTED, payload: selected[0]})
-// }
+export const selectContractor = (id, list) => dispatch => {
+  const selected = list.filter(item => item.id === id);
+  dispatch({ type: SELECTED, payload: selected[0] });
+};
+export const handleSubscribe = (token, address) => dispatch => {
+  dispatch({ type: LOADING });
+  const headers = setHeaders();
+  axios
+    .post(
+      'https://fierce-plains-47590.herokuapp.com/api/subscription',
+      { token, address },
+      { headers }
+    )
+    .then(res =>
+      dispatch({ type: SUBSCRIBE_SUCCESS, payload: res.data.success })
+    )
+    .catch(err => {
+      dispatch({ type: SUBSCRIBE_FAILURE, payload: err.response.data.error });
+    });
+};
+
+export const retrieveSubscription = () => dispatch => {
+  dispatch({ type: LOADING });
+  const headers = setHeaders();
+  axios
+    .get('https://fierce-plains-47590.herokuapp.com/api/subscription', {
+      headers,
+    })
+    .then(res =>
+      dispatch({
+        type: RETRIEVE_SUBSCRIPTION_SUCCESS,
+        payload: res.data.subscription,
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: RETRIEVE_SUBSCRIPTION_FAILURE,
+        payload: err.response.data.error,
+      })
+    );
+};
+
+export const cancelDefault = () => dispatch => {
+  dispatch({ type: LOADING });
+  const headers = setHeaders();
+  axios
+    .delete('https://fierce-plains-47590.herokuapp.com/api/subscription', {
+      headers,
+    })
+    .then(res => dispatch({ type: CANCEL_DEFAULT_SUCCESS }))
+    .catch(err =>
+      dispatch({
+        type: CANCEL_DEFAULT_FAILURE,
+        payload: err.response.data.error,
+      })
+    );
+};
+
+export const cancelImmediate = () => dispatch => {
+  dispatch({ type: LOADING });
+  const headers = setHeaders();
+  axios
+    .delete(
+      'https://fierce-plains-47590.herokuapp.com/api/subscription/immediate',
+      { headers }
+    )
+    .then(res =>
+      dispatch({ type: CANCEL_IMMEDIATE_SUCCESS, payload: res.data })
+    )
+    .catch(err =>
+      dispatch({
+        type: CANCEL_IMMEDIATE_FAILURE,
+        payload: err.response.data.error,
+      })
+    );
+};
+
+export const startManualLoad = () => dispatch => {
+  dispatch({ type: LOADING });
+};
+
+export const endManualLoad = () => dispatch => {
+  dispatch({ type: END_LOAD });
+};

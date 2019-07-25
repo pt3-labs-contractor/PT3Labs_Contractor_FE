@@ -20,14 +20,17 @@ import TopNavbar from '../navbar/TopNavbar';
 function Contractor(props) {
   const [service, setService] = useState({ name: 'Pick a service' });
   const [appointment, setAppointment] = useState({});
-  const [mediaQuery] = useState(window.innerWidth)
+  const [mediaQuery] = useState(window.innerWidth);
   const mql = window.matchMedia('(max-width: 800px)').matches;
   const { id } = props.match.params;
 
   window.addEventListener('resize', () => {
-    if((window.innerWidth <= 800 && mediaQuery > 800) || (mediaQuery < 800 && window.innerWidth > 800)) {
+    if (
+      (window.innerWidth <= 800 && mediaQuery > 800) ||
+      (mediaQuery < 800 && window.innerWidth > 800)
+    ) {
       window.location.reload();
-    } 
+    }
   });
 
   useEffect(() => {
@@ -37,7 +40,7 @@ function Contractor(props) {
       props.getFeedbackByContractor(id),
     ]);
     // eslint-disable-next-line
-  }, []);
+  }, [props.list]);
 
   const makeAppointment = date => {
     setAppointment(date);
@@ -89,10 +92,10 @@ function Contractor(props) {
 
 const mapStateToProps = state => {
   return {
+    list: state.contractors,
     contractor: state.thisContractor,
     selectedDay: state.thisDay,
     schedule: state.schedule,
-    error: state.errorSchedule,
   };
 };
 
@@ -100,7 +103,6 @@ export default connect(
   mapStateToProps,
   { selectSingleContractorSetting, fetchSchedule, getFeedbackByContractor }
 )(Contractor);
-
 
 Contractor.propTypes = {
   contractor: PropTypes.shape({
@@ -121,9 +123,9 @@ Contractor.propTypes = {
         contractorId: PropTypes.string,
         name: PropTypes.string,
         price: PropTypes.string,
-        createdAt: PropTypes.string
+        createdAt: PropTypes.string,
       })
-    )
+    ),
   }),
   selectedDay: PropTypes.instanceOf(Date),
   schedule: PropTypes.arrayOf(
@@ -132,13 +134,13 @@ Contractor.propTypes = {
       contractorId: PropTypes.string,
       startTime: PropTypes.string,
       duration: PropTypes.shape({
-        hours: PropTypes.number
+        hours: PropTypes.number,
       }),
       createdAt: PropTypes.string,
-      open: PropTypes.bool
+      open: PropTypes.bool,
     })
   ),
   fetchSchedule: PropTypes.func,
   getFeedbackByContractor: PropTypes.func,
-  selectSingleContractorSetting: PropTypes.func
-}
+  selectSingleContractorSetting: PropTypes.func,
+};

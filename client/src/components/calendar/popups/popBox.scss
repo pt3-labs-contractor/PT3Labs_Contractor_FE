@@ -8,13 +8,13 @@
   border-radius: 5px;
   font-size: 0.8rem;
 	background-color: white;
-	z-index: 10000;
 
 	@media screen and (max-width: 601px) {
 		position: fixed;
 		top: 33%;
 		left: 20%;
 		width: 73%;
+		z-index: 200;
 	}
 }
 .closeIconEdit {
@@ -84,11 +84,9 @@
   background-color: white;
   height: 60%;
 	@media screen and (max-width: 601px) {
-		display: flex;
-		align-items: center;
-		justify-content: center;
+		height: 39px;
 		color: darkred;
-		padding-bottom: 5px;
+		padding-top: 0px;
 		font-size: 1.1rem;
 	}
 }
@@ -110,11 +108,7 @@
 
 	@media screen and (max-width: 601px) {
 		color: green;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		padding-top: 5px;
-		padding-bottom: 5px;
+		padding-top: 3px;
 		font-size: 1.1rem;
 	}
 }

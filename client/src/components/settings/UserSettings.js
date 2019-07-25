@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 // import { IoIosTrash } from 'react-icons/io'
 // import { IoMdCreate } from 'react-icons/io'
@@ -29,42 +29,59 @@ function UserSetting(props) {
     <>
       <TopNavbar />
       <NavBarUser />
-      <div className="settings-container">
-        <h2>User Setting Page</h2>
-        {'\n'}
-        <form onSubmit={handleUpdate}>
-          User Email
-          <input
-            value={email}
-            type="text"
-            name="userEmail"
-            onChange={e => setEmail(e.target.value)}
-          />
-          User Name
-          <input
-            value={username}
-            type="text"
-            name="userUsername"
-            onChange={e => setUsername(e.target.value)}
-          />
-          {/* Old Password
-          <input />
+      <div className="main-container">
+        <div className="settings-container">
+          <Link to="/uploadimage">
+            <p>Upload Image</p>
+          </Link>
+          <h2 className="title">{props.User.username} Settings</h2>
+          {'\n'}
+          <form onSubmit={handleUpdate}>
+            <div className="email-div">
+              Email
+              <input
+                className="email-input"
+                value={email}
+                type="text"
+                name="userEmail"
+                onChange={e => setEmail(e.target.value)}
+              />
+            </div>
 
-          New Passowrd
-          <input /> */}
-          Phone Number
-          <input
-            value={phoneNumber}
-            type="text"
-            name="userphoneNumber"
-            onChange={e => setPhoneNumber(e.target.value)}
-          />
-          <button>Save</button>
-        </form>
-        {/* <form>
-          Add Service <input placeholder="Service" />
-          <input placeholder="Price" />
-        </form> */}
+            <div className="username-div">
+              Username
+              <input
+                value={username}
+                type="text"
+                name="userUsername"
+                onChange={e => setUsername(e.target.value)}
+              />
+            </div>
+            {/* Old Password
+            <input />
+
+            New Passowrd
+            <input /> */}
+            <div className="phonenumber-div">
+              Phone Number
+              <input
+                value={phoneNumber}
+                type="text"
+                name="userphoneNumber"
+                onChange={e => setPhoneNumber(e.target.value)}
+              />
+            </div>
+
+            <div className="box">
+              <button className="btn btn-three">Save</button>
+            </div>
+          </form>
+
+          {/* <form>
+            Add Service <input placeholder="Service" />
+            <input placeholder="Price" />
+          </form> */}
+        </div>
       </div>
     </>
   );

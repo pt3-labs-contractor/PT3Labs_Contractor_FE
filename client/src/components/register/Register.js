@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import axios from 'axios';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import MainNavbar from '../navbar/MainNavbar';
+import { startManualLoad, endManualLoad } from '../../actions';
 
 import './Register.css';
 
@@ -21,6 +23,7 @@ function Register(props) {
     const headers = { authorization: bearer };
 
     if (!oauth) {
+      props.startManualLoad();
       axios
         .post(
           'https://fierce-plains-47590.herokuapp.com/api/auth/register',
@@ -29,6 +32,7 @@ function Register(props) {
         )
         .then(res => {
           localStorage.setItem('jwt', res.data.token);
+          props.endManualLoad();
           props.history.push('/app');
         })
         .catch(err => {
@@ -121,12 +125,14 @@ function Register(props) {
           )}
           <input
             name="email"
+            type="email"
             placeholder="E-mail"
             onChange={handleChange}
             required
           />
           <input
             name="phoneNumber"
+            type="number"
             placeholder="Phone#"
             onChange={handleChange}
             required
@@ -193,8 +199,10 @@ function Register(props) {
   );
 }
 
-export default Register;
-
 Register.propTypes = {
   oauth: PropTypes.bool,
 };
+export default connect(
+  null,
+  { startManualLoad, endManualLoad }
+)(Register);

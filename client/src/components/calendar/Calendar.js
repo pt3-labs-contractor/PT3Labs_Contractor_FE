@@ -15,14 +15,20 @@ function Calendar(props) {
     return (
       <div className="calendar-nav">
         {!dateFns.isThisMonth(selectedMonth) ? (
-          <div onClick={() => setMonth(dateFns.subMonths(selectedMonth, 1))}>
+          <div
+            className="calendar-month-nav"
+            onClick={() => setMonth(dateFns.subMonths(selectedMonth, 1))}
+          >
             &lt;
           </div>
         ) : null}
         <div className="nav-month">
           {dateFns.format(selectedMonth, 'MMMM YYYY').toUpperCase()}
         </div>
-        <div onClick={() => setMonth(dateFns.addMonths(selectedMonth, 1))}>
+        <div
+          className="calendar-month-nav"
+          onClick={() => setMonth(dateFns.addMonths(selectedMonth, 1))}
+        >
           &gt;
         </div>
       </div>

@@ -13,8 +13,10 @@ import {
   GETTING_USER_SUCC,
   LOGOUTUSER,
   REFS,
+  DELETE_APP,
   // fetching users
   LOADING,
+  END_LOAD,
   FETCHING_USERS_SUCCESS,
   FAILURE,
 
@@ -61,6 +63,15 @@ import {
 
   // edit the user information
   EDIT_USER_SUCCESS,
+  SELECTED,
+  SUBSCRIBE_SUCCESS,
+  SUBSCRIBE_FAILURE,
+  RETRIEVE_SUBSCRIPTION_SUCCESS,
+  RETRIEVE_SUBSCRIPTION_FAILURE,
+  CANCEL_DEFAULT_SUCCESS,
+  CANCEL_DEFAULT_FAILURE,
+  CANCEL_IMMEDIATE_SUCCESS,
+  CANCEL_IMMEDIATE_FAILURE,
 } from '../actions';
 
 const initialState = {
@@ -81,6 +92,7 @@ const initialState = {
   serviceFilter: '',
   refs: [],
   positionContractor: {},
+  subscription: null,
 };
 
 export default (state = initialState, action) => {
@@ -92,6 +104,8 @@ export default (state = initialState, action) => {
         loading: true,
         error: null,
       };
+    case END_LOAD:
+      return { ...state, loading: false };
     case FETCHING_USERS_SUCCESS:
       return {
         ...state,
@@ -268,6 +282,15 @@ export default (state = initialState, action) => {
         refs: action.payload,
       };
 
+
+    //delete app by user
+    case DELETE_APP:
+      return {
+        ...state,
+        appointments: action.payload,
+        loading: false,
+      };
+
     // fetching appointments for a contractor
     case RET_CONTRACTOR_APP_SUCC:
       return { ...state, appointments: action.payload };
@@ -280,8 +303,45 @@ export default (state = initialState, action) => {
       return { ...state, user: action.payload };
 
     case LOGOUTUSER:
-      return { ...state, user: {} };
-
+      return initialState;
+    case SELECTED:
+      return { ...state, thisContractor: action.payload };
+    case SUBSCRIBE_SUCCESS:
+      return {
+        ...state,
+        user: { ...state.user, subscriptionId: action.payload.subscriptionId },
+        error: null,
+        loading: false,
+      };
+    case SUBSCRIBE_FAILURE:
+      return { ...state, error: action.payload, loading: false };
+    case RETRIEVE_SUBSCRIPTION_SUCCESS:
+      return {
+        ...state,
+        subscription: action.payload,
+        error: null,
+        loading: false,
+      };
+    case RETRIEVE_SUBSCRIPTION_FAILURE:
+      return { ...state, error: action.payload, loading: false };
+    case CANCEL_DEFAULT_SUCCESS:
+      return {
+        ...state,
+        subscription: { ...state.subscription, cancel_at_period_end: true },
+        loading: false,
+      };
+    case CANCEL_DEFAULT_FAILURE:
+      return { ...state, error: action.payload, loading: false };
+    case CANCEL_IMMEDIATE_SUCCESS:
+      return {
+        ...state,
+        subscription: null,
+        user: { ...state.user, subscriptionId: null },
+        error: null,
+        loading: false,
+      };
+    case CANCEL_IMMEDIATE_FAILURE:
+      return { ...state, error: action.payload, loading: false };
     default:
       return state;
   }

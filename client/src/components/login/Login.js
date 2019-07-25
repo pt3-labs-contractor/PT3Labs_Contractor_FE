@@ -4,7 +4,11 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import MainNavbar from '../navbar/MainNavbar';
-import { fetchAccts, getFeedback } from '../../actions/index.js';
+import {
+  fetchAccts,
+  getFeedback,
+  startManualLoad,
+} from '../../actions/index.js';
 
 import './Login.css';
 
@@ -14,23 +18,29 @@ function Login(props) {
   const [error, setError] = useState('');
 
   useEffect(() => {
+    console.log(`${props.user}` + 'hihi');
     if (props.user.contractorId) {
       props.history.push('/contractorcalendar');
     } else if (props.user.username) {
       props.history.push('/app');
     }
   }, [props.user]);
+  console.log(props.user);
 
   function handleSubmit(e) {
     e.preventDefault();
     const bearer = `Bearer ${localStorage.getItem('jwt')}`;
     const headers = { authorization: bearer };
     const credentials = { username, password };
-
+    props.startManualLoad();
     axios
-      .post('https://fierce-plains-47590.herokuapp.com/api/auth/login', credentials, {
-        headers,
-      })
+      .post(
+        'https://fierce-plains-47590.herokuapp.com/api/auth/login',
+        credentials,
+        {
+          headers,
+        }
+      )
       .then(res => {
         localStorage.setItem('jwt', res.data.token);
         props.fetchAccts(); 
@@ -100,7 +110,7 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { fetchAccts, getFeedback }
+  { fetchAccts, getFeedback, startManualLoad }
 )(Login);
 
 Login.propTypes = {
