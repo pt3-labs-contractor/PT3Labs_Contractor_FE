@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import MainNavbar from '../navbar/MainNavbar';
 import { startManualLoad, endManualLoad } from '../../actions';
@@ -13,11 +14,7 @@ function Register(props) {
   const { oauth } = props;
 
   function handleChange(event) {
-    event.persist();
-    setValues(values => ({
-      ...values,
-      [event.target.name]: event.target.value,
-    }));
+    setValues({ ...values, [event.target.name]: event.target.value });
   }
 
   function handleSubmit(event) {
@@ -95,12 +92,14 @@ function Register(props) {
           <i className="fas fa-user" /> Create your account:
         </p>
         <button
+          type="button"
           className={`btn btn-register ${contractor && 'selected'}`}
           onClick={() => setContractor(true)}
         >
           Contractor
         </button>
         <button
+          type="button"
           className={`btn btn-register ${!contractor && 'selected'}`}
           onClick={() => setContractor(false)}
         >
@@ -200,9 +199,10 @@ function Register(props) {
   );
 }
 
+Register.propTypes = {
+  oauth: PropTypes.bool,
+};
 export default connect(
-  () => {
-    return {};
-  },
+  null,
   { startManualLoad, endManualLoad }
 )(Register);
