@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import Calendar from '../calendar/Calendar';
@@ -30,6 +30,15 @@ function Contractor(props) {
     ]);
     // eslint-disable-next-line
   }, [props.list]);
+
+  const makeAppointment = date => {
+    setAppointment(date);
+  };
+
+  const clearAppointment = () => {
+    setAppointment({});
+    setService({});
+  };
 
   return (
     <>
