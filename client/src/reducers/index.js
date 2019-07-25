@@ -58,6 +58,9 @@ import {
   // fetching current contractor appointments
   RET_CONTRACTOR_APP_SUCC,
 
+  // fetching user appointments
+  APPOINTMENT_SUCCESS,
+
   // edit the user information
   EDIT_USER_SUCCESS,
   SELECTED,
@@ -75,6 +78,7 @@ const initialState = {
   user: {},
   contractors: [],
   feedback: [],
+  tempFeedback: [],
   appointments: [],
   services: [],
   loading: false,
@@ -124,7 +128,7 @@ export default (state = initialState, action) => {
 
     // calander
     case SET_DAY:
-      return { ...state, thisDay: action.payload, feedback: [] };
+      return { ...state, thisDay: action.payload, tempFeedback: [] };
     case SET_MONTH:
       return { ...state, thisMonth: action.payload };
     case SET_SCHEDULE:
@@ -142,7 +146,7 @@ export default (state = initialState, action) => {
         schedule: [],
       };
     case SET_SERVICE_SORT:
-      return { ...state, serviceFilter: action.payload, feedback: [] };
+      return { ...state, serviceFilter: action.payload, tempFeedback: [] };
     case SET_CONTRACTOR_POSITION:
       return { ...state, positionContractor: action.payload };
     case LOAD_SCHEDULE:
@@ -188,8 +192,13 @@ export default (state = initialState, action) => {
 
     // fetching current user written feedback
     case FEEDBACK_SUCCESS:
-      return { ...state, feedback: action.payload.feedback, loading: false };
-
+      return {
+        ...state,
+        feedback: action.payload.feedback,
+        tempFeedback: action.payload.feedback,
+      }; // Look for a possible need for separate temp feedback reducer
+    // case TEMP_FEEDBACK_SUCCESS:
+    //   return { ...state, tempFeedback: action.payload.feedback };
     case POST_FEEDBACK_SUCCESS:
       return {
         ...state,
@@ -198,13 +207,6 @@ export default (state = initialState, action) => {
 
     case DELETE_FEEDBACK_SUCCESS:
       return { ...state, feedback: action.payload.feedback };
-      console.log(action.payload.feedback);
-      return {
-        ...state,
-        feedback: state.feedback.filter(
-          x => x.id !== action.payload.deleted.id
-        ),
-      };
     // fetching current contractor appointments
     // case RET_CONTRACTOR_APP_SUCC:
     //   return {...state, accounts:{appointments: action.payload }}
@@ -291,6 +293,9 @@ export default (state = initialState, action) => {
 
     // fetching appointments for a contractor
     case RET_CONTRACTOR_APP_SUCC:
+      return { ...state, appointments: action.payload };
+
+    case APPOINTMENT_SUCCESS:
       return { ...state, appointments: action.payload };
 
     // edit user settigns

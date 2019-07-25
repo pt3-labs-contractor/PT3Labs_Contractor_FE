@@ -7,15 +7,15 @@ function AppointmentList(props) {
     <div className="appointment-list">
       <h3>Pending Appointments</h3>
       <div className="appointments-container">
-        {props.appointments.map(item => {
+        {props.appointments.slice(0, 4).map(item => {
           const contractor = props.contractors.filter(
             con => con.id === item.contractorId
           )[0];
           if (item.confirmed === null)
             return (
               <div className="appointment-card" key={item.id}>
-                <h5>{dateFns.format(item.startTime, 'MMMM Do:')}</h5>
-                <p>
+                <h5>{dateFns.format(item.startTime, 'MMMM Do:[   ]HH:mm')}</h5>
+                {/* <p>
                   {`${dateFns.format(
                     item.startTime,
                     'HH:mm'
@@ -23,8 +23,8 @@ function AppointmentList(props) {
                     dateFns.addHours(item.startTime, item.duration.hours),
                     'HH:mm'
                   )}`}
-                </p>
-                <p>{contractor.contractorName}</p>
+                </p> */}
+                <p>{contractor.name}</p>
                 <p>{contractor.phoneNumber}</p>
                 <p className="service-title">{item.service}</p>
               </div>

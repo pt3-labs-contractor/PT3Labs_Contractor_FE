@@ -11,6 +11,12 @@
   opacity: 0.9;
 }
 
+.main-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 ul {
   display: flex;
 }
@@ -23,6 +29,12 @@ a {
 
 a:hover {
   color: var(--secondary-color);
+}
+
+.main-title-icon {
+  color: var(--primary-color);
+  margin-right: 5px;
+  font-size: 1.5rem;
 }
 
 @media (max-width: 500px) {

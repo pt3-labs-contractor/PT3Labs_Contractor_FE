@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Rating from 'react-rating';
 import NavBarUser from '../navbar/NavBarUser';
@@ -18,12 +17,10 @@ function UserFeedback(props) {
   const [message, setMessage] = useState([]);
   const [contractorId, setContractorId] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage, setPostsPerPage] = useState(3);
+  const [postsPerPage, setPostsPerPage] = useState(5);
   const [loading, setLoading] = useState(false);
   const [clicked, setClicked] = useState(false);
   const [toggle, setToggle] = useState(false);
-
-  console.log(props.contractor);
 
   const stringify = JSON.stringify(props.feedback);
   useEffect(() => {
@@ -35,23 +32,20 @@ function UserFeedback(props) {
   }, []);
 
   function deleteFeedback(feedback) {
-    console.log(feedback);
     props.deleteFeedback(feedback.id);
   }
   function handleChange(contrID) {
-    // e.preventDefault();
     setContractorId(contrID);
-    // console.log(contrID)
   }
 
   function handleSubmit(e) {
     e.preventDefault();
-    // console.log(contractorId)
-
-    props.postFeedback({ contractorId, id, stars, message });
-    // console.log({stars, message, contractorId, id})
-
-    // console.log(props)
+    props.postFeedback({
+      contractorId,
+      id,
+      stars,
+      message,
+    });
   }
 
   // Get current posts
@@ -69,11 +63,18 @@ function UserFeedback(props) {
     setCurrentPage(pageNumber);
   };
 
-  const feedbackId = feedback.id;
-
   const myToggle = () => {
     setToggle(!toggle);
   };
+
+  function mySort() {
+    const newOne = createdArray.sort((a, b) => {
+      return b - a;
+    });
+    console.log(newOne);
+  }
+
+  const createdArray = feedback.map(user => user.contractorName);
 
   return (
     <>
@@ -142,6 +143,7 @@ function UserFeedback(props) {
                       ))}
                     </select>
                   </div>
+
                   <div>
                     <h6 className="feedback-h6">Overall Rating</h6>
                     <Rating
@@ -161,6 +163,7 @@ function UserFeedback(props) {
                 placeholder="Leave a comment"
                 value={message}
                 onChange={e => setMessage(e.target.value)}
+                required
               />
 
               <input type="submit" value="Submit" className="btn btn-primary" />
@@ -168,10 +171,13 @@ function UserFeedback(props) {
           </div>
         </div>
 
+        <button onClick={mySort}>click</button>
+
         {clicked ? <DeleteModal toggle={toggle} myToggle={myToggle} /> : null}
 
         <div className="feeback-form-container">
           <h4 className="feedback-user-header">Your Feedback History</h4>
+
           <div>
             <Pagination
               postsPerPage={postsPerPage}
@@ -187,9 +193,12 @@ function UserFeedback(props) {
               currentPosts.map(feedback => {
                 return (
                   <div key={feedback.id} className="user-feedback-container">
-                    <p>Contractor: {feedback.contractorName}</p>
+                    <p>
+                      <span className="bold">Contractor:</span>{' '}
+                      {feedback.contractorName}
+                    </p>
                     <div>
-                      Rating:{' '}
+                      <span className="bold">Rating:</span>{' '}
                       <Rating
                         emptySymbol={<span className="icon-text">&#9734;</span>}
                         fullSymbol={
@@ -209,7 +218,7 @@ function UserFeedback(props) {
                       </div>
                       <div className="posted-user">
                         <div>
-                          Posted:{' '}
+                          <span className="bold">Posted: </span>{' '}
                           {dateFns.format(feedback.createdAt, 'MMM DD YYYY')}
                         </div>
                         <div>
@@ -245,6 +254,7 @@ const mapStateToProps = state => {
     loading: state.loading,
     error: state.error,
     contractor: state.contractors,
+    services: state.services,
   };
 };
 
