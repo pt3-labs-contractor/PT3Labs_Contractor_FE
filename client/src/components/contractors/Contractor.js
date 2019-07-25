@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import Calendar from '../calendar/Calendar';
@@ -29,16 +29,7 @@ function Contractor(props) {
       props.getFeedbackByContractor(id),
     ]);
     // eslint-disable-next-line
-  }, []);
-
-  const makeAppointment = date => {
-    setAppointment(date);
-  };
-
-  const clearAppointment = () => {
-    setAppointment({});
-    setService({});
-  };
+  }, [props.list]);
 
   return (
     <>
@@ -83,11 +74,10 @@ function Contractor(props) {
 
 const mapStateToProps = state => {
   return {
+    list: state.contractors,
     contractor: state.thisContractor,
-    services: state.services,
     selectedDay: state.thisDay,
     schedule: state.schedule,
-    error: state.errorSchedule,
   };
 };
 

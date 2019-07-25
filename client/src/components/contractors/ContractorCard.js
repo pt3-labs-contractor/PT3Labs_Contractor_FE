@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
 import Rating from 'react-rating';
 import PropTypes from 'prop-types';
 
-function ContractorCard({ contractor, service, full }) {
+function ContractorCard({ contractor, service, full, mainList }) {
   const [localService, setService] = useState({});
   const {
     name,
@@ -20,6 +19,9 @@ function ContractorCard({ contractor, service, full }) {
       const filtered = contractor.services.filter(entry => {
         return entry.name === service;
       });
+      console.log(filtered);
+      console.log(contractor.services);
+      console.log(service);
       setService(filtered[0]);
     }
   }, [service]);
@@ -43,7 +45,7 @@ function ContractorCard({ contractor, service, full }) {
       </>
     );
   return (
-    <div className="contractor-card">
+    <div className={mainList ? 'contractor-card-full' : ''}>
       <h3>{name}</h3>
       <address>
         <p>{phoneNumber}</p>
@@ -55,7 +57,7 @@ function ContractorCard({ contractor, service, full }) {
             </p>
             <p>{zipCode}</p>
           </>
-        ) : localService ? (
+        ) : !mainList && localService ? (
           <>
             <p className="service-title">
               {localService.name}: {localService.price}
@@ -80,35 +82,4 @@ function ContractorCard({ contractor, service, full }) {
   );
 }
 
-const mapStateToProps = state => {
-  return {
-    service: state.serviceFilter,
-  };
-};
-
-export default connect(mapStateToProps)(ContractorCard);
-
-ContractorCard.propTypes = {
-  contractor: PropTypes.shape({
-    city: PropTypes.string,
-    createdAt: PropTypes.string,
-    id: PropTypes.string,
-    latitude: PropTypes.string,
-    longitude: PropTypes.string,
-    name: PropTypes.string,
-    phoneNumber: PropTypes.string,
-    stateAbbr: PropTypes.string,
-    streetAddress: PropTypes.string,
-    zipCode: PropTypes.string,
-    services: PropTypes.arrayOf(
-      PropTypes.shape({
-        contractorId: PropTypes.string,
-        createdAt: PropTypes.string,
-        id: PropTypes.string,
-        name: PropTypes.string,
-        price: PropTypes.string,
-      })
-    ),
-  }),
-  service: PropTypes.string,
-};
+export default ContractorCard;

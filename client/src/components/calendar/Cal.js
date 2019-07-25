@@ -16,7 +16,13 @@ import PopBoxSched from './popups/popBox.jsx';
 import AppInfo from './comps/appointConf.jsx';
 import './cal.scss';
 
-import { setDay, setMonth, getSchedules, setRefs } from '../../actions/index';
+import {
+  seeMyAppointments,
+  setDay,
+  setMonth,
+  getSchedules,
+  setRefs,
+} from '../../actions/index';
 
 import AvailabilityList from '../appointments/AvailabilityList';
 
@@ -53,10 +59,12 @@ function ContCalendar(props) {
   const selecDayString = JSON.stringify(props.selectedDay);
   const [ani, setAni] = useState();
   const newRef = useRef();
+  const appString = JSON.stringify(props.appointments);
   let toTween;
 
   useEffect(() => {
     // setId(props.id);
+    props.seeMyAppointments();
     props.getSchedules(props.id);
     pendingAppoints();
     setTheRefs();
@@ -378,23 +386,27 @@ function ContCalendar(props) {
       });
       let aIds = [];
       if (filter) {
-        if (filter[0].scheduleId) {
-          aIds = filter.map(a => {
-            return a.id;
-          });
-        }
-        if (filter[0].id) {
-          aIds = filter.map(a => {
-            return a.id;
-          });
+        if (filter.length > 0) {
+          if (filter[0].scheduleId) {
+            aIds = filter.map(a => {
+              return a.id;
+            });
+          }
+          if (filter[0].id) {
+            aIds = filter.map(a => {
+              return a.id;
+            });
+          }
         }
       }
       let fFilterIds = [];
       if (fullFilter) {
-        if (fullFilter[0].id) {
-          fFilterIds = fullFilter.map(a => {
-            return a.id;
-          });
+        if (fullFilter.length > 0) {
+          if (fullFilter[0].id) {
+            fFilterIds = fullFilter.map(a => {
+              return a.id;
+            });
+          }
         }
       }
 
@@ -722,5 +734,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { setDay, setMonth, getSchedules, setRefs }
+  { seeMyAppointments, setDay, setMonth, getSchedules, setRefs }
 )(ContCalendar);

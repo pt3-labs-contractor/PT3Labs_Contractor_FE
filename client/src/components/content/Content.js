@@ -15,9 +15,11 @@ export default function Content() {
           </div>
           <div className="stacks">
             <div className="stack">
-              <div className="icon-container">
-                <i className="fas fa-code" />
-              </div>
+              <a href="https://github.com/pt3-labs-contractor/PT3Labs_Contractor_FE">
+                <div className="icon-container">
+                  <i className="fas fa-code" />
+                </div>
+              </a>
               <h1>Front-End</h1>
               <ul className="dev-tools">
                 <li>React</li>
@@ -29,23 +31,26 @@ export default function Content() {
             </div>
 
             <div className="stack">
-              <div className="icon-container">
-                <i className="fas fa-layer-group" />
-              </div>
+              <a href="https://github.com/pt3-labs-contractor/PT3Labs_Contractor_BE">
+                <div className="icon-container">
+                  <i className="fas fa-layer-group" />
+                </div>
+              </a>
               <h1>Back-End</h1>
               <ul className="dev-tools">
                 <li>Node</li>
                 <li>Express</li>
                 <li>Postgres</li>
                 <li>SQL</li>
-                <li>GraphQL</li>
               </ul>
             </div>
 
             <div className="stack">
-              <div className="icon-container">
-                <i className="fas fa-laptop-code" />
-              </div>
+              <a href="https://github.com/pt3-labs-contractor">
+                <div className="icon-container">
+                  <i className="fas fa-laptop-code" />
+                </div>
+              </a>
               <h1>Technology</h1>
               <ul className="dev-tools">
                 <li>Netlify</li>
