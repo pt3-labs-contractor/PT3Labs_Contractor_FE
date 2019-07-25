@@ -1,9 +1,9 @@
 header {
-  position: relative
+  position: relative;
 }
 .sideNav {
   height: 100%;
-  width: 200px;
+  width: var(--nav-bar-width);
   position: fixed;
   top: 0px;
   left: 0px;
@@ -44,19 +44,17 @@ header {
   }
 
   .sideNav {
-    width: 60px;
+    width: var(--nav-bar-width-mobile);
   }
 
   .sideNav a {
     text-align: center;
   }
-  .sideNav a:hover .side-listing{
+  .sideNav a:hover .side-listing {
     display: inline-block;
     color: var(--primary-color);
     font-size: 16px;
   }
 }
 @media (max-width: 500px) {
-  
 }
-

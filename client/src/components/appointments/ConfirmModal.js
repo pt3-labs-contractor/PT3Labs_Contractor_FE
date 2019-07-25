@@ -8,8 +8,12 @@ function ConfirmModal(props) {
       <div className="confirm-box">
         <p>Are you sure?</p>
         <div className="modal-btn-container">
-          <button onClick={() => props.postAppointment(true)}>Yes</button>
-          <button onClick={() => props.postAppointment(false)}>No</button>
+          <button className="yes" onClick={() => props.postAppointment(true)}>
+            Yes
+          </button>
+          <button className="no" onClick={() => props.postAppointment(false)}>
+            No
+          </button>
         </div>
       </div>
     </div>

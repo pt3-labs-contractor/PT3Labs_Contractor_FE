@@ -1,10 +1,9 @@
 .calendar-container {
-  margin-left: 200px;
-  width: 81%;
-  max-width: 1000px;
-  min-height: 85vh;
+  margin-left: var(--nav-bar-width);
+  width: calc(100% - var(--nav-bar-width));
+  max-width: 880px;
   position: relative;
-  background-color: #c2d4f1;
+  /* background-color: #c2d4f1; */
 }
 
 .calendar-container form select {
@@ -22,8 +21,9 @@
 .user-calendar {
   display: flex;
   justify-content: flex-start;
-  max-height: 100vh;
-  min-height: 485px;
+  height: 495px;
+  /* max-height: 100vh; */
+  /* min-height: 485px; */
 }
 
 .user-calendar .calendar-target {
@@ -40,8 +40,9 @@
 }
 
 .user-calendar .contractor-target {
-  width: 20%;
-  max-height: 495px;
+  width: 25%;
+  /* max-width: 220px; */
+  /* max-height: 495px; */
   margin-right: 0;
   margin-left: 0;
   padding: 0;
@@ -70,6 +71,7 @@
 
 .contractor-target .contractor-list .btn-container {
   display: flex;
+  justify-content: center;
 }
 
 .contractor-target .contractor-list .btn {
@@ -124,6 +126,15 @@
 .contractor-target
   .contractor-list
   .contractor-card-container
+  p:nth-of-type(1) {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.contractor-target
+  .contractor-list
+  .contractor-card-container
   .contractor-card-star {
   font-size: 1.4rem;
 }
@@ -137,6 +148,10 @@
   box-shadow: inset 2px 2px 3px rgba(0, 0, 0, 0.74);
 }
 
+.user-calendar .contractor-card .service-title {
+  width: 60%;
+}
+
 .user-calendar .contractor-card-container.selected .fullstar {
   color: black;
 }
@@ -147,7 +162,7 @@
 
 .availability-target {
   width: 25%;
-  height: 65vh;
+  /* height: 65vh; */
   background-color: rgba(211, 211, 211, 0.342);
   overflow-y: scroll;
   overflow-x: hidden;
@@ -206,7 +221,7 @@
 
 .appointment-form-target {
   position: absolute;
-  top: -70px;
+  top: -60px;
   right: 27%;
   width: 31%;
   /* height: 90px; */
@@ -216,7 +231,7 @@
 .calendar-container .appointment-list {
   background-color: rgba(211, 211, 211, 0.37);
   box-shadow: inset 3px 3px 5px rgba(0, 0, 0, 0.4);
-  width: 70%;
+  width: 75%;
   padding: 5px 15px;
 }
 
@@ -236,7 +251,7 @@
   background: linear-gradient(var(--dark-color), #485158);
   color: var(--primary-color);
   padding: 6px;
-  max-width: 150px;
+  width: 23.7%;
   height: 105px;
   border-radius: 0 0 5px 5px;
   box-shadow: var(--shadow);
@@ -247,24 +262,26 @@
   .appointment-list
   .appointments-container
   .appointment-card
-  p:nth-of-type(n + 2) {
+  p:nth-of-type(n + 1) {
   color: white;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .calendar-container
   .appointment-list
   .appointments-container
   .appointment-card
-  p:nth-of-type(2) {
+  p:nth-of-type(1) {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 800px) {
   .calendar-container {
-    margin-left: 12%;
-    /* padding-left: 60px; */
+    margin-left: var(--nav-bar-width-mobile);
     margin-top: 0px;
     width: 88%;
   }
@@ -299,6 +316,7 @@
     flex-direction: column;
     justify-content: space-between;
     width: 100%;
+    height: max-content;
     max-height: none;
   }
 
@@ -323,17 +341,24 @@
     text-align: center;
   }
 
-  .user-calendar .contractor-list {
+  .user-calendar .contractor-target .contractor-list {
     width: 100%;
+    font-size: 1.2rem;
     text-align: center;
+  }
+
+  .user-calendar .contractor-card .service-title {
+    width: unset;
   }
 
   .user-calendar .availability-target {
     width: 100%;
-    height: 100vh;
+    height: 100vh !important;
     display: flex;
     align-items: center;
     background-color: var(--dark-color);
+    overflow-x: unset;
+    overflow-y: unset;
   }
 
   .user-calendar .availability-target .availability-list {
@@ -341,7 +366,8 @@
     flex-direction: column;
     align-items: center;
     border-radius: 0;
-    width: 92%;
+    width: 97%;
+    border: 1px solid var(--primary-color);
   }
 
   .user-calendar .availability-target .availability-list button {
@@ -354,6 +380,8 @@
     position: relative;
     width: 101%;
     height: 100vh;
+    top: 0;
+    right: 0;
   }
 
   .user-calendar .appointment-form {
