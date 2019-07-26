@@ -264,7 +264,6 @@ export default connect(
   { getFeedback, postFeedback, deleteFeedback }
 )(UserFeedback);
 
-
 UserFeedback.propTypes = {
   contractor: PropTypes.arrayOf(
     PropTypes.shape({
@@ -285,9 +284,9 @@ UserFeedback.propTypes = {
           contractorId: PropTypes.string,
           name: PropTypes.string,
           price: PropTypes.string,
-          createdAt: PropTypes.string
+          createdAt: PropTypes.string,
         })
-      )
+      ),
     })
   ),
   user: PropTypes.shape({
@@ -297,7 +296,7 @@ UserFeedback.propTypes = {
     phoneNumber: PropTypes.string,
     googleId: PropTypes.string,
     contractorId: PropTypes.string,
-    subscriptionId: PropTypes.string
+    subscriptionId: PropTypes.string,
   }),
   feedback: PropTypes.arrayOf(
     PropTypes.shape({
@@ -308,12 +307,12 @@ UserFeedback.propTypes = {
       contractorName: PropTypes.string,
       message: PropTypes.string,
       stars: PropTypes.number,
-      createdAt: PropTypes.string 
+      createdAt: PropTypes.string,
     })
   ),
   error: PropTypes.string,
   loading: PropTypes.bool,
   getFeedback: PropTypes.func,
   deleteFeedback: PropTypes.func,
-  postFeedback: PropTypes.func
-}
+  postFeedback: PropTypes.func,
+};

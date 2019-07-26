@@ -51,10 +51,8 @@ function App({ user, loading, ...props }) {
   console.log(location);
   return (
     <div className="App">
+      {loading && !location.includes('contractorcalendar') ? <Loading /> : null}
       <main>
-        {loading && !location.includes('contractorcalendar') ? (
-          <Loading />
-        ) : null}
         <Route exact path="/" component={Homepage} />
         <Route
           path="/app"

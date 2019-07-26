@@ -196,6 +196,7 @@ export default (state = initialState, action) => {
         ...state,
         feedback: action.payload.feedback,
         tempFeedback: action.payload.feedback,
+        loading: false,
       }; // Look for a possible need for separate temp feedback reducer
     // case TEMP_FEEDBACK_SUCCESS:
     //   return { ...state, tempFeedback: action.payload.feedback };
@@ -282,8 +283,7 @@ export default (state = initialState, action) => {
         refs: action.payload,
       };
 
-
-    //delete app by user
+    // delete app by user
     case DELETE_APP:
       return {
         ...state,
