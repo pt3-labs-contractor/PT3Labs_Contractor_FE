@@ -163,7 +163,6 @@ function ContCalendar(props) {
         boxTween = theRef.current.getElementsByClassName('boxCont');
         appTween = theRef.current.getElementsByClassName('infoContApp');
         errorTween = theRef.current.getElementsByClassName('errorNot');
-        console.log(errorTween);
         schedTween = Array.from(schedTween);
         boxTween = Array.from(boxTween);
         if (schedTween[0] !== undefined) {

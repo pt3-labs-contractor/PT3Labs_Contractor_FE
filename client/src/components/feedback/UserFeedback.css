@@ -92,18 +92,29 @@
   color: red;
 }
 
-.fa-trash {
+/* .fa-trash { */
+/* color: var(--danger-color); */
+/*   font-size: 1.5rem; */
+/*   cursor: pointer; */
+/*   text-align: right; */
+/* } */
+
+.userTrash {
   color: var(--danger-color);
   font-size: 1.5rem;
   cursor: pointer;
   text-align: right;
 }
 
-.fa-trash:hover {
-  opacity: .8;
+.userTrach:hover {
+  opacity: 0.8;
 }
+/*  */
+/* .fa-trash:hover { */
+/*   opacity: .8; */
+/* } */
 
-.fa-trash:hover .helper-tool{
+.fa-trash:hover .helper-tool {
   display: flex;
 }
 
@@ -111,7 +122,7 @@
   font-weight: 700;
 }
 
-@media (max-width:1000px) {
+@media (max-width: 1000px) {
   .feedback-form-container {
     width: 95%;
   }
