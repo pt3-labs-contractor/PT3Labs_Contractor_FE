@@ -53,7 +53,12 @@ function UserFeedback(props) {
       message,
     });
     setMessage('');
+    setStars('');
   }
+
+  const descending = props.feedback.sort((a, b) => {
+    return new Date(b.createdAt) - new Date(a.createdAt);
+  });
 
   // Get current posts
   const indexOfLastPost = currentPage * postsPerPage;
@@ -73,17 +78,6 @@ function UserFeedback(props) {
   const myToggle = () => {
     setToggle(!toggle);
   };
-
-  function mySort() {
-    const newOne = createdArray.sort((a, b) => {
-      return b - a;
-    });
-  }
-
-  const createdArray = feedback.map(user => user.contractorName);
-  const descending = feedback.sort((a, b) => {
-    return new Date(b.createdAt) - new Date(a.createdAt);
-  });
 
   return (
     <>
@@ -180,7 +174,14 @@ function UserFeedback(props) {
           </div>
         </div>
 
-        {clicked ? <DeleteModal toggle={toggle} myToggle={myToggle} /> : null}
+        {clicked ? (
+          <DeleteModal
+            toggle={toggle}
+            myToggle={myToggle}
+            descending={descending}
+            feedback={feedback}
+          />
+        ) : null}
 
         <div className="feeback-form-container">
           <h4 className="feedback-user-header">Your Feedback History</h4>
@@ -193,15 +194,16 @@ function UserFeedback(props) {
               currentPosts={currentPosts}
               createdAt={currentPosts ? currentPosts.createdAt : null}
               item
+              descending={descending}
             />
 
             {props.error ? (
               <p>{props.error}</p>
             ) : currentPosts ? (
-              descending.map(feedback => {
+              currentPosts.map(feedback => {
                 return (
                   <div key={feedback.id} className="user-feedback-container">
-                    <p>
+                    <p className="feedback-contractor-name">
                       <span className="bold">Contractor:</span>{' '}
                       {feedback.contractorName}
                     </p>
@@ -225,7 +227,7 @@ function UserFeedback(props) {
                         </p>
                       </div>
                       <div className="posted-user">
-                        <div>
+                        <div className="feedback-created-date">
                           <span className="bold">Posted: </span>{' '}
                           {dateFns.format(feedback.createdAt, 'MMM DD YYYY')}
                         </div>

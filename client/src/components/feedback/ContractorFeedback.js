@@ -80,7 +80,11 @@ function ContractorFeedback(props) {
           />
           {currentPosts.map(feedback => (
             <div key={feedback.id} className="feedback-container">
-              <span className="bold">Client: {feedback.username}</span>
+              <p className="feedback-contractor-name">
+                <span className="bold">Client: </span>
+                {feedback.username}
+              </p>
+
               {'\n'}
               <div>
                 <span className="bold">Rating:</span>{' '}
