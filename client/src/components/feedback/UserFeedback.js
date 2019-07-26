@@ -25,8 +25,9 @@ function UserFeedback(props) {
 
   const stringify = JSON.stringify(props.feedback);
   useEffect(() => {
+    console.log('ran');
     props.getFeedback();
-  }, [stringify]);
+  }, [props.feedback.length]);
 
   useEffect(() => {
     setClicked(!clicked);
@@ -72,10 +73,12 @@ function UserFeedback(props) {
     const newOne = createdArray.sort((a, b) => {
       return b - a;
     });
-    console.log(newOne);
   }
 
   const createdArray = feedback.map(user => user.contractorName);
+  const descending = feedback.sort((a, b) => {
+    return new Date(b.createdAt) - new Date(a.createdAt);
+  });
 
   return (
     <>
@@ -191,7 +194,7 @@ function UserFeedback(props) {
             {props.error ? (
               <p>{props.error}</p>
             ) : currentPosts ? (
-              currentPosts.map(feedback => {
+              descending.map(feedback => {
                 return (
                   <div key={feedback.id} className="user-feedback-container">
                     <p>

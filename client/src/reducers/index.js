@@ -144,11 +144,17 @@ export default (state = initialState, action) => {
         sortedContractors: action.payload,
         thisContractor: {},
         schedule: [],
+        loading: false,
       };
     case SET_SERVICE_SORT:
-      return { ...state, serviceFilter: action.payload, tempFeedback: [] };
+      return {
+        ...state,
+        serviceFilter: action.payload,
+        tempFeedback: [],
+        loading: false,
+      };
     case SET_CONTRACTOR_POSITION:
-      return { ...state, positionContractor: action.payload };
+      return { ...state, positionContractor: action.payload, loading: false };
     case LOAD_SCHEDULE:
       return {
         ...state,
@@ -162,6 +168,7 @@ export default (state = initialState, action) => {
         schedule: [],
         errorSchedule: action.error,
         loadSchedule: false,
+        loading: false,
       };
 
     // fetching single contractor
@@ -204,10 +211,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         feedback: [...state.feedback, action.payload.feedback],
+        loading: false,
       };
 
     case DELETE_FEEDBACK_SUCCESS:
-      return { ...state, feedback: action.payload.feedback };
+      return { ...state, feedback: action.payload.feedback, loading: false };
     // fetching current contractor appointments
     // case RET_CONTRACTOR_APP_SUCC:
     //   return {...state, accounts:{appointments: action.payload }}
@@ -276,11 +284,12 @@ export default (state = initialState, action) => {
     case GETTING_USER:
       return { ...state, loading: true };
     case GETTING_USER_SUCC:
-      return { ...state, queryUser: [action.payload.user] };
+      return { ...state, queryUser: [action.payload.user], loading: false };
     case REFS:
       return {
         ...state,
         refs: action.payload,
+        loading: false,
       };
 
     // delete app by user
@@ -293,10 +302,10 @@ export default (state = initialState, action) => {
 
     // fetching appointments for a contractor
     case RET_CONTRACTOR_APP_SUCC:
-      return { ...state, appointments: action.payload };
+      return { ...state, appointments: action.payload, loading: false };
 
     case APPOINTMENT_SUCCESS:
-      return { ...state, appointments: action.payload };
+      return { ...state, appointments: action.payload, loading: false };
 
     // edit user settigns
     case EDIT_USER_SUCCESS:
