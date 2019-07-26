@@ -24,10 +24,14 @@ function UserFeedback(props) {
   const [toggle, setToggle] = useState(false);
 
   const stringify = JSON.stringify(props.feedback);
+  let length = [];
+  if (props.feedback) {
+    length = props.feedback.length;
+  }
   useEffect(() => {
     console.log('ran');
     props.getFeedback();
-  }, [props.feedback.length]);
+  }, [length]);
 
   useEffect(() => {
     setClicked(!clicked);
