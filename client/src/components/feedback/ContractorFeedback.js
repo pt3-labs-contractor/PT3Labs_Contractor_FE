@@ -28,20 +28,20 @@ function ContractorFeedback(props) {
   });
 
   useEffect(() => {
-    const totalStars = totalPosts * 5;
+    // const totalStars = totalPosts * 5;
     const starsArray = props.feedback.map(item => item.stars);
     const starsAvg = starsArray.map(item => item / 5);
     const starsAvgTotal = starsAvg.reduce((a, b) => a + b, 0);
     const newStarsAvg = (starsAvgTotal / props.feedback.length) * 5;
-    console.log(starsAvg);
-    console.log(totalStars);
-    console.log(starsAvgTotal);
-    console.log(newStarsAvg);
+    // console.log(starsAvg);
+    // console.log(totalStars);
+    // console.log(starsAvgTotal);
+    // console.log(newStarsAvg);
     setPostStarAvg(newStarsAvg);
   });
 
-  console.log(totalPosts);
-  console.log(postStarAvg);
+  // console.log(totalPosts);
+  // console.log(postStarAvg);
 
   // Get current posts
   const indexOfLastPost = currentPage * postsPerPage;

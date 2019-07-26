@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-// import moment from 'moment';
+import moment from 'moment';
 import { connect } from 'react-redux';
 
 import NavBarUser from '../navbar/NavBarUser';
@@ -33,31 +33,29 @@ function MyBookings(props) {
       <NavBarUser />
       <div className="main-body">
         <div className="booking-container">
-          <h2 className="main-header-title">Appointment Summary</h2>
+          <h2 className="main-header-title">Your Appointment Summary</h2>
 
-          <div>
-            {/* {loading ? <p>Loading Appointments....</p> : null} */}
-            {/* {error ? <p>{error}</p> : null} */}
-            {/* {appointments === null ? <p>Loading Appointments</p> : null} */}
-            {appointments
-              ? appointments.map(app => (
-                  <div>
-                    <p>You have an appointment with {app.contractorName}</p>
-                    <p>
-                      {' '}
-                      {/* On: {moment(app.startTime).format('MMMM Do')} @{' '}
-                      {moment(app.startTime).format('h:mm a')} */}
-                    </p>
-                    <p>For: {app.service}</p>
-                    {app.confirmed === null ? (
-                      <p>Not confirmed yet</p>
-                    ) : (
-                      <p>Contractor confirmed!</p>
-                    )}
+          <div className="app-container">
+            {appointments ?
+            appointments.map(app => 
+              <div className="mapping-div">
+                  <p className="app-information">Company: <span className="important">
+                     {app.contractorName}
+                    </span>
+                  </p>
+                  <p className="app-information"> On: <span className="important">{moment(app.startTime).format('MMMM Do')} @ {moment(app.startTime).format('h:mm a')} </span>
+                  </p>
+                  <p className="app-information">For: <span className="important">{app.service}</span></p>
 
-                    <button onClick={e => cancelApp(app.id)}>Cancel</button>
-                  </div>
-                ))
+                  {app.confirmed === null 
+                    ? <p className="confirmation" >Not confirmed yet</p> 
+                    : <p className="confirmation" >Contractor confirmed!</p>}
+                  <div className="button-div">
+                    <button className="cancel-app-button" onClick={e => cancelApp(app.id)}>Cancel</button>
+                </div>
+
+                </div>
+              )
               : null}
           </div>
         </div>

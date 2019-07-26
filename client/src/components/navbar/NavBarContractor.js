@@ -11,7 +11,7 @@ function NavBarContractor() {
         <span className="side-listing"> Home</span>
       </NavLink>
       <NavLink
-        to="/contractorcalendar"
+        to="/contractorCalendar"
         className="side-link"
         activeClassName="current"
       >
