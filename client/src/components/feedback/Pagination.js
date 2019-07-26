@@ -13,7 +13,7 @@ const Pagination = ({ postsPerPage, totalPosts, paginate }) => {
       <h3 className="page-total">Total Reviews: {totalPosts}</h3>
       <ul className="pagination">
         <div>
-          <p>Pages:</p>
+          <p className="pages">Pages:</p>
         </div>
         <div className="page-numbers">
           {pageNumbers.map(number => (

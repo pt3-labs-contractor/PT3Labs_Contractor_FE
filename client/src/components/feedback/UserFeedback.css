@@ -109,6 +109,7 @@
 
 .bold {
   font-weight: 700;
+  color: whitesmoke
 }
 
 @media (max-width:1000px) {

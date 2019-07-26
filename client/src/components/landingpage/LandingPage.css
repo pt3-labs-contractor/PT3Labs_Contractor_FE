@@ -52,13 +52,14 @@
 .landing-inner p {
     font-size: 1.3rem;
     margin: 1rem 0;
+    width: 60%;
     position: relative;
     animation: content;
     animation-duration: 2s;
     animation-fill-mode: forwards
 }
 @keyframes content {
-    0% {left: -1000px}
+    0% {left: -1500px}
     100% {left: 0}
 }
 .btn-primary {
@@ -113,6 +114,12 @@
 @keyframes arrow {
     0% {opacity: 0}
     100% {opacity: 1}
+}
+
+@media (max-width:800px) {
+    .landing-inner p {
+        width: 80%;
+    }
 }
 
 @media (max-width:400px) {

@@ -11,11 +11,37 @@ import Pagination from './Pagination';
 function ContractorFeedback(props) {
   // console.log(props);
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage, setPostsPerPage] = useState(3);
+  const [postsPerPage, setPostsPerPage] = useState(5);
+  const [totalPosts, settotalPosts] = useState('');
+  const [postStarAvg, setPostStarAvg] = useState('');
+
+  console.log(props.feedback);
+  console.log(props.feedback.length);
+  console.log(props.feedback.stars);
 
   useEffect(() => {
     props.getFeedback();
   }, []);
+
+  useEffect(() => {
+    settotalPosts(props.feedback.length);
+  });
+
+  useEffect(() => {
+    const totalStars = totalPosts * 5;
+    const starsArray = props.feedback.map(item => item.stars);
+    const starsAvg = starsArray.map(item => item / 5);
+    const starsAvgTotal = starsAvg.reduce((a, b) => a + b, 0);
+    const newStarsAvg = (starsAvgTotal / props.feedback.length) * 5;
+    console.log(starsAvg);
+    console.log(totalStars);
+    console.log(starsAvgTotal);
+    console.log(newStarsAvg);
+    setPostStarAvg(newStarsAvg);
+  });
+
+  console.log(totalPosts);
+  console.log(postStarAvg);
 
   // Get current posts
   const indexOfLastPost = currentPage * postsPerPage;
@@ -32,7 +58,19 @@ function ContractorFeedback(props) {
       <TopNavbar />
       <NavBarContractor />
       <div className="main-body">
-        <h2 className="main-header-feedback">Reviews</h2>
+        <h2 className="main-header-feedback">My Feedback</h2>
+        <div className="average-rating">
+          <h3>
+            Average Rating:
+            <Rating
+              emptySymbol={<span className="icon-text">&#9734;</span>}
+              fullSymbol={<span className="icon-text fullstar">&#9733;</span>}
+              readonly
+              initialRating={postStarAvg}
+              stop={5}
+            />
+          </h3>
+        </div>
         <div className="feedback-pages">
           <Pagination
             postsPerPage={postsPerPage}
@@ -42,10 +80,10 @@ function ContractorFeedback(props) {
           />
           {currentPosts.map(feedback => (
             <div key={feedback.id} className="feedback-container">
-              Client: {feedback.username}
+              <span className="bold">Client: {feedback.username}</span>
               {'\n'}
               <div>
-                Rating:{' '}
+                <span className="bold">Rating:</span>{' '}
                 <Rating
                   emptySymbol={<span className="icon-text">&#9734;</span>}
                   fullSymbol={
@@ -64,7 +102,8 @@ function ContractorFeedback(props) {
                   </p>
                 </div>
                 <div className="posted">
-                  Posted: {dateFns.format(feedback.createdAt, 'MMM DD YYYY')}
+                  <span className="bold">Posted: </span>{' '}
+                  {dateFns.format(feedback.createdAt, 'MMM DD YYYY')}
                 </div>
               </div>
             </div>

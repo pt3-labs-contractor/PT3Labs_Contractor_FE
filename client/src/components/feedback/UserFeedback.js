@@ -14,7 +14,7 @@ function UserFeedback(props) {
   const { id } = props.user;
   const currentStar = 0;
   const [stars, setStars] = useState(currentStar);
-  const [message, setMessage] = useState([]);
+  const [message, setMessage] = useState('');
   const [contractorId, setContractorId] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(5);
@@ -46,6 +46,7 @@ function UserFeedback(props) {
       stars,
       message,
     });
+    setMessage('');
   }
 
   // Get current posts
@@ -66,15 +67,6 @@ function UserFeedback(props) {
   const myToggle = () => {
     setToggle(!toggle);
   };
-
-  function mySort() {
-    const newOne = createdArray.sort((a, b) => {
-      return b - a;
-    });
-    console.log(newOne);
-  }
-
-  const createdArray = feedback.map(user => user.contractorName);
 
   return (
     <>
@@ -171,8 +163,6 @@ function UserFeedback(props) {
           </div>
         </div>
 
-        <button onClick={mySort}>click</button>
-
         {clicked ? <DeleteModal toggle={toggle} myToggle={myToggle} /> : null}
 
         <div className="feeback-form-container">
@@ -185,6 +175,7 @@ function UserFeedback(props) {
               paginate={paginate}
               currentPosts={currentPosts}
               createdAt={currentPosts ? currentPosts.createdAt : null}
+              item
             />
 
             {props.error ? (

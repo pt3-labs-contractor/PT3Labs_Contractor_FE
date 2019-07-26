@@ -13,6 +13,9 @@
   margin: 0 auto;
 }
 
+.pages {
+  font-size: 20px;
+}
 .page-numbers {
   display: flex;
 }
@@ -47,5 +50,8 @@
 @media (max-width: 500px) {
   .page-item a {
     padding: 8px
+  }
+  .pages {
+    font-size: 14px;
   }
 }
