@@ -9,6 +9,12 @@
   margin-bottom: 1.5rem;
 }
 
+.average-rating {
+  width: 80%;
+  margin: 0 auto;
+  letter-spacing: 1.2px;
+}
+
 .feedback-pages {
   display: flex;
   flex-direction: column;
@@ -21,6 +27,8 @@
   border-bottom: 2px solid var(--secondary-color);
   color: black;
   width: 80%;
+  background: linear-gradient(45deg, black, transparent);
+  margin-bottom: 10px;
 }
 
 .feedback-header {
@@ -33,14 +41,14 @@
   width: 100%;
   height: auto;
   margin-top: 1rem;
-  color: grey;
+  color: whitesmoke;
 }
 
 .quotes {
   font-style: bold;
   font-weight: 300;
   font-size: 1.5rem;
-  color: black;
+  color: var(--secondary-color);
 }
 
 .fullstar {
@@ -65,11 +73,20 @@
   .feedback-pages {
     width: 100%;
   }
+  .average-rating {
+    width: 95%
+  }
 }
 
 @media (max-width: 400px) {
   .main-header-feedback {
     font-size: 2rem;
+  }
+  .average-rating {
+    font-size: .8rem;
+  }
+  .feedback-pages {
+    font-size: .8rem;
   }
 }
 

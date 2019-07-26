@@ -53,6 +53,15 @@
   align-items: center;
   justify-content: center;
   margin: 0 auto 1rem;
+  background: linear-gradient(45deg, black, transparent);
+}
+
+.feedback-contractor-name {
+  color: orange;
+}
+
+.feedback-created-date {
+  color: orange;
 }
 
 .feedback-user-header {
@@ -120,6 +129,7 @@
 
 .bold {
   font-weight: 700;
+  color: whitesmoke
 }
 
 @media (max-width: 1000px) {
