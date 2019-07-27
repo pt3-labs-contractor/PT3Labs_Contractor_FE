@@ -48,7 +48,7 @@ export const FETCH_SINGLE_CONTRACTOR_SUCCESS =
 export const FEEDBACK_SUCCESS = 'FEEDBACK_SUCCESS';
 export const FETCH_CONTRACTOR_FEEDBACK_SUCCESS =
   'FETCH_CONTRACTOR_FEEDBACK_SUCCESS';
-export const CLEAR_TEMP_FEEDBACK = 'CLEAR_TEMP_FEEDBACK'
+export const CLEAR_TEMP_FEEDBACK = 'CLEAR_TEMP_FEEDBACK';
 export const POST_FEEDBACK_SUCCESS = 'POST_FEEDBACK_SUCCESS';
 export const DELETE_FEEDBACK_SUCCESS = 'DELETE_FEEDBACK_SUCCESS';
 
@@ -260,7 +260,7 @@ export const setFailure = fail => dispatch => {
 
 // axios get feedback
 export const getFeedback = () => dispatch => {
-  dispatch({ type: LOADING });
+  // dispatch({ type: LOADING });
   const headers = setHeaders();
 
   axios
@@ -310,7 +310,7 @@ export const postFeedback = data => dispatch => {
 };
 
 // axios delete feedback about a contractor
-export const deleteFeedback = id => dispatch => {
+export const deleteFeedback = (id, list) => dispatch => {
   dispatch({ type: LOADING });
   const headers = setHeaders();
 
@@ -318,8 +318,9 @@ export const deleteFeedback = id => dispatch => {
     .delete(`https://fierce-plains-47590.herokuapp.com/api/feedback/${id}`, {
       headers,
     })
-    .then(res => {
-      dispatch({ type: DELETE_FEEDBACK_SUCCESS, payload: res.data });
+    .then(() => {
+      const newFeedback = list.filter(item => item.id !== id);
+      dispatch({ type: DELETE_FEEDBACK_SUCCESS, payload: newFeedback });
     })
     .catch(err => dispatch({ type: FAILURE, payload: err }));
 };
@@ -669,8 +670,8 @@ export const cancelImmediate = () => dispatch => {
 };
 
 export const clearTempFeedbak = () => dispatch => {
-  dispatch({ type: CLEAR_TEMP_FEEDBACK })
-}
+  dispatch({ type: CLEAR_TEMP_FEEDBACK });
+};
 
 export const startManualLoad = () => dispatch => {
   dispatch({ type: LOADING });
