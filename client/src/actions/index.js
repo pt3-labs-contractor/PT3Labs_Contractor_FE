@@ -48,6 +48,7 @@ export const FETCH_SINGLE_CONTRACTOR_SUCCESS =
 export const FEEDBACK_SUCCESS = 'FEEDBACK_SUCCESS';
 export const FETCH_CONTRACTOR_FEEDBACK_SUCCESS =
   'FETCH_CONTRACTOR_FEEDBACK_SUCCESS';
+export const CLEAR_TEMP_FEEDBACK = 'CLEAR_TEMP_FEEDBACK'
 export const POST_FEEDBACK_SUCCESS = 'POST_FEEDBACK_SUCCESS';
 export const DELETE_FEEDBACK_SUCCESS = 'DELETE_FEEDBACK_SUCCESS';
 
@@ -666,6 +667,10 @@ export const cancelImmediate = () => dispatch => {
       })
     );
 };
+
+export const clearTempFeedbak = () => dispatch => {
+  dispatch({ type: CLEAR_TEMP_FEEDBACK })
+}
 
 export const startManualLoad = () => dispatch => {
   dispatch({ type: LOADING });

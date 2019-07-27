@@ -49,6 +49,9 @@ import {
   // fetching single contractor feedback
   // FETCH_CONTRACTOR_FEEDBACK_SUCCESS,
 
+  // Clear temp feedback for initial load
+  CLEAR_TEMP_FEEDBACK,
+
   // POST feedback by user
   POST_FEEDBACK_SUCCESS,
 
@@ -213,6 +216,8 @@ export default (state = initialState, action) => {
         feedback: [...state.feedback, action.payload.feedback],
         loading: false,
       };
+    case CLEAR_TEMP_FEEDBACK:
+      return { ...state, tempFeedback: [] };
 
     case DELETE_FEEDBACK_SUCCESS:
       return { ...state, feedback: action.payload.feedback, loading: false };
