@@ -39,13 +39,29 @@
 
 .landing-inner h1 {
     font-size: 4rem;
+    position: relative;
+    animation: heading;
+    animation-duration: 1.5s;
+    animation-fill-mode: forwards;
+}
+@keyframes heading {
+    0% {top: -400px}
+    100% {top: 0}
 }
 
 .landing-inner p {
     font-size: 1.3rem;
     margin: 1rem 0;
+    width: 60%;
+    position: relative;
+    animation: content;
+    animation-duration: 2s;
+    animation-fill-mode: forwards
 }
-
+@keyframes content {
+    0% {left: -1500px}
+    100% {left: 0}
+}
 .btn-primary {
     background-color: var(--primary-color);
     color: #FFF;
@@ -60,6 +76,19 @@
     color: #000;
 }
 
+.landing-btn {
+    position: relative;
+    animation-name: button;
+    animation-duration: .75s;
+    animation-delay: 2s;
+    animation-fill-mode: forwards;
+    opacity: 0;
+}
+@keyframes button {
+    0% {opacity: 0}
+    100% {opacity: 1}
+}
+
 .arrow {
     position: absolute;
     bottom: 2.5rem;
@@ -72,11 +101,25 @@
     font-size: 3rem;
     margin: 0 auto;
     animation: bounce .8s infinite ease-in-out;
+    position: relative;
+    animation-delay: 3s;
+    opacity: 0;
 }
 
 @keyframes bounce{
     0%{}
+    25%{opacity: 1}
     50%{transform: translate(0, 20px);}
+}
+@keyframes arrow {
+    0% {opacity: 0}
+    100% {opacity: 1}
+}
+
+@media (max-width:800px) {
+    .landing-inner p {
+        width: 80%;
+    }
 }
 
 @media (max-width:400px) {

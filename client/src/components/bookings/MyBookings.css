@@ -4,24 +4,144 @@
   align-items: center;
   margin-top: 2rem;
   letter-spacing: 1.2px;
+  justify-content: center;
 }
 
-.booking-item-container {
-  padding: 1rem 2rem;
-  margin: 1rem;
-  border-bottom: 2px solid var(--secondary-color);
-  color: black;
-  width: 80%;
+.app-container {
+  display: flex;
+  width: 100%;
+  font-family:'BioRhyme', serif;
+  justify-content: center;
+
 }
+
+.mapping-div {
+  /* display: flex; */
+  /* flex-direction: column; */
+  /* justify-content: center; */
+  background-color: #e6e6e6a2;
+  height: 100%;
+  width: 340px;
+  padding: 30px;
+  margin: 20px 40px 40px 40px;
+}  
+
+.mapping-div {
+  /* background: white; */
+  /* margin: auto;
+  margin-top: 5%; */
+  /* max-width: 30%; */
+  padding: 20px 50px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+
+.mapping-div:hover {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  animation-name: example;
+  animation-duration: 0.25s;
+  border-left: 8px solid rgb(0, 0, 0);
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+
+
+.confirmation {
+  margin: 20px 0px 0px 0px;
+}  
+
+.app-information {
+  margin: 10px 0px 0px 0px;
+}  
+
+
+
+
+
+
+.important{
+  font-weight: bold;
+  font-size: 15px;
+  font-family:'BioRhyme', bold;
+}  
+
+
+
+
+.cancel-app-button {
+  font-family:'BioRhyme', serif;
+  background:gray;
+  color:#FEBD17;
+  border:none;
+  position:relative;
+  height:40px;
+  font-size:1.6em;
+  padding:0 2em;
+  cursor:pointer;
+  transition:800ms ease all;
+  outline:none;
+  margin: 30px 0px 0px 20px;
+}
+
+.cancel-app-button:hover{
+  background:#fff;
+  color:gray;
+}
+.cancel-app-button:before,.cancel-app-button:after{
+  content:'';
+  position:absolute;
+  top:0;
+  right:0;
+  height:2px;
+  width:0;
+  background: gray;
+  transition:400ms ease all;
+}
+.cancel-app-button:after{
+  right:inherit;
+  top:inherit;
+  left:0;
+  bottom:0;
+}
+.cancel-app-button:hover:before,.cancel-app-button:hover:after{
+  width:100%;
+  transition:800ms ease all;
+}
+
+
+
+
+
+
 
 @media (max-width: 1000px) {
   .booking-container {
-    width: 600px;
+    width: 100%;
+  }
+
+  .app-container {
+    display: flex;
+    flex-flow:row wrap;
+
+    /* flex-direction: column; */
+    margin: 60px;
   }
 }
 
 @media (max-width: 800px) {
   .booking-container {
+    width: 100%;
+  }
+
+  .app-container {
+    display: flex;
+    /* flex-direction: column; */
+    align-content: center;
+    flex-flow:row wrap;
+    /* justify-content: center; */
+    margin: 30px 0px 0px 0px;
+    padding: 0px;
     width: 100%;
   }
 }

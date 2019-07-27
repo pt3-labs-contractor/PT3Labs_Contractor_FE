@@ -5,6 +5,7 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import './AppointmentForm.css';
 
+import { postAppointment } from '../../actions';
 import ConfirmModal from './ConfirmModal';
 
 function AppointmentForm(props) {
@@ -39,18 +40,19 @@ function AppointmentForm(props) {
         startTime,
         duration: `${dur}h`,
       };
-      axios
-        .post(
-          'https://fierce-plains-47590.herokuapp.com/api/appointments',
-          appointment,
-          { headers }
-        )
-        .then(res => {
-          console.log('Created!');
-        })
-        .catch(err => {
-          console.log(err);
-        });
+      props.postAppointment(appointment);
+      // axios
+      //   .post(
+      //     'https://fierce-plains-47590.herokuapp.com/api/appointments',
+      //     appointment,
+      //     { headers }
+      //   )
+      //   .then(res => {
+      //     console.log('Created!');
+      //   })
+      //   .catch(err => {
+      //     console.log(err);
+      //   });
     }
     setConfirm(false);
   }
@@ -88,7 +90,10 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(AppointmentForm);
+export default connect(
+  mapStateToProps,
+  { postAppointment }
+)(AppointmentForm);
 
 AppointmentForm.propTypes = {
   service: PropTypes.objectOf(PropTypes.string),

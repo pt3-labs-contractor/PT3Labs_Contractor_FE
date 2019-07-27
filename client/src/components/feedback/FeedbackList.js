@@ -1,18 +1,28 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import FeedbackCard from './FeedbackCard';
 
-function FeedbackList({ feedback }) {
+function FeedbackList({ feedback, tempFeedback, temp }) {
+  const [feedbackList, setFeedbackList] = useState([]);
+
+  useEffect(() => {
+    if (temp) {
+      setFeedbackList(tempFeedback);
+    } else {
+      setFeedbackList(feedback);
+    }
+  }, [feedback, tempFeedback]);
+
   return (
     <div className="feedback-list">
-      {feedback.length > 0 && (
+      {feedbackList.length > 0 && (
         <>
           <h2>User Feedback:</h2> <hr />
         </>
       )}
-      {feedback.map(item => (
+      {feedbackList.map(item => (
         <div className="feedback-card" key={item.id}>
           <FeedbackCard feedback={item} />
           <br />
@@ -25,6 +35,7 @@ function FeedbackList({ feedback }) {
 const mapStateToProps = state => {
   return {
     feedback: state.feedback,
+    tempFeedback: state.tempFeedback,
   };
 };
 

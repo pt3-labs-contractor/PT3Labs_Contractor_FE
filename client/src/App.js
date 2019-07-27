@@ -25,10 +25,11 @@ import MyBookings from './components/bookings/MyBookings';
 import Plans from './components/plans/Plans';
 import UserSettings from './components/settings/UserSettings';
 import ContractorSchedule from './components/contractors/ContractorSchedule';
+import Loading from './components/loading/loading';
 import UploadImage from './components/settings/UploadImage';
 import DeleteModal from './components/feedback/DeleteModal';
 
-function App({ user, ...props }) {
+function App({ user, loading, ...props }) {
   const [win, setWin] = useState();
   const string = JSON.stringify(win);
   useEffect(() => {
@@ -36,10 +37,21 @@ function App({ user, ...props }) {
     // eslint-disable-next-line
   }, [string]);
 
-  // console.log(props.user);
+  useEffect(() => {
+    const userSet = Object.keys(user).length; // If user object has keys, we have received a response from back end.
+    const missingMandatoryKeys = // Missing any of these keys indicates an unfinished Oauth registration.
+      !user.email || !user.username || !user.phoneNumber;
+    if (userSet && missingMandatoryKeys) props.history.push('/register/oauth');
+  }, [user]);
 
+  // console.log(props.user);
+  let location = props.location.pathname;
+  location = location.split('/');
+  location = [...location, location[1].toLowerCase()];
+  console.log(location);
   return (
     <div className="App">
+      {loading && !location.includes('contractorcalendar') ? <Loading /> : null}
       <main>
         <Route exact path="/" component={Homepage} />
         <Route
@@ -96,6 +108,7 @@ const mapStateToProps = state => {
   return {
     user: state.user,
     feedback: state.feedback,
+    loading: state.loading,
   };
 };
 

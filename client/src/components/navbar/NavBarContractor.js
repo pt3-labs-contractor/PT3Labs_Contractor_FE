@@ -11,7 +11,7 @@ function NavBarContractor() {
         <span className="side-listing"> Home</span>
       </NavLink>
       <NavLink
-        to="/contractorcalendar"
+        to="/contractorCalendar"
         className="side-link"
         activeClassName="current"
       >
@@ -28,16 +28,16 @@ function NavBarContractor() {
       </NavLink>
       <NavLink to="/plans" className="side-link" activeClassName="current">
         <i className="fas fa-money-check-alt" />
-        <span className="side-listing"> Plans</span>
+        <span className="side-listing"> Subscription</span>
       </NavLink>
       <NavLink to="/settings" className="side-link" activeClassName="current">
         <i className="fas fa-user-cog" />
         <span className="side-listing"> Settings</span>
       </NavLink>
-      <NavLink to="/app" className="side-link" activeClassName="current">
+      {/* <NavLink to="/app" className="side-link" activeClassName="current">
         <i className="fas fa-user" />
         <span className="side-listing"> User</span>
-      </NavLink>
+      </NavLink> */}
     </div>
   );
 }

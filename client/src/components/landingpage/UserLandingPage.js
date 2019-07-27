@@ -26,6 +26,7 @@ function UserLandingPage(props) {
   const [service, setService] = useState({});
   const [serviceSort, setServiceSort] = useState('Pick a service');
   const [currentTarget, setTarget] = useState(0);
+  const [mediaQuery, setMediaQuery] = useState(window.innerWidth);
   const serviceTarget = useRef(null);
   const calendarTarget = useRef(null);
   const contractorTarget = useRef(null);
@@ -38,7 +39,7 @@ function UserLandingPage(props) {
     availabilityTarget,
     appointmentTarget,
   ];
-  const mql = window.matchMedia('(max-width: 600px)').matches;
+  const mql = window.matchMedia('(max-width: 800px)').matches;
   const serviceList = [
     'Electrical',
     'Plumbing',
@@ -48,6 +49,15 @@ function UserLandingPage(props) {
     'Health and Beauty',
     'Roofing and Siding',
   ];
+
+  window.addEventListener('resize', () => {
+    if (
+      (window.innerWidth <= 800 && mediaQuery > 800) ||
+      (mediaQuery < 800 && window.innerWidth > 800)
+    ) {
+      window.location.reload();
+    }
+  });
 
   useEffect(() => {
     if (mql) {
@@ -76,6 +86,7 @@ function UserLandingPage(props) {
   }, [props.selectedDay, props.contractors, serviceSort]);
 
   useEffect(() => {
+    setContractor({});
     if (serviceSort !== 'Pick a service' && mql) {
       scroll(contractorTarget.current);
     }
@@ -92,6 +103,7 @@ function UserLandingPage(props) {
   }, [contractor]);
 
   const selectContractor = item => {
+    console.log('clicked contractor');
     setContractor(item);
     const filter = item.services.filter(service => {
       return service.name === serviceSort;
@@ -170,7 +182,7 @@ function UserLandingPage(props) {
           </div>
           <div className="availability-target" ref={availabilityTarget}>
             <AvailabilityList setAppointment={selectTime} />
-            {!mql && <FeedbackList />}
+            {!mql && <FeedbackList temp />}
           </div>
           <div className="appointment-form-target" ref={appointmentTarget}>
             {contractor.id && time.id && (

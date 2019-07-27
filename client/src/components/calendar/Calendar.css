@@ -34,7 +34,7 @@
 
 .cell-container {
   display: grid;
-  grid-template-columns: repeat(7, minmax(50px, auto));
+  grid-template-columns: repeat(7, minmax(30px, auto));
   grid-auto-rows: minmax(50px, 65px);
 }
 
@@ -83,4 +83,10 @@
     padding: 5px;
     font-size: 0.8rem;
   }
+}
+.calendar-month-nav {
+  cursor: pointer;
+}
+.calendar-month-nav:active {
+  transform: translateY(1px);
 }
