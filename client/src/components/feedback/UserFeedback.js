@@ -199,8 +199,9 @@ function UserFeedback(props) {
 
             {props.error ? (
               <p>{props.error}</p>
-            ) : currentPosts ? (
+            ) : descending ? (
               currentPosts.map(feedback => {
+                console.log(currentPosts);
                 return (
                   <div key={feedback.id} className="user-feedback-container">
                     <p className="feedback-contractor-name">
