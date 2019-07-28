@@ -18,6 +18,7 @@ import {
   fetchAvailabilityByDay,
   getFeedbackByContractor,
   storeServiceName,
+  clearTempFeedbak,
 } from '../../actions/index';
 
 function UserLandingPage(props) {
@@ -60,6 +61,7 @@ function UserLandingPage(props) {
   });
 
   useEffect(() => {
+    props.clearTempFeedbak();
     if (mql) {
       const container = document.querySelector('.calendar-container');
       container.addEventListener('touchmove', e => {
@@ -226,6 +228,7 @@ export default connect(
     fetchAvailabilityByDay,
     getFeedbackByContractor,
     storeServiceName,
+    clearTempFeedbak
   }
 )(UserLandingPage);
 

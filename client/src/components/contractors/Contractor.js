@@ -92,10 +92,11 @@ function Contractor(props) {
 
 const mapStateToProps = state => {
   return {
-    list: state.contractors,
     contractor: state.thisContractor,
+    services: state.services,
     selectedDay: state.thisDay,
     schedule: state.schedule,
+    error: state.errorSchedule,
   };
 };
 
