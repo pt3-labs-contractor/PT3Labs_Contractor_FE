@@ -27,16 +27,14 @@ function UserFeedback(props) {
 
   useEffect(() => {
     console.log('ran');
-    props.getFeedback();
+    // props.getFeedback();
   }, [props.feedback]);
 
   useEffect(() => {
     setClicked(!clicked);
+    props.getFeedback();
   }, []);
 
-  function deleteFeedback(feedback) {
-    props.deleteFeedback(feedback.id, props.feedback);
-  }
   function handleChange(contrID) {
     setContractorId(contrID);
   }
@@ -53,9 +51,11 @@ function UserFeedback(props) {
     setStars('');
   }
 
-  const descending = props.feedback.sort((a, b) => {
-    return new Date(b.createdAt) - new Date(a.createdAt);
-  });
+  const descending =
+    props.feedback &&
+    props.feedback.sort((a, b) => {
+      return new Date(b.createdAt) - new Date(a.createdAt);
+    });
 
   // Get current posts
   const indexOfLastPost = currentPage * postsPerPage;
@@ -132,6 +132,7 @@ function UserFeedback(props) {
                       value={contractorId}
                       onChange={e => handleChange(e.target.value)}
                     >
+                      <option value="">Pick a contractor</option>
                       {props.contractor.map(contractor => (
                         <option
                           key={contractor.id}
@@ -198,7 +199,7 @@ function UserFeedback(props) {
               <p>{props.error}</p>
             ) : descending ? (
               currentPosts.map(feedback => {
-                console.log(currentPosts);
+                // console.log(currentPosts);
                 return (
                   <div key={feedback.id} className="user-feedback-container">
                     <p className="feedback-contractor-name">

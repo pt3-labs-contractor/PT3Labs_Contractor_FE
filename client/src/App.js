@@ -48,7 +48,7 @@ function App({ user, loading, ...props }) {
   let location = props.location.pathname;
   location = location.split('/');
   location = [...location, location[1].toLowerCase()];
-  console.log(location);
+  // console.log(location);
   return (
     <div className="App">
       {loading && !location.includes('contractorcalendar') ? <Loading /> : null}
