@@ -114,6 +114,8 @@ AppointmentForm.propTypes = {
     duration: PropTypes.object,
     createdAt: PropTypes.string,
   }),
+  contractor: PropTypes.string,
+  postAppointment: PropTypes.func,
 };
 
 AppointmentForm.defaultProps = {
@@ -124,4 +126,6 @@ AppointmentForm.defaultProps = {
   appointment: {
     id: null,
   },
+  contractor: null,
+  postAppointment: null,
 };
