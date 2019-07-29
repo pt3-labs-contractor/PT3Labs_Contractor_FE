@@ -75,6 +75,8 @@ export const CANCEL_DEFAULT_SUCCESS = 'CANCEL_DEFAULT_SUCCESS';
 export const CANCEL_DEFAULT_FAILURE = 'CANCEL_DEFAULT_FAILURE';
 export const CANCEL_IMMEDIATE_SUCCESS = 'CANCEL_IMMEDIATE_SUCCESS';
 export const CANCEL_IMMEDIATE_FAILURE = 'CANCEL_IMMEDIATE_FAILURE';
+
+export const SET_ERROR = 'SET_ERROR';
 // ---------------------------------------------------------------
 
 function setHeaders() {
@@ -680,3 +682,7 @@ export const startManualLoad = () => dispatch => {
 export const endManualLoad = () => dispatch => {
   dispatch({ type: END_LOAD });
 };
+
+export const setError = err => dispatch => {
+  dispatch({ type: SET_ERROR, payload: err });
+}

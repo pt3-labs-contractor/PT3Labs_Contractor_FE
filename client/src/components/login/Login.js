@@ -8,6 +8,7 @@ import {
   fetchAccts,
   getFeedback,
   startManualLoad,
+  endManualLoad,
 } from '../../actions/index.js';
 
 import './Login.css';
@@ -43,10 +44,11 @@ function Login(props) {
       )
       .then(res => {
         localStorage.setItem('jwt', res.data.token);
-        props.fetchAccts(); 
+        props.fetchAccts();
         props.getFeedback();
       })
       .catch(err => {
+        props.endManualLoad();
         switch (err.response.status) {
           case 400:
           case 401:
@@ -110,11 +112,17 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { fetchAccts, getFeedback, startManualLoad }
+  { fetchAccts, getFeedback, startManualLoad, endManualLoad }
 )(Login);
+
+Login.defaultProps = {
+  user: {},
+};
 
 Login.propTypes = {
   user: PropTypes.object,
-  fetchAccts: PropTypes.func,
-  getFeedback: PropTypes.func,
+  fetchAccts: PropTypes.func.isRequired,
+  getFeedback: PropTypes.func.isRequired,
+  startManualLoad: PropTypes.func.isRequired,
+  endManualLoad: PropTypes.func.isRequired,
 };
