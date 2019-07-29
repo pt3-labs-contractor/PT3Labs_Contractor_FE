@@ -30,15 +30,11 @@
   width: 300px;
   height: 400px;
   margin-top: 10%;
-  box-shadow: 1px 1px 80px rgba(0, 0, 0, .9);
+  box-shadow: 1px 1px 20px rgba(0, 0, 0, .9);
   text-align: center;
   color: white;
   transition: 0.7s;
-  background-image: url('./card-bg.jpg');
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  overflow: hidden;
+  background: lightgray;
 }
 
 .free-plan:hover h4 {
@@ -50,15 +46,10 @@
   height: 400px;
   /* background-color: var(--dark-color); */
   margin-top: 10%;
-  box-shadow: 1px 1px 80px rgba(256, 189, 23, 0.9);
+  box-shadow: 1px 1px 20px rgba(0, 0, 0, .9);
   text-align: center;
   transition: 0.7s;
-  color: black;
-  background-image: url('./card-bg.jpg');
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  overflow: hidden;
+  background: lightgrey;
 }
 
 .premium-plan:hover h4 {
@@ -127,7 +118,7 @@
 .free-plan:hover {
   background: lightgray;
   color: #fff;
-  box-shadow: 0 0 15px rgba(256, 189, 23, 1);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 1);
   transform: scale(1.05);
   z-index: 1;
 }
@@ -135,7 +126,7 @@
 .premium-plan:hover {
   background: lightgray;
   color: #fff;
-  box-shadow: 0 0 15px rgba(140, 32, 248, 1);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 1);
   transform: scale(1.05);
   z-index: 1;
 }
