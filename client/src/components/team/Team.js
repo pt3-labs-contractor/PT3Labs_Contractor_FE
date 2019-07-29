@@ -130,7 +130,7 @@ export default function Team() {
                 className="card-img"
               />
               <img
-                src="images/profile1.png"
+                src="images/phil-smith.jpg"
                 alt="profile1 img"
                 className="profile-img"
               />
