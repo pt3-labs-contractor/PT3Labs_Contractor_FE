@@ -337,7 +337,7 @@ export const editUserSettings = data => dispatch => {
       headers,
     })
     .then(res => {
-      dispatch({ type: EDIT_USER_SUCCESS, payload: res.data });
+      dispatch({ type: EDIT_USER_SUCCESS, payload: res.data.user });
     })
     .catch(err => dispatch({ type: FAILURE, payload: err }));
 };
