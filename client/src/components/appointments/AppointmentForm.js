@@ -114,7 +114,27 @@ AppointmentForm.propTypes = {
     duration: PropTypes.object,
     createdAt: PropTypes.string,
   }),
-  contractor: PropTypes.string,
+  contractor: PropTypes.shape({
+    city: PropTypes.string,
+    createdAt: PropTypes.string,
+    id: PropTypes.string,
+    latitude: PropTypes.string,
+    longitude: PropTypes.string,
+    name: PropTypes.string,
+    phoneNumber: PropTypes.string,
+    stateAbbr: PropTypes.string,
+    streetAddress: PropTypes.string,
+    zipCode: PropTypes.string,
+    services: PropTypes.arrayOf(
+      PropTypes.shape({
+        contractorId: PropTypes.string,
+        createdAt: PropTypes.string,
+        id: PropTypes.string,
+        name: PropTypes.string,
+        price: PropTypes.string,
+      })
+    ),
+  }),
   postAppointment: PropTypes.func,
 };
 
