@@ -20,31 +20,11 @@ function ContractorCard({ contractor, service, full, mainList = false }) {
       const filtered = contractor.services.filter(entry => {
         return entry.name === service;
       });
-      console.log(filtered);
-      console.log(contractor.services);
-      console.log(service);
       setService(filtered[0]);
     }
+    // eslint-disable-next-line
   }, [service]);
-  let display = null;
-  if (full)
-    display = (
-      <>
-        <p>{streetAddress}</p>
-        <p>
-          {city} {stateAbbr}
-        </p>
-        <p>{zipCode}</p>
-      </>
-    );
-  else if (localService)
-    display = (
-      <>
-        <p>
-          {localService.name}: {localService.price}
-        </p>
-      </>
-    );
+
   return (
     <div className={mainList ? 'contractor-card-full' : 'contractor-card'}>
       <h3>{name}</h3>
@@ -90,3 +70,37 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps)(ContractorCard);
+
+ContractorCard.propTypes = {
+  contractor: PropTypes.shape({
+    city: PropTypes.string,
+    createdAt: PropTypes.string,
+    id: PropTypes.string,
+    latitude: PropTypes.string,
+    longitude: PropTypes.string,
+    name: PropTypes.string,
+    phoneNumber: PropTypes.string,
+    stateAbbr: PropTypes.string,
+    streetAddress: PropTypes.string,
+    zipCode: PropTypes.string,
+    services: PropTypes.arrayOf(
+      PropTypes.shape({
+        contractorId: PropTypes.string,
+        createdAt: PropTypes.string,
+        id: PropTypes.string,
+        name: PropTypes.string,
+        price: PropTypes.string,
+      })
+    ),
+  }),
+  service: PropTypes.string,
+  full: PropTypes.bool,
+  mainList: PropTypes.bool,
+};
+
+ContractorCard.defaultProps = {
+  contractor: null,
+  service: null,
+  full: false,
+  mainList: false,
+};
