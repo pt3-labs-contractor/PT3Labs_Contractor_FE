@@ -77,6 +77,8 @@ export const CANCEL_IMMEDIATE_SUCCESS = 'CANCEL_IMMEDIATE_SUCCESS';
 export const CANCEL_IMMEDIATE_FAILURE = 'CANCEL_IMMEDIATE_FAILURE';
 
 export const SET_ERROR = 'SET_ERROR';
+export const CHANGE_PAYMENT_METHOD_SUCCESS = 'CHANGE_PAYMENT_METHOD_SUCCESS';
+export const CHANGE_PAYMENT_METHOD_FAILURE = 'CHANGE_PAYMENT_METHOD_FAILURE';
 // ---------------------------------------------------------------
 
 function setHeaders() {
@@ -685,4 +687,32 @@ export const endManualLoad = () => dispatch => {
 
 export const setError = err => dispatch => {
   dispatch({ type: SET_ERROR, payload: err });
-}
+};
+
+export const changePaymentMethod = (token, address) => dispatch => {
+  dispatch({ type: LOADING });
+  const headers = setHeaders();
+  axios
+    .put(
+      'https://fierce-plains-47590.herokuapp.com/api/subscription/payment',
+      { token, address },
+      { headers }
+    )
+    .then(res =>
+      axios.get('https://fierce-plains-47590.herokuapp.com/api/subscription', {
+        headers,
+      })
+    )
+    .then(res =>
+      dispatch({
+        type: CHANGE_PAYMENT_METHOD_SUCCESS,
+        payload: res.data.subscription,
+      })
+    )
+    .catch(err => {
+      dispatch({
+        type: CHANGE_PAYMENT_METHOD_FAILURE,
+        payload: err.response.data.error,
+      });
+    });
+};

@@ -76,6 +76,8 @@ import {
   CANCEL_IMMEDIATE_SUCCESS,
   CANCEL_IMMEDIATE_FAILURE,
   SET_ERROR,
+  CHANGE_PAYMENT_METHOD_SUCCESS,
+  CHANGE_PAYMENT_METHOD_FAILURE,
 } from '../actions';
 
 const initialState = {
@@ -358,6 +360,15 @@ export default (state = initialState, action) => {
       return { ...state, error: action.payload, loading: false };
     case SET_ERROR:
       return { ...state, error: action.payload };
+    case CHANGE_PAYMENT_METHOD_SUCCESS:
+      return {
+        ...state,
+        subscription: action.payload,
+        error: null,
+        loading: false,
+      };
+    case CHANGE_PAYMENT_METHOD_FAILURE:
+      return { ...state, error: action.payload, loading: false };
     default:
       return state;
   }

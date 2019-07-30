@@ -244,3 +244,7 @@
   background-color: white;
   color: var(--success-color);
 }
+.plan-wrapper .StripeCheckout:hover {
+  background-color: var(--success-color);
+  color: white;
+}
