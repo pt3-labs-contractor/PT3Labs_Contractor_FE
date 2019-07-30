@@ -41,25 +41,27 @@
 
 .user-calendar .contractor-target {
   width: 25%;
+  height: 100%;
   /* max-width: 220px; */
   /* max-height: 495px; */
   margin-right: 0;
   margin-left: 0;
   padding: 0;
   box-shadow: var(--shadow);
+  /* border-bottom: 15px solid var(--dark-color); */
 }
 
-.user-calendar .contractor-target .contractor-list {
+.user-calendar .contractor-target .contractor-list.container {
   padding: 0px;
   margin: 0;
   height: 100%;
-  min-height: 395px;
+  min-height: 400px;
   font-size: 12px;
   color: var(--light-color);
   background-color: var(--dark-color);
 }
 
-.user-calendar .contractor-target .contractor-list .contractor-list-container {
+.user-calendar .contractor-target .contractor-list:not(.container) {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -69,12 +71,13 @@
   box-shadow: inset 2px 2px 4px #000;
 }
 
-.contractor-target .contractor-list .btn-container {
+.user-calendar .contractor-list .btn-container {
+  width: 100%;
   display: flex;
   justify-content: center;
 }
 
-.contractor-target .contractor-list .btn {
+.contractor-target .contractor-list .list-header .btn {
   width: 40%;
   height: 37px;
   text-align: center;

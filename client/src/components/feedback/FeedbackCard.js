@@ -24,16 +24,14 @@ function FeedbackCard({ feedback }) {
 export default FeedbackCard;
 
 FeedbackCard.propTypes = {
-  feedback: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string,
-      contractorName: PropTypes.string,
-      username: PropTypes.string,
-      message: PropTypes.string,
-      contractorId: PropTypes.string,
-      userId: PropTypes.string,
-      stars: PropTypes.number,
-      createdAt: PropTypes.string,
-    })
-  ),
+  feedback: PropTypes.shape({
+    id: PropTypes.string,
+    contractorName: PropTypes.string,
+    username: PropTypes.string,
+    message: PropTypes.string,
+    contractorId: PropTypes.string,
+    userId: PropTypes.string,
+    stars: PropTypes.number,
+    createdAt: PropTypes.string,
+  }),
 };

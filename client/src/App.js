@@ -45,10 +45,13 @@ function App({ user, loading, ...props }) {
   }, [user]);
 
   // console.log(props.user);
-
+  let location = props.location.pathname;
+  location = location.split('/');
+  location = [...location, location[1].toLowerCase()];
+  console.log(location);
   return (
     <div className="App">
-      {loading ? <Loading /> : null}
+      {loading && !location.includes('contractorcalendar') ? <Loading /> : null}
       <main>
         <Route exact path="/" component={Homepage} />
         <Route

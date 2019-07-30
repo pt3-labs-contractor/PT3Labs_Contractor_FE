@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import Rating from 'react-rating';
+import PropTypes from 'prop-types';
 import NavBarUser from '../navbar/NavBarUser';
 import './UserFeedback.css';
 import { getFeedback, postFeedback, deleteFeedback } from '../../actions/index';
@@ -23,9 +24,14 @@ function UserFeedback(props) {
   const [toggle, setToggle] = useState(false);
 
   const stringify = JSON.stringify(props.feedback);
+  let length = [];
+  if (props.feedback) {
+    length = props.feedback.length;
+  }
   useEffect(() => {
+    console.log('ran');
     props.getFeedback();
-  }, [stringify]);
+  }, [length]);
 
   useEffect(() => {
     setClicked(!clicked);
@@ -71,10 +77,12 @@ function UserFeedback(props) {
     const newOne = createdArray.sort((a, b) => {
       return b - a;
     });
-    console.log(newOne);
   }
 
   const createdArray = feedback.map(user => user.contractorName);
+  const descending = feedback.sort((a, b) => {
+    return new Date(b.createdAt) - new Date(a.createdAt);
+  });
 
   return (
     <>
@@ -190,7 +198,7 @@ function UserFeedback(props) {
             {props.error ? (
               <p>{props.error}</p>
             ) : currentPosts ? (
-              currentPosts.map(feedback => {
+              descending.map(feedback => {
                 return (
                   <div key={feedback.id} className="user-feedback-container">
                     <p>
@@ -262,3 +270,56 @@ export default connect(
   mapStateToProps,
   { getFeedback, postFeedback, deleteFeedback }
 )(UserFeedback);
+
+UserFeedback.propTypes = {
+  contractor: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string,
+      name: PropTypes.string,
+      phoneNumber: PropTypes.string,
+      city: PropTypes.string,
+      stateAbbr: PropTypes.string,
+      streetAddress: PropTypes.string,
+      zipCode: PropTypes.string,
+      userScore: PropTypes.number,
+      latitude: PropTypes.string,
+      longitude: PropTypes.string,
+      createdAt: PropTypes.string,
+      services: PropTypes.arrayOf(
+        PropTypes.shape({
+          id: PropTypes.string,
+          contractorId: PropTypes.string,
+          name: PropTypes.string,
+          price: PropTypes.string,
+          createdAt: PropTypes.string,
+        })
+      ),
+    })
+  ),
+  user: PropTypes.shape({
+    id: PropTypes.string,
+    username: PropTypes.string,
+    email: PropTypes.string,
+    phoneNumber: PropTypes.string,
+    googleId: PropTypes.string,
+    contractorId: PropTypes.string,
+    subscriptionId: PropTypes.string,
+  }),
+  feedback: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string,
+      userId: PropTypes.string,
+      contractorId: PropTypes.string,
+      username: PropTypes.string,
+      contractorName: PropTypes.string,
+      message: PropTypes.string,
+      stars: PropTypes.number,
+      createdAt: PropTypes.string,
+    })
+  ),
+  error: PropTypes.string,
+  loading: PropTypes.bool,
+  getFeedback: PropTypes.func,
+  deleteFeedback: PropTypes.func,
+  postFeedback: PropTypes.func,
+};
