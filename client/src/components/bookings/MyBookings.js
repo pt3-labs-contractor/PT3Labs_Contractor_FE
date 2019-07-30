@@ -36,26 +36,40 @@ function MyBookings(props) {
           <h2 className="main-header-title">Your Appointment Summary</h2>
 
           <div className="app-container">
-            {appointments ?
-            appointments.map(app => 
-              <div className="mapping-div">
-                  <p className="app-information">Company: <span className="important">
-                     {app.contractorName}
-                    </span>
-                  </p>
-                  <p className="app-information"> On: <span className="important">{moment(app.startTime).format('MMMM Do')} @ {moment(app.startTime).format('h:mm a')} </span>
-                  </p>
-                  <p className="app-information">For: <span className="important">{app.service}</span></p>
+            {appointments
+              ? appointments.map(app => (
+                  <div className="mapping-div">
+                    <p className="app-information">
+                      Company:{' '}
+                      <span className="important">{app.contractorName}</span>
+                    </p>
+                    <p className="app-information">
+                      {' '}
+                      On:{' '}
+                      <span className="important">
+                        {moment(app.startTime).format('MMMM Do')} @{' '}
+                        {moment(app.startTime).format('h:mm a')}{' '}
+                      </span>
+                    </p>
+                    <p className="app-information">
+                      For: <span className="important">{app.service}</span>
+                    </p>
 
-                  {app.confirmed === null 
-                    ? <p className="confirmation" >Not confirmed yet</p> 
-                    : <p className="confirmation" >Contractor confirmed!</p>}
-                  <div className="button-div">
-                    <button className="cancel-app-button" onClick={e => cancelApp(app.id)}>Cancel</button>
-                </div>
-
-                </div>
-              )
+                    {app.confirmed === null ? (
+                      <p className="confirmation">Not confirmed yet</p>
+                    ) : (
+                      <p className="confirmation">Contractor confirmed!</p>
+                    )}
+                    <div className="button-div">
+                      <button
+                        className="cancel-app-button"
+                        onClick={e => cancelApp(app.id)}
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                ))
               : null}
           </div>
         </div>

@@ -11,9 +11,8 @@ function DeleteModal(props) {
     props.getFeedback();
   }, [stringify]);
 
-  function deleteFeedback(feedback) {
-    console.log(feedback);
-    props.deleteFeedback(localStorage.id);
+  function deleteFeedback() {
+    props.deleteFeedback(localStorage.id, props.feedback);
     props.myToggle(true);
   }
 
@@ -29,7 +28,7 @@ function DeleteModal(props) {
       <div>
         <button
           onClick={() => {
-            deleteFeedback(props.id);
+            deleteFeedback();
           }}
           className="btn btn-danger"
         >

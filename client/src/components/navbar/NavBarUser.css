@@ -54,6 +54,7 @@ header {
     display: inline-block;
     color: var(--primary-color);
     font-size: 16px;
+    background-color: var(--dark-color);
   }
 }
 @media (max-width: 500px) {

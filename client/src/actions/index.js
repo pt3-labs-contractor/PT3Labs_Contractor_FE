@@ -319,6 +319,7 @@ export const deleteFeedback = (id, list) => dispatch => {
       headers,
     })
     .then(() => {
+      console.log('From action.js', list);
       const newFeedback = list.filter(item => item.id !== id);
       dispatch({ type: DELETE_FEEDBACK_SUCCESS, payload: newFeedback });
     })

@@ -397,9 +397,10 @@
   }
 
   .user-calendar .appointment-form .set-btn {
-    margin-top: 40px;
+    margin-top: 50px;
     width: 60%;
     height: 60px;
+    bottom: unset;
     box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
     border-radius: 10px;
   }

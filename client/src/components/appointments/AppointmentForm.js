@@ -8,22 +8,28 @@ import './AppointmentForm.css';
 import { postAppointment } from '../../actions';
 import ConfirmModal from './ConfirmModal';
 
-function AppointmentForm(props) {
+function AppointmentForm({
+  appointment,
+  service,
+  contractor,
+  postAppointment,
+}) {
   const [confirm, setConfirm] = useState(false);
-  const { startTime } = props.appointment;
+  const { name, price = '$--' } = service;
+  const { startTime } = appointment;
 
-  function postAppointment(check) {
+  function createAppointment(check) {
     if (check) {
       const bearer = `Bearer ${localStorage.getItem('jwt')}`;
       const headers = { authorization: bearer };
       let hours;
       let minutes;
       let dur;
-      if (props.appointment.duration.hours) {
-        hours = props.appointment.duration.hours;
+      if (appointment.duration.hours) {
+        hours = appointment.duration.hours;
       }
-      if (props.appointment.duration.minutes) {
-        minutes = Number(props.appointment.duration.minutes / 60) * 100;
+      if (appointment.duration.minutes) {
+        minutes = Number(appointment.duration.minutes / 60) * 100;
         minutes = minutes.toFixed(0);
       }
       if (hours && minutes) {
@@ -33,14 +39,14 @@ function AppointmentForm(props) {
       } else {
         dur = `${minutes}`;
       }
-      const appointment = {
-        contractorId: props.contractor.id,
-        serviceId: props.service.id,
-        scheduleId: props.appointment.id,
+      const newAppointment = {
+        contractorId: contractor.id,
+        serviceId: service.id,
+        scheduleId: appointment.id,
         startTime,
         duration: `${dur}h`,
       };
-      props.postAppointment(appointment);
+      postAppointment(newAppointment);
       // axios
       //   .post(
       //     'https://fierce-plains-47590.herokuapp.com/api/appointments',
@@ -59,27 +65,31 @@ function AppointmentForm(props) {
   return (
     <div className="appointment-form">
       <p>
-        {dateFns.format(startTime, 'MMM Do [at] HH:mm')}
-        {/* {dateFns.isValid(new Date(startTime))
+        {/* {dateFns.format(startTime, 'MMM Do [at] HH:mm')} */}
+        {dateFns.isValid(new Date(startTime))
           ? dateFns.format(startTime, 'MMM Do [at] HH:mm')
-          : 'Select date and time.'} */}
+          : 'Select date and time.'}
       </p>
       <p className="service-title">
-        {`${props.service.name}: ${props.service.price}`}
+        {`${name}: ${price}`}
         {/* {props.service.name
           ? `${props.service.name}: ${props.service.price}`
           : null} */}
       </p>
       {dateFns.isValid(new Date(startTime)) &&
-      !props.service.name.includes('service') ? (
-        <button className="set-btn" onClick={() => setConfirm(true)}>
+      !service.name.includes('service') ? (
+        <button
+          type="button"
+          className="set-btn"
+          onClick={() => setConfirm(true)}
+        >
           Set Appointment
         </button>
       ) : null}
       {/* <button className="close-btn" onClick={props.clearAppointment}>
         X
       </button> */}
-      <ConfirmModal confirm={confirm} postAppointment={postAppointment} />
+      <ConfirmModal confirm={confirm} postAppointment={createAppointment} />
     </div>
   );
 }
@@ -104,17 +114,18 @@ AppointmentForm.propTypes = {
     duration: PropTypes.object,
     createdAt: PropTypes.string,
   }),
+  contractor: PropTypes.string,
+  postAppointment: PropTypes.func,
 };
 
 AppointmentForm.defaultProps = {
   service: {
-    id: null,
-    contractorId: null,
     name: 'Pick a service',
     price: '$--',
-    createdAt: null,
   },
   appointment: {
-    startTime: 'Select date and time',
+    id: null,
   },
+  contractor: null,
+  postAppointment: null,
 };
