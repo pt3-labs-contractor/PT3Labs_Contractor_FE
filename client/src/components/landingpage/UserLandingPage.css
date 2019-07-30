@@ -286,7 +286,7 @@
   .calendar-container {
     margin-left: var(--nav-bar-width-mobile);
     margin-top: 0px;
-    width: 88%;
+    width: calc(100% - var(--nav-bar-width-mobile) - 4px);
   }
 
   .service-list {
