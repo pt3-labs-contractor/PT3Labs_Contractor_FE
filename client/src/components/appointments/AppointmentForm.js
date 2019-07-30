@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import dateFns from 'date-fns';
-import axios from 'axios';
 import PropTypes from 'prop-types';
 import './AppointmentForm.css';
 
@@ -20,8 +19,6 @@ function AppointmentForm({
 
   function createAppointment(check) {
     if (check) {
-      const bearer = `Bearer ${localStorage.getItem('jwt')}`;
-      const headers = { authorization: bearer };
       let hours;
       let minutes;
       let dur;
@@ -47,35 +44,17 @@ function AppointmentForm({
         duration: `${dur}h`,
       };
       postAppointment(newAppointment);
-      // axios
-      //   .post(
-      //     'https://fierce-plains-47590.herokuapp.com/api/appointments',
-      //     appointment,
-      //     { headers }
-      //   )
-      //   .then(res => {
-      //     console.log('Created!');
-      //   })
-      //   .catch(err => {
-      //     console.log(err);
-      //   });
     }
     setConfirm(false);
   }
   return (
     <div className="appointment-form">
       <p>
-        {/* {dateFns.format(startTime, 'MMM Do [at] HH:mm')} */}
         {dateFns.isValid(new Date(startTime))
           ? dateFns.format(startTime, 'MMM Do [at] HH:mm')
           : 'Select date and time.'}
       </p>
-      <p className="service-title">
-        {`${name}: ${price}`}
-        {/* {props.service.name
-          ? `${props.service.name}: ${props.service.price}`
-          : null} */}
-      </p>
+      <p className="service-title">{`${name}: ${price}`}</p>
       {dateFns.isValid(new Date(startTime)) &&
       !service.name.includes('service') ? (
         <button
@@ -86,9 +65,6 @@ function AppointmentForm({
           Set Appointment
         </button>
       ) : null}
-      {/* <button className="close-btn" onClick={props.clearAppointment}>
-        X
-      </button> */}
       <ConfirmModal confirm={confirm} postAppointment={createAppointment} />
     </div>
   );
