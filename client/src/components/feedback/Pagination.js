@@ -11,9 +11,12 @@ const Pagination = ({ postsPerPage, totalPosts, paginate }) => {
   return (
     <nav>
       <h3 className="page-total">Total Reviews: {totalPosts}</h3>
+
       <ul className="pagination">
         <div>
-          <p className="pages">Pages:</p>
+          {pageNumbers.length === 0 ? null : <p>Pages:</p>}
+          {/* <p className="pages">Pages:</p> */}
+          {console.log(pageNumbers)}
         </div>
         <div className="page-numbers">
           {pageNumbers.map(number => (
