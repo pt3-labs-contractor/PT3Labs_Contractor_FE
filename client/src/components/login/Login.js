@@ -4,11 +4,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import MainNavbar from '../navbar/MainNavbar';
-import {
-  fetchAccts,
-  getFeedback,
-  startManualLoad,
-} from '../../actions/index.js';
+import { fetchAccts, getFeedback, startManualLoad } from '../../actions/index';
 
 import './Login.css';
 
@@ -18,14 +14,12 @@ function Login(props) {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    console.log(`${props.user}` + 'hihi');
     if (props.user.contractorId) {
       props.history.push('/contractorcalendar');
     } else if (props.user.username) {
       props.history.push('/app');
     }
   }, [props.user]);
-  console.log(props.user);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -43,7 +37,7 @@ function Login(props) {
       )
       .then(res => {
         localStorage.setItem('jwt', res.data.token);
-        props.fetchAccts(); 
+        props.fetchAccts();
         props.getFeedback();
       })
       .catch(err => {
@@ -92,7 +86,7 @@ function Login(props) {
         </form>
         {error.length > 0 && <p style={{ color: 'red' }}>{error}</p>}
         <p>
-          Don't have an account?
+          Don&apos;t have an account?
           <NavLink to="/register" className="form-links">
             Sign Up
           </NavLink>
@@ -117,4 +111,12 @@ Login.propTypes = {
   user: PropTypes.object,
   fetchAccts: PropTypes.func,
   getFeedback: PropTypes.func,
+  startManualLoad: PropTypes.func,
+};
+
+Login.defaultProps = {
+  user: null,
+  fetchAccts: null,
+  getFeedback: null,
+  startManualLoad: null,
 };
