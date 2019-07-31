@@ -19,6 +19,7 @@ import {
   getFeedbackByContractor,
   storeServiceName,
   clearTempFeedbak,
+  postAppointment,
 } from '../../actions/index';
 
 function UserLandingPage(props) {
@@ -146,6 +147,12 @@ function UserLandingPage(props) {
     setContractor({});
   };
 
+  const confirmAppointment = newAppointment => {
+    props.postAppointment(newAppointment);
+    clearAppointment();
+    mql && props.history.push('mybookings');
+  };
+
   return (
     <>
       <TopNavbar />
@@ -191,7 +198,7 @@ function UserLandingPage(props) {
               <AppointmentForm
                 user
                 contractor={contractor}
-                clearAppointment={clearAppointment}
+                addAppointment={confirmAppointment}
                 appointment={time}
                 service={service}
               />
@@ -228,7 +235,8 @@ export default connect(
     fetchAvailabilityByDay,
     getFeedbackByContractor,
     storeServiceName,
-    clearTempFeedbak
+    clearTempFeedbak,
+    postAppointment,
   }
 )(UserLandingPage);
 
