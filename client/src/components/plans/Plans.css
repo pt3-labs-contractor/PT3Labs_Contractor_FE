@@ -30,7 +30,7 @@
   width: 300px;
   height: 400px;
   margin-top: 10%;
-  box-shadow: 1px 1px 20px rgba(0, 0, 0, .9);
+  box-shadow: 1px 1px 20px rgba(0, 0, 0, 0.9);
   text-align: center;
   color: white;
   transition: 0.7s;
@@ -38,7 +38,7 @@
 }
 
 .free-plan:hover h4 {
-  color: var(--secondary-color)
+  color: var(--secondary-color);
 }
 
 .premium-plan {
@@ -46,14 +46,14 @@
   height: 400px;
   /* background-color: var(--dark-color); */
   margin-top: 10%;
-  box-shadow: 1px 1px 20px rgba(0, 0, 0, .9);
+  box-shadow: 1px 1px 20px rgba(0, 0, 0, 0.9);
   text-align: center;
   transition: 0.7s;
   background: lightgrey;
 }
 
 .premium-plan:hover h4 {
-  color: var(--secondary-color)
+  color: var(--secondary-color);
 }
 
 .checked {
@@ -75,7 +75,7 @@
 }
 
 .price h4 {
-  color: white;;
+  color: white;
   font-size: 40px;
   margin-top: 15%;
 }
@@ -230,4 +230,17 @@
 }
 .pending-cancel h3 {
   margin-bottom: 10px;
+}
+.StripeCheckout {
+  /* Some styles on component itself- unavoidable due to Object.assign in original library */
+  background-color: var(--success-color);
+  color: white;
+  margin: 2rem auto;
+  text-transform: uppercase;
+  font-weight: bold;
+  border-color: var(--success-color);
+}
+.StripeCheckout:hover {
+  background-color: white;
+  color: var(--success-color);
 }

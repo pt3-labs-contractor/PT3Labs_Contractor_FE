@@ -75,6 +75,8 @@ export const CANCEL_DEFAULT_SUCCESS = 'CANCEL_DEFAULT_SUCCESS';
 export const CANCEL_DEFAULT_FAILURE = 'CANCEL_DEFAULT_FAILURE';
 export const CANCEL_IMMEDIATE_SUCCESS = 'CANCEL_IMMEDIATE_SUCCESS';
 export const CANCEL_IMMEDIATE_FAILURE = 'CANCEL_IMMEDIATE_FAILURE';
+
+export const SET_ERROR = 'SET_ERROR';
 // ---------------------------------------------------------------
 
 function setHeaders() {
@@ -336,7 +338,7 @@ export const editUserSettings = data => dispatch => {
       headers,
     })
     .then(res => {
-      dispatch({ type: EDIT_USER_SUCCESS, payload: res.data });
+      dispatch({ type: EDIT_USER_SUCCESS, payload: res.data.user });
     })
     .catch(err => dispatch({ type: FAILURE, payload: err }));
 };
@@ -372,7 +374,7 @@ export const postNewService = serv => {
         dispatch({ type: SEND_SERV_COMP, payload: res.data.created });
       })
       .catch(err => {
-        console.log(err);
+        dispatch({ type: FAILURE, error: 'Failed to add Service.' });
       });
   };
 };
@@ -387,10 +389,7 @@ export const deleteService = (service, list) => dispatch => {
       { headers }
     )
     .then(res => {
-      // console.log(res.data)
-      const newList = list.filter(
-        service => service.id !== res.data.deleted.id
-      );
+      const newList = list.filter(serv => serv.id !== res.data.deleted.id);
       dispatch({ type: DELETE_SERV_SUCC, payload: newList });
     })
     .catch(err => {
@@ -680,4 +679,8 @@ export const startManualLoad = () => dispatch => {
 
 export const endManualLoad = () => dispatch => {
   dispatch({ type: END_LOAD });
+};
+
+export const setError = err => dispatch => {
+  dispatch({ type: SET_ERROR, payload: err });
 };

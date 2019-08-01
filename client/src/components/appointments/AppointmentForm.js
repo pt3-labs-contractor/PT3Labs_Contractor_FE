@@ -1,27 +1,19 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import dateFns from 'date-fns';
-import axios from 'axios';
 import PropTypes from 'prop-types';
 import './AppointmentForm.css';
 
-import { postAppointment } from '../../actions';
+// import { postAppointment } from '../../actions';
 import ConfirmModal from './ConfirmModal';
 
-function AppointmentForm({
-  appointment,
-  service,
-  contractor,
-  postAppointment,
-}) {
+function AppointmentForm({ appointment, service, contractor, addAppointment }) {
   const [confirm, setConfirm] = useState(false);
-  const { name, price = '$--' } = service;
+  const { name, price } = service;
   const { startTime } = appointment;
 
   function createAppointment(check) {
     if (check) {
-      const bearer = `Bearer ${localStorage.getItem('jwt')}`;
-      const headers = { authorization: bearer };
       let hours;
       let minutes;
       let dur;
@@ -46,36 +38,20 @@ function AppointmentForm({
         startTime,
         duration: `${dur}h`,
       };
-      postAppointment(newAppointment);
-      // axios
-      //   .post(
-      //     'https://fierce-plains-47590.herokuapp.com/api/appointments',
-      //     appointment,
-      //     { headers }
-      //   )
-      //   .then(res => {
-      //     console.log('Created!');
-      //   })
-      //   .catch(err => {
-      //     console.log(err);
-      //   });
+      console.log(check);
+
+      addAppointment(newAppointment);
     }
     setConfirm(false);
   }
   return (
     <div className="appointment-form">
       <p>
-        {/* {dateFns.format(startTime, 'MMM Do [at] HH:mm')} */}
         {dateFns.isValid(new Date(startTime))
           ? dateFns.format(startTime, 'MMM Do [at] HH:mm')
           : 'Select date and time.'}
       </p>
-      <p className="service-title">
-        {`${name}: ${price}`}
-        {/* {props.service.name
-          ? `${props.service.name}: ${props.service.price}`
-          : null} */}
-      </p>
+      <p className="service-title">{`${name}: ${price}`}</p>
       {dateFns.isValid(new Date(startTime)) &&
       !service.name.includes('service') ? (
         <button
@@ -86,9 +62,6 @@ function AppointmentForm({
           Set Appointment
         </button>
       ) : null}
-      {/* <button className="close-btn" onClick={props.clearAppointment}>
-        X
-      </button> */}
       <ConfirmModal confirm={confirm} postAppointment={createAppointment} />
     </div>
   );
@@ -100,10 +73,19 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  { postAppointment }
-)(AppointmentForm);
+AppointmentForm.defaultProps = {
+  service: {
+    name: 'Pick a service',
+    price: '$--',
+  },
+  appointment: {
+    id: null,
+  },
+  contractor: null,
+  addAppointment: null,
+};
+
+export default connect(mapStateToProps)(AppointmentForm);
 
 AppointmentForm.propTypes = {
   service: PropTypes.objectOf(PropTypes.string),
@@ -114,18 +96,26 @@ AppointmentForm.propTypes = {
     duration: PropTypes.object,
     createdAt: PropTypes.string,
   }),
-  contractor: PropTypes.string,
-  postAppointment: PropTypes.func,
-};
-
-AppointmentForm.defaultProps = {
-  service: {
-    name: 'Pick a service',
-    price: '$--',
-  },
-  appointment: {
-    id: null,
-  },
-  contractor: null,
-  postAppointment: null,
+  contractor: PropTypes.shape({
+    city: PropTypes.string,
+    createdAt: PropTypes.string,
+    id: PropTypes.string,
+    latitude: PropTypes.string,
+    longitude: PropTypes.string,
+    name: PropTypes.string,
+    phoneNumber: PropTypes.string,
+    stateAbbr: PropTypes.string,
+    streetAddress: PropTypes.string,
+    zipCode: PropTypes.string,
+    services: PropTypes.arrayOf(
+      PropTypes.shape({
+        contractorId: PropTypes.string,
+        createdAt: PropTypes.string,
+        id: PropTypes.string,
+        name: PropTypes.string,
+        price: PropTypes.string,
+      })
+    ),
+  }),
+  addAppointment: PropTypes.func,
 };

@@ -75,6 +75,7 @@ import {
   CANCEL_DEFAULT_FAILURE,
   CANCEL_IMMEDIATE_SUCCESS,
   CANCEL_IMMEDIATE_FAILURE,
+  SET_ERROR,
 } from '../actions';
 
 const initialState = {
@@ -195,7 +196,7 @@ export default (state = initialState, action) => {
     case DELETE_SERV_SUCC:
       return {
         ...state,
-        service: action.payload,
+        services: action.payload,
         loading: false,
         error: null,
       };
@@ -236,6 +237,7 @@ export default (state = initialState, action) => {
         ...state,
         loading: false,
         services: [...state.services, action.payload],
+        error: null,
       };
 
     case SEND_SCHED:
@@ -314,8 +316,7 @@ export default (state = initialState, action) => {
 
     // edit user settigns
     case EDIT_USER_SUCCESS:
-      return { ...state, user: action.payload };
-
+      return { ...state, user: action.payload, loading: false };
     case LOGOUTUSER:
       return initialState;
     case SELECTED:
@@ -356,6 +357,8 @@ export default (state = initialState, action) => {
       };
     case CANCEL_IMMEDIATE_FAILURE:
       return { ...state, error: action.payload, loading: false };
+    case SET_ERROR:
+      return { ...state, error: action.payload };
     default:
       return state;
   }

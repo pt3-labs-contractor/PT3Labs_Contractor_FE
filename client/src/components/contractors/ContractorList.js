@@ -6,7 +6,7 @@ import Fuse from 'fuse.js';
 import { sortByDistance } from './searchFunctions';
 import './ContractorList.css';
 
-import TopNavbar from '../navbar/TopNavbar';
+// import TopNavbar from '../navbar/TopNavbar';
 import ContractorCard from './ContractorCard';
 // import NavBarUser from './components/navbar/NavBarUser';
 
@@ -163,7 +163,6 @@ function ContractorList({
                   type="text"
                   onChange={ev => setQuery(ev.target.value)}
                   value={query}
-                  className="my-input"
                 />
                 <button type="submit" className="btn btn-primary btn-search">
                   Search

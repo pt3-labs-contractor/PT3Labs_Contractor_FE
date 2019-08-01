@@ -148,9 +148,35 @@ function Plans({ user, subscription, ...props }) {
                   <i className="fas fa-check checked" />
                   Access to feedback
                 </p>
-              </div>
-              {user.subscriptionId ? null : (
                 <StripeCheckout
+                  style={{
+                    overflow: '',
+                    display: 'inline-block',
+                    background: '',
+                    border: 'none',
+                    padding: '0.5rem 1rem',
+                    textDecoration: '',
+                    borderRadius: '5%',
+                    boxShadow: 'none',
+                    cursor: 'pointer',
+                    visibility: '',
+                    userSelect: '',
+                  }}
+                  textStyle={{
+                    backgroundImage: '',
+                    fontFamily: '',
+                    fontSize: '1.2rem',
+                    position: '',
+                    padding: '',
+                    display: '',
+                    height: '',
+                    lineHeight: '',
+                    color: '',
+                    fontWeight: 'bold',
+                    boxShadow: 'none',
+                    textShadow: '',
+                    borderRadius: '',
+                  }}
                   token={props.handleSubscribe}
                   stripeKey={process.env.REACT_APP_STRIPE_PUBLIC_KEY_TEST}
                   currency="USD"
@@ -161,7 +187,7 @@ function Plans({ user, subscription, ...props }) {
                   description="Expanded scheduling of clients."
                   label="SELECT"
                 />
-              )}
+              </div>
             </div>
           </div>
         )}

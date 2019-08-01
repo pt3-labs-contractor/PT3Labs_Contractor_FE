@@ -52,7 +52,6 @@ function ContractorFeedback(props) {
       <TopNavbar />
       <NavBarContractor />
       <div className="main-body">
-        <h2 className="main-header-feedback">My Feedback</h2>
         <div className="average-rating">
           <h3>
             Average Rating:

@@ -4,7 +4,7 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import MainNavbar from '../navbar/MainNavbar';
-import { startManualLoad, endManualLoad } from '../../actions';
+import { startManualLoad, endManualLoad, setError } from '../../actions';
 
 import './Register.css';
 
@@ -36,7 +36,8 @@ function Register(props) {
           props.history.push('/app');
         })
         .catch(err => {
-          console.log(err);
+          props.endManualLoad();
+          props.setError(err.response.data.error);
         });
     } else {
       const userUpdate = {};
@@ -204,5 +205,5 @@ Register.propTypes = {
 };
 export default connect(
   null,
-  { startManualLoad, endManualLoad }
+  { startManualLoad, endManualLoad, setError }
 )(Register);

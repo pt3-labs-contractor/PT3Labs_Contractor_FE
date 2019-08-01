@@ -286,7 +286,7 @@
   .calendar-container {
     margin-left: var(--nav-bar-width-mobile);
     margin-top: 0px;
-    width: 88%;
+    width: calc(100% - var(--nav-bar-width-mobile) - 4px);
   }
 
   .service-list {
@@ -418,8 +418,8 @@
 #back-button {
   position: fixed;
   z-index: 3;
-  bottom: 20px;
-  right: 20px;
+  bottom: 6%;
+  left: 17%;
   width: 55px;
   height: 55px;
   border-radius: 50%;
