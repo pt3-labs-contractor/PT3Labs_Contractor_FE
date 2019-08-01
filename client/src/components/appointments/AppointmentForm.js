@@ -38,9 +38,11 @@ function AppointmentForm({ appointment, service, contractor, addAppointment }) {
         startTime,
         duration: `${dur}h`,
       };
-      setConfirm(false);
+      console.log(check);
+
       addAppointment(newAppointment);
     }
+    setConfirm(false);
   }
   return (
     <div className="appointment-form">
