@@ -181,7 +181,7 @@ function UserLandingPage(props) {
         )}
         <div className="user-calendar">
           <div className="calendar-target" ref={calendarTarget}>
-            <Calendar user />
+            <Calendar />
           </div>
           <div className="contractor-target" ref={contractorTarget}>
             <ContractorList userLanding selectContractor={selectContractor} />
@@ -229,6 +229,17 @@ const mapStateToProps = state => {
   };
 };
 
+UserLandingPage.defaultProps = {
+  contractors: null,
+  serviceFilter: null,
+  fetchAvailabilityByDay: null,
+  fetchSchedule: null,
+  getFeedbackByContractor: null,
+  clearTempFeedbak: null,
+  storeServiceName: null,
+  selectedDay: null,
+};
+
 export default connect(
   mapStateToProps,
   {
@@ -266,23 +277,10 @@ UserLandingPage.propTypes = {
     })
   ),
   serviceFilter: PropTypes.string,
-  // sorted: PropTypes.array, // This is just a sorted copy of contractors
   fetchAvailabilityByDay: PropTypes.func,
   fetchSchedule: PropTypes.func,
   getFeedbackByContractor: PropTypes.func,
   storeServiceName: PropTypes.func,
   clearTempFeedbak: PropTypes.func,
   selectedDay: PropTypes.instanceOf(Date),
-};
-
-UserLandingPage.defaultProps = {
-  contractors: null,
-  serviceFilter: null,
-  // sorted: null,
-  fetchAvailabilityByDay: null,
-  fetchSchedule: null,
-  getFeedbackByContractor: null,
-  clearTempFeedbak: null,
-  storeServiceName: null,
-  selectedDay: null,
 };

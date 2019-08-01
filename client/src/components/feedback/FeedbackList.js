@@ -39,6 +39,12 @@ const mapStateToProps = state => {
   };
 };
 
+FeedbackList.defaultProps = {
+  feedback: null,
+  tempFeedback: null,
+  temp: null,
+};
+
 export default connect(mapStateToProps)(FeedbackList);
 
 FeedbackList.propTypes = {
@@ -54,4 +60,17 @@ FeedbackList.propTypes = {
       createdAt: PropTypes.string,
     })
   ),
+  tempFeedback: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string,
+      contractorName: PropTypes.string,
+      username: PropTypes.string,
+      message: PropTypes.string,
+      contractorId: PropTypes.string,
+      userId: PropTypes.string,
+      stars: PropTypes.number,
+      createdAt: PropTypes.string,
+    })
+  ),
+  temp: PropTypes.bool,
 };

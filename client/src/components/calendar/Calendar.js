@@ -1,8 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import dateFns from 'date-fns';
-
-// import AvailabilityList from '../appointments/AvailabilityList';
+import PropTypes from 'prop-types';
 
 import { setDay, setMonth, fetchAvailabilityByDay } from '../../actions/index';
 
@@ -16,6 +15,7 @@ function Calendar(props) {
       <div className="calendar-nav">
         {!dateFns.isThisMonth(selectedMonth) ? (
           <div
+            role="cell"
             className="calendar-month-nav"
             onClick={() => setMonth(dateFns.subMonths(selectedMonth, 1))}
           >
@@ -113,13 +113,27 @@ const mapStateToProps = state => {
   return {
     selectedDay: state.thisDay,
     selectedMonth: state.thisMonth,
-    schedules: state.schedule,
-    id: state.user.contractorId,
+    // schedules: state.schedule,
+    // id: state.user.contractorId,
     // contractor: state.thisContractor
   };
+};
+
+Calendar.defaultProps = {
+  selectedDay: null,
+  selectedMonth: null,
+  setDay: null,
+  setMonth: null,
 };
 
 export default connect(
   mapStateToProps,
   { setDay, setMonth, fetchAvailabilityByDay }
 )(Calendar);
+
+Calendar.propTypes = {
+  selectedDay: PropTypes.instanceOf(Date),
+  selectedMonth: PropTypes.instanceOf(Date),
+  setDay: PropTypes.func,
+  setMonth: PropTypes.func,
+};

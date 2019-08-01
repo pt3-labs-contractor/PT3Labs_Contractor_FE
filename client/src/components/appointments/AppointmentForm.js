@@ -14,7 +14,7 @@ function AppointmentForm({
   postAppointment,
 }) {
   const [confirm, setConfirm] = useState(false);
-  const { name, price = '$--' } = service;
+  const { name, price } = service;
   const { startTime } = appointment;
 
   function createAppointment(check) {
@@ -76,6 +76,18 @@ const mapStateToProps = state => {
   };
 };
 
+AppointmentForm.defaultProps = {
+  service: {
+    name: 'Pick a service',
+    price: '$--',
+  },
+  appointment: {
+    id: null,
+  },
+  contractor: null,
+  postAppointment: null,
+};
+
 export default connect(
   mapStateToProps,
   { postAppointment }
@@ -112,16 +124,4 @@ AppointmentForm.propTypes = {
     ),
   }),
   postAppointment: PropTypes.func,
-};
-
-AppointmentForm.defaultProps = {
-  service: {
-    name: 'Pick a service',
-    price: '$--',
-  },
-  appointment: {
-    id: null,
-  },
-  contractor: null,
-  postAppointment: null,
 };

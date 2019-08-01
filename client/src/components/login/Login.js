@@ -102,6 +102,13 @@ const mapStateToProps = state => {
   };
 };
 
+Login.defaultProps = {
+  user: null,
+  fetchAccts: null,
+  getFeedback: null,
+  startManualLoad: null,
+};
+
 export default connect(
   mapStateToProps,
   { fetchAccts, getFeedback, startManualLoad }
@@ -112,11 +119,4 @@ Login.propTypes = {
   fetchAccts: PropTypes.func,
   getFeedback: PropTypes.func,
   startManualLoad: PropTypes.func,
-};
-
-Login.defaultProps = {
-  user: null,
-  fetchAccts: null,
-  getFeedback: null,
-  startManualLoad: null,
 };
