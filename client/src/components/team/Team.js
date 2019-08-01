@@ -18,7 +18,7 @@ export default function Team() {
                 className="card-img"
               />
               <img
-                src="images/profile1.png"
+                src="images/lee2.jpg"
                 alt="profile1 img"
                 className="profile-img"
               />

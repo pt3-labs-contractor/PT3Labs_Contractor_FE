@@ -26,6 +26,10 @@
   bottom: 5px;
 }
 
+.set-btn:hover {
+  cursor: pointer;
+}
+
 .close-btn {
   background-color: var(--primary-color);
   font-weight: bold;
