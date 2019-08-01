@@ -1,20 +1,21 @@
 .contractor-list.container {
   margin-top: 20px;
-  margin-left: 210px;
+  margin-left: 200px;
   width: auto;
   position: relative;
 }
 .list-header {
   position: relative;
   display: flex;
-  height: 100px;
   padding-top: 27px;
+  justify-content: space-between;
 }
 .contractor-list-title {
   position: absolute;
   font-size: 22px;
   top: 0;
   left: 0;
+  margin-left: 10px;
 }
 .contractor-list-form-container {
   height: 100%;
@@ -30,12 +31,10 @@
   margin-right: 10px;
 }
 .contractor-display {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
   padding: 10px 30px;
   background: #485158;
-  min-width: 60%;
+  width: 60%;
+  margin: 0 auto;
 }
 .contractor-card-full {
   background: #b3b3b3;
@@ -49,6 +48,61 @@
 }
 .individual-contractor-container {
   margin-top: 20px;
-  margin-left: 210px;
+  margin-left: 200px;
   width: auto;
+}
+.btn-container {
+  margin-left: 10px;
+}
+
+.list-btn {
+  padding: 0.3rem 1.4rem;
+  border: none;
+  cursor: pointer;
+  margin-right: 0.5rem;
+  outline: none;
+}
+
+@media (max-width: 1000px) {
+  .list-header {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media (max-width: 800px) {
+  .contractor-list.container {
+    margin-left: 60px;
+  }
+  .list-header {
+    position: relative;
+    display: flex;
+    height: 100px;
+    padding-top: 27px;
+    flex-direction: column;
+    align-items: center;
+  }
+  .contractor-display {
+    margin-top: 80px;
+    width: 95%;
+  }
+}
+
+@media (max-width: 500px) {
+  /* .btn-search {
+    padding: .4rem .3rem;
+  } */
+  .contractor-list-form-container {
+    flex-direction: column;
+    margin-top: 1rem;
+  }
+  .my-input {
+    margin: 2px auto;
+  }
+}
+
+@media (max-width: 400px) {
+  .contractor-list.container {
+    margin-left: 60px;
+  }
 }
