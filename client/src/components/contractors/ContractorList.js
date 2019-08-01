@@ -15,6 +15,7 @@ function ContractorList({
   loading,
   contractors,
   sortedContractors,
+  locationSortContractors,
   user,
   userLanding,
   ...handlers
@@ -40,6 +41,7 @@ function ContractorList({
 
   useEffect(() => {
     if (userLanding) return paginate(sortedContractors);
+    if (locationSortContractors) return paginate(locationSortContractors);
     return paginate(contractors);
     // eslint-disable-next-line
   }, [sortedContractors]);
@@ -194,43 +196,11 @@ ContractorList.defaultProps = {
   selectContractor: undefined,
 };
 
-// ContractorList.propTypes = {
-//   contractors: PropTypes.arrayOf(PropTypes.object),
-//   loading: PropTypes.bool,
-//   error: PropTypes.string,
-//   user: PropTypes.shape({
-//     id: PropTypes.string,
-//     googleId: PropTypes.string,
-//     email: PropTypes.string,
-//     phoneNumber: PropTypes.string,
-//     contractorId: PropTypes.string,
-//     city: PropTypes.string,
-//   }),
-//   userLanding: PropTypes.bool,
-//   setPosition: PropTypes.func,
-//   selectContractor: PropTypes.func,
-// };
-
-// city: "Test City"
-// contractorId: "aec1f8d3-a534-48e5-8be1-9fc4197acccd"
-// createdAt: "2019-06-25T01:28:58.426Z"
-// email: "testContractor@email.com"
-// googleId: null
-// id: "aec1f8d3-a534-48e5-8be1-9fc4197acccd"
-// latitude: "40.6042"
-// longitude: "-74.2825"
-// name: "Test Contractor"
-// phoneNumber: "(555)867-5309"
-// services: (3) [{…}, {…}, {…}]
-// stateAbbr: "TE"
-// streetAddress: "1 Test St."
-// username: "Test Contractor"
-// zipCode: "07065"
-
 const mapStateToProps = state => {
   return {
     contractors: state.contractors,
     sortedContractors: state.sortedContractors,
+    locationSortContractors: state.locationSortContractors,
     user: state.user,
     loading: state.loading,
     error: state.error,
