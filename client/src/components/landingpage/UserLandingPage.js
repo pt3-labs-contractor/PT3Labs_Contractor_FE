@@ -256,6 +256,7 @@ export default connect(
     getFeedbackByContractor,
     storeServiceName,
     clearTempFeedbak,
+    postAppointment,
   }
 )(UserLandingPage);
 
