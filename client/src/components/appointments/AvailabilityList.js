@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import dateFns from 'date-fns';
+import PropTypes from 'prop-types';
 
 function AvailabilityList(props) {
   const [availability, setAvailability] = useState([]);
-  const [pos, setPos] = useState({});
-  const { selectedDay, schedule, position } = props;
-  const mql = window.matchMedia('(max-width: 600px)').matches;
+  const { selectedDay, schedule, setAppointment } = props;
 
   useEffect(() => {
     const date = schedule.filter(item => {
@@ -15,18 +14,6 @@ function AvailabilityList(props) {
     setAvailability(date);
     // eslint-disable-next-line
   }, [selectedDay, schedule]);
-
-  useEffect(() => {
-    // if (!mql && !props.contractor) {
-    //   const { top, right, height } = position;
-    //   setPos({
-    //     position: 'fixed',
-    //     top,
-    //     left: right,
-    //     minHeight: height,
-    //   });
-    // }
-  }, [props.position]);
 
   const RenderTimes = () => {
     const times = availability.map(item => {
@@ -46,7 +33,11 @@ function AvailabilityList(props) {
         end = dateFns.addMilliseconds(end, item.duration.milliseconds);
       }
       return (
-        <button key={item.id} onClick={() => props.setAppointment(item)}>
+        <button
+          type="button"
+          key={item.id}
+          onClick={() => setAppointment(item)}
+        >
           {`${dateFns.format(start, 'HH:mm')} - ${dateFns.format(
             end,
             'HH:mm'
@@ -59,7 +50,6 @@ function AvailabilityList(props) {
 
   return (
     <div
-      style={pos}
       className={`availability-list ${
         availability.length > 0 ? 'display' : ''
       }`}
@@ -73,8 +63,30 @@ const mapStateToProps = state => {
   return {
     schedule: state.schedule,
     selectedDay: state.thisDay,
-    position: state.positionContractor,
   };
 };
 
 export default connect(mapStateToProps)(AvailabilityList);
+
+AvailabilityList.propTypes = {
+  schedule: PropTypes.arrayOf(
+    PropTypes.shape({
+      contractorId: PropTypes.string,
+      id: PropTypes.string,
+      startTime: PropTypes.string,
+      duration: PropTypes.shape({
+        hours: PropTypes.number,
+      }),
+      open: PropTypes.bool,
+      createAt: PropTypes.string,
+    })
+  ),
+  selectedDay: PropTypes.instanceOf(Date),
+  setAppointment: PropTypes.func,
+};
+
+AvailabilityList.defaultProps = {
+  schedule: null,
+  selectedDay: null,
+  setAppointment: null,
+};

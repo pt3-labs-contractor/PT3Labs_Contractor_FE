@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
+import dateFns from 'date-fns';
 import PropTypes from 'prop-types';
+
 import Calendar from '../calendar/Calendar';
 import AppointmentList from '../appointments/AppointmentList';
 import ContractorList from '../contractors/ContractorList';
@@ -8,9 +10,8 @@ import AvailabilityList from '../appointments/AvailabilityList';
 import AppointmentForm from '../appointments/AppointmentForm';
 import FeedbackList from '../feedback/FeedbackList';
 import TopNavbar from '../navbar/TopNavbar';
-import './UserLandingPage.css';
 
-import dateFns from 'date-fns';
+import './UserLandingPage.css';
 
 import {
   fetchAccts,
@@ -28,7 +29,7 @@ function UserLandingPage(props) {
   const [service, setService] = useState({});
   const [serviceSort, setServiceSort] = useState('Pick a service');
   const [currentTarget, setTarget] = useState(0);
-  const [mediaQuery, setMediaQuery] = useState(window.innerWidth);
+  const [mediaQuery] = useState(window.innerWidth);
   const serviceTarget = useRef(null);
   const calendarTarget = useRef(null);
   const contractorTarget = useRef(null);
@@ -60,6 +61,21 @@ function UserLandingPage(props) {
       window.location.reload();
     }
   });
+
+  const scroll = element => {
+    const y = element.getBoundingClientRect().top + window.scrollY;
+    window.scroll({
+      top: y,
+      behavior: 'smooth',
+    });
+    setTarget(currentTarget + 1);
+  };
+
+  const clearAppointment = () => {
+    setService({});
+    setTime({});
+    setContractor({});
+  };
 
   useEffect(() => {
     props.clearTempFeedbak();
@@ -106,10 +122,9 @@ function UserLandingPage(props) {
   }, [contractor]);
 
   const selectContractor = item => {
-    console.log('clicked contractor');
     setContractor(item);
-    const filter = item.services.filter(service => {
-      return service.name === serviceSort;
+    const filter = item.services.filter(serv => {
+      return serv.name === serviceSort;
     });
     setService(filter[0]);
     mql && scroll(availabilityTarget.current);
@@ -118,15 +133,6 @@ function UserLandingPage(props) {
   const selectTime = item => {
     setTime(item);
     mql && scroll(appointmentTarget.current);
-  };
-
-  const scroll = element => {
-    const y = element.getBoundingClientRect().top + window.scrollY;
-    window.scroll({
-      top: y,
-      behavior: 'smooth',
-    });
-    setTarget(currentTarget + 1);
   };
 
   const scrollBack = () => {
@@ -139,12 +145,6 @@ function UserLandingPage(props) {
     props.storeServiceName(event.target.value);
     clearAppointment();
     mql && scroll(calendarTarget.current);
-  };
-
-  const clearAppointment = () => {
-    setService({});
-    setTime({});
-    setContractor({});
   };
 
   const confirmAppointment = newAppointment => {
@@ -160,9 +160,13 @@ function UserLandingPage(props) {
         {mql ? (
           <div ref={serviceTarget} className="service-list">
             <h2>Pick a service</h2>
-            {serviceList.map(service => (
-              <button value={service.toLowerCase()} onClick={handleSort}>
-                {service}
+            {serviceList.map(serv => (
+              <button
+                type="button"
+                value={serv.toLowerCase()}
+                onClick={handleSort}
+              >
+                {serv}
               </button>
             ))}
           </div>
@@ -174,9 +178,9 @@ function UserLandingPage(props) {
               onChange={handleSort}
             >
               <option value="">Pick a service</option>
-              {serviceList.map(service => (
-                <option key={service} value={service.toLowerCase()}>
-                  {service}
+              {serviceList.map(serv => (
+                <option key={serv} value={serv.toLowerCase()}>
+                  {serv}
                 </option>
               ))}
             </select>
@@ -184,7 +188,7 @@ function UserLandingPage(props) {
         )}
         <div className="user-calendar">
           <div className="calendar-target" ref={calendarTarget}>
-            <Calendar user />
+            <Calendar />
           </div>
           <div className="contractor-target" ref={contractorTarget}>
             <ContractorList userLanding selectContractor={selectContractor} />
@@ -207,7 +211,13 @@ function UserLandingPage(props) {
         </div>
 
         {mql && currentTarget > 0 ? (
-          <div onClick={scrollBack} id="back-button">
+          <div
+            role="button"
+            onClick={scrollBack}
+            onKeyDown={scrollBack}
+            id="back-button"
+            tabIndex={0}
+          >
             Back
           </div>
         ) : null}
@@ -223,8 +233,18 @@ const mapStateToProps = state => {
     serviceFilter: state.serviceFilter,
     sorted: state.sortedContractors,
     selectedDay: state.thisDay,
-    serviceFilter: state.serviceFilter,
   };
+};
+
+UserLandingPage.defaultProps = {
+  contractors: null,
+  serviceFilter: null,
+  fetchAvailabilityByDay: null,
+  fetchSchedule: null,
+  getFeedbackByContractor: null,
+  clearTempFeedbak: null,
+  storeServiceName: null,
+  selectedDay: null,
 };
 
 export default connect(
@@ -236,7 +256,6 @@ export default connect(
     getFeedbackByContractor,
     storeServiceName,
     clearTempFeedbak,
-    postAppointment,
   }
 )(UserLandingPage);
 
@@ -264,9 +283,11 @@ UserLandingPage.propTypes = {
       ),
     })
   ),
-  sorted: PropTypes.array, // This is just a sorted copy of contractors
+  serviceFilter: PropTypes.string,
   fetchAvailabilityByDay: PropTypes.func,
   fetchSchedule: PropTypes.func,
+  getFeedbackByContractor: PropTypes.func,
   storeServiceName: PropTypes.func,
+  clearTempFeedbak: PropTypes.func,
   selectedDay: PropTypes.instanceOf(Date),
 };

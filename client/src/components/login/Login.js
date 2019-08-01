@@ -9,7 +9,7 @@ import {
   getFeedback,
   startManualLoad,
   endManualLoad,
-} from '../../actions/index.js';
+} from '../../actions/index';
 
 import './Login.css';
 
@@ -19,14 +19,12 @@ function Login(props) {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    console.log(`${props.user}` + 'hihi');
     if (props.user.contractorId) {
       props.history.push('/contractorcalendar');
     } else if (props.user.username) {
       props.history.push('/app');
     }
   }, [props.user]);
-  console.log(props.user);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -94,7 +92,7 @@ function Login(props) {
         </form>
         {error.length > 0 && <p style={{ color: 'red' }}>{error}</p>}
         <p>
-          Don't have an account?
+          Don&apos;t have an account?
           <NavLink to="/register" className="form-links">
             Sign Up
           </NavLink>
@@ -108,6 +106,13 @@ const mapStateToProps = state => {
   return {
     user: state.user,
   };
+};
+
+Login.defaultProps = {
+  user: null,
+  fetchAccts: null,
+  getFeedback: null,
+  startManualLoad: null,
 };
 
 export default connect(
