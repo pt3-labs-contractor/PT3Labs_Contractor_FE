@@ -196,7 +196,7 @@ export default (state = initialState, action) => {
     case DELETE_SERV_SUCC:
       return {
         ...state,
-        service: action.payload,
+        services: action.payload,
         loading: false,
         error: null,
       };
@@ -237,6 +237,7 @@ export default (state = initialState, action) => {
         ...state,
         loading: false,
         services: [...state.services, action.payload],
+        error: null,
       };
 
     case SEND_SCHED:

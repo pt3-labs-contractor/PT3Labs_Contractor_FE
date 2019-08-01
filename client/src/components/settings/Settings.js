@@ -19,7 +19,7 @@ function ContractorSetting(props) {
   const [username, setUsername] = useState(props.User.username);
   const [phoneNumber, setPhoneNumber] = useState(props.User.phoneNumber);
   const [email, setEmail] = useState(props.User.email);
-  const [services, setServices] = useState(props.User.services);
+  const [serviceArr, setServices] = useState(props.services);
 
   const [addService, setAddServices] = useState('');
   const [addPrice, setAddPrice] = useState('');
@@ -74,7 +74,7 @@ function ContractorSetting(props) {
 
   function handleServeDelete(service) {
     // e.preventDefault();
-    props.deleteService(service);
+    props.deleteService(service, props.services);
     // console.log(service)
   }
   return (
@@ -85,6 +85,7 @@ function ContractorSetting(props) {
         <div className="settings-container">
           <h2 className="title">{props.User.username} Settings</h2>
           {'\n'}
+          {props.error ? <h3 style={{ color: 'red' }}>{props.error}</h3> : null}
           <form onSubmit={handleUpdate}>
             <div className="username-div">
               Username
@@ -161,7 +162,7 @@ function ContractorSetting(props) {
           <div className="services">
             <div>
               {props.services
-                ? props.services.map(service => (
+                ? serviceArr.map(service => (
                     <div className="indi-services">
                       <p>{service.name}</p>
                       <p>{service.price}</p>

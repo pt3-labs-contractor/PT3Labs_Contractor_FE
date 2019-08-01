@@ -374,7 +374,7 @@ export const postNewService = serv => {
         dispatch({ type: SEND_SERV_COMP, payload: res.data.created });
       })
       .catch(err => {
-        console.log(err);
+        dispatch({ type: FAILURE, error: 'Failed to add Service.' });
       });
   };
 };
@@ -389,10 +389,7 @@ export const deleteService = (service, list) => dispatch => {
       { headers }
     )
     .then(res => {
-      // console.log(res.data)
-      const newList = list.filter(
-        service => service.id !== res.data.deleted.id
-      );
+      const newList = list.filter(serv => serv.id !== res.data.deleted.id);
       dispatch({ type: DELETE_SERV_SUCC, payload: newList });
     })
     .catch(err => {
@@ -686,4 +683,4 @@ export const endManualLoad = () => dispatch => {
 
 export const setError = err => dispatch => {
   dispatch({ type: SET_ERROR, payload: err });
-}
+};
