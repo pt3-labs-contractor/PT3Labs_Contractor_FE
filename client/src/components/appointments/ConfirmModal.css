@@ -46,6 +46,10 @@
   font-weight: bold;
 }
 
+.modal-btn-container button:hover {
+  cursor: pointer;
+}
+
 .modal-btn-container .yes {
   background: linear-gradient(rgba(0, 128, 0, 0.72), rgba(2, 180, 2, 0.72));
 }

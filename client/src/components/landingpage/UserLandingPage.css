@@ -296,7 +296,7 @@
     flex-direction: column;
     font-size: 2.4rem;
   }
-
+ 
   .service-list h2 {
     background-color: var(--primary-color);
     font-size: 6vh;
@@ -307,6 +307,7 @@
     border: none;
     height: 10vh;
     font-size: 5vh;
+    cursor: pointer;
   }
 
   .service-list h2,
@@ -443,5 +444,39 @@
   }
   100% {
     width: 100%;
+  }
+}
+
+@media (max-width: 400px) {
+  .calendar-container {
+    margin-left: var(--nav-bar-width-mobile);
+    margin-top: 0px;
+    width: calc(100% - var(--nav-bar-width-mobile) - 4px);
+  }
+
+  .service-list {
+    height: 100vh;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    font-size: 2.4rem;
+  }
+
+  .service-list h2 {
+    background-color: var(--primary-color);
+    font-size: 4.5vh;
+  }
+
+  .service-list button {
+    background: none;
+    border: none;
+    height: 10vh;
+    font-size: 3vh;
+  }
+
+  .service-list h2,
+  .service-list button {
+    /* line-height: 2; */
+    border-bottom: 1px solid #000;
   }
 }

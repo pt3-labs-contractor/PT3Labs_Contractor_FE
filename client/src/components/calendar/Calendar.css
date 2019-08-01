@@ -38,6 +38,10 @@
   grid-auto-rows: minmax(50px, 65px);
 }
 
+.cell-container:hover {
+  cursor: pointer;
+}
+
 .cell,
 .day-container .day-cell {
   border: 1px solid var(--primary-color);
@@ -73,6 +77,14 @@
 
 .cell.available {
   border: 3px solid green;
+}
+
+.user-calendar .contractor-target .contractor-list .contractor-card-container:hover {
+  cursor: pointer;
+}
+
+.user-calendar .availability-target .availability-list button:hover {
+  cursor: pointer;
 }
 
 @media (max-width: 400px) {
