@@ -82,7 +82,6 @@ function UserFeedback(props) {
       <NavBarUser />
       <div className="main-body">
         <div className="feedback-body-user">
-          <h2 className="main-header-title">Feedback</h2>
           <div>
             <form onSubmit={handleSubmit} className="feedback-form-container">
               <h3 className="feedback-form-header">

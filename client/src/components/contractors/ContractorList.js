@@ -6,6 +6,7 @@ import Fuse from 'fuse.js';
 import { sortByDistance } from './searchFunctions';
 import './ContractorList.css';
 
+// import TopNavbar from '../navbar/TopNavbar';
 import ContractorCard from './ContractorCard';
 // import NavBarUser from './components/navbar/NavBarUser';
 
@@ -115,82 +116,93 @@ function ContractorList({
   }
 
   return (
-    <div className="contractor-list container">
-      <div className="list-header">
-        <h3 className="contractor-list-title">Contractors:</h3>
-        <div className="btn-container">
-          <button
-            type="button"
-            className="btn"
-            onClick={() => pageChange(-1)}
-            disabled={pageNum <= 0}
-          >
-            Page
-            <br />
-            down
-          </button>
-          <button
-            type="button"
-            className="btn"
-            onClick={() => pageChange(1)}
-            disabled={pageNum >= contractorList.length - 1}
-          >
-            Page
-            <br />
-            up
-          </button>
-        </div>
-        {userLanding ? null : (
-          <div className="contractor-list-form-container">
-            <form onSubmit={handleZipSort}>
-              <input
-                placeholder="Sort By Distance"
-                type="text"
-                onChange={ev => setZip(ev.target.value)}
-                value={zip}
-              />
-              <button type="submit">Search</button>
-            </form>
-            <form onSubmit={handleSearch}>
-              <input
-                placeholder="Search"
-                type="text"
-                onChange={ev => setQuery(ev.target.value)}
-                value={query}
-              />
-              <button type="submit">Search</button>
-            </form>
-          </div>
-        )}
-      </div>
-      <div className={userLanding ? 'contractor-list' : 'contractor-display'}>
-        {loading ? <p>Loading...</p> : null}
-        {error ? <p>{error}</p> : null}
-        {list.map(contractor =>
-          userLanding ? (
-            <div
+    <>
+      {/* <TopNavbar /> */}
+      <div className="contractor-list container">
+        <div className="list-header">
+          <h3 className="contractor-list-title">Contractors:</h3>
+          <div className="btn-container">
+            <button
               type="button"
-              key={contractor.id}
-              ref={contractorRef.current[contractor.id]}
-              className={
-                'contractor-card-container' +
-                `${select === contractor.id ? ' selected' : ''}`
-              }
-              onClick={() => {
-                handlers.selectContractor(contractor);
-                selectElement(contractor.id);
-              }}
+              className="list-btn"
+              onClick={() => pageChange(-1)}
+              disabled={pageNum <= 0}
             >
-              <ContractorCard contractor={contractor} />
+              Page
+              <br />
+              down
+            </button>
+            <button
+              type="button"
+              className="list-btn"
+              onClick={() => pageChange(1)}
+              disabled={pageNum >= contractorList.length - 1}
+            >
+              Page
+              <br />
+              up
+            </button>
+          </div>
+          {userLanding ? null : (
+            <div className="contractor-list-form-container">
+              <form onSubmit={handleZipSort}>
+                <input
+                  placeholder="Sort By Distance"
+                  type="text"
+                  onChange={ev => setZip(ev.target.value)}
+                  value={zip}
+                  className="my-input"
+                />
+                <button type="submit" className="btn btn-primary btn-search">
+                  Search
+                </button>
+              </form>
+              <form onSubmit={handleSearch}>
+                <input
+                  placeholder="Search"
+                  type="text"
+                  onChange={ev => setQuery(ev.target.value)}
+                  value={query}
+                />
+                <button type="submit" className="btn btn-primary btn-search">
+                  Search
+                </button>
+              </form>
             </div>
-          ) : (
-            <Link to={`/app/contractors/${contractor.id}`} key={contractor.id}>
-              <ContractorCard mainList contractor={contractor} />
-            </Link>
-          )
-        )}
+          )}
+        </div>
+        <div className={userLanding ? 'contractor-list' : 'contractor-display'}>
+          {loading ? <p>Loading...</p> : null}
+          {error ? <p>{error}</p> : null}
+          {list.map(contractor =>
+            userLanding ? (
+              <div
+                type="button"
+                key={contractor.id}
+                ref={contractorRef.current[contractor.id]}
+                className={
+                  'contractor-card-container' +
+                  `${select === contractor.id ? ' selected' : ''}`
+                }
+                onClick={() => {
+                  handlers.selectContractor(contractor);
+                  selectElement(contractor.id);
+                }}
+              >
+                <ContractorCard contractor={contractor} />
+              </div>
+            ) : (
+              <Link
+                to={`/app/contractors/${contractor.id}`}
+                key={contractor.id}
+              >
+                <ContractorCard mainList contractor={contractor} />
+              </Link>
+            )
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

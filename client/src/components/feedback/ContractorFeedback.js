@@ -15,10 +15,6 @@ function ContractorFeedback(props) {
   const [totalPosts, settotalPosts] = useState('');
   const [postStarAvg, setPostStarAvg] = useState('');
 
-  console.log(props.feedback);
-  console.log(props.feedback.length);
-  console.log(props.feedback.stars);
-
   useEffect(() => {
     props.getFeedback();
   }, []);
@@ -33,20 +29,18 @@ function ContractorFeedback(props) {
     const starsAvg = starsArray.map(item => item / 5);
     const starsAvgTotal = starsAvg.reduce((a, b) => a + b, 0);
     const newStarsAvg = (starsAvgTotal / props.feedback.length) * 5;
-    // console.log(starsAvg);
-    // console.log(totalStars);
-    // console.log(starsAvgTotal);
-    // console.log(newStarsAvg);
+
     setPostStarAvg(newStarsAvg);
   });
 
-  // console.log(totalPosts);
-  // console.log(postStarAvg);
+  const descending = props.feedback.sort((a, b) => {
+    return new Date(b.createdAt) - new Date(a.createdAt);
+  });
 
   // Get current posts
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = props.feedback.slice(indexOfFirstPost, indexOfLastPost);
+  const currentPosts = descending.slice(indexOfFirstPost, indexOfLastPost);
 
   // Chage page
   const paginate = pageNumber => {
@@ -58,7 +52,6 @@ function ContractorFeedback(props) {
       <TopNavbar />
       <NavBarContractor />
       <div className="main-body">
-        <h2 className="main-header-feedback">My Feedback</h2>
         <div className="average-rating">
           <h3>
             Average Rating:
