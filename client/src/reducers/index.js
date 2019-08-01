@@ -89,6 +89,7 @@ const initialState = {
   error: null,
   thisContractor: {},
   sortedContractors: [],
+  locationSortContractors: [],
   thisMonth: new Date(),
   thisDay: new Date(),
   schedule: [],
@@ -107,6 +108,7 @@ export default (state = initialState, action) => {
         ...state,
         loading: true,
         error: null,
+        locationSortContractors: null, // Testing this, removing location sort on load sufficient?
       };
     case END_LOAD:
       return { ...state, loading: false };

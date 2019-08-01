@@ -3,13 +3,12 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Fuse from 'fuse.js';
-import { sortByDistance } from './searchFunctions';
 import './ContractorList.css';
 
 import ContractorCard from './ContractorCard';
 // import NavBarUser from './components/navbar/NavBarUser';
 
-import { setPosition } from '../../actions/index';
+import { setPosition, sortContractorsByLocation } from '../../actions/index';
 
 function ContractorList({
   error,
@@ -101,17 +100,8 @@ function ContractorList({
   }
   function handleZipSort(ev) {
     ev.preventDefault();
-    sortByDistance(zip, contractors)
-      .then(arr => {
-        setZip('');
-        setPageNum(1);
-        if (!arr) {
-          paginate(contractors);
-          throw new Error('Invalid Zip Code');
-        }
-        paginate(arr);
-      })
-      .catch(err => console.log(err));
+    if (!zip || zip.length < 5) return;
+    handlers.sortContractorsByDistance(contractors, zip);
   }
 
   return (
@@ -168,7 +158,7 @@ function ContractorList({
         {error ? <p>{error}</p> : null}
         {list.map(contractor =>
           userLanding ? (
-            <div
+            <button
               type="button"
               key={contractor.id}
               ref={contractorRef.current[contractor.id]}
@@ -182,7 +172,7 @@ function ContractorList({
               }}
             >
               <ContractorCard contractor={contractor} />
-            </div>
+            </button>
           ) : (
             <Link to={`/app/contractors/${contractor.id}`} key={contractor.id}>
               <ContractorCard mainList contractor={contractor} />
@@ -249,7 +239,7 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { setPosition }
+  { setPosition, sortContractorsByLocation }
 )(ContractorList);
 
 ContractorList.propTypes = {

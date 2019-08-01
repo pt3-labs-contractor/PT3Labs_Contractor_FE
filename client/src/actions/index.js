@@ -77,6 +77,8 @@ export const CANCEL_IMMEDIATE_SUCCESS = 'CANCEL_IMMEDIATE_SUCCESS';
 export const CANCEL_IMMEDIATE_FAILURE = 'CANCEL_IMMEDIATE_FAILURE';
 
 export const SET_ERROR = 'SET_ERROR';
+export const SORT_CONTRACTORS_BY_LOCATION_SUCCESS = 'SORT_CONTRACTORS_BY_LOCATION_SUCCESS';
+export const SORT_CONTRACTORS_BY_LOCATION_FAILURE = 'SORT_CONTRACTORS_BY_LOCATION_FAILURE';
 // ---------------------------------------------------------------
 
 function setHeaders() {
@@ -685,4 +687,25 @@ export const endManualLoad = () => dispatch => {
 
 export const setError = err => dispatch => {
   dispatch({ type: SET_ERROR, payload: err });
-}
+};
+
+export const sortContractorsByLocation = (contractors, zip, limit) => dispatch => {
+  dispatch({ type: LOADING });
+  const headers = setHeaders();
+  axios
+    .post(`https://fierce-plains-47590.herokuapp.com/api/contractors/zip/${zip}`,
+      { contractors, limit },
+      { headers })
+    .then(res =>
+      dispatch({
+        type: SORT_CONTRACTORS_BY_LOCATION_SUCCESS,
+        payload: res.data.contractors,
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: SORT_CONTRACTORS_BY_LOCATION_FAILURE,
+        payload: err.response.data.error,
+      })
+    );
+};
