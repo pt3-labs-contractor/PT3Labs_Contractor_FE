@@ -4,10 +4,17 @@ import dateFns from 'date-fns';
 import PropTypes from 'prop-types';
 import './AppointmentForm.css';
 
-// import { postAppointment } from '../../actions';
+import { postAppointment } from '../../actions';
 import ConfirmModal from './ConfirmModal';
 
-function AppointmentForm({ appointment, service, contractor, addAppointment }) {
+function AppointmentForm({
+  user = false,
+  appointment,
+  service,
+  contractor,
+  addAppointment,
+  postAppointment,
+}) {
   const [confirm, setConfirm] = useState(false);
   const { name, price } = service;
   const { startTime } = appointment;
@@ -38,9 +45,9 @@ function AppointmentForm({ appointment, service, contractor, addAppointment }) {
         startTime,
         duration: `${dur}h`,
       };
-      console.log(check);
+      console.log(newAppointment);
 
-      addAppointment(newAppointment);
+      user ? addAppointment(newAppointment) : postAppointment(newAppointment);
     }
     setConfirm(false);
   }
@@ -85,7 +92,10 @@ AppointmentForm.defaultProps = {
   addAppointment: null,
 };
 
-export default connect(mapStateToProps)(AppointmentForm);
+export default connect(
+  mapStateToProps,
+  { postAppointment }
+)(AppointmentForm);
 
 AppointmentForm.propTypes = {
   service: PropTypes.objectOf(PropTypes.string),

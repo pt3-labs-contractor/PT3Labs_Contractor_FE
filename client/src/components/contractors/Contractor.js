@@ -79,7 +79,7 @@ function Contractor(props) {
           />
         </div>
         <AppointmentForm
-          contractor={id}
+          contractor={props.contractor}
           clearAppointment={clearAppointment}
           appointment={appointment}
           service={service}
