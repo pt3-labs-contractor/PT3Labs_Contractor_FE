@@ -127,7 +127,7 @@ input:focus {
     width: 100%;
     background-image: none;
     justify-content: center;
-    height: 100vh;
+    height: 100%;
   }
   
   .settings-container {
@@ -150,7 +150,6 @@ input:focus {
   justify-content: center;
   flex-direction: row;
   width: 100%;
-
 }
 
 .indi-services {
