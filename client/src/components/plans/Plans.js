@@ -107,14 +107,12 @@ function Plans({ user, subscription, ...props }) {
               </div>
               <div className="deals">
                 <p>
-                  <i className="fas fa-check checked" />4 appoinments per month
-                </p>
-                <p>
-                  <i className="fas fa-check checked" />5 hour appoinment window
+                  <i className="fas fa-check checked" />
+                  Up to 5 hrs per week
                 </p>
                 <p>
                   <i className="fas fa-check checked" />
-                  24 hr helpdesk
+                  Continuous app improvements
                 </p>
                 <p>
                   <i className="fas fa-check checked" />
@@ -142,7 +140,7 @@ function Plans({ user, subscription, ...props }) {
                 </p>
                 <p>
                   <i className="fas fa-check checked" />
-                  24 hr helpdesk
+                  Continuous app improvements
                 </p>
                 <p>
                   <i className="fas fa-check checked" />

@@ -447,7 +447,13 @@
   }
 }
 
-@media (max-width: 400px) {
+@media (max-width: 800px) {
+  .service-list button:hover {
+    background-color: lightgrey;
+  }
+}
+
+@media (max-width: 500px) {
   .calendar-container {
     margin-left: var(--nav-bar-width-mobile);
     margin-top: 0px;
