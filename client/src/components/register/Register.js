@@ -66,7 +66,7 @@ function Register(props) {
             ),
           ])
           .then(res => {
-            props.history.push('/');
+            props.history.push('/contractorCalendar');
           })
           .catch(err => {
             console.log(err);
