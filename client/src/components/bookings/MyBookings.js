@@ -56,9 +56,13 @@ function MyBookings(props) {
                     </p>
 
                     {app.confirmed === null ? (
-                      <p className="confirmation">Not confirmed yet</p>
+                      <p className="confirmation confirmed-pending">
+                        Awaiting Confirmation
+                      </p>
                     ) : (
-                      <p className="confirmation">Contractor confirmed!</p>
+                      <p className="confirmation confirmed">
+                        Appointment Confirmed
+                      </p>
                     )}
                     <div className="button-div">
                       <button

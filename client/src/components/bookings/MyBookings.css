@@ -27,7 +27,7 @@
   /* margin: auto;
   margin-top: 5%; */
   /* max-width: 30%; */
-  padding: 20px 50px;
+  padding: 20px 40px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
@@ -47,6 +47,14 @@
 
 .confirmation {
   margin: 20px 0px 0px 0px;
+}
+
+.confirmed-pending {
+  color: var(--danger-color)
+}
+
+.confirmed {
+  color: var(--success-color)
 }
 
 .app-information {
@@ -129,5 +137,11 @@
     margin: 30px 0px 0px 0px;
     padding: 0px;
     width: 100%;
+  }
+}
+
+@media (max-width: 500px) {
+  .mapping-div {
+    margin: 0 auto;
   }
 }

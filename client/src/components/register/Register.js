@@ -147,7 +147,7 @@ function Register(props) {
             <>
               <input
                 name="contractorName"
-                placeholder="Name"
+                placeholder="Company or Contractor Name"
                 onChange={handleChange}
                 required
               />
