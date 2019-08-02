@@ -1,5 +1,8 @@
 import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
 import queryString from 'query-string';
+
+import { fetchAccts } from '../../actions/index';
 
 function Redirect(props) {
   useEffect(() => {
@@ -11,11 +14,15 @@ function Redirect(props) {
     if (!registrationComplete) {
       props.history.push(`/register/oauth`);
     } else {
-      props.history.push('/app');
+      props.fetchAccts();
+      props.history.push('/login');
     }
   }, [props]);
 
   return <div />;
 }
 
-export default Redirect;
+export default connect(
+  null,
+  { fetchAccts }
+)(Redirect);

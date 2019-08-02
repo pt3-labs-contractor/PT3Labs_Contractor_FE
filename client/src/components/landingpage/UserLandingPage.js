@@ -94,6 +94,11 @@ function UserLandingPage(props) {
   }, []);
 
   useEffect(() => {
+    console.log(props.user.contractorId);
+    props.user.contractorId && props.history.push('/contractorCalendar');
+  }, [props.user]);
+
+  useEffect(() => {
     const dateString = dateFns.format(props.selectedDay, 'YYYY-MM-DD');
     props.fetchAvailabilityByDay(
       dateString,
@@ -229,6 +234,7 @@ function UserLandingPage(props) {
 
 const mapStateToProps = state => {
   return {
+    user: state.user,
     contractors: state.contractors,
     serviceFilter: state.serviceFilter,
     sorted: state.sortedContractors,
