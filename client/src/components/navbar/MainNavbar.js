@@ -14,7 +14,7 @@ function Navbar({ user }) {
       <nav className="navbar bg-dark">
         <NavLink to="/" className="main-title">
           <i className="far fa-calendar-alt main-title-icon" />
-          <h1>Digital Calendar</h1>
+          <h1>Inquiry</h1>
         </NavLink>
         <ul>
           {user.username ? (

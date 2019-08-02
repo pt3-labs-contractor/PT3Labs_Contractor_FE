@@ -10,10 +10,10 @@ function LandingPage({ user }) {
       <section className="landing">
         <div className="dark-overlay">
           <div className="landing-inner">
-            <h1>Digital Calendar</h1>
+            <h1>Inquiry</h1>
             <p>
-              Scheduling a contractor can be a pain. With Digital Calendar, we
-              aim to eliminate the stress of finding and booking a contractor.
+              Scheduling a contractor can be a pain. With Inquiry, we aim to
+              eliminate the stress of finding and booking a contractor.
             </p>
             {user.username ? (
               <div className="button">
