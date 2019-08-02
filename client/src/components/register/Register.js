@@ -60,6 +60,7 @@ function Register(props) {
           )
           .then(res => {
             userUpdate.contractorId = res.data.id;
+            console.log(userUpdate);
             axios.put(
               'https://fierce-plains-47590.herokuapp.com/api/users',
               userUpdate,
