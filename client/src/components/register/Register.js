@@ -66,6 +66,7 @@ function Register(props) {
             ),
           ])
           .then(res => {
+            console.log('Register after oauth', res);
             props.history.push('/contractorCalendar');
           })
           .catch(err => {
