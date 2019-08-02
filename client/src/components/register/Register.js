@@ -33,7 +33,11 @@ function Register(props) {
         .then(res => {
           localStorage.setItem('jwt', res.data.token);
           props.endManualLoad();
-          props.history.push('/app');
+          if (contractor) {
+            props.history.push('/contractorCalendar');
+          } else {
+            props.history.push('/app');
+          }
         })
         .catch(err => {
           props.endManualLoad();
