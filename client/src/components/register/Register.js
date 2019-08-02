@@ -53,25 +53,43 @@ function Register(props) {
 
       if (contractor) {
         axios
-          .all([
-            axios.post(
-              'https://fierce-plains-47590.herokuapp.com/api/contractors',
-              contractorUpdate,
-              { headers }
-            ),
+          .post(
+            'https://fierce-plains-47590.herokuapp.com/api/contractors',
+            contractorUpdate,
+            { headers }
+          )
+          .then(res => {
+            userUpdate.contactorId = res.data.id;
             axios.put(
               'https://fierce-plains-47590.herokuapp.com/api/users',
               userUpdate,
               { headers }
-            ),
-          ])
-          .then(res => {
-            console.log('Register after oauth', res);
-            props.history.push('/contractorCalendar');
+            );
           })
-          .catch(err => {
-            console.log(err);
+          .then(() => {
+            props.history.push('/contractorCalendar');
           });
+
+        // axios
+        //   .all([
+        //     axios.post(
+        //       'https://fierce-plains-47590.herokuapp.com/api/contractors',
+        //       contractorUpdate,
+        //       { headers }
+        //     ),
+        //     axios.put(
+        //       'https://fierce-plains-47590.herokuapp.com/api/users',
+        //       userUpdate,
+        //       { headers }
+        //     ),
+        //   ])
+        //   .then(res => {
+        //     console.log('Register after oauth', res);
+        //     props.history.push('/contractorCalendar');
+        //   })
+        //   .catch(err => {
+        //     console.log(err);
+        //   });
       } else {
         axios
           .put(
