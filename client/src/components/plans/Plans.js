@@ -160,7 +160,7 @@ function Plans({ user, subscription, ...props }) {
             <div className="premium-plan single-price">
               <h3>Premium</h3>
               <div className="price">
-                <h4>$20/month</h4>
+                <h4>$10/month</h4>
               </div>
               <div className="deals">
                 <p>
