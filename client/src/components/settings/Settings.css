@@ -156,7 +156,6 @@ input:focus {
   .title {
     font-size: 15px;
   }
-
 }
 
 
@@ -186,6 +185,9 @@ input:focus {
   width: 30px;
   height: 25px;
   /* padding: 10px 0px 10px 0px; */
+}
+.indi-services button:hover {
+  cursor: pointer;
 }
 
 .add-service {
