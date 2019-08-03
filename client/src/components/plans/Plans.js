@@ -42,12 +42,14 @@ function Plans({ user, subscription, ...props }) {
               <h2 className="plan-attribute">Current Payment Method</h2>
               <div className="plan-wrapper">
                 <h3 className="plan-attribute">Type: </h3>{' '}
-                {subscription.paymentMethod.card.brand}
+                <span>{subscription.paymentMethod.card.brand}</span>
                 <h3 className="plan-attribute">Last 4 Digits: </h3>
-                {subscription.paymentMethod.card.last4}
+                <span>{subscription.paymentMethod.card.last4}</span>
                 <h3 className="plan-attribute">Expiration Date: </h3>
-                {subscription.paymentMethod.card.exp_month}/
-                {subscription.paymentMethod.card.exp_year}
+                <span>
+                  {subscription.paymentMethod.card.exp_month}/
+                  {subscription.paymentMethod.card.exp_year}
+                </span>
                 <button
                   type="button"
                   className="btn btn-primary"
