@@ -81,6 +81,8 @@ export const SORT_CONTRACTORS_BY_LOCATION_SUCCESS =
   'SORT_CONTRACTORS_BY_LOCATION_SUCCESS';
 export const SORT_CONTRACTORS_BY_LOCATION_FAILURE =
   'SORT_CONTRACTORS_BY_LOCATION_FAILURE';
+export const UPDATE_PAYMENT_METHOD_SUCCESS = 'UPDATE_PAYMENT_METHOD_SUCCESS';
+export const UPDATE_PAYMENT_METHOD_FAILURE = 'UPDATE_PAYMENT_METHOD_FAILURE';
 // ---------------------------------------------------------------
 
 function setHeaders() {
@@ -713,6 +715,29 @@ export const sortContractorsByLocation = (
     .catch(err =>
       dispatch({
         type: SORT_CONTRACTORS_BY_LOCATION_FAILURE,
+        payload: err.response.data.error,
+      })
+    );
+};
+
+export const updatePaymentMethod = (token, address) => dispatch => {
+  dispatch({ type: LOADING });
+  const headers = setHeaders();
+  axios
+    .put(
+      'https://fierce-plains-47590.herokuapp.com/api/subscription/payment',
+      { token, address },
+      { headers }
+    )
+    .then(res =>
+      dispatch({
+        type: UPDATE_PAYMENT_METHOD_SUCCESS,
+        payload: res.data.subscription,
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: UPDATE_PAYMENT_METHOD_FAILURE,
         payload: err.response.data.error,
       })
     );

@@ -7,6 +7,7 @@ import {
   retrieveSubscription,
   cancelDefault,
   cancelImmediate,
+  updatePaymentMethod,
 } from '../../actions';
 import NavBarContractor from '../navbar/NavBarContractor';
 import './Plans.css';
@@ -48,13 +49,43 @@ function Plans({ user, subscription, ...props }) {
                 <h3 className="plan-attribute">Expiration Date: </h3>
                 {subscription.paymentMethod.card.exp_month}/
                 {subscription.paymentMethod.card.exp_year}
-                <button
-                  type="button"
-                  className="btn btn-primary"
-                  onClick={() => setUpdateForm(true)}
-                >
-                  Update
-                </button>
+                <StripeCheckout
+                  style={{
+                    overflow: '',
+                    display: 'inline-block',
+                    background: '',
+                    border: 'none',
+                    padding: '0.5rem 1rem',
+                    textDecoration: '',
+                    borderRadius: '5%',
+                    boxShadow: 'none',
+                    cursor: 'pointer',
+                    visibility: '',
+                    userSelect: '',
+                  }}
+                  textStyle={{
+                    backgroundImage: '',
+                    fontFamily: '',
+                    fontSize: '1.2rem',
+                    position: '',
+                    padding: '',
+                    display: '',
+                    height: '',
+                    lineHeight: '',
+                    color: '',
+                    fontWeight: 'bold',
+                    boxShadow: 'none',
+                    textShadow: '',
+                    borderRadius: '',
+                  }}
+                  token={props.updatePaymentMethod}
+                  stripeKey={process.env.REACT_APP_STRIPE_PUBLIC_KEY_TEST}
+                  billingAddress
+                  zipCode
+                  name="Contractor Scheduler"
+                  description="Expanded scheduling of clients."
+                  label="UPDATE"
+                />
               </div>
               <h2 className="plan-attribute">Cancel Subscription</h2>
               {subscription.cancel_at_period_end ? (
@@ -220,5 +251,11 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { handleSubscribe, retrieveSubscription, cancelDefault, cancelImmediate }
+  {
+    handleSubscribe,
+    retrieveSubscription,
+    cancelDefault,
+    cancelImmediate,
+    updatePaymentMethod,
+  }
 )(Plans);

@@ -78,6 +78,8 @@ import {
   SET_ERROR,
   SORT_CONTRACTORS_BY_LOCATION_SUCCESS,
   SORT_CONTRACTORS_BY_LOCATION_FAILURE,
+  UPDATE_PAYMENT_METHOD_SUCCESS,
+  UPDATE_PAYMENT_METHOD_FAILURE,
 } from '../actions';
 
 const initialState = {
@@ -370,6 +372,15 @@ export default (state = initialState, action) => {
         loading: false,
       };
     case SORT_CONTRACTORS_BY_LOCATION_FAILURE:
+      return { ...state, error: action.payload, loading: false };
+    case UPDATE_PAYMENT_METHOD_SUCCESS:
+      return {
+        ...state,
+        subscription: action.payload,
+        error: null,
+        loading: false,
+      };
+    case UPDATE_PAYMENT_METHOD_FAILURE:
       return { ...state, error: action.payload, loading: false };
     default:
       return state;
