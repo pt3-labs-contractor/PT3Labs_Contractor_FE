@@ -11,6 +11,17 @@
   background-color: #999;
 }
 
+.main-container-user {
+  display:flex;
+  justify-content: center;
+  background-image: url("background.png");
+  background-position: center center;
+  background-repeat:  no-repeat;
+  background-attachment: fixed;
+  background-size:  cover;
+  background-color: #999;
+}
+
 .settings-container {
   max-width: 500px;
   margin-left: calc(var(--nav-bar-width) + 10px);
@@ -128,6 +139,12 @@ input:focus {
     background-image: none;
     justify-content: center;
     height: 100%;
+  }
+  .main-container-user {
+    width: 100%;
+    background-image: none;
+    justify-content: center;
+    height: 100vh;
   }
   
   .settings-container {
