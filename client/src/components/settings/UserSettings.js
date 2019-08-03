@@ -29,7 +29,7 @@ function UserSetting(props) {
     <>
       <TopNavbar />
       <NavBarUser />
-      <div className="main-container">
+      <div className="main-container-user">
         <div className="settings-container">
           <Link to="/uploadimage">
             <p>Upload Image</p>
