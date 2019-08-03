@@ -44,7 +44,7 @@ function ContractorList({
     if (locationSortContractors) return paginate(locationSortContractors);
     return paginate(contractors);
     // eslint-disable-next-line
-  }, [sortedContractors]);
+  }, [sortedContractors, locationSortContractors]);
 
   useEffect(() => {
     setList(contractorList[pageNum] || []);
@@ -102,8 +102,8 @@ function ContractorList({
   }
   function handleZipSort(ev) {
     ev.preventDefault();
-    if (!zip || zip.length < 5) return;
-    handlers.sortContractorsByDistance(contractors, zip);
+    if (!zip || zip.length < 5) return paginate(contractors);
+    handlers.sortContractorsByLocation(contractors, zip);
   }
 
   return (

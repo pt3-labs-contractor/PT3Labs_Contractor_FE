@@ -76,6 +76,8 @@ import {
   CANCEL_IMMEDIATE_SUCCESS,
   CANCEL_IMMEDIATE_FAILURE,
   SET_ERROR,
+  SORT_CONTRACTORS_BY_LOCATION_SUCCESS,
+  SORT_CONTRACTORS_BY_LOCATION_FAILURE,
 } from '../actions';
 
 const initialState = {
@@ -360,6 +362,15 @@ export default (state = initialState, action) => {
       return { ...state, error: action.payload, loading: false };
     case SET_ERROR:
       return { ...state, error: action.payload };
+    case SORT_CONTRACTORS_BY_LOCATION_SUCCESS:
+      return {
+        ...state,
+        locationSortContractors: action.payload,
+        error: null,
+        loading: false,
+      };
+    case SORT_CONTRACTORS_BY_LOCATION_FAILURE:
+      return { ...state, error: action.payload, loading: false };
     default:
       return state;
   }
