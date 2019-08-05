@@ -24,7 +24,7 @@ function UserFeedback(props) {
   const [contractorId, setContractorId] = useState('');
   // const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(3);
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const [clicked, setClicked] = useState(false);
   const [toggle, setToggle] = useState(false);
 

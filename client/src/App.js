@@ -31,19 +31,7 @@ import Loading from './components/loading/loading';
 import UploadImage from './components/settings/UploadImage';
 import DeleteModal from './components/feedback/DeleteModal';
 
-<<<<<<< HEAD
-// function App(props) {
-//   useEffect(() => {
-//     props.fetchAccts();
-//     props.getFeedback();
-//     // console.log(props)
-//     // eslint-disable-next-line
-//   }, []);
-
-function App(props) {
-=======
 function App({ user, loading, ...props }) {
->>>>>>> 23ecc5e21d801d2744e3e6eb4e98ec1b9b2ab786
   const [win, setWin] = useState();
   const string = JSON.stringify(win);
   useEffect(() => {
@@ -67,11 +55,7 @@ function App({ user, loading, ...props }) {
         <Route exact path="/" component={Homepage} />
         <Route
           path="/app"
-<<<<<<< HEAD
-          component={props.user.contractorId ? NavBarContractor : NavBarUser} // NavBarUser
-=======
           component={user.contractorId ? NavBarContractor : NavBarUser}
->>>>>>> 23ecc5e21d801d2744e3e6eb4e98ec1b9b2ab786
         />
         <Route exact path="/app" component={UserLandingPage} />
         <Route exact path="/app/contractors" component={ContractorList} />
