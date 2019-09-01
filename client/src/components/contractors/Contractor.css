@@ -1,0 +1,104 @@
+.contractor-container {
+  margin-left: 180px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.contractor-container .contractor-card {
+  width: 30%;
+  margin-left: 10px;
+  padding: 5px;
+  background-color: #343a4021;
+  box-shadow: var(--shadow);
+}
+
+.contractor-container .contractor-card h3 {
+  color: var(--dark-color);
+  border-bottom: 1px solid var(--primary-color);
+  padding-bottom: 3px;
+  margin-bottom: 5px;
+  font-size: 1.4rem;
+  box-shadow: 0 5px 3px -3px rgba(0, 0, 0, 0.5);
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.219);
+}
+
+.contractor-container .contractor-card p {
+  padding-left: 10px;
+}
+
+.services-container {
+  display: flex;
+  justify-content: flex-end;
+  width: 60%;
+  margin: 10px 0 5px;
+}
+
+.services-container .service {
+  width: 14%;
+}
+
+.services-container .service p:first-child {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.contractor-calendar {
+  width: 100%;
+  display: flex;
+}
+
+.contractor-calendar .calendar {
+  margin-left: 0px;
+}
+
+.contractor-container .availability-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.contractor-container .availability-list button,
+.service {
+  padding: 3px;
+  margin: 0 0px 5px 15px;
+  max-width: 200px;
+  height: 50px;
+  font-size: 14px;
+  font-weight: bold;
+  border: 1px solid rgba(0, 0, 0, 0.13);
+  border-radius: 3px;
+  box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.637);
+  background: linear-gradient(lightgrey, rgb(238, 235, 235));
+  transition: all 0.2s ease-out;
+}
+
+.contractor-container .availability-list button:active,
+.service:active {
+  box-shadow: none;
+}
+
+.contractor-container .appointment-form {
+  position: absolute;
+  width: 20%;
+  left: 45%;
+}
+
+@media (max-width: 600px) {
+  .contractor-container {
+    margin-left: 60px;
+    padding: 0;
+  }
+
+  .contractor-container .contractor-card {
+    width: 94%;
+  }
+
+  .contractor-calendar {
+    flex-direction: column;
+  }
+
+  .contractor-calendar .calendar {
+    width: 100%;
+  }
+}

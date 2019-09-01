@@ -8,8 +8,9 @@ export default function Content() {
       <section className="built-on">
         <div className="container .dark-overlay">
           <div className="section-heading">
-            <h1>
-              <span className="tech">Technology</span> Stack
+            <h1 className="heading">
+              <span className="tech">Technology</span>
+              <span className="dark-tech"> Stack</span>
             </h1>
           </div>
           <div className="stacks">
@@ -56,6 +57,9 @@ export default function Content() {
                 <li>Twilio</li>
               </ul>
             </div>
+          </div>
+          <div className="arrow-content">
+            <i className="far fa-arrow-alt-circle-down arrow-motion" />
           </div>
         </div>
       </section>

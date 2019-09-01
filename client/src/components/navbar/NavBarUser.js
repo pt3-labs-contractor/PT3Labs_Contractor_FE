@@ -1,34 +1,59 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { connect } from 'react-redux';
 import './NavBarUser.css';
 
-function NavBarUser() {
+function NavBarUser(props) {
   return (
-    <div>
-      <nav className="navbar bg-dark">
-        <NavLink to="/">
-          <h1>
-            <i className="far fa-calendar-alt"> Digital Calendar - user</i>
-          </h1>
+    <>
+      <div className="sideNav">
+        <NavLink to="/" className="side-link">
+          <i className="fas fa-home" />
+          <span className="side-listing"> Home</span>
         </NavLink>
-        <ul>
-          <li>
-            <NavLink to="/calendar">Calendar</NavLink>
-          </li>
-          <li>
-            <NavLink to="/userFeedback">Feedback</NavLink>
-          </li>
-          <li>
-            <NavLink to="/contractors">Contractors</NavLink>
-          </li>
-          <li>
-            <NavLink to="/">Log Out</NavLink>
-          </li>
-        </ul>
-      </nav>
-    </div>
+        <NavLink
+          to="/app"
+          className="side-link"
+          exact
+          activeClassName="current"
+        >
+          <i className="fas fa-calendar-alt" />
+          <span className="side-listing"> Schedule</span>
+        </NavLink>
+        <NavLink
+          to="/mybookings"
+          className="side-link"
+          activeClassName="current"
+        >
+          <i className="fas fa-book" />
+          <span className="side-listing"> Appointments</span>
+        </NavLink>
+        <NavLink
+          to="/userFeedback"
+          className="side-link"
+          activeClassName="current"
+        >
+          <i className="fas fa-users" />
+          <span className="side-listing"> Feedback</span>
+        </NavLink>
+        <NavLink
+          to="/usersettings"
+          className="side-link"
+          activeClassName="current"
+        >
+          <i className="fas fa-user-cog" />
+          <span className="side-listing"> Settings</span>
+        </NavLink>
+        <NavLink
+          to="/app/contractors"
+          className="side-link"
+          activeClassName="current"
+        >
+          <i className="fas fa-user" />
+          <span className="side-listing"> Contractors</span>
+        </NavLink>
+      </div>
+    </>
   );
 }
 
-export default connect()(NavBarUser);
+export default NavBarUser;

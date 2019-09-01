@@ -1,0 +1,40 @@
+.topnav {
+  margin-left: 200px;
+}
+
+.topnav-style {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1rem;
+  color: white;
+  background-color: #656475;
+  padding: 0 2rem;
+  border-bottom: 2px solid var(--primary-color);
+  top: 0
+}
+.topnav-link a {
+  text-decoration: none;
+  color: white;
+}
+
+.logout:hover {
+  opacity: .6;
+}
+
+@media (max-width: 800px) {
+  .topnav {
+    margin-left: 60px;
+  }
+}
+
+@media (max-width: 500px) {
+  .topnav-style {
+    flex-direction: column;
+  }
+  a {
+    padding: 0 0;
+    margin: 0;
+    
+  }
+}

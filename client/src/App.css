@@ -1,7 +1,10 @@
 * {
   box-sizing: border-box;
   margin: 0;
-  padding: 0
+  padding: 0;
+}
+html {
+  font-family: 'Roboto', sans-serif;
 }
 
 body {
@@ -10,11 +13,20 @@ body {
 
 p {
   line-height: 1.25;
+  letter-spacing: 1.25px;
 }
 
 a {
   text-decoration: none;
-  color: var(--light-color)
+}
+
+a:hover {
+  opacity: 0.75;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: var(--light-color);
 }
 
 ul {
@@ -39,6 +51,31 @@ img {
   outline: none;
 }
 
-.btn:hover{
-  background-color: darken()
+.btn:hover {
+  opacity: 0.8;
+}
+
+.delete-btn {
+  background-color: var(--danger-color);
+}
+
+.main-body {
+  margin-left: 200px;
+}
+
+.service-title {
+  text-transform: capitalize;
+}
+
+@media (max-width: 800px) {
+  .main-body {
+    margin-left: 5rem;
+    margin-right: 1rem;
+  }
+}
+
+@media (max-width: 400px) {
+  body {
+    font-size: .8rem;
+  }
 }

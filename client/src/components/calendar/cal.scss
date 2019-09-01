@@ -1,0 +1,680 @@
+$mobile: (max-width: 601px);
+.cal {
+  padding-top: 10px;
+  width: 90%;
+  max-width: 1000px;
+  margin: 0 auto;
+  /* margin: 0 20px; */
+  /* max-height: 70vh; */
+	.calendar-nav {
+		display: flex;
+		justify-content: center;
+		@media screen and (max-width: 601px) {
+			margin-bottom: 5px;
+			border-radius: 5px;
+		}
+	}
+	.nav-month {
+		padding: 0 20px;
+		width: 30%;
+	}
+	.day-container {
+		display: grid;
+		grid-template-columns: repeat(7, 1fr);
+		@media screen and (max-width: 601px) {
+			display: none;
+		}
+
+		.day-cell {
+			border: 1px solid #000;
+		}
+	}
+}
+
+.notification {
+	text-align: center;
+	margin-top: 20px;
+	font-size: 2rem;
+}
+
+#legend {
+	display: flex;
+	border-radius: 5px;
+	flex-direction: column;
+	position: absolute;
+	left: 29.3%;
+	height: 28px;
+	width: 80px;
+	overflow: hidden;
+	justify-content: space-between;
+	z-index: 200;
+	border: 2px solid black;
+	background-color: white;
+	@media screen and (max-width: 800px)  {
+		left: 20%;
+	}
+		@media screen and (max-width: 450px) {
+			height: 15px;
+			width: 35px;
+			left: 24%;
+		}
+	&:hover {
+		height: auto;
+		width: 110px;
+		padding: 0px 15px 15px 15px;
+	}
+
+	.leg {
+		font-size: 1.3rem !important;
+		color: black !important;
+		text-align: center;
+		text-decoration: underline;
+
+		@media screen and (max-width: 450px) {
+			font-size: .5rem !important;
+		}
+	}
+	.confirmedl {
+	font-size: 15px !important;
+	color: black !important;
+		background-color: #febd17;
+		padding: 3px;
+		margin-top: 10px;
+		margin-bottom: 2px;
+		border-radius: 5px;
+	}
+
+	.pendingl {
+	font-size: 15px !important;
+	color: black !important;
+		background-color: #8c20f8;
+		padding: 3px;
+		margin-bottom: 2px;
+		border-radius: 5px;
+	}
+	.openl {
+	font-size: 15px !important;
+	color: black !important;
+		background-color: white;
+		border: 1px solid black;
+		padding: 3px;
+		margin-bottom: 2px;
+		border-radius: 5px;
+	}
+	.deniedl {
+	font-size: 15px !important;
+	color: black !important;
+		background-color: red;
+		padding: 3px;
+		margin-bottom: 2px;
+		border-radius: 5px;
+	}
+}
+
+.filterButtons {
+	display: flex;
+	flex-wrap:  wrap;
+	justify-content: space-between;
+	width: 90%;
+	max-width: 900px;
+	margin: 0 auto;
+	margin-top: 50px;
+	align-items: flex-end;
+
+
+
+	.fbutt {
+		border: none;
+		outline: none;
+		background-color: white;
+		border-radius: 5px;
+		padding: 15px;
+		padding-top: 7px;
+		padding-bottom: 7px;
+		text-decoration: none;
+		height: 40px;
+
+		&:hover {
+			cursor: pointer;
+			transform: scale(1.1);
+		}
+	}
+	.pendingApp {
+		background-color: rgba(173, 140, 233, 0.4);
+	}
+
+	.openDays {
+		background-color: rgba(73, 182, 117, 0.3);
+	}
+
+	.closedDays {
+		background-color: rgba(1, 1, 1, 0.5);
+	}
+
+	.wholeCal {
+		background-color: white;
+		border: 2px solid black;
+	}
+
+
+	@media screen and (max-width: 601px) {
+		margin-top: 10px;
+
+		.fbutt {
+			width: 100%;
+			margin-bottom: 5px;
+
+		}
+	}
+}
+
+
+.nav {
+	border-radius: 50%;
+	padding-left: 15px;
+	padding-right: 15px;
+	transform: scale(.7);
+	&:hover {
+		cursor: pointer;
+	}
+}
+
+
+.cel-container {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-auto-rows: 85px;
+
+	@media screen and (max-width: 601px) {
+  grid-template-columns: repeat(1, 1fr);
+	grid-auto-rows: 115px;
+	}
+}
+
+
+
+.cel {
+	height: 58px;
+	overflow: hidden;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+	@media screen and (max-width: 601px) {
+		height: 80px;
+	}
+}
+
+
+.day-cell {
+  text-align: center;
+}
+
+.spacer.selected {
+  background-color: #e4e4e4;
+  z-index: 100;
+}
+
+.cel.selected {
+  background-color: #e4e4e4;
+	border-radius: 8px;
+	border-bottom: 4px solid black;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+}
+
+.spacer.disable {
+  opacity: 0.25;
+}
+.btn:hover {
+  background-color: darken(white, 30%);
+}
+.delete:hover {
+  cursor: pointer;
+}
+
+.edit:hover {
+  cursor: pointer;
+}
+
+.close {
+  padding: 20px;
+}
+
+.close:hover {
+  cursor: pointer;
+}
+
+.timeSlot {
+  text-align: center;
+  font-size: 0.7rem;
+  margin-top: 0px;
+  margin-bottom: 5px;
+  padding: 2px;
+  padding-right: 20px;
+  border-radius: 5px;
+  color: black;
+  width: 100%;
+}
+
+
+
+
+.listCont {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.schCont {
+	@media screen and (max-width: 601px) {
+		width: 80%;
+		list-style: none;
+
+		.timeSlot {
+			font-size: 1rem;
+			padding: 5px;
+		}
+
+		.appCont {
+			display: flex;
+			justify-content: center;
+
+			.timeSlot {
+				font-size: .8rem;
+			}
+		}
+	}
+
+}
+
+.scheduleCont {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  height: 0px;
+
+}
+
+.editLink {
+  padding: 0px;
+  margin: 0px;
+  font-size: 0px;
+}
+
+.appLink {
+  padding: 0px;
+  margin: 0px;
+  font-size: 0px;
+}
+
+.spacer {
+  border: 1px solid black;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+	@media screen and (max-width: 601px) {
+		border: 2px solid black;
+		margin-bottom: 2px;
+		border-radius: 10px;
+	}
+}
+
+.sBordPend {
+	border-left: 10px solid #8c20f8;
+}
+
+.sBordConfirm {
+	border-left: 10px solid #febd17;
+}
+
+.sBordDeny {
+	border-left: 10px solid red;
+}
+
+.sBordOpen {
+	border-left: 10px solid rgb(73, 182, 117);
+}
+
+.sideBordPend {
+	@media screen and (max-width: 601px) {
+	border-left: 10px solid #8c20f8;
+	}
+}
+
+.sideBordOpen {
+	@media screen and (max-width: 601px) {
+    border-left: 10px solid rgb(73, 182, 117);
+	}
+}
+
+.sideBordFull {
+	@media screen and (max-width: 601px) {
+    border-left: 10px solid rgb(1, 1, 1);
+	}
+}
+
+.add {
+  width: 15px;
+}
+
+.add:hover {
+  cursor: pointer;
+}
+
+.appSlot {
+  list-style: none;
+  margin-bottom: 10px;
+  font-size: 0.5rem;
+  margin-left: 15px;
+}
+
+.infoCont {
+  height: 150px;
+  width: 150px;
+}
+
+.appLink {
+  text-decoration: none;
+  color: black;
+}
+
+.editLink {
+  text-decoration: none;
+  color: black;
+}
+
+// .schedulerCont {
+// 	display: fixed;
+// 	top: 50%;
+// 	left: 50%;
+//   width: 200px;
+//   height: 150px;
+
+	// @media screen and (max-width: 601px) {
+	// 	display: fixed;
+	// 	top: 50%;
+	// 	left: 50%;
+	// }
+// }
+
+.infoCont {
+  border: 1px solid black;
+}
+
+.downCont {
+  margin: 0 auto;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 3px;
+  position: relative;
+  top: -20%;
+  height: 17px;
+  width: 100%;
+  background-color: none;
+  cursor: pointer;
+
+}
+
+.fa-angle-double-down,
+.fa-angle-double-up {
+  font-size: 0.7rem;
+  pointer-events: none;
+	@media screen and (max-width: 601px) {
+		font-size: 1.5rem;
+	}
+}
+
+.disabledLink {
+  pointer-events: none;
+}
+
+
+.arrowHidden {
+  display: none;
+}
+
+.notHidden {
+	overflow: hidden;
+	height: auto;
+	background-color: #e4e4e4;
+	border: none;
+	box-shadow: none;
+	
+}
+
+/* .react-datetime-picker__inputGroup__month, */
+/* .react-datetime-picker__inputGroup__day, */
+/* .react-datetime-picker__inputGroup__year { */
+/*   pointer-events: none; */
+/* } */
+
+.react-calendar {
+  width: 200px;
+}
+
+.react-calendar__navigation {
+  justify-content: center;
+}
+
+.react-datetime-picker__clock {
+  display: none;
+}
+
+.confirmedDot {
+  font-size: 0.7rem;
+  display: list-item;
+  background-color: #febd17;
+}
+
+.pendingDot {
+  font-size: 0.7rem;
+  background-color: #8c20f8;
+  color: white;
+}
+
+.openDot {
+  display: list-item;
+  font-size: 0.7rem;
+  background-color: white;
+  border: 1px solid black;
+  color: black;
+}
+
+.confirmedSlot {
+  display: flex;
+  justify-content: flex-end;
+  list-style: none;
+  margin-left: 5px;
+}
+
+.confirmedSlot::before {
+  display: inline-block;
+  content: '\2022';
+  color: #febd17;
+  font-weight: bold;
+  font-size: 1rem;
+  height: 0px;
+  margin-left: -1px;
+  margin-right: 2px;
+  margin-top: -5px;
+
+	@media screen and (max-width: 601px) {
+		font-size: 1.5rem;
+	}
+}
+
+.pendingSlot {
+  display: flex;
+  justify-content: flex-end;
+  list-style: none;
+  margin-left: 5px;
+}
+
+.pendingSlot::before {
+  display: inline-block;
+  content: '\2022';
+  color: #8c20f8;
+  font-weight: bold;
+  font-size: 1rem;
+  height: 0px;
+  margin-left: -1px;
+  margin-right: 2px;
+  margin-top: -5px;
+
+	@media screen and (max-width: 601px) {
+		font-size: 1.5rem;
+	}
+}
+
+
+.deniedSlot {
+  display: flex;
+  justify-content: flex-end;
+  list-style: none;
+  margin-left: 5px;
+}
+
+.deniedSlot::before {
+  display: inline-block;
+  content: '\2022';
+  color: red;
+  font-weight: bold;
+  font-size: 1rem;
+  height: 0px;
+  margin-left: -1px;
+  margin-right: 2px;
+  margin-top: -5px;
+
+	@media screen and (max-width: 601px) {
+		font-size: 1.5rem;
+	}
+}
+
+.disabled {
+  pointer-events: none;
+}
+
+.date {
+  margin-bottom: 5px;
+	width: 20px;
+	height: min-content;
+}
+
+.weekDay {
+	width: 83%;
+}
+
+.today {
+  background-color: #555555;
+  color: white;
+  border-radius: 50%;
+}
+
+.pend {
+  opacity: 1;
+  animation: fade 3s infinite;
+}
+
+.errorCont {
+	width: 100%;
+	display: flex;
+	flex-wrap:  wrap;
+	justify-content: center;
+	.errorNot {
+		display: flex;
+		flex-wrap:  wrap;
+		justify-content: space-around;
+		border-top: 8px solid red;
+		position: fixed;
+		top: 50%;
+		width: 200px;
+		padding: 5px;
+		box-shadow: 0 3px 20px #555555;
+		border-radius: 5px;
+		font-size: .9rem;
+		z-index: 100000;
+		background-color: white;
+	}
+
+	.ok {
+		background-color: white;
+		border: 1px solid black;
+		font-weight: bold;
+		padding-top: 5px;
+		padding-bottom: 5px;
+		border-radius: 5px;
+		width: 30%;
+		margin-top: 7px;
+		margin-bottom: 5px;
+		
+		&:hover {
+			cursor: pointer;
+			background-color: green;
+			color: white;
+			border: 1px solid white;
+		}
+	}
+
+	.plans {
+		border: none;
+		background-color: rgba(73, 182, 117, 0.3);
+		color: white;
+		font-weight: bold;
+		padding-top: 5px;
+		padding-bottom: 5px;
+		border-radius: 5px;
+		width: 80%;
+		margin-bottom: 5px;
+		
+		&:hover {
+			cursor: pointer;
+			background-color: green;
+		}
+
+	}
+}
+
+@keyframes fade {
+  0%,
+  100% {
+    background-color: rgba(173, 140, 233, 0);
+  }
+  50% {
+    background-color: rgba(173, 140, 233, 0.4);
+  }
+}
+
+
+.open {
+  opacity: 1;
+  animation: open 3s infinite;
+}
+
+@keyframes open {
+  0%,
+  100% {
+    background-color: rgba(73, 182, 117, 0);
+  }
+  50% {
+    background-color: rgba(73, 182, 117, 0.3);
+  }
+}
+
+.closed {
+  opacity: 1;
+  animation: closed 3s infinite;
+}
+
+@keyframes closed {
+  0%,
+  100% {
+    background-color: rgba(1, 1, 1, 0);
+  }
+  50% {
+    background-color: rgba(1, 1, 1, 0.5);
+  }
+}
+

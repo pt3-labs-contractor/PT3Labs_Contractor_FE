@@ -2,19 +2,18 @@ import React from 'react';
 import { connect } from 'react-redux';
 import NavBarUser from '../navbar/NavBarUser';
 
-function Users(props) {
+const Users = props => {
+  console.log(props.users);
   return (
     <div>
       <NavBarUser />
       <h3>Users:</h3>
       {props.loading ? <p>Loading...</p> : null}
       {props.error ? <p>{props.error}</p> : null}
-      {props.users.map(user => (
-        <p key={user.id}>{user.username}</p>
-      ))}
+      <p key={props.users.id}>{props.users.username}</p>
     </div>
   );
-}
+};
 
 const mapStateToProps = state => {
   return {
@@ -24,4 +23,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(Users);
+export default React.memo(connect(mapStateToProps)(Users));

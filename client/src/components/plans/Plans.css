@@ -1,0 +1,182 @@
+.main-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.main-header-title {
+  font-size: 3rem;
+  font-weight: 100;
+}
+
+.main-header p {
+  margin: 1rem 8rem 0;
+  font-size: 1.2rem;
+  letter-spacing: 1.25px;
+  color: grey;
+}
+.wrapper {
+  margin: 5% auto;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.single-price {
+  width: 300px;
+  height: 400px;
+  /* background-color: var(--dark-color); */
+  margin-top: 2%;
+  box-shadow: 1px 1px 20px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  transition: 0.7s;
+  color: black;
+}
+
+.single-price h2 {
+  font-size: 1.5rem;
+  color: var(--primary-color);
+  text-transform: uppercase;
+  border: 1px solid black;
+  padding: 1rem;
+  background-color: var(--dark-color);
+  opacity: 0.9;
+}
+
+.price {
+  margin: 5% auto 0 auto;
+  text-align: center;
+}
+
+.price h2 {
+  font-size: 38px;
+  color: black;
+}
+
+.deals {
+  margin: 15% 0;
+}
+
+.deals h4 {
+  font-size: 14px;
+  font-weight: normal;
+  text-align: center;
+  color: black;
+  line-height: 1.5;
+}
+
+.single-price:hover {
+  background: lightgray;
+  color: #fff;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 1);
+  transform: scale(1.05);
+  z-index: 1;
+}
+
+.single-price:hover .price {
+  border-color: #fff;
+}
+
+.single-price a {
+  text-decoration: none;
+  background: var(--primary-color);
+  color: var(--secondary-color);
+  border: 1px solid var(--secondary-color);
+  padding: 0.5rem 2.5rem;
+  display: inline-block;
+  margin: 1rem auto;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.single-price:hover a {
+  background: var(--secondary-color);
+  color: #fff;
+}
+
+@media (max-width: 800px) {
+  .wrapper {
+    flex-direction: column;
+    align-items: center;
+  }
+  .main-header p {
+    margin: 1rem 2rem;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .main-header-title {
+    font-size: 2rem;
+  }
+  .single-price {
+    width: 90%;
+    height: auto;
+  }
+  .single-price a {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  .single-price h2 {
+    font-size: 1rem;
+    padding: 1rem 0;
+  }
+}
+.plan-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+.plan-wrapper > * {
+  margin: 5px 0;
+}
+.plan-wrapper > *:first-child {
+  margin-top: 0;
+}
+.plan-wrapper > *:last-child {
+  margin-bottom: 0;
+}
+.cancel-btn {
+  background: #dc3545;
+  border: #dc3545;
+  border-radius: 3px;
+  padding: 0.4rem 1.3rem;
+  color: #eee;
+  font-size: 1rem;
+  cursor: pointer;
+}
+.cancel-btn:hover {
+  background: #c82333;
+}
+.single-price.active-sub {
+  box-shadow: none;
+  transform: none;
+  border: 1px solid rgba(52, 58, 64, 0.9);
+  height: auto;
+  background: initial;
+  color: initial;
+}
+.cancel-form {
+  padding: 10px;
+}
+.cancel-form label > * {
+  margin: 3px 0;
+}
+.cancel-form label input {
+  margin-bottom: 30px;
+}
+.cancel-notice {
+  margin: 10px;
+}
+.pending-cancel {
+  padding: 10px;
+}
+.pending-cancel h3 {
+  margin-bottom: 10px;
+}

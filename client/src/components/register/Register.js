@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import axios from 'axios';
+import { connect } from 'react-redux';
 import MainNavbar from '../navbar/MainNavbar';
+import { startManualLoad, endManualLoad } from '../../actions';
 
 import './Register.css';
 
@@ -22,9 +24,9 @@ function Register(props) {
     event.preventDefault();
     const bearer = `Bearer ${localStorage.getItem('jwt')}`;
     const headers = { authorization: bearer };
-    // var { email, phoneNumber } = values;
 
     if (!oauth) {
+      props.startManualLoad();
       axios
         .post(
           'https://fierce-plains-47590.herokuapp.com/api/auth/register',
@@ -33,13 +35,15 @@ function Register(props) {
         )
         .then(res => {
           localStorage.setItem('jwt', res.data.token);
-          props.history.push('/');
+          props.endManualLoad();
+          props.history.push('/app');
         })
         .catch(err => {
           console.log(err);
         });
     } else {
       const userUpdate = {};
+      userUpdate.username = values.username;
       userUpdate.email = values.email;
       userUpdate.phoneNumber = values.phoneNumber;
 
@@ -91,38 +95,48 @@ function Register(props) {
           <i className="fas fa-user" /> Create your account:
         </p>
         <button
-          className="btn btn-register"
+          className={`btn btn-register ${contractor && 'selected'}`}
           onClick={() => setContractor(true)}
         >
           Contractor
         </button>
         <button
-          className="btn btn-register"
+          className={`btn btn-register ${!contractor && 'selected'}`}
           onClick={() => setContractor(false)}
         >
           User{' '}
         </button>
         <form onSubmit={handleSubmit}>
+          <input
+            name="username"
+            placeholder="Username"
+            onChange={handleChange}
+            required
+          />
           {!oauth && (
             <>
-              <input
-                name="username"
-                placeholder="Username"
-                onChange={handleChange}
-              />
               <input
                 name="password"
                 type="password"
                 placeholder="Password"
                 onChange={handleChange}
+                required
               />
             </>
           )}
-          <input name="email" placeholder="E-mail" onChange={handleChange} />
+          <input
+            name="email"
+            type="email"
+            placeholder="E-mail"
+            onChange={handleChange}
+            required
+          />
           <input
             name="phoneNumber"
+            type="number"
             placeholder="Phone#"
             onChange={handleChange}
+            required
           />
           {contractor && (
             <>
@@ -130,30 +144,50 @@ function Register(props) {
                 name="contractorName"
                 placeholder="Name"
                 onChange={handleChange}
+                required
               />
               <input
                 name="streetAddress"
                 placeholder="Street Address"
                 onChange={handleChange}
+                required
               />
-              <input name="city" placeholder="City" onChange={handleChange} />
+              <input
+                name="city"
+                placeholder="City"
+                onChange={handleChange}
+                required
+              />
               <input
                 name="stateAbbr"
                 placeholder="State"
                 onChange={handleChange}
+                required
               />
               <input
                 name="zipCode"
                 placeholder="Zip Code"
                 onChange={handleChange}
+                required
               />
             </>
           )}
-          <input
+          <button
+            type="submit"
+            // value="Create Account"
+            className="btn btn-primary"
+          >
+            Create Account
+          </button>
+
+          {/* <button
             type="submit"
             value="Create Account"
             className="btn btn-primary"
-          />
+            onClick={handleSubmit}
+
+          /> */}
+
           <p>
             Already have an account?{' '}
             <NavLink to="/login" className="form-links">
@@ -166,4 +200,9 @@ function Register(props) {
   );
 }
 
-export default Register;
+export default connect(
+  () => {
+    return {};
+  },
+  { startManualLoad, endManualLoad }
+)(Register);

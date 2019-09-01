@@ -1,32 +1,45 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react';
 import { connect } from 'react-redux';
 import dateFns from 'date-fns';
 
 function AppointmentList(props) {
-  const [appointment, setAppointment] = useState([]);
-  const {selectedDay, schedule} = props;
-
-  useEffect(() => {
-    const date = schedule.filter(item => dateFns.isSameDay(item, selectedDay));
-    setAppointment(date);
-    // eslint-disable-next-line
-  }, [selectedDay])
-
   return (
-    <div>
-      {appointment.map(item => (
-        <>
-        {dateFns.format(item, "HH:mm ")}
-        </>
-      ))}
+    <div className="appointment-list">
+      <h3>Pending Appointments</h3>
+      <div className="appointments-container">
+        {props.appointments.map(item => {
+          const contractor = props.contractors.filter(
+            con => con.id === item.contractorId
+          )[0];
+          if (item.confirmed === null)
+            return (
+              <div className="appointment-card" key={item.id}>
+                <h5>{dateFns.format(item.startTime, 'MMMM Do:')}</h5>
+                <p>
+                  {`${dateFns.format(
+                    item.startTime,
+                    'HH:mm'
+                  )} - ${dateFns.format(
+                    dateFns.addHours(item.startTime, item.duration.hours),
+                    'HH:mm'
+                  )}`}
+                </p>
+                <p>{contractor.contractorName}</p>
+                <p>{contractor.phoneNumber}</p>
+                <p className="service-title">{item.service}</p>
+              </div>
+            );
+        })}
+      </div>
     </div>
-  )
+  );
 }
 
 const mapStateToProps = state => {
   return {
-    schedule: state.schedule
-  }
-}
+    appointments: state.appointments,
+    contractors: state.contractors,
+  };
+};
 
 export default connect(mapStateToProps)(AppointmentList);
